@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '@/components/common/navbar'
-import Footer from '@/components/common/footer'
+// import Navbar from '@/components/common/navbar'
+// import Footer from '@/components/common/footer'
 import ClassSchedule from '@/components/class/class-schedule'
 import Head from 'next/head'
 
@@ -10,10 +10,11 @@ export default function Class() {
       <Head>
         <title>課程專區</title>
       </Head>
-      <Navbar />
+      {/* <Navbar /> */}
+
       <hr />
       <ClassSchedule />
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }
