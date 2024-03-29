@@ -10,11 +10,8 @@ export default function Class() {
       <Head>
         <title>課程專區</title>
       </Head>
-      {/* <Navbar /> */}
-
       <hr />
       <ClassSchedule />
-      {/* <Footer /> */}
     </>
   )
 }
