@@ -42,30 +42,6 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-
-  .switch {
-    display: flex;
-    width: 100%;
-
-    div {
-      width: 50%;
-      height: 80px;
-      text-align: center;
-      line-height: 80px;
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .switch-left {
-      background-color: #ed7c15;
-    }
-
-    .switch-right {
-      background-color: #2e2e2e;
-      color: white;
-    }
-  }
-
   .schedule-filter {
     display: flex;
     flex-direction: column;

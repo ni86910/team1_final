@@ -12,10 +12,6 @@ export default function ClassSchedule() {
   return (
     <>
       <section className={style['schedule-section']}>
-        <div className={style['switch']}>
-          <div className={style['switch-left']}>課程介紹</div>
-          <div className={style['switch-right']}>課表查詢</div>
-        </div>
         <div className={style['schedule-filter']}>
           <div className={style['text']}>
             <h2 className={style['filter-title']}>選擇區域及場館</h2>
