@@ -15,10 +15,10 @@ export default function Class() {
       </Head>
       <hr />
       <ClassSwitch />
-      {/* <div style={{ display: 'flex', width: '200%' }}> */}
-      <ClassIntro />
-      {/* <ClassSchedule /> */}
-      {/* </div> */}
+      <div style={{ display: 'flex', width: '200%', position: '' }}>
+        <ClassIntro />
+        <ClassSchedule />
+      </div>
     </>
   )
 }
