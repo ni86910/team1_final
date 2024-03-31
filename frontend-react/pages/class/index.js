@@ -3,6 +3,8 @@ import React from 'react'
 // import Footer from '@/components/common/footer'
 import ClassSchedule from '@/components/class/class-schedule'
 import ClassSwitch from '@/components/class/class-switch'
+import ClassIntro from '@/components/class/class-intro'
+
 import Head from 'next/head'
 
 export default function Class() {
@@ -13,7 +15,10 @@ export default function Class() {
       </Head>
       <hr />
       <ClassSwitch />
-      <ClassSchedule />
+      {/* <div style={{ display: 'flex', width: '200%' }}> */}
+      <ClassIntro />
+      {/* <ClassSchedule /> */}
+      {/* </div> */}
     </>
   )
 }
