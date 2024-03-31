@@ -6,7 +6,7 @@ import Link from 'next/link'
 export default function ClassIntro() {
   return (
     <>
-      <section className={style['schedule-section']}>
+      <section className={style['intro-section']}>
         <div className={style['category-nav']}>
           <div className={style['categories']}>
             <Link href="">印度瑜珈</Link>
