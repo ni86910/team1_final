@@ -1,9 +1,14 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import style from '@/styles/class-intro.module.scss'
 import { FaSortDown } from 'react-icons/fa'
 import Link from 'next/link'
+import { API_SERVER } from '../common/config'
+import Image from 'next/image'
 
 export default function ClassIntro({ setContainerHeight, tab }) {
+  // 用狀態接收fetch來的課程介紹資料
+  const [introData, setIntroData] = useState()
+
   // 取得section參照
   const sectionRef = useRef(null)
 
@@ -14,6 +19,16 @@ export default function ClassIntro({ setContainerHeight, tab }) {
       ? setContainerHeight(sectionRef.current.clientHeight + 'px')
       : () => {}
   }, [tab])
+
+  // 取得課程介紹資料
+  useEffect(() => {
+    fetch(`${API_SERVER}/class`, { credentials: 'include' })
+      .then((r) => r.json())
+      .then((data) => {
+        console.log(data)
+        setIntroData(data)
+      })
+  }, [])
 
   return (
     <>
@@ -47,6 +62,35 @@ export default function ClassIntro({ setContainerHeight, tab }) {
           </div>
         </div>
         <div className={style['classes']}>
+          {!introData ? (
+            <div>loading...</div>
+          ) : (
+            introData.map((v, i) => {
+              return (
+                <div key={i} className={style['class']}>
+                  <div className={style['img-box']}>
+                    <Image
+                      src={`/img/class/class-page/${v['class_img']}`}
+                      alt=""
+                      // fill={true}
+                      height={400}
+                      width={650}
+                    />
+                  </div>
+                  <div className={style['class-content']}>
+                    <div className={style['class-content-box']}>
+                      <h3 className={style['class-name']}>{v['class_name']}</h3>
+                      <p className={style['class-info']}>
+                        {v['class_description']}
+                      </p>
+                      <div className={style['learn-more']}>+</div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })
+          )}
+
           <div className={style['class']}>
             <div className={style['img-box']}>
               <img src="./img/class/2_202212291552011if0i26239.jpg" alt="" />
@@ -61,7 +105,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
               </div>
             </div>
           </div>
-          <div className={style['class']}>
+          {/* <div className={style['class']}>
             <div className={style['img-box']}>
               <img src="./img/class/2_20221229164722batp5kE9j10.jpg" alt="" />
             </div>
@@ -88,7 +132,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                 <div className={style['learn-more']}>+</div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
     </>
