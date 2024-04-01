@@ -1,5 +1,5 @@
 import express from "express";
-import sales from "./data/sales.json" assert { type: "json" };
+// import sales from "./data/sales.json" assert { type: "json" };
 import upload from "./utils/upload-imgs.js";
 import admin2Router from "./routes/admin2.js";
 import abRouter from "./routes/address-book.js";
@@ -11,8 +11,9 @@ import db from "./utils/mysql2-connect.js";
 import cors from "cors";
 import bcrypt from "bcryptjs";
 // import wsServer from "./routes/ws-chat.js";
-import wsServer from "./routes/ws-draw.js";
+// import wsServer from "./routes/ws-draw.js";
 import jwt from "jsonwebtoken";
+import classRouter from './routes/class.js'
 
 // 建立一個session可以儲存的地方
 const MysqlStore = mysql_session(session);
@@ -27,6 +28,18 @@ const app = express();
 // false: 使用 body-parser 自己的解析器
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// 解決跨來源 不能拜訪的問題
+const corsOptions = {
+  credentials: true, //這行是在設定Access-Control-Allow-Credentials:
+  origin: (origin, callback) => {
+    console.log({ origin });
+    callback(null, true); // 設定為true 允許所有現在origin是誰就允許誰來拜訪
+    //這裡的true 使在設定 Access-Control-Allow-Origin: http://127.0.0.1:5500
+  },
+};
+app.use(cors(corsOptions));
+
 
 // session
 app.use(
@@ -69,7 +82,7 @@ app.use((req, res, next) => {
 
 // 路由 (routes) 設定
 
-
+app.use('/class',classRouter)
 
 
 
