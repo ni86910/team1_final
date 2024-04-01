@@ -4,95 +4,6 @@ $black2: #2e2e2e;
 $gray: #f1f1f1;
 $white: #ffffff;
 
-// * {
-//   box-sizing: border-box;
-//   margin: 0;
-//   padding: 0;
-//   font-family: Verdana, Geneva, Tahoma, sans-serif;
-//   font-weight: normal;
-//   text-decoration: none;
-//   border: none;
-// }
-
-// a {
-//   & :active {
-//     color: $orange;
-//   }
-//   &:visited {
-//     color: $white;
-//   }
-//   &:hover {
-//     color: $orange;
-//   }
-//   transition: all 0.2s ease-in;
-// }
-
-.container {
-  width: 90%;
-}
-
-// header {
-//   background-color: $black;
-//   height: 70px;
-//   display: flex;
-//   justify-content: center;
-//   div {
-//     height: 100%;
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//   }
-//   .logo {
-//     width: auto;
-//     height: 80%;
-//     justify-content: space-between;
-//     img {
-//       height: 100%;
-//     }
-//   }
-//   nav {
-//     height: 100%;
-//     color: white;
-//     display: flex;
-//     align-items: center;
-//     ul {
-//       display: flex;
-//       list-style: none;
-//       height: 100%;
-//       align-items: center;
-//       li {
-//         display: flex;
-//         flex-direction: column;
-//         position: relative;
-//         align-items: center;
-//         margin-left: 20px;
-//         height: 100%;
-//         overflow: hidden;
-//         a {
-//           display: flex;
-//           align-items: center;
-//           height: 100%;
-//           .icon {
-//             font-size: larger;
-//           }
-//         }
-//         a::after {
-//           content: "";
-//           position: absolute;
-//           top: 65px;
-//           left: 0px;
-//           width: 0;
-//           // height: 100%;
-//           border-bottom: 5px solid $orange;
-//           transition: all 0.2s ease-in;
-//         }
-//         a:hover::after {
-//           width: 200%;
-//         }
-//       }
-//     }
-//   }
-// }
 .banner {
   margin-top: 100px;
   margin-bottom: 50px;
@@ -109,7 +20,16 @@ $white: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
+  width: 100%;
+  height: fit-content;
+  position: absolute;
+  left:0%;
+  transition: all .5s ease-in-out;
+}
+.hide {
+  display: none;
+  left:'-100%';
+  transition: all .5s ease-in-out;
 }
 .category-nav {
   display: flex;
@@ -177,6 +97,7 @@ $white: #ffffff;
     padding: 0 30px 0 30px;
     font-weight: 700;
     display: flex;
+    // align-items: center;
     justify-content: space-between;
     p {
       line-height: 50px;
@@ -191,6 +112,7 @@ $white: #ffffff;
   .class {
     display: flex;
     height: 380px;
+    // flex-wrap: wrap;
     .img-box {
       width: 55%;
       display: flex;
@@ -208,6 +130,7 @@ $white: #ffffff;
       flex-direction: column;
       padding: 70px 50px;
       width: 45%;
+      min-width: 320px;
       .class-content-box{
         margin: auto;
         .class-name {
@@ -221,6 +144,12 @@ $white: #ffffff;
           line-height: 28px;
           letter-spacing: 0.5px;
           color: white;
+
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2; //多行在这里修改数字即可
+          overflow:hidden;
+          -webkit-box-orient: vertical;
         }
         .learn-more {
           width: 90px;

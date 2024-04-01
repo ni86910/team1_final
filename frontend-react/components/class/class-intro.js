@@ -1,12 +1,30 @@
-import React from 'react'
+import { useRef, useEffect } from 'react'
 import style from '@/styles/class-intro.module.scss'
 import { FaSortDown } from 'react-icons/fa'
 import Link from 'next/link'
 
-export default function ClassIntro() {
+export default function ClassIntro({ setContainerHeight, tab }) {
+  // 取得section參照
+  const sectionRef = useRef(null)
+
+  //當tab改變時，設定container高度 為當前section(左側section)的高度
+  useEffect(() => {
+    console.log('left-height:', sectionRef.current.clientHeight)
+    tab === 'left'
+      ? setContainerHeight(sectionRef.current.clientHeight + 'px')
+      : () => {}
+  }, [tab])
+
   return (
     <>
-      <section className={style['intro-section']}>
+      <section
+        ref={sectionRef}
+        className={
+          tab === 'right'
+            ? `${style['intro-section']} ${style['hide']}`
+            : style['intro-section']
+        }
+      >
         <div className={style['category-nav']}>
           <div className={style['categories']}>
             <Link href="">印度瑜珈</Link>

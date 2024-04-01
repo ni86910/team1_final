@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { useRef, useEffect } from 'react'
 import style from '@/styles/class-schedule.module.scss'
 import {
   FaCaretDown,
@@ -8,10 +8,33 @@ import {
   FaSearch,
 } from 'react-icons/fa'
 
-export default function ClassSchedule() {
+export default function ClassSchedule({ setContainerHeight, tab }) {
+  // 取得section參照
+  const sectionRef2 = useRef(null)
+
+  //當tab改變時，設定container高度 為當前section(右側section)的高度
+  useEffect(() => {
+    console.log('right-height:', sectionRef2.current.clientHeight)
+
+    tab === 'right'
+      ? setContainerHeight(sectionRef2.current.clientHeight + 'px')
+      : () => {}
+  }, [tab])
+
   return (
     <>
-      <section className={style['schedule-section']}>
+      <section
+        ref={sectionRef2}
+        className={
+          tab === 'right'
+            ? `${style['schedule-section']} ${style['show']}`
+            : style['schedule-section']
+        }
+        style={{
+          left: tab === 'right' ? '0%' : `100%`,
+          display: tab === 'right' ? 'flex' : `none`,
+        }}
+      >
         <div className={style['schedule-filter']}>
           <div className={style['text']}>
             <h2 className={style['filter-title']}>選擇區域及場館</h2>

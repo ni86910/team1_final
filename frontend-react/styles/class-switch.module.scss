@@ -20,3 +20,15 @@
     color: white;
   }
 }
+.on {
+  background-color: #ed7c15;
+  color: black;
+}
+.off {
+  background-color: #2e2e2e;
+  color: white;
+  &:hover {
+    background-color: #ed7c15;
+    color: black;
+  }
+}
