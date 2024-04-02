@@ -1,0 +1,15 @@
+.site-btn {
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 50px;
+  margin: 0 20px;
+  background-color: #000000;
+}
+
+.site-btn:hover {
+  color: #000000;
+  background-color: #EB6234;
+}

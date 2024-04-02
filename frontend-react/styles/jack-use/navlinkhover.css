@@ -1,0 +1,8 @@
+.nav-link{
+    color: black;
+}
+
+/* 添加 hover 效果 */
+.nav-link:hover {
+    color: #EB6234; /* hover 時的文字顏色 */
+}

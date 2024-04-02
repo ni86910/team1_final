@@ -1,0 +1,97 @@
+
+/* Styles for wrapping the search box */
+
+.main {
+    width: auto;
+    margin: 30px auto;
+    
+}
+
+/* Bootstrap 4 text input with search icon */
+
+/* .has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+} */
+
+.b1{
+    color: black;
+    background-color: #ED7C15;
+    width: 500px;
+    height: auto;
+    text-align: center;
+}
+.b1:hover{
+    background-color: #EB6234;
+    color: black;
+}
+.b1 a {
+    color: black;
+}
+
+.b2{
+    color: black;
+    background-color: #D9D9D9;
+    width:500px;
+    height: auto;
+    text-align: center;
+}
+
+.b2 a {
+    color: black;
+}
+
+/* 自定義 select 樣式 */
+select {
+    padding: 8px 20px; /* 上下間距和左右間距 */
+    border: 1px solid grey; /* 邊框顏色 */
+    border-radius: 50px; /* 圓角 */
+    background-color: black; /* 背景顏色 */
+    text-align: center;
+    color: white; /* 文字顏色 */
+    cursor: pointer; /* 滑鼠指針形狀 */
+    appearance: none; /* 移除原生樣式 */
+    -webkit-appearance: none; /* 移除 Safari 原生樣式 */
+    -moz-appearance: none; /* 移除 Firefox 原生樣式 */
+}
+
+/* 選項樣式 */
+select option {
+    padding: 8px 20px; /* 上下間距和左右間距 */
+    text-align: center;
+    font-size: 14px; /* 字體大小 */
+}
+
+
+.btn-outline-info {
+    color: black;/* 文字顏色 */
+    border-color: #ED7C15; /* 邊框顏色 */
+    border-radius: 50px;
+}
+
+.btn-outline-info:hover {
+    background-color: #EB6234; /* 滑入顏色 */
+    border-color: #EB6234; /* 滑入邊框顏色 */
+}
+.btn-outline-warning{
+    color: black;
+    background-color: #FF965A;
+    border-color: #FF965A;
+    border-radius: 50px;
+}
+.btn-outline-warning:hover{
+    color: white;
+    background-color: #EB6234; /* 滑入顏色 */
+    border-color: #EB6234; /* 滑入邊框顏色 */
+}
