@@ -26,7 +26,7 @@ export default function Class() {
         style={{
           display: 'flex',
           width: '100%',
-          height: ContainerHeight,
+          height: ContainerHeight || '800px',
           position: 'relative',
           overflow: 'hidden',
         }}

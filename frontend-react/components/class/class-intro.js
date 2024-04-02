@@ -4,8 +4,11 @@ import { FaSortDown } from 'react-icons/fa6'
 import Link from 'next/link'
 import { API_SERVER } from '../common/config'
 import Image from 'next/image'
+import Router, { useRouter } from 'next/router'
 
 export default function ClassIntro({ setContainerHeight, tab }) {
+  const router = useRouter()
+
   // 用狀態接收fetch來的課程介紹資料
   const [introData, setIntroData] = useState()
 
@@ -18,7 +21,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
     tab === 'left'
       ? setContainerHeight(sectionRef.current.clientHeight + 'px')
       : () => {}
-  }, [tab])
+  }, [introData, tab])
 
   // 取得課程介紹資料
   useEffect(() => {
@@ -42,12 +45,11 @@ export default function ClassIntro({ setContainerHeight, tab }) {
       >
         <div className={style['category-nav']}>
           <div className={style['categories']}>
-            <Link href="">印度瑜珈</Link>
-            <Link href="">強力健身</Link>
-            <Link href="">活力有氧</Link>
-            <Link href="">空中瑜珈</Link>
-            <Link href="">健身</Link>
-            <Link href="">活力有氧</Link>
+            <Link href="?class_type=靜態課程">靜態課程</Link>
+            <Link href="?class_type=飛輪課程">飛輪課程</Link>
+            <Link href="?class_type=心肺訓練課程">心肺訓練課程</Link>
+            <Link href="?class_type=舞蹈課程">舞蹈課程</Link>
+            <Link href="?class_type=radical課程">radical課程</Link>
           </div>
           <div className={style['more-btn']}>+</div>
         </div>
@@ -83,7 +85,15 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                       <p className={style['class-info']}>
                         {v['class_description']}
                       </p>
-                      <div className={style['learn-more']}>+</div>
+                      <div
+                        className={style['learn-more']}
+                        onClick={() => {
+                          router.push(`/class/${v.class_id}`)
+                        }}
+                        role="presentation"
+                      >
+                        +
+                      </div>
                     </div>
                   </div>
                 </div>
