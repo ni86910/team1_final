@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Myaccordion from '../accordion/Myaccordion'
 import { questions } from '@/pages/api/accordion-data'
 import Image from 'next/image'
+import { FaBasketball, FaLocationDot, FaClock, FaPhone } from 'react-icons/fa6'
 
 export default function GymDetail() {
   const [data, setData] = useState(questions)
@@ -66,12 +67,21 @@ export default function GymDetail() {
               <div className="card" style={{ border: 'none', height: 350 }}>
                 <div className="card-body">
                   <h5 className="card-title">廠館資料</h5>
-                  <p>廠館電話</p>
+                  <p>
+                    <FaPhone />
+                    廠館電話
+                  </p>
                   <p>07-3453838</p>
-                  <p>營業時間</p>
+                  <p>
+                    <FaClock />
+                    營業時間
+                  </p>
                   <p>周一至周六 06:00~24:00</p>
                   <p>周日 08:00~24:00</p>
-                  <p>廠館地址</p>
+                  <p>
+                    <FaLocationDot />
+                    廠館地址
+                  </p>
                   <p>813高雄市左營區博愛三路102號</p>
                 </div>
               </div>
@@ -91,7 +101,7 @@ export default function GymDetail() {
                       <img src="#" alt="" width={30} height={30} />
                       飛輪教室
                       <br />
-                      <img src="#" alt="" width={30} height={30} />
+                      <FaBasketball />
                       籃球場
                     </div>
                     <div className="col">

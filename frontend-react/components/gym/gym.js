@@ -40,7 +40,7 @@ export default function GymPlace() {
             <select
               name="area"
               id="area"
-              className="select"
+              className={style['select']}
               data-type="select"
               data-width="medium"
             >
@@ -57,7 +57,12 @@ export default function GymPlace() {
           <div className="col-auto">
             <button
               className="btn btn-warning"
-              style={{ borderRadius: '50%', backgroundColor: '#EB6234' }}
+              style={{
+                border: 'none',
+                borderRadius: '50%',
+                color: '#ffffff',
+                backgroundColor: '#000',
+              }}
               type="submit"
             >
               <FaSearch />
