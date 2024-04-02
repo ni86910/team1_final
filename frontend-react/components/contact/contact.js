@@ -78,7 +78,7 @@ export default function Contact() {
                         <option value="企業/特約商家申請">
                           企業/特約商家申請
                         </option>
-                        <option value={3}>類別3</option>
+                        <option value="">類別3</option>
                         {/* 添加更多選項 */}
                       </select>
                     </div>

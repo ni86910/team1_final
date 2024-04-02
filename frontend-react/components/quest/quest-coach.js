@@ -37,7 +37,7 @@ export default function QuestCoach() {
               className="nav-link"
               style={{ color: 'black' }}
               aria-current="page"
-              href="quest"
+              href="/quest"
             >
               場館相關
             </a>
