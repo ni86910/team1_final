@@ -1,4 +1,5 @@
 import React from 'react'
+import ImageSlider from '../src/ImageSlider'
 
 export default function Article() {
   return (
@@ -23,7 +24,8 @@ export default function Article() {
       <div className="container">
         <div className="row">
           <div className="col text-center">
-            <div className="carousel">
+            <ImageSlider />
+            {/* <div className="carousel">
               <div className="carousel-inner">
                 <div className="carousel-item active">
                   <img src="/img/article/salad.png" alt="Slide 1" />
@@ -40,7 +42,7 @@ export default function Article() {
               </div>
               <button className="carousel-control prev">&lt;</button>
               <button className="carousel-control next">&gt;</button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
