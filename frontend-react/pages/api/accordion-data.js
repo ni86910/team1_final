@@ -18,7 +18,7 @@ export const questions = [
   },
   {
     id: 4,
-    question: '主題競賽組別',
+    question: '主題競賽',
     answer:
       'Modern Web   Mobile Development   Arm Platforms - Sparking the World’s Potential',
   },

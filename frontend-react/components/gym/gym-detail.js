@@ -2,7 +2,18 @@ import React, { useState } from 'react'
 import Myaccordion from '../accordion/Myaccordion'
 import { questions } from '@/pages/api/accordion-data'
 import Image from 'next/image'
-import { FaBasketball, FaLocationDot, FaClock, FaPhone } from 'react-icons/fa6'
+import {
+  FaBasketball,
+  FaLocationDot,
+  FaClock,
+  FaPhone,
+  FaPersonSwimming,
+  FaBath,
+} from 'react-icons/fa6'
+import { FaHotTub } from 'react-icons/fa'
+import { IoWoman } from 'react-icons/io5'
+import { MdSportsMartialArts, MdElectricBike } from 'react-icons/md'
+import { GiSteam } from 'react-icons/gi'
 
 export default function GymDetail() {
   const [data, setData] = useState(questions)
@@ -87,34 +98,37 @@ export default function GymDetail() {
               </div>
             </div>
             <div className="col">
-              <div className="card" style={{ border: 'none', height: 350 }}>
+              <div
+                className="card"
+                style={{ border: 'none', height: 350, lineHeight: 3 }}
+              >
                 <div className="card-body">
                   <h5 className="card-title">館內設施</h5>
                   <div className="row">
                     <div className="col">
-                      <img src="#" alt="" width={30} height={30} />
+                      <MdSportsMartialArts />
                       有氧教室
                       <br />
-                      <img src="#" alt="" width={30} height={30} />
+                      <GiSteam />
                       蒸氣室
                       <br />
-                      <img src="#" alt="" width={30} height={30} />
+                      <MdElectricBike />
                       飛輪教室
                       <br />
                       <FaBasketball />
                       籃球場
                     </div>
                     <div className="col">
-                      <img src="#" alt="" width={30} height={30} />
+                      <FaBath />
                       更衣室
                       <br />
-                      <img src="#" alt="" width={30} height={30} />
+                      <FaHotTub />
                       烤箱
                       <br />
-                      <img src="#" alt="" width={30} height={30} />
+                      <FaPersonSwimming />
                       游泳池
                       <br />
-                      <img src="#" alt="" width={30} height={30} />
+                      <IoWoman />
                       女性專區
                     </div>
                   </div>
