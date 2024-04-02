@@ -2,8 +2,8 @@
   color: #fff;
   border: none;
   padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  /* cursor: pointer; */
+  transition: background-color 0.5s;
   border-radius: 50px;
   margin: 0 20px;
   background-color: #000000;
@@ -12,4 +12,10 @@
 .site-btn:hover {
   color: #000000;
   background-color: #EB6234;
+}
+.accordion-btn{
+  color: #000000;
+  background-color: #E6E6E6;
+  border-radius: 50px;
+  border: none;
 }

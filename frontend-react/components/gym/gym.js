@@ -1,5 +1,6 @@
 import React from 'react'
 import style from '@/styles/jack-use/button.module.css'
+import { FaSearch } from 'react-icons/fa'
 
 export default function GymPlace() {
   return (
@@ -56,10 +57,10 @@ export default function GymPlace() {
           <div className="col-auto">
             <button
               className="btn btn-warning"
-              style={{ borderRadius: '50%', backgroundColor: '#FF965A' }}
+              style={{ borderRadius: '50%', backgroundColor: '#EB6234' }}
               type="submit"
             >
-              <i className="fa-solid fa-magnifying-glass" />
+              <FaSearch />
             </button>
           </div>
         </form>

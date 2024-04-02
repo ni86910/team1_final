@@ -1,5 +1,7 @@
 import React from 'react'
 import ImageSlider from '../src/ImageSlider'
+import Image from 'next/image'
+import { FaSearch } from 'react-icons/fa'
 
 export default function Article() {
   return (
@@ -25,30 +27,11 @@ export default function Article() {
         <div className="row">
           <div className="col text-center">
             <ImageSlider />
-            {/* <div className="carousel">
-              <div className="carousel-inner">
-                <div className="carousel-item active">
-                  <img src="/img/article/salad.png" alt="Slide 1" />
-                </div>
-                <div className="carousel-item">
-                  <img src="/img/article/photo-sport.png" alt="Slide 2" />
-                </div>
-                <div className="carousel-item">
-                  <img src="/img/article/food.png" alt="Slide 3" />
-                </div>
-                <div className="carousel-item">
-                  <img src="/img/article/photo-muscle.png" alt="Slide 3" />
-                </div>
-              </div>
-              <button className="carousel-control prev">&lt;</button>
-              <button className="carousel-control next">&gt;</button>
-            </div> */}
           </div>
         </div>
       </div>
       {/* carousel End*/}
-      {/* search Begin */}
-      {/* search End */}
+
       {/* Article Section Begin */}
       <div className="container">
         <div className="article-container">
@@ -71,7 +54,7 @@ export default function Article() {
                   aria-label="Search"
                 />
                 <button className="btn" type="submit">
-                  <i className="fa-solid fa-magnifying-glass" />
+                  <FaSearch />
                 </button>
               </form>
             </div>
@@ -88,11 +71,13 @@ export default function Article() {
             className="card col border-0"
             style={{ backgroundColor: '#E6E6E6' }}
           >
-            <img
+            <Image
               src="/img/article/food.png"
               className="card-img-top"
               alt="..."
               style={{ width: 'auto', height: 'auto' }}
+              width={300}
+              height={200}
             />
           </div>
           <div
@@ -119,10 +104,12 @@ export default function Article() {
           <div className="col-4">
             <div className="card">
               <div className="card-body">
-                <img
+                <Image
                   src="/img/article/food.png"
                   alt=""
                   style={{ marginBottom: 10 }}
+                  width={300}
+                  height={200}
                 />
                 <a href="#">
                   <h5 className="card-title">
@@ -137,10 +124,12 @@ export default function Article() {
           <div className="col-4">
             <div className="card">
               <div className="card-body">
-                <img
+                <Image
                   src="/img/article/photo-sport.png"
                   alt=""
                   style={{ marginBottom: 10 }}
+                  width={300}
+                  height={200}
                 />
                 <a href="#">
                   <h5 className="card-title">
@@ -155,10 +144,12 @@ export default function Article() {
           <div className="col-4">
             <div className="card">
               <div className="card-body">
-                <img
+                <Image
                   src="/img/article/salad.png"
                   alt=""
                   style={{ marginBottom: 10 }}
+                  width={300}
+                  height={200}
                 />
                 <a href="">
                   <h5 className="card-title">

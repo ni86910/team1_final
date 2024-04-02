@@ -1,5 +1,6 @@
 import React from 'react'
 import style from '@/styles/jack-use/button.module.css'
+import Image from 'next/image'
 
 export default function ArticleDetail() {
   return (
@@ -40,11 +41,11 @@ export default function ArticleDetail() {
               2016
               年發表的研究發現，離心阻力運動對老年人的心肺需求較少，而且可能比以往許多研究關注的「漸進式阻力訓練」更能強化老人的肌肉組織、產生更多膠原蛋白，進一步強化關節、減少傷害。
             </p>
-            <img
+            <Image
               src="/img/article/oldman.jpg"
               alt=""
-              style={{ width: 900 }}
-              height="500px"
+              width={900}
+              height={550}
             />
           </div>
           <h5 className="mt-4" style={{ marginTop: 20, marginBottom: 20 }}>

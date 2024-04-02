@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Myaccordion from '../accordion/Myaccordion'
 import { questions } from '@/pages/api/accordion-data'
+import Image from 'next/image'
 
 export default function GymDetail() {
   const [data, setData] = useState(questions)
@@ -36,7 +37,12 @@ export default function GymDetail() {
             </div>
             <div className="row">
               <div className="col text-center">
-                <img src="/img/gym/gym.jpg" alt="" height="450px" />
+                <Image
+                  src="/img/gym/gym.jpg"
+                  alt=""
+                  width={1000}
+                  height={500}
+                />
               </div>
             </div>
           </div>
@@ -60,30 +66,12 @@ export default function GymDetail() {
               <div className="card" style={{ border: 'none', height: 350 }}>
                 <div className="card-body">
                   <h5 className="card-title">廠館資料</h5>
-                  <p>
-                    <i
-                      className="fa-solid fa-phone"
-                      style={{ color: '#FFD43B' }}
-                    />
-                    廠館電話
-                  </p>
+                  <p>廠館電話</p>
                   <p>07-3453838</p>
-                  <p>
-                    <i
-                      className="fa-solid fa-clock"
-                      style={{ color: '#FFD43B' }}
-                    />
-                    營業時間
-                  </p>
+                  <p>營業時間</p>
                   <p>周一至周六 06:00~24:00</p>
                   <p>周日 08:00~24:00</p>
-                  <p>
-                    <i
-                      className="fa-solid fa-location-dot"
-                      style={{ color: '#FFD43B' }}
-                    />
-                    廠館地址
-                  </p>
+                  <p>廠館地址</p>
                   <p>813高雄市左營區博愛三路102號</p>
                 </div>
               </div>
@@ -94,29 +82,29 @@ export default function GymDetail() {
                   <h5 className="card-title">館內設施</h5>
                   <div className="row">
                     <div className="col">
-                      <img src="#" alt="" width="30px" height="30px" />
+                      <img src="#" alt="" width={30} height={30} />
                       有氧教室
                       <br />
-                      <img src="#" alt="" width="30px" height="30px" />
+                      <img src="#" alt="" width={30} height={30} />
                       蒸氣室
                       <br />
-                      <img src="#" alt="" width="30px" height="30px" />
+                      <img src="#" alt="" width={30} height={30} />
                       飛輪教室
                       <br />
-                      <img src="#" alt="" width="30px" height="30px" />
+                      <img src="#" alt="" width={30} height={30} />
                       籃球場
                     </div>
                     <div className="col">
-                      <img src="#" alt="" width="30px" height="30px" />
+                      <img src="#" alt="" width={30} height={30} />
                       更衣室
                       <br />
-                      <img src="#" alt="" width="30px" height="30px" />
+                      <img src="#" alt="" width={30} height={30} />
                       烤箱
                       <br />
-                      <img src="#" alt="" width="30px" height="30px" />
+                      <img src="#" alt="" width={30} height={30} />
                       游泳池
                       <br />
-                      <img src="#" alt="" width="30px" height="30px" />
+                      <img src="#" alt="" width={30} height={30} />
                       女性專區
                     </div>
                   </div>
