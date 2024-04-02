@@ -73,7 +73,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                       src={`/img/class/class-page/${v['class_img']}`}
                       alt=""
                       // fill={true}
-                      height={400}
+                      height={500}
                       width={650}
                     />
                   </div>
@@ -90,7 +90,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
               )
             })
           )}
-
+          {/* 
           <div className={style['class']}>
             <div className={style['img-box']}>
               <img src="./img/class/2_202212291552011if0i26239.jpg" alt="" />
@@ -104,7 +104,8 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                 <div className={style['learn-more']}>+</div>
               </div>
             </div>
-          </div>
+          </div> */}
+
           {/* <div className={style['class']}>
             <div className={style['img-box']}>
               <img src="./img/class/2_20221229164722batp5kE9j10.jpg" alt="" />

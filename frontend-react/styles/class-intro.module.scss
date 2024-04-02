@@ -24,12 +24,12 @@ $white: #ffffff;
   height: fit-content;
   position: absolute;
   left:0%;
-  transition: all .5s ease-in-out;
+  transition: left .5s ease-in-out;
 }
 .hide {
   display: none;
   left:-100%;
-  transition: all .5s ease-in-out;
+  transition: left .5s ease-in-out;
 }
 .category-nav {
   display: flex;
@@ -97,11 +97,12 @@ $white: #ffffff;
     padding: 0 30px 0 30px;
     font-weight: 700;
     display: flex;
-    // align-items: center;
+    align-items: center;
     justify-content: space-between;
     p {
       line-height: 50px;
       font-weight: 700;
+      margin: 0;
     }
     i {
       line-height: 50px;
@@ -111,7 +112,7 @@ $white: #ffffff;
 .classes {
   .class {
     display: flex;
-    height: 380px;
+    height: 500px;
     // flex-wrap: wrap;
     .img-box {
       width: 55%;

@@ -1,11 +1,11 @@
 import express from "express";
 // import sales from "./data/sales.json" assert { type: "json" };
-import upload from "./utils/upload-imgs.js";
-import admin2Router from "./routes/admin2.js";
-import abRouter from "./routes/address-book.js";
+// import upload from "./utils/upload-imgs.js";
+// import admin2Router from "./routes/admin2.js";
+// import abRouter from "./routes/address-book.js";
 import session from "express-session";
 import mysql_session from "express-mysql-session";
-import moment from "moment-timezone";
+// import moment from "moment-timezone";
 import dayjs from "dayjs";
 import db from "./utils/mysql2-connect.js";
 import cors from "cors";
@@ -84,8 +84,9 @@ app.use((req, res, next) => {
 
 app.use('/class',classRouter)
 
+// app.use('/product',)
 
-
+// app.use('/gym',gymRouter)
 
 // *** 路由放在此段之前 ***
 // 設定靜態內容的資料夾

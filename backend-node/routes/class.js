@@ -3,7 +3,7 @@ import db from "./../utils/mysql2-connect.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/detail", async (req, res) => {
   // JS是 non blocking io php 是blocking
   const sql = "SELECT * FROM class WHERE `class_type`='靜態課程'";
 
