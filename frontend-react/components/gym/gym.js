@@ -2,6 +2,7 @@ import React from 'react'
 import style from '@/styles/jack-use/button.module.css'
 import { FaSearch } from 'react-icons/fa'
 import { FaPhone, FaClock, FaLocationDot } from 'react-icons/fa6'
+import Link from 'next/link'
 
 export default function GymPlace() {
   return (
@@ -79,17 +80,17 @@ export default function GymPlace() {
                   <FaLocationDot />
                   高雄市左營區博愛三路102號
                 </p>
-                <button href="#" className={style['site-btn']}>
+                <Link href={'#'} className={style['site-btn']}>
                   課表查詢
-                </button>
+                </Link>
                 <br />
-                <button
-                  href="gym-detail"
+                <br />
+                <Link
+                  href={'/gym/index-gym-detail'}
                   className={style['site-btn']}
-                  style={{ marginTop: 10 }}
                 >
                   查看更多資訊
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -101,17 +102,17 @@ export default function GymPlace() {
                 <p className="card-text">07-3453838</p>
                 <p className="card-text">周一至周日 08:00~24:00</p>
                 <p className="card-text">高雄市左營區博愛三路102號</p>
-                <button href="#" className={style['site-btn']}>
+                <Link href={'#'} className={style['site-btn']}>
                   課表查詢
-                </button>
+                </Link>
                 <br />
-                <button
-                  href="gym-detail"
+                <br />
+                <Link
+                  href={'/gym/index-gym-detail'}
                   className={style['site-btn']}
-                  style={{ marginTop: 10 }}
                 >
                   查看更多資訊
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -123,17 +124,17 @@ export default function GymPlace() {
                 <p className="card-text">07-3453838</p>
                 <p className="card-text">周一至周日 08:00~24:00</p>
                 <p className="card-text">高雄市左營區博愛三路102號</p>
-                <button href="#" className={style['site-btn']}>
+                <Link href={'#'} className={style['site-btn']}>
                   課表查詢
-                </button>
+                </Link>
                 <br />
-                <button
-                  href="gym-detail"
+                <br />
+                <Link
+                  href={'/gym/index-gym-detail'}
                   className={style['site-btn']}
-                  style={{ marginTop: 10 }}
                 >
                   查看更多資訊
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -147,17 +148,17 @@ export default function GymPlace() {
                 <p className="card-text">07-3453838</p>
                 <p className="card-text">周一至周日 08:00~24:00</p>
                 <p className="card-text">高雄市左營區博愛三路102號</p>
-                <button href="#" className={style['site-btn']}>
+                <Link href={'#'} className={style['site-btn']}>
                   課表查詢
-                </button>
+                </Link>
                 <br />
-                <button
-                  href="gym-detail"
+                <br />
+                <Link
+                  href={'/gym/index-gym-detail'}
                   className={style['site-btn']}
-                  style={{ marginTop: 10 }}
                 >
                   查看更多資訊
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -169,17 +170,17 @@ export default function GymPlace() {
                 <p className="card-text">07-3453838</p>
                 <p className="card-text">周一至周日 08:00~24:00</p>
                 <p className="card-text">高雄市左營區博愛三路102號</p>
-                <button href="#" className={style['site-btn']}>
+                <Link href={'#'} className={style['site-btn']}>
                   課表查詢
-                </button>
+                </Link>
                 <br />
-                <button
-                  href="gym-detail"
+                <br />
+                <Link
+                  href={'/gym/index-gym-detail'}
                   className={style['site-btn']}
-                  style={{ marginTop: 10 }}
                 >
                   查看更多資訊
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -191,17 +192,17 @@ export default function GymPlace() {
                 <p className="card-text">07-3453838</p>
                 <p className="card-text">周一至周日 08:00~24:00</p>
                 <p className="card-text">高雄市左營區博愛三路102號</p>
-                <button href="#" className={style['site-btn']}>
+                <Link href={'#'} className={style['site-btn']}>
                   課表查詢
-                </button>
+                </Link>
                 <br />
-                <button
-                  href="gym-detail"
+                <br />
+                <Link
+                  href={'/gym/index-gym-detail'}
                   className={style['site-btn']}
-                  style={{ marginTop: 10 }}
                 >
                   查看更多資訊
-                </button>
+                </Link>
               </div>
             </div>
           </div>
