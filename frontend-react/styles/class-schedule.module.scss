@@ -33,19 +33,17 @@
   }
 }
 
-.show {
-  display: flex;
-  left: 0%;
-  transition: left 0.5s ease-in-out;
-}
 
 .schedule-section {
+  transition: width 0.1s ease-in-out;
+  transition: height 0.1s ease-in-out;
   // margin-bottom: 100px;
   position: absolute;
-  display: none;
+  // display: none;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  // height: unset;
   left: 100%;
   transition: left 0.5s ease-in-out;
   .schedule-filter {
@@ -326,4 +324,18 @@
       }
     }
   }
+}
+
+.show {
+  display: flex;
+  left: 0%;
+  height: unset;
+}
+.hide {
+  // height: 0;
+  // width: 0;
+  left: 100%;
+  overflow: hidden;
+  // transition: width 0.1s ease-in-out;
+  // transition: height 0.1s ease-in-out;
 }

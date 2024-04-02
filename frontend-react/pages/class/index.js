@@ -28,12 +28,11 @@ export default function Class() {
           width: '100%',
           height: ContainerHeight,
           position: 'relative',
+          overflow: 'hidden',
         }}
       >
         <ClassIntro setContainerHeight={setContainerHeight} tab={tab} />
-        <div>
-          <ClassSchedule setContainerHeight={setContainerHeight} tab={tab} />
-        </div>
+        <ClassSchedule setContainerHeight={setContainerHeight} tab={tab} />
       </div>
       {/* </div> */}
     </>

@@ -28,12 +28,12 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
         className={
           tab === 'right'
             ? `${style['schedule-section']} ${style['show']}`
-            : style['schedule-section']
+            : `${style['schedule-section']} ${style['hide']}`
         }
-        style={{
-          left: tab === 'right' ? '0%' : `100%`,
-          display: tab === 'right' ? 'flex' : `none`,
-        }}
+        // style={{
+        //   left: tab === 'right' ? '0%' : `100%`,
+        //   // display: tab === 'right' ? 'flex' : `none`,
+        // }}
       >
         <div className={style['schedule-filter']}>
           <div className={style['text']}>
