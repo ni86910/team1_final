@@ -8,9 +8,9 @@ export default function ClassSwitch({ setTab, tab }) {
         onClick={() => {
           setTab('left')
         }}
-        onKeyPress={() => {}}
-        role="button"
-        tabIndex="0"
+        // onKeyPress={() => {}}
+        role="presentation"
+        // tabIndex="0"
         className={style[tab == 'left' ? 'on' : 'off']}
       >
         課程介紹
@@ -19,9 +19,7 @@ export default function ClassSwitch({ setTab, tab }) {
         onClick={() => {
           setTab('right')
         }}
-        onKeyPress={() => {}}
-        role="button"
-        tabIndex="0"
+        role="presentation"
         className={style[tab == 'right' ? 'on' : 'off']}
       >
         課表查詢
