@@ -10,4 +10,4 @@ export const IMG_PATH = '/img/products'
 // 後端寫法:
 // export const IMG_PATH2 = 'http://localhost:3600/img/products'
 
-
+export const API_SERVER = 'http://localhost:3001'

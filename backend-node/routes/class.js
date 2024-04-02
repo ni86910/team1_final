@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   // JS是 non blocking io php 是blocking
-  const sql = "SELECT * FROM class WHERE `class_type`='靜態課程'";
+  const sql = "SELECT * FROM class WHERE `class_type` = '靜態課程'";
 
   // 下面不一定長這樣
   // promise處理完後，拿到的是陣列 第一個元素會依 SQL 語法不同而異
@@ -19,6 +19,25 @@ router.get("/", async (req, res) => {
     console.log(ex);
   }
   res.json(rows);
+});
+
+// 動態路由 接收課程名稱
+router.get("/:class_id", async (req, res) => {
+  // 用變數接收動態路由
+  const class_id = req.params.class_id
+  const sql = `SELECT * FROM class WHERE class_id = ${class_id}`;
+
+  let rows = [];
+  let fields;
+
+  try {
+    [rows, fields] = await db.query(sql);
+    // console.log(class_name);
+  } catch (ex) {
+    console.log(ex);
+  }
+  // 拿第一個物件
+  res.json(rows[0]);
 });
 
 export default router;

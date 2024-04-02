@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
 import style from '@/styles/class-intro.module.scss'
-import { FaSortDown } from 'react-icons/fa'
+import { FaSortDown } from 'react-icons/fa6'
 import Link from 'next/link'
 import { API_SERVER } from '../common/config'
 import Image from 'next/image'

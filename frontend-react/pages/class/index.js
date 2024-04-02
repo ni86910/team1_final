@@ -21,7 +21,7 @@ export default function Class() {
       </Head>
       <hr />
       <ClassSwitch setTab={setTab} tab={tab} />
-      {/* <div style={{ width: '100%', overflow: 'hidden' }}> */}
+
       <div
         style={{
           display: 'flex',
@@ -34,7 +34,6 @@ export default function Class() {
         <ClassIntro setContainerHeight={setContainerHeight} tab={tab} />
         <ClassSchedule setContainerHeight={setContainerHeight} tab={tab} />
       </div>
-      {/* </div> */}
     </>
   )
 }
