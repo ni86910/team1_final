@@ -6,23 +6,7 @@ import { IMG_PATH } from '@/configs'
 export default function ShopProduct() {
   return (
     <>
-      {/* Breadcrumb Section Begin */}
-      <section className={style['breadcrumb-option']}>
-        <div className={`container`}>
-          <div className={`row`}>
-            <div className={`col-lg-12`}>
-              <div className={`breadcrumb-text`}>
-                <h4>健康商城</h4>
-                <div className={`breadcrumb-links`}>
-                  <a href="./index.html">首頁</a>
-                  <span>所有商品</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* Breadcrumb Section End */}
+
       <section className={`${style.shop} ${style.spad}`}>
         <div className={`container-fluid ${style['shop-product-display']}`}>
           <div className={`row`}>
