@@ -10,12 +10,12 @@ export default function Footer() {
             <div className="footer__about">
               <div className="footer__logo">
                 <a href="#">
-                  <img src="img/navbar-template/FITS U_RESIZE.png" alt="" />
+                  <img src="/img/navbar-template/FITS U_RESIZE.png" alt="" />
                 </a>
               </div>
               <p>您的健康好朋友 - 飛特友，健康生活一步到位。</p>
               <a href="#">
-                <img src="img/navbar-template/payment.png" alt="" />
+                <img src="/img/navbar-template/payment.png" alt="" />
               </a>
             </div>
           </div>
