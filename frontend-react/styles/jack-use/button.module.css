@@ -13,6 +13,20 @@
   color: #000000;
   background-color: #EB6234;
 }
+
+.btn {
+  color: #fff;
+  background-color: #000000;
+  border-radius: 50%;
+  border: none;
+  width: 40px;
+  height: 40px;
+}
+.btn:hover{
+  color: #000000;
+  background-color: #EB6234;
+}
+
 .accordion-btn{
   color: #000000;
   background-color: #E6E6E6;
@@ -22,7 +36,6 @@
 
 .select {
   padding: 8px 20px; /* 上下間距和左右間距 */
-  border: 1px solid grey; /* 邊框顏色 */
   border-radius: 50px; /* 圓角 */
   background-color: black; /* 背景顏色 */
   text-align: center;
@@ -33,9 +46,10 @@
   -moz-appearance: none; /* 移除 Firefox 原生樣式 */
 }
 
+
 /* 選項樣式 */
 .select option {
   padding: 8px 20px; /* 上下間距和左右間距 */
-  text-align: center;
+  text-align: left;
   font-size: 14px; /* 字體大小 */
 }

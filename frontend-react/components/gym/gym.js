@@ -1,6 +1,7 @@
 import React from 'react'
 import style from '@/styles/jack-use/button.module.css'
 import { FaSearch } from 'react-icons/fa'
+import { FaPhone, FaClock, FaLocationDot } from 'react-icons/fa6'
 
 export default function GymPlace() {
   return (
@@ -24,7 +25,7 @@ export default function GymPlace() {
       <div className="container">
         <div className="row">
           <h4 className="mt-4 text-center">
-            <i className="fa-solid fa-location-dot" />
+            <FaLocationDot />
             尋找場地
           </h4>
           <p className="mt-4 text-center">
@@ -55,16 +56,7 @@ export default function GymPlace() {
             </select>
           </div>
           <div className="col-auto">
-            <button
-              className="btn btn-warning"
-              style={{
-                border: 'none',
-                borderRadius: '50%',
-                color: '#ffffff',
-                backgroundColor: '#000',
-              }}
-              type="submit"
-            >
+            <button className={style['btn']} type="submit">
               <FaSearch />
             </button>
           </div>
@@ -75,9 +67,18 @@ export default function GymPlace() {
               <div className="card-body">
                 <p className="card-text">高雄市</p>
                 <h5 className="card-title">高雄博愛</h5>
-                <p className="card-text">07-3453838</p>
-                <p className="card-text">周一至周日 08:00~24:00</p>
-                <p className="card-text">高雄市左營區博愛三路102號</p>
+                <p className="card-text">
+                  <FaPhone />
+                  07-3453838
+                </p>
+                <p className="card-text">
+                  <FaClock />
+                  周一至周日 08:00~24:00
+                </p>
+                <p className="card-text">
+                  <FaLocationDot />
+                  高雄市左營區博愛三路102號
+                </p>
                 <button href="#" className={style['site-btn']}>
                   課表查詢
                 </button>
