@@ -28,7 +28,7 @@ $white: #ffffff;
 }
 .hide {
   // display: none;
-  left:-100%;
+  left:-150%;
   transition: left .5s ease-in-out;
 }
 .category-nav {
@@ -110,6 +110,7 @@ $white: #ffffff;
   }
 }
 .classes {
+  overflow: hidden;
   .class {
     display: flex;
     height: 500px;
