@@ -4,8 +4,12 @@ import db from "./../utils/mysql2-connect.js";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
+
+  const class_type = req.query.class_type ? req.query.class_type :'靜態課程'
+
+  console.log('class_type:',class_type);
   // JS是 non blocking io php 是blocking
-  const sql = "SELECT * FROM class WHERE `class_type` = '靜態課程'";
+  const sql = `SELECT * FROM class WHERE \`class_type\` = '${class_type}'`;
 
   // 下面不一定長這樣
   // promise處理完後，拿到的是陣列 第一個元素會依 SQL 語法不同而異
@@ -15,9 +19,13 @@ router.get("/", async (req, res) => {
   //用await要捕捉錯誤 要像這樣，用.then 就用.catch
   try {
     [rows, fields] = await db.query(sql);
+    if(rows.length === 0){
+      [rows, fields] = await db.query(`SELECT * FROM class WHERE \`class_type\` = '靜態課程'`)
+    }
   } catch (ex) {
     console.log(ex);
   }
+  console.log('rows',rows);
   res.json(rows);
 });
 

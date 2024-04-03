@@ -23,15 +23,34 @@ export default function ClassIntro({ setContainerHeight, tab }) {
       : () => {}
   }, [introData, tab])
 
-  // 取得課程介紹資料
+  // // 取得課程介紹資料
+  // useEffect(() => {
+  //   fetch(`${API_SERVER}/class`, { credentials: 'include' })
+  //     .then((r) => r.json())
+  //     .then((data) => {
+  //       console.log(data)
+  //       setIntroData(data)
+  //     })
+  // }, [])
+
+  // 取得課程類別介紹資料
   useEffect(() => {
-    fetch(`${API_SERVER}/class`, { credentials: 'include' })
-      .then((r) => r.json())
-      .then((data) => {
-        console.log(data)
-        setIntroData(data)
+    if (router.isReady) {
+      // 確保能得到pid
+      const class_type = router.query.class_type || '靜態課程'
+      // console.log(class_type)
+      console.log(router.query.class_type)
+      fetch(`${API_SERVER}/class?class_type=${class_type}`, {
+        credentials: 'include',
       })
-  }, [])
+        .then((r) => r.json())
+        .then((data) => {
+          console.log(data)
+          setIntroData(data)
+          // router.push(`?class_type=${class_type}`)
+        })
+    }
+  }, [router.isReady, router.query])
 
   return (
     <>
@@ -54,10 +73,10 @@ export default function ClassIntro({ setContainerHeight, tab }) {
           <div className={style['more-btn']}>+</div>
         </div>
         <div className={style['category-intro']}>
-          <h2 className={style['category-name']}>靜態課程</h2>
-          <p className={style['category-desc']}>
-            靜態課程相關介紹，課程並包含完整的瑜珈、皮拉提斯、和緩運動。
-          </p>
+          <h2 className={style['category-name']}>
+            {introData ? introData[0].class_type : ''}
+          </h2>
+          <p className={style['category-desc']}>選擇課程以查看更多資訊</p>
           <div className={style['select-bar']}>
             <p>查看課程</p>
             <FaSortDown />
@@ -72,7 +91,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                 <div key={i} className={style['class']}>
                   <div className={style['img-box']}>
                     <Image
-                      src={`/img/class/class-page/${v['class_img']}`}
+                      src={`http://localhost:3001/imgs/class/class-page/${v['class_img']}`}
                       alt=""
                       // fill={true}
                       height={500}
