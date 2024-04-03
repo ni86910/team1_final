@@ -1,8 +1,10 @@
 import express from "express";
+/*
 import sales from "./data/sales.json" assert { type: "json" };
 import upload from "./utils/upload-imgs.js";
 import admin2Router from "./routes/admin2.js";
 import abRouter from "./routes/address-book.js";
+*/
 import session from "express-session";
 import mysql_session from "express-mysql-session";
 import moment from "moment-timezone";
@@ -11,7 +13,7 @@ import db from "./utils/mysql2-connect.js";
 import cors from "cors";
 import bcrypt from "bcryptjs";
 // import wsServer from "./routes/ws-chat.js";
-import wsServer from "./routes/ws-draw.js";
+/*import wsServer from "./routes/ws-draw.js";*/
 import jwt from "jsonwebtoken";
 
 // 建立一個session可以儲存的地方
