@@ -1,5 +1,6 @@
 import React from 'react'
 import style from '@/styles/jack-use/button.module.css'
+import Link from 'next/link'
 
 export default function Contact() {
   return (
@@ -11,7 +12,7 @@ export default function Contact() {
               <div className="breadcrumb__text">
                 <h4>客服專區</h4>
                 <div className="breadcrumb__links">
-                  <a href="./index.html">首頁</a>
+                  <Link href="./index.html">首頁</Link>
                   <span>客服專區</span>
                 </div>
               </div>

@@ -14,6 +14,7 @@ import { FaHotTub } from 'react-icons/fa'
 import { IoWoman } from 'react-icons/io5'
 import { MdSportsMartialArts, MdElectricBike } from 'react-icons/md'
 import { GiSteam } from 'react-icons/gi'
+import Link from 'next/link'
 
 export default function GymDetail() {
   const [data, setData] = useState(questions)
@@ -27,7 +28,7 @@ export default function GymDetail() {
               <div className="breadcrumb__text">
                 <h4>場地一覽</h4>
                 <div className="breadcrumb__links">
-                  <a href="./index.html">首頁</a>
+                  <Link href="./index.html">首頁</Link>
                   <span>場地一覽-高雄博愛</span>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import style from '@/styles/jack-use/button.module.css'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function ArticleDetail() {
   return (
@@ -13,7 +14,7 @@ export default function ArticleDetail() {
               <div className="breadcrumb__text">
                 <h4>健康小知識</h4>
                 <div className="breadcrumb__links">
-                  <a href="./index.html">首頁</a>
+                  <Link href="./index.html">首頁</Link>
                   <span>
                     健康小知識 &gt; 訓練專區 &gt; 靠運動預防肌少症
                     放下啞鈴比舉起啞鈴更有效？

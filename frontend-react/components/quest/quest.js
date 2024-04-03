@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Myaccordion from '../accordion/Myaccordion'
 import { questions } from '@/pages/api/accordion-data'
+import Link from 'next/link'
 
 export default function Quest() {
   const [data, setData] = useState(questions)
@@ -14,7 +15,7 @@ export default function Quest() {
               <div className="breadcrumb__text">
                 <h4>常見問題</h4>
                 <div className="breadcrumb__links">
-                  <a href="./index.html">首頁</a>
+                  <Link href="./index.html">首頁</Link>
                   <span>常見問題</span>
                 </div>
               </div>
@@ -33,32 +34,32 @@ export default function Quest() {
         </div>
         <ul className="nav justify-content-center">
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link"
               style={{ color: 'black' }}
               aria-current="page"
               href="/quest"
             >
               場館相關
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link"
               style={{ color: 'black' }}
               href="/quest/index-coach"
             >
               教練相關
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link"
               style={{ color: 'black' }}
               href="/quest/index-product"
             >
               商品相關
-            </a>
+            </Link>
           </li>
         </ul>
         <div className="row">
