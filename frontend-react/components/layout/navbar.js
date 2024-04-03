@@ -21,7 +21,7 @@ export default function Navbar() {
       <div className={`offcanvas-menu-wrapper ${offcanvas}`}>
         <div className="offcanvas__option">
           <div className="offcanvas__links">
-            <a href="#">註冊</a>
+            <a href="/pages/member/register">註冊</a>
             <a href="#">常見問題</a>
           </div>
           <div className="offcanvas__top__hover">
@@ -83,7 +83,7 @@ export default function Navbar() {
               <div className="col-lg-6 col-md-5">
                 <div className="header__top__right">
                   <div className="header__top__links">
-                    <a href="#">加入會員</a>
+                    <a href="/pages/member/register">加入會員</a>
                     <a href="#">
                       <i className="fa-regular fa-comments" /> 常見問題
                     </a>
