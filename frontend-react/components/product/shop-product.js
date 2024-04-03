@@ -1,12 +1,11 @@
 import React from 'react'
-import style from '@/styles/product-shop.module.scss'
+import style from '@/styles/shop-product.module.scss'
 import { FaRegHeart, FaPlus } from 'react-icons/fa6'
 import { IMG_PATH } from '@/configs'
 
 export default function ShopProduct() {
   return (
     <>
-
       <section className={`${style.shop} ${style.spad}`}>
         <div className={`container-fluid ${style['shop-product-display']}`}>
           <div className={`row`}>
