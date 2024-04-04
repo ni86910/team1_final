@@ -188,7 +188,6 @@ export default function CheckoutMain() {
                   </div>
                 </div>
               </div>
-              {/* <Link href={}>返回購物車</Link> */}
             </div>
             {/* Right 訂單金額總計 */}
             <div

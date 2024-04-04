@@ -1,5 +1,6 @@
 import React from 'react'
 import style from '@/styles/cart-main.module.scss'
+import Link from 'next/link'
 import { FaRegHeart } from 'react-icons/fa6'
 import { RxPlus, RxMinus, RxCross2 } from 'react-icons/rx'
 import { IoReturnDownBackOutline } from 'react-icons/io5'
@@ -183,9 +184,9 @@ export default function CartMain() {
               <div className={`row mb-5 ${style['continue-shopping']}`}>
                 <div className={`col-lg-6 col-md-6 col-sm-6`}>
                   <div className={style['continue-btn']}>
-                    <a href="#">
-                      <IoReturnDownBackOutline size={20} /> 繼續購物
-                    </a>
+                    <Link href="/product/product-list">
+                      <IoReturnDownBackOutline size={20} /> 繼續購物{' '}
+                    </Link>
                   </div>
                 </div>
               </div>
