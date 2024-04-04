@@ -13,26 +13,30 @@ import 'swiper/css/thumbs'
 
 // import required modules
 import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules'
+
 export default function ProductDetail() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
 
   return (
     <>
       {/* Shop Details Section Begin */}
-      <section className={style['shop-details']}>
-        <div className={style['product-details-pic']}>
-          <div className={`container-fluid px-5`}>
-            <div className={`row ${style['ProductDetail-product']}`}>
-              <div className={style['col-lg-12']}>
-                <div className={style['product-details-breadcrumb']}>
-                  <a href="#">首頁</a>
-                  <a href="#">健康商城</a>
-                  <span>商品詳細</span>
-                </div>
-              </div>
+      <section className={`${style['shop-detail']} ${style['spad']}`}>
+        <div className={`container px-5`}>
+          <div className={`row`}>
+            <div className={`col-lg-12`}>
               <div
-                className={`col-xs-12 col-md-6 ${style['ProductDetail-product-gallery']}`}
+                className={`justify-content-center ${style['product-detail-breadcrumb']}`}
               >
+                <a href="#">首頁</a>
+                <a href="#">健康商城</a>
+                <span>商品詳細</span>
+              </div>
+            </div>
+            {/* Product Gallery Section Start */}
+            <div
+              className={`col-xs-12 col-md-6 ${style['product-gallery-section']}`}
+            >
+              <div className={style['swiper-wrapper']}>
                 <Swiper
                   style={{
                     '--swiper-navigation-color': '#EB6234',
@@ -120,100 +124,97 @@ export default function ProductDetail() {
                     />{' '}
                   </SwiperSlide>
                 </Swiper>
-                <br />
-                <div className={`row`}></div>
               </div>
-              {/* Product Options Section Start */}
-              <div
-                className={`col-xs-12 col-md-6 ${style['ProductDetail-product-info']} ${style['js-product-info']}`}
-              >
-                <div className={style['product-details-text']}>
-                  <h2>女款棉質透氣訓練緊身褲</h2>
-                  <h4>
-                    NT$ 1,270.00 <span>NT$ 1,370</span>
-                  </h4>
-                  <div className={style['product-details-option']}>
-                    <div className={style['product-details-option-spec']}>
-                      <span
-                        className="row justify-content-start"
-                        style={{ fontWeight: 700, marginBottom: '10px' }}
-                      >
-                        請選擇規格:
-                      </span>
-                      <div className={`row ${style['choose-spec']}`}>
-                        <ul className="d-flex justify-content-start">
-                          <a
-                            href="#"
-                            className={`col-4 ${style['choose-spec-option']}`}
-                          >
-                            1
-                          </a>
-                          <a
-                            href="#"
-                            className={`col-4 ${style['choose-spec-option']}`}
-                          >
-                            2
-                          </a>
-                          <a
-                            href="#"
-                            className={`col-4 ${style['choose-spec-option']}`}
-                          >
-                            3
-                          </a>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className={style['product-details-options-qty']}>
-                      {/* 數量增減的框還沒加上 */}
-                      <span
-                        className="row justify-content-start"
-                        style={{
-                          fontWeight: 700,
-                          marginTop: '30px',
-                          marginBottom: '10px',
-                        }}
-                      >
-                        數量:
-                      </span>
-                    </div>
-                  </div>
-                  <div className="row d-flex justify-content-center">
-                    <button
-                      href="#"
-                      className={`col-6 ${style['add-to-cart-btn']}`}
-                    >
-                      加入購物車
-                    </button>
-                    <button
-                      href="#"
-                      className={`col-6 ${style['primary-checkout-btn']}`}
-                    >
-                      立即結帳
-                    </button>
-                  </div>
-                </div>
-                <div className={style['product-details-btns-option']}>
-                  <a href="#">
-                    <FaRegHeart /> 加入我的收藏
-                  </a>{' '}
-                </div>
-                <div className={style['product-details-last-option']}>
-                  <ul>
-                    <li>
-                      <span>庫存數量:</span> 23
-                    </li>
-                    <li>
-                      <span>商品分類:</span> 服飾及配件＞配件專區
-                    </li>
-                  </ul>
-                </div>
-                <hr />
-                <p>
-                  產品原名為Sato緊身褲，我們參考使用者的回饋全新設計Stretch緊身褲。更耐穿，更不透明，還可以讓你在運動提升自信。雙腿間搭配鑲布襯料，穿著更舒適。加寬腰帶，更為平坦。新款剪裁可貼合任何身形，提供最大的舒適感受。你會愛上這款全新Stretch緊身褲
-                </p>
-              </div>
-              {/* Product Options Section End */}
+              <br />
             </div>
+            {/* Product Options Section Start */}
+            <div className={`col-xs-12 col-md-6 ${style['product-info']}`}>
+              <div className={style['product-detail-text']}>
+                <h2>女款棉質透氣訓練緊身褲</h2>
+                <h4>
+                  NT$ 1,270.00 <span>NT$ 1,370</span>
+                </h4>
+                <div className={style['product-detail-option']}>
+                  <div className={style['product-detail-option-spec']}>
+                    <span
+                      className={`row justify-content-start`}
+                      style={{ fontWeight: 700, marginBottom: '10px' }}
+                    >
+                      請選擇規格:
+                    </span>
+                    <div className={`row ${style['choose-spec']}`}>
+                      <ul className={`d-flex justify-content-start`}>
+                        <a
+                          href="#"
+                          className={`col-4 ${style['choose-spec-option']}`}
+                        >
+                          1
+                        </a>
+                        <a
+                          href="#"
+                          className={`col-4 ${style['choose-spec-option']}`}
+                        >
+                          2
+                        </a>
+                        <a
+                          href="#"
+                          className={`col-4 ${style['choose-spec-option']}`}
+                        >
+                          3
+                        </a>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className={style['product-details-options-qty']}>
+                    {/* 數量增減的框還沒加上 */}
+                    <span
+                      className="row justify-content-start"
+                      style={{
+                        fontWeight: 700,
+                        marginTop: '30px',
+                        marginBottom: '10px',
+                      }}
+                    >
+                      數量:
+                    </span>
+                  </div>
+                </div>
+                <div className="row d-flex justify-content-center">
+                  <button
+                    href="#"
+                    className={`col-6 ${style['add-to-cart-btn']}`}
+                  >
+                    加入購物車
+                  </button>
+                  <button
+                    href="#"
+                    className={`col-6 ${style['primary-checkout-btn']}`}
+                  >
+                    立即結帳
+                  </button>
+                </div>
+              </div>
+              <div className={style['product-details-btns-option']}>
+                <a href="#">
+                  <FaRegHeart /> 加入我的收藏
+                </a>{' '}
+              </div>
+              <div className={style['product-details-last-option']}>
+                <ul>
+                  <li>
+                    <span>庫存數量:</span> 23
+                  </li>
+                  <li>
+                    <span>商品分類:</span> 服飾及配件＞配件專區
+                  </li>
+                </ul>
+              </div>
+              <hr />
+              <p>
+                產品原名為Sato緊身褲，我們參考使用者的回饋全新設計Stretch緊身褲。更耐穿，更不透明，還可以讓你在運動提升自信。雙腿間搭配鑲布襯料，穿著更舒適。加寬腰帶，更為平坦。新款剪裁可貼合任何身形，提供最大的舒適感受。你會愛上這款全新Stretch緊身褲
+              </p>
+            </div>
+            {/* Product Options Section End */}
           </div>
         </div>
       </section>

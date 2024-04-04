@@ -1,6 +1,6 @@
 import React from 'react'
 import style from '@/styles/product-list.module.scss'
-import { FaRegHeart, FaPlus } from 'react-icons/fa6'
+import { FaRegHeart, FaPlus, FaSearch } from 'react-icons/fa6'
 import { IMG_PATH } from '@/configs'
 
 export default function ProductList() {
@@ -10,12 +10,19 @@ export default function ProductList() {
         <div className={`container-fluid ${style['shop-product-display']}`}>
           <div className={`row`}>
             <div className={`col-lg-3`}>
-              <div className={style['shop-sidebar']}>
+              <div className={`${style['shop-sidebar']}`}>
                 <div className={style['shop-sidebar-search']}>
                   <form action="#">
-                    <input type="text" placeholder="搜尋..." />
-                    <button type="submit">
-                      <span className={`icon_search`} />
+                    <input
+                      className={`col-9`}
+                      type="text"
+                      placeholder="請輸入商品關鍵字..."
+                    />
+                    <button
+                      type="submit"
+                      className={`col-3 ${style['search-icon']}`}
+                    >
+                      搜尋
                     </button>
                   </form>
                 </div>
@@ -587,7 +594,7 @@ export default function ProductList() {
 
               {/* product pagination Begin */}
               <nav aria-label="Page navigation example">
-                <ul className="pagination">
+                <ul className="pagination mb-4">
                   <li className="page-item">
                     <a className="page-link" href="#" aria-label="Previous">
                       <span aria-hidden="true">«</span>

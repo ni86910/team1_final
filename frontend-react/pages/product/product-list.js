@@ -1,17 +1,17 @@
 import React from 'react'
-import CheckoutMain from '@/components/checkout/checkout-main'
+import ProductList from '@/components/product/product-list'
 import Head from 'next/head'
 // import Loader from '@/components/product-b/loader'
 // import LoadingBar from 'react-top-loading-bar'
 
-export default function Checkout() {
+export default function Product() {
   return (
     <>
       <Head>
-        <title>Fits U - 結帳頁</title>
+        <title>Fits U - 健康商城</title>
       </Head>
       <hr />
-      <CheckoutMain />
+      <ProductList />
     </>
   )
 }

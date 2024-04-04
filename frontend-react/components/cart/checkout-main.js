@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import style from '@/styles/checkout-main.module.scss'
+import Link from 'next/link'
+import style from '@/styles/cart-checkout-main.module.scss'
 import { FaRegHeart, FaPlus, FaRegCreditCard } from 'react-icons/fa6'
 import { IoIosArrowForward, IoIosArrowDown } from 'react-icons/io'
 
@@ -187,6 +188,7 @@ export default function CheckoutMain() {
                   </div>
                 </div>
               </div>
+              {/* <Link href={}>返回購物車</Link> */}
             </div>
             {/* Right 訂單金額總計 */}
             <div
@@ -216,7 +218,7 @@ export default function CheckoutMain() {
                 </ul>
                 <hr />
                 <div className={style['checkout-products-detail']}>
-                  查看商品清單 <IoIosArrowDown />
+                  購買清單 (共<span>4</span>件) <IoIosArrowDown />
                 </div>
               </div>
               <div className={style['BlockContainer']}>
@@ -246,7 +248,9 @@ export default function CheckoutMain() {
                   </label>
                 </div>
               </div>
-              <div className={style['confirm-order-btn']}>
+              <div
+                className={`row justify-content-center ${style['confirm-order-btn']}`}
+              >
                 <a href="#">
                   <FaRegCreditCard size={20} /> 送出訂單
                 </a>

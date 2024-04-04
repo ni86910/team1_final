@@ -7,7 +7,7 @@ import { MdShoppingCartCheckout } from 'react-icons/md'
 
 import { IMG_PATH } from '@/configs'
 
-export default function ShopCart() {
+export default function CartMain() {
   return (
     <>
       {/* Shopping Cart Section Begin */}
