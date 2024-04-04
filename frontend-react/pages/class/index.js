@@ -28,7 +28,8 @@ export default function Class() {
           width: '100%',
           height: ContainerHeight || '800px',
           position: 'relative',
-          overflow: 'hidden',
+          overflow: 'clip',
+          // 這裡overflow hidden的話 課表的sticky會沒作用
         }}
       >
         <ClassIntro setContainerHeight={setContainerHeight} tab={tab} />
