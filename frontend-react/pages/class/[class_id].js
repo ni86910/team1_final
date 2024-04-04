@@ -58,6 +58,7 @@ export default function ClassPage() {
               alt=""
               width={1920}
               height={1080}
+              layout="responsive"
             />
           </div>
           <div className={style['control-bar']}>
