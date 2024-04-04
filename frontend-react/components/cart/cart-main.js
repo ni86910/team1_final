@@ -1,7 +1,7 @@
 import React from 'react'
-import style from '@/styles/shop-cart.module.scss'
-import { FaRegHeart, FaPlus, FaMinus } from 'react-icons/fa6'
-import { RxCross2 } from 'react-icons/rx'
+import style from '@/styles/cart-main.module.scss'
+import { FaRegHeart } from 'react-icons/fa6'
+import { RxPlus, RxMinus, RxCross2 } from 'react-icons/rx'
 import { IoReturnDownBackOutline } from 'react-icons/io5'
 import { MdShoppingCartCheckout } from 'react-icons/md'
 
@@ -43,7 +43,7 @@ export default function ShopCart() {
                       <td className={style['quantity-item']}>
                         <div className={style['quantity']}>
                           <span className={style['qt-minus']}>
-                            <FaMinus />
+                            <RxMinus />
                           </span>
                           <div className={style['pro-qty-2']}>
                             <input
@@ -53,7 +53,7 @@ export default function ShopCart() {
                             />
                           </div>
                           <span className={style['qt-plus']}>
-                            <FaPlus />
+                            <RxPlus />
                           </span>
                         </div>
                       </td>
@@ -81,7 +81,7 @@ export default function ShopCart() {
                       <td className={style['quantity-item']}>
                         <div className={style['quantity']}>
                           <span className={style['qt-minus']}>
-                            <FaMinus />
+                            <RxMinus />
                           </span>
                           <div className={style['pro-qty-2']}>
                             <input
@@ -91,7 +91,7 @@ export default function ShopCart() {
                             />
                           </div>
                           <span className={style['qt-plus']}>
-                            <FaPlus />
+                            <RxPlus />
                           </span>
                         </div>
                       </td>
@@ -119,7 +119,7 @@ export default function ShopCart() {
                       <td className={style['quantity-item']}>
                         <div className={style['quantity']}>
                           <span className={style['qt-minus']}>
-                            <FaMinus />
+                            <RxMinus />
                           </span>
                           <div className={style['pro-qty-2']}>
                             <input
@@ -129,7 +129,7 @@ export default function ShopCart() {
                             />
                           </div>
                           <span className={style['qt-plus']}>
-                            <FaPlus />
+                            <RxPlus />
                           </span>
                         </div>
                       </td>
@@ -156,7 +156,7 @@ export default function ShopCart() {
                       <td className={style['quantity-item']}>
                         <div className={style['quantity']}>
                           <span className={style['qt-minus']}>
-                            <FaMinus />
+                            <RxMinus />
                           </span>
                           <div className={style['pro-qty-2']}>
                             <input
@@ -166,7 +166,7 @@ export default function ShopCart() {
                             />
                           </div>
                           <span className={style['qt-plus']}>
-                            <FaPlus />
+                            <RxPlus />
                           </span>
                         </div>
                       </td>
@@ -184,7 +184,7 @@ export default function ShopCart() {
                 <div className={`col-lg-6 col-md-6 col-sm-6`}>
                   <div className={style['continue-btn']}>
                     <a href="#">
-                      <IoReturnDownBackOutline /> 繼續購物
+                      <IoReturnDownBackOutline size={20} /> 繼續購物
                     </a>
                   </div>
                 </div>
@@ -253,7 +253,7 @@ export default function ShopCart() {
                     </li>
                   </ul>
                   <a href="#" className={style['primary-btn']}>
-                    <MdShoppingCartCheckout /> 下一步 - 結帳
+                    <MdShoppingCartCheckout size={20} /> 下一步 - 結帳
                   </a>
                 </div>
               </div>

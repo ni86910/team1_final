@@ -1,9 +1,9 @@
 import React from 'react'
-import style from '@/styles/shop-product.module.scss'
+import style from '@/styles/product-list.module.scss'
 import { FaRegHeart, FaPlus } from 'react-icons/fa6'
 import { IMG_PATH } from '@/configs'
 
-export default function ShopProduct() {
+export default function ProductList() {
   return (
     <>
       <section className={`${style.shop} ${style.spad}`}>

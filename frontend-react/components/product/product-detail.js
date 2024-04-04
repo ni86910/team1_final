@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { IMG_PATH } from '@/configs'
 import { FaRegHeart, FaPlus } from 'react-icons/fa6'
-import style from '@/styles/shop-detail.module.scss'
+import style from '@/styles/product-detail.module.scss'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
 
@@ -13,7 +13,7 @@ import 'swiper/css/thumbs'
 
 // import required modules
 import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules'
-export default function ShopDetail() {
+export default function ProductDetail() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
 
   return (
