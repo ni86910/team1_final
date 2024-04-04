@@ -4,7 +4,7 @@ import { FaSortDown } from 'react-icons/fa6'
 import Link from 'next/link'
 import { API_SERVER } from '../common/config'
 import Image from 'next/image'
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 
 export default function ClassIntro({ setContainerHeight, tab }) {
   const router = useRouter()
@@ -64,11 +64,21 @@ export default function ClassIntro({ setContainerHeight, tab }) {
       >
         <div className={style['category-nav']}>
           <div className={style['categories']}>
-            <Link href="?class_type=靜態課程">靜態課程</Link>
-            <Link href="?class_type=飛輪課程">飛輪課程</Link>
-            <Link href="?class_type=心肺訓練課程">心肺訓練課程</Link>
-            <Link href="?class_type=舞蹈課程">舞蹈課程</Link>
-            <Link href="?class_type=radical課程">radical課程</Link>
+            <Link href="?class_type=靜態課程" scroll={false}>
+              靜態課程
+            </Link>
+            <Link href="?class_type=飛輪課程" scroll={false}>
+              飛輪課程
+            </Link>
+            <Link href="?class_type=心肺訓練課程" scroll={false}>
+              心肺訓練課程
+            </Link>
+            <Link href="?class_type=舞蹈課程" scroll={false}>
+              舞蹈課程
+            </Link>
+            <Link href="?class_type=radical課程" scroll={false}>
+              radical課程
+            </Link>
           </div>
           <div className={style['more-btn']}>+</div>
         </div>
