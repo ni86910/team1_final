@@ -1,0 +1,141 @@
+@import "variable";
+
+
+.spad{
+	background-color: $gray-color;
+}
+
+.price-highlight {
+	color: $primary-color;
+	padding-left: 10px;
+	font-weight: 600;
+}
+
+.checkout-left-section {
+	margin-top: 40px;
+	h3 {
+		font-weight: 700;
+		margin-bottom: 10px;
+	}
+}
+
+.checkout-BlockContainer {
+	margin-top: 12px;
+	margin-bottom: 30px;
+	width: 100%;
+	padding: 20px;
+	background: #ffffff;
+}
+
+.checkout-BlockTitle {
+	margin-bottom: 17px;
+	h5 {
+		font-size: 20px;
+		font-weight: 700;
+	}
+}
+
+.checkout-BlockRow {
+	margin-bottom: 12px;
+}
+
+.checkout-choose {
+	text-decoration: none;
+	color: #F1600D;
+	line-height: 100%;
+
+	&:hover {
+		text-decoration: none;
+		color: #F1600D;
+		line-height: 100%;
+	}
+}
+
+.invoice-option, 
+.invoice-option:hover {
+	color: #000000;
+	font-size: 16px;
+	width: 50vh;
+	height: 100%;
+	line-height: 100%;
+	border: 1px solid $gray-deep-color;
+	border-radius: 5px;
+	background-color: #ffffff;
+	padding: 10px 0 10px 8px;
+	margin-left: 5px;
+	
+}
+
+.invoice-option-left {
+	text-align: left;
+	display: inline-block;
+	line-height: 100%;
+
+}
+
+.invoice-option-right {
+	margin-left: 30vh;
+	text-align: right;
+	display: inline-block;
+	line-height: 100%;
+}
+
+.invoice-subtitle {
+	font-size: smaller;
+	color: $heading-color;
+	margin: 10px 0 10px 7px;
+}
+
+.checkout-right-section {
+	margin-top: 100px;
+}
+
+.checkout-order {
+	background-color: #ffffff;
+	padding: 20px;
+	li {
+		list-style: none;
+		padding-bottom: 10px;
+		span {
+			float: right;
+		}
+	}
+}
+
+.checkout-products-detail {
+	background-color: #cccccc;
+	text-align: center;
+	line-height: 45px;
+	padding: 5px auto;
+	height: 45px;
+	width: auto;
+	border-radius: 5px;
+	font-size: 15px;
+}
+
+.TermsAndConditionsContainer {
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+.confirm-order-btn a {
+	margin-bottom: 20px;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 5px;
+	text-align: center;
+	width: 200px;
+    border-radius: 50px;
+    padding: 14px 35px;
+    display: inline-block;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+}
+
+.confirm-order-btn a:hover {
+    background-color: $primary-color;
+    color: #ffffff;
+    text-align: center;
+}

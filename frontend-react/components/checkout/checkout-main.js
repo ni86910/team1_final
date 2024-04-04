@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import style from '@/styles/checkout-main.module.scss'
-import { FaRegHeart, FaPlus } from 'react-icons/fa6'
+import { FaRegHeart, FaPlus, FaRegCreditCard } from 'react-icons/fa6'
 import { IoIosArrowForward, IoIosArrowDown } from 'react-icons/io'
 
 export default function CheckoutMain() {
@@ -245,6 +245,11 @@ export default function CheckoutMain() {
                     </a>
                   </label>
                 </div>
+              </div>
+              <div className={style['confirm-order-btn']}>
+                <a href="#">
+                  <FaRegCreditCard size={20} /> 送出訂單
+                </a>
               </div>
             </div>
           </div>
