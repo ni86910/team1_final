@@ -1,6 +1,14 @@
 import React from 'react'
+import Link from 'next/link'
 import style from '@/styles/product-list.module.scss'
-import { FaRegHeart, FaPlus, FaSearch } from 'react-icons/fa6'
+import { FaRegHeart, FaCartArrowDown, FaPlus, FaSearch } from 'react-icons/fa6'
+import {
+  MdKeyboardDoubleArrowLeft,
+  MdKeyboardDoubleArrowRight,
+  MdKeyboardArrowLeft,
+  MdKeyboardArrowRight,
+} from 'react-icons/md'
+import { IoIosSearch } from 'react-icons/io'
 import { IMG_PATH } from '@/configs'
 
 export default function ProductList() {
@@ -10,22 +18,9 @@ export default function ProductList() {
         <div className={`container-fluid ${style['shop-product-display']}`}>
           <div className={`row`}>
             <div className={`col-lg-3`}>
-              <div className={`${style['shop-sidebar']}`}>
-                <div className={style['shop-sidebar-search']}>
-                  <form action="#">
-                    <input
-                      className={`col-9`}
-                      type="text"
-                      placeholder="請輸入商品關鍵字..."
-                    />
-                    <button
-                      type="submit"
-                      className={`col-3 ${style['search-icon']}`}
-                    >
-                      搜尋
-                    </button>
-                  </form>
-                </div>
+              <div className={style['shop-sidebar']}>
+
+                {/* 產品分類選單 start */}
                 <div className={style['shop-sidebar-accordion']}>
                   <ul className={style['accordion']}>
                     <li className={style['accordion-item']}>
@@ -250,19 +245,22 @@ export default function ProductList() {
                     </li>
                   </ul>
                 </div>
+                {/* 產品分類選單 end */}
               </div>
             </div>
             <div className={`col-lg-9`}>
+              {/* product list section Begin */}
               <div className={style['shop-product-option']}>
                 <div className={`row`}>
                   <div className={`col-lg-6 col-md-6 col-sm-6`}>
                     <div className={style['shop-product-option-left']}>
-                      <p>顯示第 1–12 筆結果 (共 126 筆)</p>
+                      <p>
+                        顯示第 <span>1</span> – <span>12</span> 筆結果 (共{' '}
+                        <span>105</span> 筆)
+                      </p>
                     </div>
                   </div>
-                  <div
-                    className={`col-lg-3 col-md-3 col-sm-3 d-flex justify-content-end`}
-                  >
+                  <div className={`col-lg-3 col-md-3 col-sm-3`}>
                     <div className={style['shop-product-option-right-sort']}>
                       <select>
                         <option value="" active="">
@@ -276,329 +274,518 @@ export default function ProductList() {
                       </select>
                     </div>
                   </div>
-                  <div
-                    className={`col-lg-3 col-md-3 col-sm-3 d-flex justify-content-start`}
-                  >
+                  <div className={`col-lg-3 col-md-3 col-sm-3`}>
                     <div className={style['shop-product-option-right-qty']}>
                       <select>
                         <option value="" active="">
-                          每頁顯示72個
+                          每頁顯示48個
                         </option>
-                        <option value="">每頁顯示48個</option>
                         <option value="">每頁顯示24個</option>
+                        <option value="">每頁顯示12個</option>
                       </select>
                     </div>
                   </div>
                 </div>
+                {/* 產品區塊 Begin */}
+                <div className={`row`}>
+                  <div className={`col-lg-4 col-md-6 col-sm-6`}>
+                    <div className={style['product-item']}>
+                      <Link
+                        href="//product-detail"
+                        className={`${style['product-item-pic']} ${style['set-bg']}`}
+                      >
+                        <img
+                          src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
+                          alt=""
+                        />
+                        <ul className={style['fav-button']}>
+                          <li>
+                            <Link
+                              href="#"
+                              style={{ color: '#ffffff', fontSize: '18px' }}
+                            >
+                              <FaRegHeart />
+                            </Link>
+                          </li>
+                        </ul>
+                        <ul className={style['add-cart-button']}>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaCartArrowDown />
+                          </Link>
+                        </ul>
+                      </Link>
+                      <div className={`mt-3 ${style['product-item-text']}`}>
+                        <Link
+                          href="/product/product-detail"
+                          className={`${style['product-item-title']}`}
+                        >
+                          <h5>平衡瑜珈墊11111</h5>
+                        </Link>
+                        <span>NT$ 1,200</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`col-lg-4 col-md-6 col-sm-6`}>
+                    <div className={style['product-item']}>
+                      <Link
+                        href="//product-detail"
+                        className={`${style['product-item-pic']} ${style['set-bg']}`}
+                      >
+                        <img
+                          src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
+                          alt=""
+                        />
+                        <ul className={style['fav-button']}>
+                          <li>
+                            <Link
+                              href="#"
+                              style={{ color: '#ffffff', fontSize: '18px' }}
+                            >
+                              <FaRegHeart />
+                            </Link>
+                          </li>
+                        </ul>
+                        <ul className={style['add-cart-button']}>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaCartArrowDown />
+                          </Link>
+                        </ul>
+                      </Link>
+                      <div className={`mt-3 ${style['product-item-text']}`}>
+                        <Link
+                          href="/product/product-detail"
+                          className={`${style['product-item-title']}`}
+                        >
+                          <h5>平衡瑜珈墊11111</h5>
+                        </Link>
+                        <span>NT$ 1,200</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`col-lg-4 col-md-6 col-sm-6`}>
+                    <div className={style['product-item']}>
+                      <Link
+                        href="//product-detail"
+                        className={`${style['product-item-pic']} ${style['set-bg']}`}
+                      >
+                        <img
+                          src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
+                          alt=""
+                        />
+                        <ul className={style['fav-button']}>
+                          <li>
+                            <Link
+                              href="#"
+                              style={{ color: '#ffffff', fontSize: '18px' }}
+                            >
+                              <FaRegHeart />
+                            </Link>
+                          </li>
+                        </ul>
+                        <ul className={style['add-cart-button']}>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaCartArrowDown />
+                          </Link>
+                        </ul>
+                      </Link>
+                      <div className={`mt-3 ${style['product-item-text']}`}>
+                        <Link
+                          href="/product/product-detail"
+                          className={`${style['product-item-title']}`}
+                        >
+                          <h5>平衡瑜珈墊11111</h5>
+                        </Link>
+                        <span>NT$ 1,200</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`col-lg-4 col-md-6 col-sm-6`}>
+                    <div className={style['product-item']}>
+                      <Link
+                        href="//product-detail"
+                        className={`${style['product-item-pic']} ${style['set-bg']}`}
+                      >
+                        <img
+                          src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
+                          alt=""
+                        />
+                        <ul className={style['fav-button']}>
+                          <li>
+                            <Link
+                              href="#"
+                              style={{ color: '#ffffff', fontSize: '18px' }}
+                            >
+                              <FaRegHeart />
+                            </Link>
+                          </li>
+                        </ul>
+                        <ul className={style['add-cart-button']}>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaCartArrowDown />
+                          </Link>
+                        </ul>
+                      </Link>
+                      <div className={`mt-3 ${style['product-item-text']}`}>
+                        <Link
+                          href="/product/product-detail"
+                          className={`${style['product-item-title']}`}
+                        >
+                          <h5>平衡瑜珈墊11111</h5>
+                        </Link>
+                        <span>NT$ 1,200</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`col-lg-4 col-md-6 col-sm-6`}>
+                    <div className={style['product-item']}>
+                      <Link
+                        href="//product-detail"
+                        className={`${style['product-item-pic']} ${style['set-bg']}`}
+                      >
+                        <img
+                          src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
+                          alt=""
+                        />
+                        <ul className={style['fav-button']}>
+                          <li>
+                            <Link
+                              href="#"
+                              style={{ color: '#ffffff', fontSize: '18px' }}
+                            >
+                              <FaRegHeart />
+                            </Link>
+                          </li>
+                        </ul>
+                        <ul className={style['add-cart-button']}>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaCartArrowDown />
+                          </Link>
+                        </ul>
+                      </Link>
+                      <div className={`mt-3 ${style['product-item-text']}`}>
+                        <Link
+                          href="/product/product-detail"
+                          className={`${style['product-item-title']}`}
+                        >
+                          <h5>平衡瑜珈墊11111</h5>
+                        </Link>
+                        <span>NT$ 1,200</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`col-lg-4 col-md-6 col-sm-6`}>
+                    <div className={style['product-item']}>
+                      <Link
+                        href="//product-detail"
+                        className={`${style['product-item-pic']} ${style['set-bg']}`}
+                      >
+                        <img
+                          src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
+                          alt=""
+                        />
+                        <ul className={style['fav-button']}>
+                          <li>
+                            <Link
+                              href="#"
+                              style={{ color: '#ffffff', fontSize: '18px' }}
+                            >
+                              <FaRegHeart />
+                            </Link>
+                          </li>
+                        </ul>
+                        <ul className={style['add-cart-button']}>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaCartArrowDown />
+                          </Link>
+                        </ul>
+                      </Link>
+                      <div className={`mt-3 ${style['product-item-text']}`}>
+                        <Link
+                          href="/product/product-detail"
+                          className={`${style['product-item-title']}`}
+                        >
+                          <h5>平衡瑜珈墊11111</h5>
+                        </Link>
+                        <span>NT$ 1,200</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`col-lg-4 col-md-6 col-sm-6`}>
+                    <div className={style['product-item']}>
+                      <Link
+                        href="//product-detail"
+                        className={`${style['product-item-pic']} ${style['set-bg']}`}
+                      >
+                        <img
+                          src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
+                          alt=""
+                        />
+                        <ul className={style['fav-button']}>
+                          <li>
+                            <Link
+                              href="#"
+                              style={{ color: '#ffffff', fontSize: '18px' }}
+                            >
+                              <FaRegHeart />
+                            </Link>
+                          </li>
+                        </ul>
+                        <ul className={style['add-cart-button']}>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaCartArrowDown />
+                          </Link>
+                        </ul>
+                      </Link>
+                      <div className={`mt-3 ${style['product-item-text']}`}>
+                        <Link
+                          href="/product/product-detail"
+                          className={`${style['product-item-title']}`}
+                        >
+                          <h5>平衡瑜珈墊11111</h5>
+                        </Link>
+                        <span>NT$ 1,200</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`col-lg-4 col-md-6 col-sm-6`}>
+                    <div className={style['product-item']}>
+                      <Link
+                        href="//product-detail"
+                        className={`${style['product-item-pic']} ${style['set-bg']}`}
+                      >
+                        <img
+                          src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
+                          alt=""
+                        />
+                        <ul className={style['fav-button']}>
+                          <li>
+                            <Link
+                              href="#"
+                              style={{ color: '#ffffff', fontSize: '18px' }}
+                            >
+                              <FaRegHeart />
+                            </Link>
+                          </li>
+                        </ul>
+                        <ul className={style['add-cart-button']}>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaCartArrowDown />
+                          </Link>
+                        </ul>
+                      </Link>
+                      <div className={`mt-3 ${style['product-item-text']}`}>
+                        <Link
+                          href="/product/product-detail"
+                          className={`${style['product-item-title']}`}
+                        >
+                          <h5>平衡瑜珈墊11111</h5>
+                        </Link>
+                        <span>NT$ 1,200</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`col-lg-4 col-md-6 col-sm-6`}>
+                    <div className={style['product-item']}>
+                      <Link
+                        href="//product-detail"
+                        className={`${style['product-item-pic']} ${style['set-bg']}`}
+                      >
+                        <img
+                          src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
+                          alt=""
+                        />
+                        <ul className={style['fav-button']}>
+                          <li>
+                            <Link
+                              href="#"
+                              style={{ color: '#ffffff', fontSize: '18px' }}
+                            >
+                              <FaRegHeart />
+                            </Link>
+                          </li>
+                        </ul>
+                        <ul className={style['add-cart-button']}>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaCartArrowDown />
+                          </Link>
+                        </ul>
+                      </Link>
+                      <div className={`mt-3 ${style['product-item-text']}`}>
+                        <Link
+                          href="/product/product-detail"
+                          className={`${style['product-item-title']}`}
+                        >
+                          <h5>平衡瑜珈墊11111</h5>
+                        </Link>
+                        <span>NT$ 1,200</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`col-lg-4 col-md-6 col-sm-6`}>
+                    <div className={style['product-item']}>
+                      <Link
+                        href="//product-detail"
+                        className={`${style['product-item-pic']} ${style['set-bg']}`}
+                      >
+                        <img
+                          src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
+                          alt=""
+                        />
+                        <ul className={style['fav-button']}>
+                          <li>
+                            <Link
+                              href="#"
+                              style={{ color: '#ffffff', fontSize: '18px' }}
+                            >
+                              <FaRegHeart />
+                            </Link>
+                          </li>
+                        </ul>
+                        <ul className={style['add-cart-button']}>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaCartArrowDown />
+                          </Link>
+                        </ul>
+                      </Link>
+                      <div className={`mt-3 ${style['product-item-text']}`}>
+                        <Link
+                          href="/product/product-detail"
+                          className={`${style['product-item-title']}`}
+                        >
+                          <h5>平衡瑜珈墊11111</h5>
+                        </Link>
+                        <span>NT$ 1,200</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`col-lg-4 col-md-6 col-sm-6`}>
+                    <div className={style['product-item']}>
+                      <Link
+                        href="//product-detail"
+                        className={`${style['product-item-pic']} ${style['set-bg']}`}
+                      >
+                        <img
+                          src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
+                          alt=""
+                        />
+                        <ul className={style['fav-button']}>
+                          <li>
+                            <Link
+                              href="#"
+                              style={{ color: '#ffffff', fontSize: '18px' }}
+                            >
+                              <FaRegHeart />
+                            </Link>
+                          </li>
+                        </ul>
+                        <ul className={style['add-cart-button']}>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaCartArrowDown />
+                          </Link>
+                        </ul>
+                      </Link>
+                      <div className={`mt-3 ${style['product-item-text']}`}>
+                        <Link
+                          href="/product/product-detail"
+                          className={`${style['product-item-title']}`}
+                        >
+                          <h5>平衡瑜珈墊11111</h5>
+                        </Link>
+                        <span>NT$ 1,200</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`col-lg-4 col-md-6 col-sm-6`}>
+                    <div className={style['product-item']}>
+                      <Link
+                        href="//product-detail"
+                        className={`${style['product-item-pic']} ${style['set-bg']}`}
+                      >
+                        <img
+                          src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
+                          alt=""
+                        />
+                        <ul className={style['fav-button']}>
+                          <li>
+                            <Link
+                              href="#"
+                              style={{ color: '#ffffff', fontSize: '18px' }}
+                            >
+                              <FaRegHeart />
+                            </Link>
+                          </li>
+                        </ul>
+                        <ul className={style['add-cart-button']}>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaCartArrowDown />
+                          </Link>
+                        </ul>
+                      </Link>
+                      <div className={`mt-3 ${style['product-item-text']}`}>
+                        <Link
+                          href="/product/product-detail"
+                          className={`${style['product-item-title']}`}
+                        >
+                          <h5>平衡瑜珈墊11111</h5>
+                        </Link>
+                        <span>NT$ 1,200</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* 產品區塊 End */}
               </div>
-              {/* 產品區塊 Begin */}
-              <div className={`row`}>
-                <div className={`col-lg-4 col-md-6 col-sm-6`}>
-                  <div className={style['product-item']}>
-                    <div
-                      className={`${style['product-item-pic']} ${style['set-bg']}`}
-                    >
-                      <img
-                        src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
-                        alt=""
-                      />
-                      <ul className={style['product-hover']}>
-                        <li>
-                          <a href="#">
-                            <FaRegHeart />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={style['product-item-text']}>
-                      <h6>平衡瑜珈墊</h6>
-                      <a href="#" className={style['add-cart']}>
-                        <FaPlus /> 加入購物車
-                      </a>
-                      <h5>NT$ 1,200</h5>
-                    </div>
-                  </div>
-                </div>
-                <div className={`col-lg-4 col-md-6 col-sm-6`}>
-                  <div className={`${style['product-item']} ${style['sale']}`}>
-                    <div
-                      className={`${style['product-item-pic']} ${style['set-bg']}`}
-                    >
-                      <img
-                        src="img/fitsu_products/product_yoga_01_00_00.webp"
-                        alt=""
-                      />
-                      <span className={style['label']}>特價</span>
-                      <ul className={style['product-hover']}>
-                        <li>
-                          <a href="#">
-                            <FaRegHeart />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={style['product-item-text']}>
-                      <h6>靈巧瑜珈網</h6>
-                      <a href="#" className={style['add-cart']}>
-                        <FaPlus /> 加入購物車
-                      </a>
-                      <h5>NT$ 590</h5>
-                    </div>
-                  </div>
-                </div>
-                <div className={`col-lg-4 col-md-6 col-sm-6`}>
-                  <div className={style['product-item`']}>
-                    <div className={`product-item-pic set-bg`}>
-                      <img
-                        src="img/fitsu_products/product_yoga_02_00_00.webp"
-                        alt=""
-                      />
-                      <ul className={`product-hover`}>
-                        <li>
-                          <a href="#">
-                            <FaRegHeart />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={style['product-item-text']}>
-                      <h6>靈活瑜珈磚</h6>
-                      <a href="#" className={style['add-cart']}>
-                        <FaPlus /> 加入購物車
-                      </a>
-                      <h5>NT$ 499</h5>
-                    </div>
-                  </div>
-                </div>
-                <div className={`col-lg-4 col-md-6 col-sm-6`}>
-                  <div className={`${style['product-item']} ${style['sale']}`}>
-                    <div className={`product-item-pic set-bg`}>
-                      <img
-                        src="img/fitsu_products/product_yoga_03_00_00.jpg"
-                        alt=""
-                      />
-                      <span className={`label`}>Sale</span>
-                      <ul className={`product-hover`}>
-                        <li>
-                          <a href="#">
-                            <img src="img/icon/heart.png" alt="" />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={`product-item-text`}>
-                      <h6>心靈瑜珈帷</h6>
-                      <a href="#" className={`add-cart`}>
-                        <FaPlus /> 加入購物車
-                      </a>
-                      <h5>NT$ 899</h5>
-                    </div>
-                  </div>
-                </div>
-                <div className={`col-lg-4 col-md-6 col-sm-6`}>
-                  <div className={style['product-item`']}>
-                    <div className={`product-item-pic set-bg`}>
-                      <img
-                        src="img/fitsu_products/product_yoga_07_00_00.webp"
-                        alt=""
-                      />
-                      <ul className={`product-hover`}>
-                        <li>
-                          <a href="#">
-                            <FaRegHeart />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={`product-item-text`}>
-                      <h6>柔美瑜珈布</h6>
-                      <a href="#" className={`add-cart`}>
-                        <FaPlus /> 加入購物車
-                      </a>
-                      <h5>NT$ 399</h5>
-                    </div>
-                  </div>
-                </div>
-                <div className={`col-lg-4 col-md-6 col-sm-6`}>
-                  <div className={style['product-item`']}>
-                    <div className={`product-item-pic set-bg`}>
-                      <img
-                        src="img/fitsu_products/product_yoga_08_00_00.webp"
-                        alt=""
-                      />
-                      <ul className={`product-hover`}>
-                        <li>
-                          <a href="#">
-                            <img src="img/icon/heart.png" alt="" />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={`product-item-text`}>
-                      <h6>靜心瑜珈筒</h6>
-                      <a href="#" className={`add-cart`}>
-                        <FaPlus /> 加入購物車
-                      </a>
-                      <h5>NT$ 469</h5>
-                    </div>
-                  </div>
-                </div>
-                <div className={`col-lg-4 col-md-6 col-sm-6`}>
-                  <div className={style['product-item`']}>
-                    <div className={`product-item-pic set-bg`}>
-                      <img
-                        src="img/fitsu_products/product_yoga_15_00.webp"
-                        alt=""
-                      />
-                      <ul className={`product-hover`}>
-                        <li>
-                          <a href="#">
-                            <FaRegHeart />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={`product-item-text`}>
-                      <h6>柔韌瑜珈帶</h6>
-                      <a href="#" className={`add-cart`}>
-                        <FaPlus /> 加入購物車
-                      </a>
-                      <h5>NT$ 299</h5>
-                    </div>
-                  </div>
-                </div>
-                <div className={`col-lg-4 col-md-6 col-sm-6`}>
-                  <div className={`product-item sale`}>
-                    <div className={`product-item-pic set-bg`}>
-                      <img
-                        src="img/fitsu_products/product_yoga_13_00_00.webp"
-                        alt=""
-                      />
-                      <span className={`label`}>Sale</span>
-                      <ul className={`product-hover`}>
-                        <li>
-                          <a href="#">
-                            <FaRegHeart />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={`product-item-text`}>
-                      <h6>靈動瑜珈條</h6>
-                      <a href="#" className={`add-cart`}>
-                        <FaPlus /> 加入購物車
-                      </a>
-                      <h5>NT$ 399</h5>
-                    </div>
-                  </div>
-                </div>
-                <div className={`col-lg-4 col-md-6 col-sm-6`}>
-                  <div className={style['product-item`']}>
-                    <div className={`product-item-pic set-bg`}>
-                      <img
-                        src="img/fitsu_products/product_yoga_06_00_00.webp"
-                        alt=""
-                      />
-                      <ul className={`product-hover`}>
-                        <li>
-                          <a href="#">
-                            <FaRegHeart />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={`product-item-text`}>
-                      <h6>自在瑜珈綁</h6>
-                      <a href="#" className={`add-cart`}>
-                        <FaPlus /> 加入購物車
-                      </a>
-                      <h5>NT$ 199</h5>
-                    </div>
-                  </div>
-                </div>
-                <div className={`col-lg-4 col-md-6 col-sm-6`}>
-                  <div className={`product-item sale`}>
-                    <div className={`product-item-pic set-bg`}>
-                      <img
-                        src="img/fitsu_products/product_yoga_15_01_00.webp"
-                        alt=""
-                      />
-                      <span className={`label`}>特價</span>
-                      <ul className={`product-hover`}>
-                        <li>
-                          <a href="#">
-                            <FaRegHeart />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={`product-item-text`}>
-                      <h6>瑜珈瑜珈瑜珈</h6>
-                      <a href="#" className={`add-cart`}>
-                        <FaPlus /> 加入購物車
-                      </a>
-                      <h5>NT$ 100</h5>
-                    </div>
-                  </div>
-                </div>
-                <div className={`col-lg-4 col-md-6 col-sm-6`}>
-                  <div className={style['product-item`']}>
-                    <div className={`product-item-pic set-bg`}>
-                      <img
-                        src="img/fitsu_products/product_yoga_13_01_00.webp"
-                        alt=""
-                      />
-                      <ul className={`product-hover`}>
-                        <li>
-                          <a href="#">
-                            <FaRegHeart />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={`product-item-text`}>
-                      <h6>輕盈瑜珈球</h6>
-                      <a href="#" className={`add-cart`}>
-                        <FaPlus /> 加入購物車
-                      </a>
-                      <h5>NT$ 350</h5>
-                    </div>
-                  </div>
-                </div>
-                <div className={`col-lg-4 col-md-6 col-sm-6`}>
-                  <div className={style['product-item`']}>
-                    <div className={`product-item-pic set-bg`}>
-                      <img
-                        src="img/fitsu_products/product_yoga_04_00_00.webp"
-                        alt=""
-                      />
-                      <ul className={`product-hover`}>
-                        <li>
-                          <a href="#">
-                            <FaRegHeart />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className={`product-item-text`}>
-                      <h6>yogayogayoga</h6>
-                      <a href="#" className={`add-cart`}>
-                        <FaPlus /> 加入購物車
-                      </a>
-                      <h5>NT$ 499</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* 產品區塊 End */}
-
               {/* product pagination Begin */}
               <nav aria-label="Page navigation example">
                 <ul className="pagination mb-4">
                   <li className="page-item">
                     <a className="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">«</span>
-                      <span className={`sr-only`}>Previous</span>
+                      <span aria-hidden="true">
+                        <MdKeyboardDoubleArrowLeft />
+                      </span>
+                    </a>
+                  </li>
+                  <li className="page-item">
+                    <a className="page-link" href="#" aria-label="VeryFirst">
+                      <span aria-hidden="true">
+                        <MdKeyboardArrowLeft />
+                      </span>
                     </a>
                   </li>
                   <li className="page-item">
@@ -618,8 +805,16 @@ export default function ProductList() {
                   </li>
                   <li className="page-item">
                     <a className="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">»</span>
-                      <span className="sr-only">Next</span>
+                      <span aria-hidden="true">
+                        <MdKeyboardArrowRight />
+                      </span>
+                    </a>
+                  </li>
+                  <li className="page-item">
+                    <a className="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">
+                        <MdKeyboardDoubleArrowRight />
+                      </span>
                     </a>
                   </li>
                 </ul>

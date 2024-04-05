@@ -5,33 +5,6 @@
   Product Category
 -----------------------*/
 
-.shop-sidebar-search form {
-    input {
-      border-radius: 50px;
-      border: 2px solid $gray-deep-color;
-      padding-left: 8px;
-      margin-bottom: 20px;
-      font-size: 15px;
-
-    }
-
-    input:focus {
-        color: $primary-color;
-        border: 2px solid $primary-color;
-    }
-}
-
-.search-icon {
-  border-radius: 50px;
-  border: 1px solid $gray-deep-color;
-  transition: 0.3s;
-  &:hover {
-    color: $primary-color;
-    border: 1px solid $primary-color;
-  }
-}
-
-
 .shop-sidebar-accordion {
     ul, li {
       list-style: none;
@@ -173,41 +146,118 @@
     }
 }
 
-.shop-product-option {
-  margin-top: 30px;
-
+.shop-product-option-left p {
+  font-size: 15px;
+  font-weight: 600;
 }
 
+.shop-product-option {
+  margin-top: 20px;
+  margin-left: 40px;
+}
+
+.shop-product-option-right-sort {
+  select {
+    border-radius: 5px;
+    border: 1px solid $gray-deep-color;
+    padding: 5px;
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
+}
 
 .shop-product-option-right-qty {
-  margin-left: 10px;
-}
-
-.product-item.sale {
-    .product-item-pic {
-        .label {
-            color: #000000;
-            background: $primary-color;
-            }
-    }
-  }
-
-.product-hover {
-  li {
-    list-style: none;
+  select {
+    border-radius: 5px;
+    border: 1px solid $gray-deep-color;
+    padding: 5px;
+    margin-bottom: 30px;
+    font-size: 16px;
   }
 }
 
 .shop-product-display {
-    padding: 0 80px;
+    padding: 0 60px;
 }
 
 .product-item-pic {
-  img:hover {
-    transform: scale(1.1);
-    transition: all 0.3s ease 0s;
-    background-color: rgba(255, 150, 90, .6);
-    // 設置背景混和模式為相乘模式
-    background-blend-mode: multiply;
+  img {
+    &:hover {
+      filter: brightness(0.9);
+      transition: all 0.4s ease-in-out 0s;
+    }
+  }
+}
+
+.product-item-pic li {
+  list-style: none;
+  color: $primary-color;
+  text-align: center;
+  padding: 0;
+}
+
+/* 商品卡片 hover 效果  */
+.product-item {
+  margin-bottom: 15px;
+  position: relative;
+
+  &:hover .product-item-title h5 {
+    color: $primary-color;
+  }
+
+  &:hover .fav-button, &:hover .add-cart-button{
+    opacity: 1;
+    transition: all .4s;
+    &:hover {
+      background-color: $secondary-color;
+    }
+  }
+}
+
+.fav-button {
+    width: 40px;
+    height: 40px;
+    background-color: $primary-color;
+    padding-top: 5px;
+    text-align: center;
+    box-shadow: 0 8px 24px hsla(0,0%, 0%, .15);
+    opacity: 0;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transition: all .3s;
+    }
+
+  .add-cart-button {
+    width: 40px;
+    height: 40px;
+    background-color: $primary-color;
+    padding-top: 5px;
+    text-align: center;
+    box-shadow: 0 8px 24px hsla(0,0%, 0%, .15);
+    opacity: 0;
+    position: absolute;
+    top: 68px;
+    right: 15px;
+    transition: all .3s;
+    }
+
+.product-item-text {
+  margin-top: 20px;
+
+  span {
+    font-size: 18px;
+    font-weight: 600;
+
+  }
+}
+
+.product-item-title h5 {
+  margin-bottom: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: 0.3s;
+  &:hover {
+    color: $primary-color;
   }
 }
