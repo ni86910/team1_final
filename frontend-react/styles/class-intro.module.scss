@@ -127,8 +127,7 @@ $white: #ffffff;
       overflow: hidden;
       position: relative;
       img {
-        width: 100%;
-        min-width: 650px;
+        object-fit: cover;
       }
     }
     .class-content {

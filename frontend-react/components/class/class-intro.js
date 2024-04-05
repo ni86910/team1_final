@@ -103,10 +103,11 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                     <Image
                       src={`http://localhost:3001/imgs/class/class-page/${v['class_img']}`}
                       alt=""
-                      layout="responsive"
-                      // fill
-                      height={500}
-                      width={650}
+                      // layout="responsive"
+                      fill
+                      // height={500}
+                      // width={650}
+                      // sizes="500px"
                     />
                   </div>
                   <div className={style['class-content']}>
