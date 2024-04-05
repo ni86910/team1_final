@@ -56,9 +56,7 @@ export default function ClassPage() {
               className={style['class-img']}
               src={`http://localhost:3001/imgs/class/class-page/${classInfo.class_img}`}
               alt=""
-              width={1920}
-              height={1080}
-              layout="responsive"
+              fill
             />
           </div>
           <div className={style['control-bar']}>
