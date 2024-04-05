@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import style from '@/styles/order-confirmation-main.module.scss'
+import { IMG_PATH } from '@/configs'
 
 export default function OrderConfirmationMain() {
   return (
@@ -10,7 +11,7 @@ export default function OrderConfirmationMain() {
           <div className={style['order-confirmation-content']}>
             <div className={`row justify-content-center`}>
               <img
-                src="img/thankyou.png"
+                src={`${IMG_PATH}/materials/thankyou.png`}
                 alt=""
                 style={{ height: 700, width: 700 }}
               />
