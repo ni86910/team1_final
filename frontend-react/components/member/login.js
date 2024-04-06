@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import style from '@/styles/login.module.scss'
 import Image from 'next/image'
+import Link from 'next/link'
 import { FaStarOfLife } from 'react-icons/fa6'
 
 export default function LoginPage() {
@@ -104,17 +105,17 @@ export default function LoginPage() {
                           <div className="sign">
                             <p>
                               還沒加入菲特友嗎?{' '}
-                              <a href="register" className={style['a-link']}>
+                              <Link href="register" className={style['a-link']}>
                                 {' '}
                                 趕快來註冊!
-                              </a>
+                              </Link>
                             </p>
-                            <a
+                            <Link
                               href="forget-password"
                               className={style['a-link']}
                             >
                               忘記密碼?
-                            </a>
+                            </Link>
                           </div>
                         </form>
                       </div>

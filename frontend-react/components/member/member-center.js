@@ -2,6 +2,7 @@ import React from 'react'
 import style from '@/styles/member-center.module.scss'
 import SideBar from '@/styles/m-sidebar.module.scss'
 import Image from 'next/image'
+import Link from 'next/link'
 /* React-Bootstrap */
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
@@ -33,25 +34,25 @@ export default function MemberCenterPage() {
               會員中心
             </Navbar.Brand>
             <Nav className={`me-auto ${SideBar['nav-side']}`}>
-              <Nav.Link className={SideBar['Nav-link']} href="#profile">
+              <Link className={SideBar['Nav-link']} href="#profile">
                 個人資料
-              </Nav.Link>
-              <Nav.Link className={SideBar['Nav-link']} href="#order">
+              </Link>
+              <Link className={SideBar['Nav-link']} href="#order">
                 我的訂單
-              </Nav.Link>
-              <Nav.Link className={SideBar['Nav-link']} href="#course-records">
+              </Link>
+              <Link className={SideBar['Nav-link']} href="#course-records">
                 課程紀錄
-              </Nav.Link>
-              <Nav.Link className={SideBar['Nav-link']} href="#points">
+              </Link>
+              <Link className={SideBar['Nav-link']} href="#points">
                 {' '}
                 我的點數
-              </Nav.Link>
-              <Nav.Link className={SideBar['Nav-link']} href="#favorite">
+              </Link>
+              <Link className={SideBar['Nav-link']} href="#favorite">
                 我的收藏
-              </Nav.Link>
-              <Nav.Link className={SideBar['Nav-link']} href="#logout">
+              </Link>
+              <Link className={SideBar['Nav-link']} href="#logout">
                 登出
-              </Nav.Link>
+              </Link>
             </Nav>
           </Container>
         </Navbar>

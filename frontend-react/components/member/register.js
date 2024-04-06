@@ -3,6 +3,7 @@ import style from '@/styles/register.module.scss'
 import Image from 'next/image'
 import { Button, Modal, Form } from 'react-bootstrap'
 import { FaStarOfLife } from 'react-icons/fa6'
+import Link from 'next/link'
 
 export default function RegisterPage() {
   const [showModal, setShowModal] = useState(false)
@@ -182,12 +183,12 @@ export default function RegisterPage() {
                         </div>
                         <div className="checkbox">
                           <input type="checkbox" defaultValue="" />
-                          <a
+                          <Link
                             className={style['member-terms']}
                             onClick={handleShowModal}
                           >
                             我已詳閱會員條款
-                          </a>
+                          </Link>
                         </div>
                         <button
                           type="submit"
