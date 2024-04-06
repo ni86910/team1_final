@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 /* My module.scss */
 import style from '@/styles/points.module.scss'
@@ -30,6 +29,9 @@ export default function PointsPage() {
             <Nav className={`me-auto ${SideBar['nav-side']}`}>
               <Link className={SideBar['Nav-link']} href="#member-center">
                 會員中心
+              </Link>
+              <Link className={SideBar['Nav-link']} href="#profile">
+                個人資料
               </Link>
               <Link className={SideBar['Nav-link']} href="#order">
                 我的訂單
