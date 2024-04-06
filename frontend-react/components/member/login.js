@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import style from '@/styles/login.module.scss'
 import Image from 'next/image'
+import { FaStarOfLife } from 'react-icons/fa6'
 
 export default function LoginPage() {
   return (
@@ -27,12 +28,14 @@ export default function LoginPage() {
                           >
                             <label
                               htmlFor="m_account"
-                              className="col-md-4 col-form-label text-md-right"
+                              className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
                             >
+                              <FaStarOfLife className={style['icon-padding']} />
                               會員帳號
                             </label>
                             <div className="col-md-6">
                               <input
+                                style={{ borderRadius: '10px' }}
                                 type="email"
                                 id="m_account"
                                 className="form-control"
@@ -47,12 +50,14 @@ export default function LoginPage() {
                           >
                             <label
                               htmlFor="m_pwd"
-                              className="col-md-4 col-form-label text-md-right"
+                              className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
                             >
+                              <FaStarOfLife className={style['icon-padding']} />
                               會員密碼
                             </label>
                             <div className="col-md-6">
                               <input
+                                style={{ borderRadius: '10px' }}
                                 type="password"
                                 id="m_pwd"
                                 className="form-control"
@@ -83,9 +88,12 @@ export default function LoginPage() {
                             className={`btn ${style['google-btn']}`}
                           >
                             <span className="glyphicon glyphicon-remove" />
-                            <img
+                            <Image
                               className={style['google-img']}
                               src="/img/member/google.png"
+                              width={20}
+                              height={20}
+                              alt="google"
                             />
                             使用Google快速登入
                           </button>
