@@ -6,7 +6,7 @@ import { IoIosSearch } from 'react-icons/io'
 export default function ProductSearch() {
   return (
     <>
-      <div className={`mb-5 ms-5 ${style['shop-sidebar-search']}`}>
+      <div className={`ms-3 ${style['shop-sidebar-search']}`}>
         <form className={style['search']}>
           <div className={style['search-wrapper']}>
             <input

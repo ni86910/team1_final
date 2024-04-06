@@ -1,5 +1,6 @@
 @import "variable";
 
+
 /* search input Start */
 
 .search {
@@ -123,7 +124,7 @@
     perspective: 1000;
   }
   .search-field::-webkit-input-placeholder[style*=hidden] {
-    color: darken($third-color, 30%);
+    color: darken($third-color, 20%);
     font-size: .65em;
     font-weight: normal;
     top: -(round(50px / 2.5));
@@ -131,7 +132,7 @@
     visibility: visible !important;
   }
   .search-field:-moz-placeholder[style*=hidden] {
-    color: darken($third-color, 30%);
+    color: darken($third-color, 20%);
     font-size: .65em;
     font-weight: normal;
     top: -(round(50px / 2.5));
@@ -139,7 +140,7 @@
     visibility: visible !important;
   }
   .search-field::-moz-placeholder[style*=hidden] {
-    color: darken($third-color, 30%);
+    color: darken($third-color, 20%);
     font-size: .65em;
     font-weight: normal;
     top: -(round(50px / 2.5));
@@ -147,7 +148,7 @@
     visibility: visible !important;
   }
   .search-field:-ms-input-placeholder[style*=hidden] {
-    color: darken($third-color, 30%);
+    color: darken($third-color, 20%);
     font-size: .65em;
     font-weight: normal;
     top: -(round(50px / 2.5));

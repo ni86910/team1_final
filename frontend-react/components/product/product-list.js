@@ -1,14 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
 import style from '@/styles/product-list.module.scss'
-import { FaRegHeart, FaCartArrowDown, FaPlus, FaSearch } from 'react-icons/fa6'
+import { FaRegHeart, FaCartArrowDown } from 'react-icons/fa6'
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
   MdKeyboardArrowLeft,
   MdKeyboardArrowRight,
 } from 'react-icons/md'
-import { IoIosSearch } from 'react-icons/io'
 import { IMG_PATH } from '@/configs'
 
 export default function ProductList() {
@@ -19,7 +18,6 @@ export default function ProductList() {
           <div className={`row`}>
             <div className={`col-lg-3`}>
               <div className={style['shop-sidebar']}>
-
                 {/* 產品分類選單 start */}
                 <div className={style['shop-sidebar-accordion']}>
                   <ul className={style['accordion']}>
@@ -40,7 +38,7 @@ export default function ProductList() {
                           </label>
                         </li>
                         <li className={style['main-cate']}>
-                          <a href="">室內健身</a>
+                          <Link href="">室內健身</Link>
                         </li>
                         <li>
                           <label>
@@ -70,7 +68,7 @@ export default function ProductList() {
                           </label>
                         </li>
                         <li className={style['main-cate']}>
-                          <a href="">營養補給品</a>
+                          <Link href="">營養補給品</Link>
                         </li>
                         <li>
                           <label>
@@ -88,7 +86,7 @@ export default function ProductList() {
                           </label>
                         </li>
                         <li className={style['main-cate']}>
-                          <a href="">服飾及配件</a>
+                          <Link href="">服飾及配件</Link>
                         </li>
                         <li>
                           <label>
@@ -111,7 +109,7 @@ export default function ProductList() {
                           </label>
                         </li>
                         <li className={style['main-cate']}>
-                          <a href="">智能運動系列</a>
+                          <Link href="">智能運動系列</Link>
                         </li>
                         <li>
                           <label>
@@ -211,9 +209,9 @@ export default function ProductList() {
                       </label>
                       <ul className={style['accordion-child']}>
                         <div className={style['sc-original']}>
-                          (原始區間：NT$150
+                          (原始區間：<span>NT$150</span>
                           <span className={style['sc-dash']}>-</span>
-                          NT$2,290)
+                          <span>NT$2,290</span>)
                         </div>
                         <div className={style['sc-range']}>
                           <div className={style['sc-bdy']}>
@@ -252,7 +250,7 @@ export default function ProductList() {
               {/* product list section Begin */}
               <div className={style['shop-product-option']}>
                 <div className={`row`}>
-                  <div className={`col-lg-6 col-md-6 col-sm-6`}>
+                  <div className={`col-lg-6 col-md-6 col-sm-12`}>
                     <div className={style['shop-product-option-left']}>
                       <p>
                         顯示第 <span>1</span> – <span>12</span> 筆結果 (共{' '}
@@ -260,29 +258,33 @@ export default function ProductList() {
                       </p>
                     </div>
                   </div>
-                  <div className={`col-lg-3 col-md-3 col-sm-3`}>
-                    <div className={style['shop-product-option-right-sort']}>
-                      <select>
-                        <option value="" active="">
-                          商品排序
-                        </option>
-                        <option value="">上架時間: 由新到舊</option>
-                        <option value="">上架時間: 由舊到新</option>
-                        <option value="">價格: 由高到低</option>
-                        <option value="">價格: 由低到高</option>
-                        <option value="">銷量: 由高到低</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className={`col-lg-3 col-md-3 col-sm-3`}>
-                    <div className={style['shop-product-option-right-qty']}>
-                      <select>
-                        <option value="" active="">
-                          每頁顯示48個
-                        </option>
-                        <option value="">每頁顯示24個</option>
-                        <option value="">每頁顯示12個</option>
-                      </select>
+                  <div className={`col-lg-6 col-md-6 col-sm-12`}>
+                    <div className={`row`}>
+                      <div
+                        className={`col-6 d-flex ${style['shop-product-option-right-sort']}`}
+                      >
+                        <select>
+                          <option value="" active="">
+                            商品排序
+                          </option>
+                          <option value="">上架時間: 由新到舊</option>
+                          <option value="">上架時間: 由舊到新</option>
+                          <option value="">價格: 由高到低</option>
+                          <option value="">價格: 由低到高</option>
+                          <option value="">銷量: 由高到低</option>
+                        </select>
+                      </div>
+                      <div
+                        className={`col-6 d-flex ${style['shop-product-option-right-qty']}`}
+                      >
+                        <select>
+                          <option value="" active="">
+                            每頁顯示48個
+                          </option>
+                          <option value="">每頁顯示24個</option>
+                          <option value="">每頁顯示12個</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -298,31 +300,33 @@ export default function ProductList() {
                           src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
                           alt=""
                         />
-                        <ul className={style['fav-button']}>
-                          <li>
-                            <Link
-                              href="#"
-                              style={{ color: '#ffffff', fontSize: '18px' }}
-                            >
-                              <FaRegHeart />
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className={style['add-cart-button']}>
+                      </Link>
+                      <ul className={style['fav-button']}>
+                        <li>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaRegHeart />
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className={style['add-cart-button']}>
+                        <li>
                           <Link
                             href="#"
                             style={{ color: '#ffffff', fontSize: '18px' }}
                           >
                             <FaCartArrowDown />
                           </Link>
-                        </ul>
-                      </Link>
+                        </li>
+                      </ul>
                       <div className={`mt-3 ${style['product-item-text']}`}>
                         <Link
                           href="/product/product-detail"
                           className={`${style['product-item-title']}`}
                         >
-                          <h5>平衡瑜珈墊11111</h5>
+                          <p>平衡瑜珈墊11111</p>
                         </Link>
                         <span>NT$ 1,200</span>
                       </div>
@@ -338,31 +342,33 @@ export default function ProductList() {
                           src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
                           alt=""
                         />
-                        <ul className={style['fav-button']}>
-                          <li>
-                            <Link
-                              href="#"
-                              style={{ color: '#ffffff', fontSize: '18px' }}
-                            >
-                              <FaRegHeart />
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className={style['add-cart-button']}>
+                      </Link>
+                      <ul className={style['fav-button']}>
+                        <li>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaRegHeart />
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className={style['add-cart-button']}>
+                        <li>
                           <Link
                             href="#"
                             style={{ color: '#ffffff', fontSize: '18px' }}
                           >
                             <FaCartArrowDown />
                           </Link>
-                        </ul>
-                      </Link>
+                        </li>
+                      </ul>
                       <div className={`mt-3 ${style['product-item-text']}`}>
                         <Link
                           href="/product/product-detail"
                           className={`${style['product-item-title']}`}
                         >
-                          <h5>平衡瑜珈墊11111</h5>
+                          <p>平衡瑜珈墊11111</p>
                         </Link>
                         <span>NT$ 1,200</span>
                       </div>
@@ -378,31 +384,33 @@ export default function ProductList() {
                           src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
                           alt=""
                         />
-                        <ul className={style['fav-button']}>
-                          <li>
-                            <Link
-                              href="#"
-                              style={{ color: '#ffffff', fontSize: '18px' }}
-                            >
-                              <FaRegHeart />
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className={style['add-cart-button']}>
+                      </Link>
+                      <ul className={style['fav-button']}>
+                        <li>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaRegHeart />
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className={style['add-cart-button']}>
+                        <li>
                           <Link
                             href="#"
                             style={{ color: '#ffffff', fontSize: '18px' }}
                           >
                             <FaCartArrowDown />
                           </Link>
-                        </ul>
-                      </Link>
+                        </li>
+                      </ul>
                       <div className={`mt-3 ${style['product-item-text']}`}>
                         <Link
                           href="/product/product-detail"
                           className={`${style['product-item-title']}`}
                         >
-                          <h5>平衡瑜珈墊11111</h5>
+                          <p>平衡瑜珈墊11111</p>
                         </Link>
                         <span>NT$ 1,200</span>
                       </div>
@@ -418,31 +426,33 @@ export default function ProductList() {
                           src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
                           alt=""
                         />
-                        <ul className={style['fav-button']}>
-                          <li>
-                            <Link
-                              href="#"
-                              style={{ color: '#ffffff', fontSize: '18px' }}
-                            >
-                              <FaRegHeart />
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className={style['add-cart-button']}>
+                      </Link>
+                      <ul className={style['fav-button']}>
+                        <li>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaRegHeart />
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className={style['add-cart-button']}>
+                        <li>
                           <Link
                             href="#"
                             style={{ color: '#ffffff', fontSize: '18px' }}
                           >
                             <FaCartArrowDown />
                           </Link>
-                        </ul>
-                      </Link>
+                        </li>
+                      </ul>
                       <div className={`mt-3 ${style['product-item-text']}`}>
                         <Link
                           href="/product/product-detail"
                           className={`${style['product-item-title']}`}
                         >
-                          <h5>平衡瑜珈墊11111</h5>
+                          <p>平衡瑜珈墊11111</p>
                         </Link>
                         <span>NT$ 1,200</span>
                       </div>
@@ -458,31 +468,33 @@ export default function ProductList() {
                           src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
                           alt=""
                         />
-                        <ul className={style['fav-button']}>
-                          <li>
-                            <Link
-                              href="#"
-                              style={{ color: '#ffffff', fontSize: '18px' }}
-                            >
-                              <FaRegHeart />
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className={style['add-cart-button']}>
+                      </Link>
+                      <ul className={style['fav-button']}>
+                        <li>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaRegHeart />
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className={style['add-cart-button']}>
+                        <li>
                           <Link
                             href="#"
                             style={{ color: '#ffffff', fontSize: '18px' }}
                           >
                             <FaCartArrowDown />
                           </Link>
-                        </ul>
-                      </Link>
+                        </li>
+                      </ul>
                       <div className={`mt-3 ${style['product-item-text']}`}>
                         <Link
                           href="/product/product-detail"
                           className={`${style['product-item-title']}`}
                         >
-                          <h5>平衡瑜珈墊11111</h5>
+                          <p>平衡瑜珈墊11111</p>
                         </Link>
                         <span>NT$ 1,200</span>
                       </div>
@@ -498,31 +510,33 @@ export default function ProductList() {
                           src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
                           alt=""
                         />
-                        <ul className={style['fav-button']}>
-                          <li>
-                            <Link
-                              href="#"
-                              style={{ color: '#ffffff', fontSize: '18px' }}
-                            >
-                              <FaRegHeart />
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className={style['add-cart-button']}>
+                      </Link>
+                      <ul className={style['fav-button']}>
+                        <li>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaRegHeart />
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className={style['add-cart-button']}>
+                        <li>
                           <Link
                             href="#"
                             style={{ color: '#ffffff', fontSize: '18px' }}
                           >
                             <FaCartArrowDown />
                           </Link>
-                        </ul>
-                      </Link>
+                        </li>
+                      </ul>
                       <div className={`mt-3 ${style['product-item-text']}`}>
                         <Link
                           href="/product/product-detail"
                           className={`${style['product-item-title']}`}
                         >
-                          <h5>平衡瑜珈墊11111</h5>
+                          <p>平衡瑜珈墊11111</p>
                         </Link>
                         <span>NT$ 1,200</span>
                       </div>
@@ -538,31 +552,33 @@ export default function ProductList() {
                           src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
                           alt=""
                         />
-                        <ul className={style['fav-button']}>
-                          <li>
-                            <Link
-                              href="#"
-                              style={{ color: '#ffffff', fontSize: '18px' }}
-                            >
-                              <FaRegHeart />
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className={style['add-cart-button']}>
+                      </Link>
+                      <ul className={style['fav-button']}>
+                        <li>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaRegHeart />
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className={style['add-cart-button']}>
+                        <li>
                           <Link
                             href="#"
                             style={{ color: '#ffffff', fontSize: '18px' }}
                           >
                             <FaCartArrowDown />
                           </Link>
-                        </ul>
-                      </Link>
+                        </li>
+                      </ul>
                       <div className={`mt-3 ${style['product-item-text']}`}>
                         <Link
                           href="/product/product-detail"
                           className={`${style['product-item-title']}`}
                         >
-                          <h5>平衡瑜珈墊11111</h5>
+                          <p>平衡瑜珈墊11111</p>
                         </Link>
                         <span>NT$ 1,200</span>
                       </div>
@@ -578,31 +594,33 @@ export default function ProductList() {
                           src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
                           alt=""
                         />
-                        <ul className={style['fav-button']}>
-                          <li>
-                            <Link
-                              href="#"
-                              style={{ color: '#ffffff', fontSize: '18px' }}
-                            >
-                              <FaRegHeart />
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className={style['add-cart-button']}>
+                      </Link>
+                      <ul className={style['fav-button']}>
+                        <li>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaRegHeart />
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className={style['add-cart-button']}>
+                        <li>
                           <Link
                             href="#"
                             style={{ color: '#ffffff', fontSize: '18px' }}
                           >
                             <FaCartArrowDown />
                           </Link>
-                        </ul>
-                      </Link>
+                        </li>
+                      </ul>
                       <div className={`mt-3 ${style['product-item-text']}`}>
                         <Link
                           href="/product/product-detail"
                           className={`${style['product-item-title']}`}
                         >
-                          <h5>平衡瑜珈墊11111</h5>
+                          <p>平衡瑜珈墊11111</p>
                         </Link>
                         <span>NT$ 1,200</span>
                       </div>
@@ -618,31 +636,33 @@ export default function ProductList() {
                           src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
                           alt=""
                         />
-                        <ul className={style['fav-button']}>
-                          <li>
-                            <Link
-                              href="#"
-                              style={{ color: '#ffffff', fontSize: '18px' }}
-                            >
-                              <FaRegHeart />
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className={style['add-cart-button']}>
+                      </Link>
+                      <ul className={style['fav-button']}>
+                        <li>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaRegHeart />
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className={style['add-cart-button']}>
+                        <li>
                           <Link
                             href="#"
                             style={{ color: '#ffffff', fontSize: '18px' }}
                           >
                             <FaCartArrowDown />
                           </Link>
-                        </ul>
-                      </Link>
+                        </li>
+                      </ul>
                       <div className={`mt-3 ${style['product-item-text']}`}>
                         <Link
                           href="/product/product-detail"
                           className={`${style['product-item-title']}`}
                         >
-                          <h5>平衡瑜珈墊11111</h5>
+                          <p>平衡瑜珈墊11111</p>
                         </Link>
                         <span>NT$ 1,200</span>
                       </div>
@@ -658,31 +678,33 @@ export default function ProductList() {
                           src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
                           alt=""
                         />
-                        <ul className={style['fav-button']}>
-                          <li>
-                            <Link
-                              href="#"
-                              style={{ color: '#ffffff', fontSize: '18px' }}
-                            >
-                              <FaRegHeart />
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className={style['add-cart-button']}>
+                      </Link>
+                      <ul className={style['fav-button']}>
+                        <li>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaRegHeart />
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className={style['add-cart-button']}>
+                        <li>
                           <Link
                             href="#"
                             style={{ color: '#ffffff', fontSize: '18px' }}
                           >
                             <FaCartArrowDown />
                           </Link>
-                        </ul>
-                      </Link>
+                        </li>
+                      </ul>
                       <div className={`mt-3 ${style['product-item-text']}`}>
                         <Link
                           href="/product/product-detail"
                           className={`${style['product-item-title']}`}
                         >
-                          <h5>平衡瑜珈墊11111</h5>
+                          <p>平衡瑜珈墊11111</p>
                         </Link>
                         <span>NT$ 1,200</span>
                       </div>
@@ -698,31 +720,33 @@ export default function ProductList() {
                           src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
                           alt=""
                         />
-                        <ul className={style['fav-button']}>
-                          <li>
-                            <Link
-                              href="#"
-                              style={{ color: '#ffffff', fontSize: '18px' }}
-                            >
-                              <FaRegHeart />
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className={style['add-cart-button']}>
+                      </Link>
+                      <ul className={style['fav-button']}>
+                        <li>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaRegHeart />
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className={style['add-cart-button']}>
+                        <li>
                           <Link
                             href="#"
                             style={{ color: '#ffffff', fontSize: '18px' }}
                           >
                             <FaCartArrowDown />
                           </Link>
-                        </ul>
-                      </Link>
+                        </li>
+                      </ul>
                       <div className={`mt-3 ${style['product-item-text']}`}>
                         <Link
                           href="/product/product-detail"
                           className={`${style['product-item-title']}`}
                         >
-                          <h5>平衡瑜珈墊11111</h5>
+                          <p>平衡瑜珈墊11111</p>
                         </Link>
                         <span>NT$ 1,200</span>
                       </div>
@@ -738,31 +762,33 @@ export default function ProductList() {
                           src={`${IMG_PATH}/product_yoga_11_00_00.webp`}
                           alt=""
                         />
-                        <ul className={style['fav-button']}>
-                          <li>
-                            <Link
-                              href="#"
-                              style={{ color: '#ffffff', fontSize: '18px' }}
-                            >
-                              <FaRegHeart />
-                            </Link>
-                          </li>
-                        </ul>
-                        <ul className={style['add-cart-button']}>
+                      </Link>
+                      <ul className={style['fav-button']}>
+                        <li>
+                          <Link
+                            href="#"
+                            style={{ color: '#ffffff', fontSize: '18px' }}
+                          >
+                            <FaRegHeart />
+                          </Link>
+                        </li>
+                      </ul>
+                      <ul className={style['add-cart-button']}>
+                        <li>
                           <Link
                             href="#"
                             style={{ color: '#ffffff', fontSize: '18px' }}
                           >
                             <FaCartArrowDown />
                           </Link>
-                        </ul>
-                      </Link>
+                        </li>
+                      </ul>
                       <div className={`mt-3 ${style['product-item-text']}`}>
                         <Link
                           href="/product/product-detail"
                           className={`${style['product-item-title']}`}
                         >
-                          <h5>平衡瑜珈墊11111</h5>
+                          <p>平衡瑜珈墊11111</p>
                         </Link>
                         <span>NT$ 1,200</span>
                       </div>
@@ -775,47 +801,47 @@ export default function ProductList() {
               <nav aria-label="Page navigation example">
                 <ul className="pagination mb-4">
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
+                    <Link className="page-link" href="#" aria-label="Previous">
                       <span aria-hidden="true">
                         <MdKeyboardDoubleArrowLeft />
                       </span>
-                    </a>
+                    </Link>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="VeryFirst">
+                    <Link className="page-link" href="#" aria-label="VeryFirst">
                       <span aria-hidden="true">
                         <MdKeyboardArrowLeft />
                       </span>
-                    </a>
+                    </Link>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="#">
+                    <Link className="page-link" href="#">
                       1
-                    </a>
+                    </Link>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="#">
+                    <Link className="page-link" href="#">
                       2
-                    </a>
+                    </Link>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="#">
+                    <Link className="page-link" href="#">
                       3
-                    </a>
+                    </Link>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Next">
+                    <Link className="page-link" href="#" aria-label="Next">
                       <span aria-hidden="true">
                         <MdKeyboardArrowRight />
                       </span>
-                    </a>
+                    </Link>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Next">
+                    <Link className="page-link" href="#" aria-label="LastPage">
                       <span aria-hidden="true">
                         <MdKeyboardDoubleArrowRight />
                       </span>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>
