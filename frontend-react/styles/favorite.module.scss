@@ -1,0 +1,79 @@
+@import "variable";
+
+
+
+.btn{
+  width: 150px;
+  background-color: black;
+  color: white;
+  border-radius: 50px;
+  display: block;
+  padding: 5px;
+  text-align: center;
+  
+  &:hover{
+    background-color:$secondary-color;
+    color:white;
+    border-radius: 50px;
+  }
+}
+
+.favorite-section{
+  margin: 0px 190px;
+  padding: 50px 0px;
+  width:100%;
+  .title{
+    margin-bottom: 20px;
+    font-size: 20px;
+    display:flex;
+    &::before{
+      background-color: rgb(7, 7, 9);
+      border-radius: 40% / 10%;
+      content: "";
+      margin: 2px 7px 2px 0px;
+      width: 3px;
+    }
+  }
+}
+
+
+.all-tabs {
+  color: white; /* 默認文字顏色 */
+  background-color: black; /* 默認背景顏色 */
+  .a-tab{
+
+color:white;
+  &:active{
+    color:white;
+    background-color: $primary-color;
+  }
+  }
+}
+
+
+
+
+
+
+.favorite-first-row{
+  background-color: white;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+} 
+
+
+/* 在你的樣式表中添加這些CSS規則 */
+@media (max-width: 600px) {
+  .col-6 {
+    width: 100% !important; /* 在小於600px的螢幕上，使列佔據整個寬度 */
+  }
+
+  .list-text {
+    font-size: 14px; /* 調整文字大小 */
+  }
+
+  .btn {
+    width: 100%; /* 讓按鈕佔據整個寬度 */
+  }
+}
