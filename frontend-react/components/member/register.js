@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import style from '@/styles/register.module.scss'
 import Image from 'next/image'
-import Form from 'react-bootstrap/Form'
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
+import { Button, Modal, Form } from 'react-bootstrap'
+import { FaStarOfLife } from 'react-icons/fa6'
 
 export default function RegisterPage() {
   const [showModal, setShowModal] = useState(false)
@@ -34,9 +33,12 @@ export default function RegisterPage() {
                           className={`btn ${style['google-btn']}`}
                         >
                           <span className="glyphicon glyphicon-remove" />
-                          <img
+                          <Image
                             className={style['google-img']}
                             src="/img/member/google.png"
+                            width={20}
+                            height={20}
+                            alt="google"
                           />
                           使用Google快速註冊
                         </button>
@@ -47,12 +49,14 @@ export default function RegisterPage() {
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="m_name"
-                            className="col-md-4 col-form-label text-md-right"
+                            className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
                           >
-                            會員暱稱
+                            <FaStarOfLife className={style['icon-padding']} />
+                            會員名稱
                           </label>
                           <div className="col-md-6">
                             <input
+                              style={{ borderRadius: '10px' }}
                               type="text"
                               id="m_name"
                               className="form-control"
@@ -64,12 +68,14 @@ export default function RegisterPage() {
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="m_account"
-                            className="col-md-4 col-form-label text-md-right"
+                            className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
                           >
+                            <FaStarOfLife className={style['icon-padding']} />
                             會員帳號
                           </label>
                           <div className="col-md-6">
                             <input
+                              style={{ borderRadius: '10px' }}
                               type="email"
                               id="m_account"
                               className="form-control"
@@ -82,12 +88,14 @@ export default function RegisterPage() {
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="m_pwd"
-                            className="col-md-4 col-form-label text-md-right"
+                            className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
                           >
+                            <FaStarOfLife className={style['icon-padding']} />
                             會員密碼
                           </label>
                           <div className="col-md-6">
                             <input
+                              style={{ borderRadius: '10px' }}
                               type="password"
                               id="m_pwd"
                               className="form-control"
@@ -100,8 +108,9 @@ export default function RegisterPage() {
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="gender"
-                            className="col-md-4 col-form-label text-md-right"
+                            className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
                           >
+                            <FaStarOfLife className={style['icon-padding']} />
                             性別
                           </label>
                           <div className="col-md-6">
@@ -115,12 +124,14 @@ export default function RegisterPage() {
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="birthday"
-                            className="col-md-4 col-form-label text-md-right"
+                            className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
                           >
+                            <FaStarOfLife className={style['icon-padding']} />
                             生日
                           </label>
                           <div className="col-md-6">
                             <input
+                              style={{ borderRadius: '10px' }}
                               type="date"
                               id="birthday"
                               className="form-control"
@@ -131,12 +142,14 @@ export default function RegisterPage() {
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="mobile"
-                            className="col-md-4 col-form-label text-md-right"
+                            className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
                           >
+                            <FaStarOfLife className={style['icon-padding']} />
                             手機
                           </label>
                           <div className="col-md-6">
                             <input
+                              style={{ borderRadius: '10px' }}
                               type="text"
                               id="mobile"
                               className="form-control"
@@ -149,12 +162,14 @@ export default function RegisterPage() {
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="address"
-                            className="col-md-4 col-form-label text-md-right"
+                            className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
                           >
+                            <FaStarOfLife className={style['icon-padding']} />
                             地址
                           </label>
                           <div className="col-md-6">
                             <textarea
+                              style={{ borderRadius: '10px' }}
                               type="text"
                               className="form-control"
                               id="address"

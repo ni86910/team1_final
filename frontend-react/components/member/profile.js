@@ -1,24 +1,13 @@
 import React from 'react'
+import Image from 'next/image'
+/* My module.scss */
 import style from '@/styles/profile.module.scss'
 import SideBar from '@/styles/m-sidebar.module.scss'
-import Image from 'next/image'
-
 /* React-Bootstrap */
-import Nav from 'react-bootstrap/Nav'
-import Navbar from 'react-bootstrap/Navbar'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-
+import { Button, Nav, Navbar, Form, Container, Row, Col } from 'react-bootstrap'
 /* React-icon */
-import { ImTruck } from 'react-icons/im'
-import { FaHourglassStart, FaCoins } from 'react-icons/fa'
-import { BsBookmarkHeartFill } from 'react-icons/bs'
-import { AiFillSchedule } from 'react-icons/ai'
-import { FaSackDollar, FaAddressCard } from 'react-icons/fa6'
 import { MdChangeCircle } from 'react-icons/md'
+import { FaStarOfLife } from 'react-icons/fa6'
 
 export default function ProfilePage() {
   // 上傳圖像
@@ -28,9 +17,8 @@ export default function ProfilePage() {
 
   return (
     <>
-      <section className={SideBar['center-container']}>
+      <section className={SideBar['member-center-container']}>
         {/* Side Bar Begin */}
-
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
             <Navbar.Brand href="#profile" className={SideBar['text-h4']}>
@@ -62,11 +50,19 @@ export default function ProfilePage() {
 
         {/* Profile Start */}
         <Container className={style['profile-section']}>
-          {/* Stack the columns on mobile by making one full-width and the other half-width */}
-          <Row className={style['profile-a']}>
+          <Container>
+            <Row>
+              <Col className={style['title']}>會員基本資料</Col>
+            </Row>
+          </Container>
+          {/* self-pic Start*/}
+          <Row className={style['profile-first-row']}>
             <Col className={style['self-pic']}>
-              <img
+              <Image
                 src="/img/member/profile-dog.png"
+                width={150}
+                height={100}
+                alt="selfie"
                 className={style['profile-img']}
               />
               <button
@@ -87,51 +83,129 @@ export default function ProfilePage() {
               <div className={style['member-date']}>永久效期</div>
             </Col>
             <Col className="col-6 col-md-4">
-              <img
+              <Image
                 src="/img/member/member-card.png"
-                className={style['member-card']}
+                width={280}
+                height={130}
+                alt="member-card"
               />
             </Col>
-          </Row>
-          {/* Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop */}
 
-          <Row className={style['profile']}>
-          <Col className={style['profile-col']}>
-              <Form className={style['profile-row']}>
-                <Form.Group className="mb-3 " controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" />
-                </Form.Group>
+            {/* self-pic End*/}
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-              </Form>
+            {/* Form Start*/}
+            <Row className={style['profile']}>
+              <Col className={style['profile-col']}>
+                <Form className={style['profile-row']}>
+                  <Form.Group
+                    className={`mb-3 ${style['label-name']}`}
+                    controlId="m_name"
+                  >
+                    <Form.Label className={style['label-text']}>
+                      <FaStarOfLife className={style['icon-padding']} />
+                      姓名
+                    </Form.Label>
+                    <Form.Control
+                      style={{ borderRadius: '10px' }}
+                      type="text"
+                      name="m_name"
+                      id="m_name"
+                      placeholder="請輸入名稱"
+                    />
+                  </Form.Group>
+                </Form>
+              </Col>
+              <Col className={style['profile-col']}>
+                <Form className={style['profile-row']}>
+                  <Form.Group
+                    className={`mb-3 ${style['label-name']}`}
+                    controlId="m_account"
+                  >
+                    <Form.Label className={style['label-text']}>
+                      <FaStarOfLife className={style['icon-padding']} />
+                      <div>信箱</div>
+                    </Form.Label>
+                    <Form.Control
+                      style={{ borderRadius: '10px' }}
+                      type="email"
+                      name="m_account"
+                      id="m_account"
+                      placeholder="請輸入信箱"
+                    />
+                  </Form.Group>
+                </Form>
+              </Col>
+            </Row>
+            <Row className={style['profile']}>
+              <Col className={style['profile-col']}>
+                <Form className={style['profile-row']}>
+                  <Form.Group
+                    className={`mb-3 ${style['label-name']}`}
+                    controlId="birthday"
+                  >
+                    <Form.Label className={style['label-text']}>
+                      <FaStarOfLife className={style['icon-padding']} />
+                      生日
+                    </Form.Label>
+                    <Form.Control
+                      style={{ borderRadius: '10px' }}
+                      type="date"
+                      name="birthday"
+                      id="birthday"
+                    />
+                  </Form.Group>
+                </Form>
+              </Col>
+              <Col className={style['profile-col']}>
+                <Form className={style['profile-row']}>
+                  <Form.Group
+                    className={`mb-3 ${style['label-name']}`}
+                    controlId="mobile"
+                  >
+                    <Form.Label className={style['label-text']}>
+                      <FaStarOfLife className={style['icon-padding']} />
+                      手機
+                    </Form.Label>
+                    <Form.Control
+                      style={{ borderRadius: '10px' }}
+                      type="text"
+                      name="mobile"
+                      id="mobile"
+                      placeholder="請輸入手機號碼 "
+                    />
+                  </Form.Group>
+                </Form>
+              </Col>
+            </Row>
+            <Col className={style['profile-col']}>
+              <Form.Group
+                className={`mb-3 ${style['label-name']}`}
+                controlId="address"
+              >
+                <Form.Label className={style['label-text']}>
+                  <FaStarOfLife className={style['icon-padding']} />
+                  地址
+                </Form.Label>
+                <Form.Control
+                  style={{ borderRadius: '10px' }}
+                  as="textarea"
+                  rows={2}
+                  name="address"
+                  id="address"
+                  placeholder="請輸入地址"
+                />
+              </Form.Group>
             </Col>
-          </Row>
-          <Row className={style['profile']}>
-            <Col className={style['profile-text']}>
-              <a className={style['a-color']} href="profile.html">
-                <FaAddressCard className={style['user-icons']} />
-              </a>
-              基本資料
-            </Col>
-            <Col className={style['profile-text']}>
-              <a className={style['a-color']} href="favorite.html">
-                <BsBookmarkHeartFill className={style['icons']} />
-              </a>
-              我的收藏
-            </Col>
-          </Row>
-          <Row className={style['profile']}>
-            <Col className={style['profile-text']}>
-              50
-              <div>
-                總點數
-                <FaSackDollar className={style['icons']} />
-              </div>
-            </Col>
+            <Row className={style['row-btn']}>
+              <Col xs="auto">
+                <Button
+                  as="input"
+                  type="submit"
+                  value="確認"
+                  className={style['edit-btn']}
+                />
+              </Col>
+            </Row>
           </Row>
         </Container>
       </section>

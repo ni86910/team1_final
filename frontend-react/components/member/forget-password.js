@@ -1,6 +1,7 @@
 import React from 'react'
 import style from '@/styles/forget-password.module.scss'
 import Image from 'next/image'
+import { FaStarOfLife } from 'react-icons/fa6'
 
 export default function ForgetPasswordPage() {
   return (
@@ -27,12 +28,14 @@ export default function ForgetPasswordPage() {
                           >
                             <label
                               htmlFor="m_account"
-                              className="col-md-4 col-form-label text-md-right"
+                              className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
                             >
+                              <FaStarOfLife className={style['icon-padding']} />
                               會員帳號
                             </label>
                             <div className="col-md-6">
                               <input
+                                style={{ borderRadius: '10px' }}
                                 type="email"
                                 id="m_account"
                                 className="form-control"
@@ -47,15 +50,15 @@ export default function ForgetPasswordPage() {
                           >
                             <label
                               htmlFor="password"
-                              className="col-md-4 col-form-label text-md-right"
+                              className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
                             >
+                              <FaStarOfLife className={style['icon-padding']} />
                               驗證碼
                             </label>
                             <div className="input_block">
-                              <p id="verify_code">
-                                驗證碼<span>*</span>
-                              </p>
+                              <p id="verify_code">圖片</p>
                               <input
+                                style={{ borderRadius: '10px' }}
                                 id="validText"
                                 type="text"
                                 placeholder="請輸入驗證碼"

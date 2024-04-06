@@ -34,6 +34,7 @@
 
 .google-img{
   width: 20px;
+  margin-right: 5px;
 }
 
 .google-btn,
@@ -61,6 +62,15 @@
   }
 }
 
+.label-text{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  .icon-padding{
+    padding-right:5px;
+    color: $primary-color;
+  }
+}
 
 /*----------------------------------------*/
 /* Register CSS END

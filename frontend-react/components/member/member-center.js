@@ -24,7 +24,7 @@ export default function MemberCenterPage() {
 
   return (
     <>
-      <section className={SideBar['center-container']}>
+      <section className={SideBar['member-center-container']}>
         {/* Side Bar Begin */}
 
         <Navbar className={SideBar['m-sidebar']}>
@@ -59,6 +59,11 @@ export default function MemberCenterPage() {
 
         {/* Member Center Start */}
         <Container className={style['member-section']}>
+          <Container>
+            <Row>
+              <Col className={style['title']}>會員中心</Col>
+            </Row>
+          </Container>
           {/* Stack the columns on mobile by making one full-width and the other half-width */}
           <Row className={style['profile']}>
             <Col className={style['self-pic']}>
