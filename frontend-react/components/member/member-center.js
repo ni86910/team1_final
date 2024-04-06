@@ -44,7 +44,6 @@ export default function MemberCenterPage() {
                 課程紀錄
               </Link>
               <Link className={SideBar['Nav-link']} href="#points">
-                {' '}
                 我的點數
               </Link>
               <Link className={SideBar['Nav-link']} href="#favorite">

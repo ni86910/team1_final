@@ -52,6 +52,9 @@ export default function FavoritePage() {
               <Link className={SideBar['Nav-link']} href="#member-center">
                 會員中心
               </Link>
+              <Link className={SideBar['Nav-link']} href="#profile">
+                個人資料
+              </Link>
               <Link className={SideBar['Nav-link']} href="#order">
                 我的訂單
               </Link>
