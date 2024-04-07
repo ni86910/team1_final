@@ -4,6 +4,7 @@ import { FaRegHeart, FaPlus } from 'react-icons/fa6'
 import style from '@/styles/product-detail.module.scss'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
+import Link from 'next/link'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -186,11 +187,8 @@ export default function ProductDetail() {
                   >
                     加入購物車
                   </button>
-                  <button
-                    href="#"
-                    className={`col-6 ${style['primary-checkout-btn']}`}
-                  >
-                    立即結帳
+                  <button className={`col-6 ${style['primary-checkout-btn']}`}>
+                    <Link href="/cart/checkout">立即結帳</Link>
                   </button>
                 </div>
               </div>

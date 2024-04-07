@@ -10,7 +10,6 @@ export default function OrderConfirmation() {
       <Head>
         <title>Fits U - 訂單成立</title>
       </Head>
-      <hr />
       <OrderConfirmationMain />
     </>
   )

@@ -1,13 +1,24 @@
 import React from 'react'
 import Link from 'next/link'
 import style from '@/styles/product-list.module.scss'
-import { FaRegHeart, FaCartArrowDown } from 'react-icons/fa6'
+import { FaRegHeart, FaCartArrowDown, FaDumbbell } from 'react-icons/fa6'
+import {
+  TbZoomMoney,
+  TbRulerMeasure,
+  TbMoodSmile,
+  TbShirtSport,
+  TbCup,
+  TbDeviceWatchBolt,
+  TbShoppingBag,
+} from 'react-icons/tb'
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
   MdKeyboardArrowLeft,
   MdKeyboardArrowRight,
 } from 'react-icons/md'
+import { PiArrowLineDownFill, PiArrowLineUpFill } from 'react-icons/pi'
+
 import { IMG_PATH } from '@/configs'
 
 export default function ProductList() {
@@ -28,17 +39,22 @@ export default function ProductList() {
                         type="checkbox"
                       />
                       <label htmlFor="s1" className={style['accordion-label']}>
-                        商品分類
+                        <TbShoppingBag /> 商品分類
                       </label>
                       <ul className={style['accordion-child']}>
                         <li>
-                          <label>
-                            <input type="checkbox" /> All - 全部商品
-                            <span>(105)</span>
-                          </label>
+                          <Link
+                            href="/product-list"
+                            className={style['all-product-link']}
+                          >
+                            All - 全部商品{' '}
+                          </Link>
+                          <span>(105)</span>
                         </li>
                         <li className={style['main-cate']}>
-                          <Link href="">室內健身</Link>
+                          <Link href="">
+                            <FaDumbbell /> 室內健身
+                          </Link>
                         </li>
                         <li>
                           <label>
@@ -68,7 +84,9 @@ export default function ProductList() {
                           </label>
                         </li>
                         <li className={style['main-cate']}>
-                          <Link href="">營養補給品</Link>
+                          <Link href="">
+                            <TbCup /> 營養補給品
+                          </Link>
                         </li>
                         <li>
                           <label>
@@ -86,7 +104,9 @@ export default function ProductList() {
                           </label>
                         </li>
                         <li className={style['main-cate']}>
-                          <Link href="">服飾及配件</Link>
+                          <Link href="">
+                            <TbShirtSport /> 服飾及配件
+                          </Link>
                         </li>
                         <li>
                           <label>
@@ -109,7 +129,9 @@ export default function ProductList() {
                           </label>
                         </li>
                         <li className={style['main-cate']}>
-                          <Link href="">智能運動系列</Link>
+                          <Link href="">
+                            <TbDeviceWatchBolt /> 智能運動系列
+                          </Link>
                         </li>
                         <li>
                           <label>
@@ -126,7 +148,7 @@ export default function ProductList() {
                         type="checkbox"
                       />
                       <label htmlFor="s2" className={style['accordion-label']}>
-                        性別
+                        <TbMoodSmile /> 性別
                       </label>
                       <ul className={style['accordion-child']}>
                         <li>
@@ -153,7 +175,7 @@ export default function ProductList() {
                         type="checkbox"
                       />
                       <label htmlFor="s3" className={style['accordion-label']}>
-                        服飾配件尺寸
+                        <TbRulerMeasure /> 尺寸
                       </label>
                       <ul className={style['accordion-child']}>
                         <li>
@@ -205,17 +227,19 @@ export default function ProductList() {
                         type="checkbox"
                       />
                       <label htmlFor="s4" className={style['accordion-label']}>
-                        價格區間
+                        <TbZoomMoney /> 價格區間
                       </label>
                       <ul className={style['accordion-child']}>
                         <div className={style['sc-original']}>
                           (原始區間：<span>NT$150</span>
-                          <span className={style['sc-dash']}>-</span>
+                          <span> - </span>
                           <span>NT$2,290</span>)
                         </div>
                         <div className={style['sc-range']}>
                           <div className={style['sc-bdy']}>
-                            <p className={style['sc-text']}>最低</p>
+                            <p className={style['sc-text']}>
+                              最低 <PiArrowLineDownFill />
+                            </p>
                             <input
                               type="number"
                               min={0}
@@ -223,9 +247,11 @@ export default function ProductList() {
                               defaultValue=""
                             />
                           </div>
-                          <div className={style['sc-range']}> － </div>
+                          <div className={style['sc-range']}> 至 </div>
                           <div className={style['sc-bdy']}>
-                            <p className={style['sc-text']}>最高</p>
+                            <p className={style['sc-text']}>
+                              最高 <PiArrowLineUpFill />
+                            </p>
                             <input
                               type="number"
                               min={0}
@@ -234,9 +260,18 @@ export default function ProductList() {
                             />
                           </div>
                         </div>
-                        <div className={style['sc-btn-filter']}>
-                          <button type="button" className={style['sc-btn']}>
+                        <div className={`row ${style['sc-btn-filter']}`}>
+                          <button
+                            type="button"
+                            className={`col-4 col ${style['sc-btn-price']}`}
+                          >
                             篩選
+                          </button>
+                          <button
+                            type="button"
+                            className={`col-4 ${style['sc-btn-reset']}`}
+                          >
+                            重置
                           </button>
                         </div>
                       </ul>
@@ -796,56 +831,90 @@ export default function ProductList() {
                   </div>
                 </div>
                 {/* 產品區塊 End */}
+                {/* product pagination Begin */}
+                <div className={`d-flex ${style['pagination-nav']}`}>
+                  <nav aria-label="Page navigation example">
+                    <ul className={`pagination mb-4`}>
+                      <li className="page-item">
+                        <Link
+                          className="page-link"
+                          href="#"
+                          aria-label="Previous"
+                        >
+                          <span aria-hidden="true">
+                            <MdKeyboardDoubleArrowLeft />
+                          </span>
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link
+                          className="page-link"
+                          href="#"
+                          aria-label="VeryFirst"
+                        >
+                          <span aria-hidden="true">
+                            <MdKeyboardArrowLeft />
+                          </span>
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link className="page-link" href="#">
+                          1
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link className="page-link" href="#">
+                          2
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link className="page-link" href="#">
+                          3
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link className="page-link" href="#">
+                          ...
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link className="page-link" href="#">
+                          7
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link className="page-link" href="#">
+                          8
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link className="page-link" href="#">
+                          9
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link className="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">
+                            <MdKeyboardArrowRight />
+                          </span>
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link
+                          className="page-link"
+                          href="#"
+                          aria-label="LastPage"
+                        >
+                          <span aria-hidden="true">
+                            <MdKeyboardDoubleArrowRight />
+                          </span>
+                        </Link>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+                {/* product pagination End */}
               </div>
-              {/* product pagination Begin */}
-              <nav aria-label="Page navigation example">
-                <ul className="pagination mb-4">
-                  <li className="page-item">
-                    <Link className="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">
-                        <MdKeyboardDoubleArrowLeft />
-                      </span>
-                    </Link>
-                  </li>
-                  <li className="page-item">
-                    <Link className="page-link" href="#" aria-label="VeryFirst">
-                      <span aria-hidden="true">
-                        <MdKeyboardArrowLeft />
-                      </span>
-                    </Link>
-                  </li>
-                  <li className="page-item">
-                    <Link className="page-link" href="#">
-                      1
-                    </Link>
-                  </li>
-                  <li className="page-item">
-                    <Link className="page-link" href="#">
-                      2
-                    </Link>
-                  </li>
-                  <li className="page-item">
-                    <Link className="page-link" href="#">
-                      3
-                    </Link>
-                  </li>
-                  <li className="page-item">
-                    <Link className="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">
-                        <MdKeyboardArrowRight />
-                      </span>
-                    </Link>
-                  </li>
-                  <li className="page-item">
-                    <Link className="page-link" href="#" aria-label="LastPage">
-                      <span aria-hidden="true">
-                        <MdKeyboardDoubleArrowRight />
-                      </span>
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
-              {/* product pagination End */}
             </div>
           </div>
         </div>

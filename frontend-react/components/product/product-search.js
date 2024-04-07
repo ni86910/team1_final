@@ -12,7 +12,7 @@ export default function ProductSearch() {
             <input
               type="text"
               name=""
-              placeholder="Search for..."
+              placeholder="輸入關鍵字 + Enter..."
               className={style['search-field']}
             />
             <button type="submit" className={style['search-icon']}>

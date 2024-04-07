@@ -11,8 +11,8 @@ export default function Product() {
       <Head>
         <title>Fits U - 健康商城</title>
       </Head>
-      <div style={{ marginTop: '80px' }}>
-          <ProductSearch />
+      <div style={{ marginTop: '80px', marginBottom: '30px' }}>
+        <ProductSearch />
         <ProductList />
       </div>
     </>
