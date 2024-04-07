@@ -112,11 +112,11 @@ export default function Article() {
                   width={300}
                   height={200}
                 />
-                <a href="#">
-                  <h5 className="card-title">
+                <Link href="#">
+                  <h5 className="article-title">
                     月經失調、體重暴增？瘦不下來竟是多囊惹的禍！
                   </h5>
-                </a>
+                </Link>
                 <p className="card-text">2024.03.21 |營養新知</p>
                 <p className="card-text">作者： xxx 營養師</p>
               </div>
@@ -132,11 +132,11 @@ export default function Article() {
                   width={300}
                   height={200}
                 />
-                <a href="#">
-                  <h5 className="card-title">
+                <Link href="#">
+                  <h5 className="article-title">
                     甜食控注意！糖上癮恐睡不著、心情差、慢性發炎
                   </h5>
-                </a>
+                </Link>
                 <p className="card-text">2024.03.21 |營養新知</p>
                 <p className="card-text">作者： xxx 營養師</p>
               </div>
@@ -152,8 +152,8 @@ export default function Article() {
                   width={300}
                   height={200}
                 />
-                <Link href="">
-                  <h5 className="card-title">
+                <Link href="#">
+                  <h5 className="article-title">
                     女性必知減重荷爾蒙: 沒搞懂這些激素，月經減重不會瘦!
                   </h5>
                 </Link>
@@ -180,7 +180,7 @@ export default function Article() {
                   height={200}
                 />
                 <Link href="#">
-                  <h5 className="card-title">
+                  <h5 className="article-title">
                     月經失調、體重暴增？瘦不下來竟是多囊惹的禍！
                   </h5>
                 </Link>
@@ -200,7 +200,7 @@ export default function Article() {
                   height={200}
                 />
                 <Link href="#">
-                  <h5 className="card-title">
+                  <h5 className="article-title">
                     甜食控注意！糖上癮恐睡不著、心情差、慢性發炎
                   </h5>
                 </Link>
@@ -220,7 +220,7 @@ export default function Article() {
                   height={200}
                 />
                 <Link href="">
-                  <h5 className="card-title">
+                  <h5 className="article-title">
                     女性必知減重荷爾蒙: 沒搞懂這些激素，月經減重不會瘦!
                   </h5>
                 </Link>
@@ -248,7 +248,7 @@ export default function Article() {
                   height={200}
                 />
                 <Link href="#">
-                  <h5 className="card-title">
+                  <h5 className="article-title">
                     月經失調、體重暴增？瘦不下來竟是多囊惹的禍！
                   </h5>
                 </Link>
@@ -268,7 +268,7 @@ export default function Article() {
                   height={200}
                 />
                 <Link href="#">
-                  <h5 className="card-title">
+                  <h5 className="article-title">
                     甜食控注意！糖上癮恐睡不著、心情差、慢性發炎
                   </h5>
                 </Link>
@@ -288,7 +288,7 @@ export default function Article() {
                   height={200}
                 />
                 <Link href="">
-                  <h5 className="card-title">
+                  <h5 className="article-title">
                     女性必知減重荷爾蒙: 沒搞懂這些激素，月經減重不會瘦!
                   </h5>
                 </Link>

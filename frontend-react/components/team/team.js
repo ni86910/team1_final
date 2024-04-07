@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 export default function Team() {
   return (
@@ -26,7 +27,12 @@ export default function Team() {
           <div className="row">
             <div className="col-lg-12">
               <div className="about__pic">
-                <img src="/img/team/about-us.jpg" alt="" />
+                <Image
+                  src="/img/team/about-us.jpg"
+                  width={1000}
+                  height={550}
+                  alt=""
+                />
               </div>
             </div>
           </div>
@@ -47,9 +53,11 @@ export default function Team() {
           <div className="row">
             <div className="col-lg-3 col-md-6 col-sm-6">
               <div className="team__item">
-                <img
+                <Image
                   src="/img/team/team-1.jpg"
                   alt=""
+                  width={500}
+                  height={350}
                   data-bs-toggle="modal"
                   data-bs-target="#modalJohnSmith"
                 />
@@ -80,7 +88,12 @@ export default function Team() {
                   </div>
                   <div className="modal-body">
                     {/* Add modal body content here */}
-                    <img src="/img/team/team-1.jpg" alt="" />
+                    <Image
+                      src="/img/team/team-1.jpg"
+                      alt=""
+                      width={250}
+                      height={300}
+                    />
                     <p>其他相關信息...</p>
                   </div>
                 </div>
@@ -96,7 +109,12 @@ export default function Team() {
                   data-bs-toggle="modal"
                   data-bs-target="#modalChristineWise"
                 >
-                  <img src="/img/team/team-2.jpg" alt="" />
+                  <Image
+                    src="/img/team/team-2.jpg"
+                    alt=""
+                    width={500}
+                    height={350}
+                  />
                 </div>
                 <h4>Christine Wise</h4>
                 <span>營養師</span>
@@ -125,7 +143,12 @@ export default function Team() {
                   </div>
                   <div className="modal-body">
                     {/* Add modal body content here */}
-                    <img src="/img/team/team-2.jpg" alt="" />
+                    <Image
+                      src="/img/team/team-2.jpg"
+                      alt=""
+                      width={250}
+                      height={300}
+                    />
                     <p>其他相關信息...</p>
                   </div>
                 </div>
@@ -139,7 +162,12 @@ export default function Team() {
                   data-bs-toggle="modal"
                   data-bs-target="#modalSeanRobbins"
                 >
-                  <img src="/img/team/team-3.jpg" alt="" />
+                  <Image
+                    src="/img/team/team-3.jpg"
+                    alt=""
+                    width={500}
+                    height={350}
+                  />
                 </div>
                 <h4>Sean Robbins</h4>
                 <span>營養師</span>
@@ -168,7 +196,12 @@ export default function Team() {
                   </div>
                   <div className="modal-body">
                     {/* Add modal body content here */}
-                    <img src="/img/team/team-3.jpg" alt="" />
+                    <Image
+                      src="/img/team/team-3.jpg"
+                      alt=""
+                      width={250}
+                      height={300}
+                    />
                     <p>其他相關信息...</p>
                   </div>
                 </div>
@@ -182,7 +215,12 @@ export default function Team() {
                   data-bs-toggle="modal"
                   data-bs-target="#modalLucyMyers"
                 >
-                  <img src="/img/team/team-4.jpg" alt="" />
+                  <Image
+                    src="/img/team/team-4.jpg"
+                    alt=""
+                    width={500}
+                    height={350}
+                  />
                 </div>
                 <h4>Lucy Myers</h4>
                 <span>健身教練</span>
@@ -211,7 +249,12 @@ export default function Team() {
                   </div>
                   <div className="modal-body">
                     {/* Add modal body content here */}
-                    <img src="/img/team/team-4.jpg" alt="" />
+                    <Image
+                      src="/img/team/team-4.jpg"
+                      alt=""
+                      width={250}
+                      height={300}
+                    />
                     <p>其他相關信息...</p>
                   </div>
                 </div>
@@ -236,42 +279,82 @@ export default function Team() {
           <div className="row">
             <div className="col-lg-3 col-md-4 col-sm-4 col-6">
               <a href="#" className="client__item">
-                <img src="/img/team/client-1.png" alt="" />
+                <Image
+                  src="/img/team/client-1.png"
+                  alt=""
+                  width={60}
+                  height={70}
+                />
               </a>
             </div>
             <div className="col-lg-3 col-md-4 col-sm-4 col-6">
               <a href="#" className="client__item">
-                <img src="/img/team/client-2.png" alt="" />
+                <Image
+                  src="/img/team/client-2.png"
+                  alt=""
+                  width={60}
+                  height={70}
+                />
               </a>
             </div>
             <div className="col-lg-3 col-md-4 col-sm-4 col-6">
               <a href="#" className="client__item">
-                <img src="/img/team/client-3.png" alt="" />
+                <Image
+                  src="/img/team/client-3.png"
+                  alt=""
+                  width={60}
+                  height={70}
+                />
               </a>
             </div>
             <div className="col-lg-3 col-md-4 col-sm-4 col-6">
               <a href="#" className="client__item">
-                <img src="/img/team/client-4.png" alt="" />
+                <Image
+                  src="/img/team/client-4.png"
+                  alt=""
+                  width={60}
+                  height={70}
+                />
               </a>
             </div>
             <div className="col-lg-3 col-md-4 col-sm-4 col-6">
               <a href="#" className="client__item">
-                <img src="/img/team/client-5.png" alt="" />
+                <Image
+                  src="/img/team/client-5.png"
+                  alt=""
+                  width={60}
+                  height={70}
+                />
               </a>
             </div>
             <div className="col-lg-3 col-md-4 col-sm-4 col-6">
               <a href="#" className="client__item">
-                <img src="/img/team/client-6.png" alt="" />
+                <Image
+                  src="/img/team/client-6.png"
+                  alt=""
+                  width={60}
+                  height={70}
+                />
               </a>
             </div>
             <div className="col-lg-3 col-md-4 col-sm-4 col-6">
               <a href="#" className="client__item">
-                <img src="/img/team/client-7.png" alt="" />
+                <Image
+                  src="/img/team/client-7.png"
+                  alt=""
+                  width={60}
+                  height={70}
+                />
               </a>
             </div>
             <div className="col-lg-3 col-md-4 col-sm-4 col-6">
               <a href="#" className="client__item">
-                <img src="/img/team/client-8.png" alt="" />
+                <Image
+                  src="/img/team/client-8.png"
+                  alt=""
+                  width={60}
+                  height={70}
+                />
               </a>
             </div>
           </div>

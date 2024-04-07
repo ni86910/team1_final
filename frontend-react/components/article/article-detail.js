@@ -2,6 +2,7 @@ import React from 'react'
 import style from '@/styles/jack-use/button.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
+import BookMark from './bookmark/bookmark'
 
 export default function ArticleDetail() {
   return (
@@ -33,21 +34,24 @@ export default function ArticleDetail() {
             靠運動預防肌少症 放下啞鈴比舉起啞鈴更有效？
           </h4>
           <p className="mt-4">2024.03.20 | 新手專區 | 徒手訓練</p>
+          <div className="col">
+            <BookMark />
+          </div>
         </div>
         <div className="row">
           <div className="col text-center">
-            <p className="mt-4">
-              長期以來，運動訓練都被視為預防肌少症 (Sarcopenia)
-              的重要方法，但你知道哪種肌力訓練方式更能有效地增強肌力嗎？一項
-              2016
-              年發表的研究發現，離心阻力運動對老年人的心肺需求較少，而且可能比以往許多研究關注的「漸進式阻力訓練」更能強化老人的肌肉組織、產生更多膠原蛋白，進一步強化關節、減少傷害。
-            </p>
             <Image
               src="/img/article/oldman.jpg"
               alt=""
               width={900}
               height={550}
             />
+            <p className="mt-4">
+              長期以來，運動訓練都被視為預防肌少症 (Sarcopenia)
+              的重要方法，但你知道哪種肌力訓練方式更能有效地增強肌力嗎？一項
+              2016
+              年發表的研究發現，離心阻力運動對老年人的心肺需求較少，而且可能比以往許多研究關注的「漸進式阻力訓練」更能強化老人的肌肉組織、產生更多膠原蛋白，進一步強化關節、減少傷害。
+            </p>
           </div>
           <h5 className="mt-4" style={{ marginTop: 20, marginBottom: 20 }}>
             離心運動 centrifugal exercise

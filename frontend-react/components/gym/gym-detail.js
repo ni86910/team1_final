@@ -17,7 +17,7 @@ import { GiSteam } from 'react-icons/gi'
 import Link from 'next/link'
 
 export default function GymDetail() {
-  const [data, setData] = useState(questions)
+  const [accordion, setAccordion] = useState(questions)
   return (
     <>
       {/* Breadcrumb Section Begin */}
@@ -155,7 +155,7 @@ export default function GymDetail() {
               </p>
             </div>
             <div className="row">
-              {data.map((curElem) => {
+              {accordion.map((curElem) => {
                 const { id } = curElem
                 return <Myaccordion key={id} {...curElem} />
               })}
