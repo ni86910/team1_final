@@ -30,7 +30,7 @@ export default function MemberCenterPage() {
 
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
-            <Navbar.Brand href="#home" className={SideBar['text-h4']}>
+            <Navbar.Brand href="#member-center" className={SideBar['text-h4']}>
               會員中心
             </Navbar.Brand>
             <Nav className={`me-auto ${SideBar['nav-side']}`}>
