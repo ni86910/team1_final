@@ -51,7 +51,7 @@ export default function CartMain() {
                           <span className={style['qt-minus']}>
                             <RxMinus />
                           </span>
-                          <div className={style['pro-qty-2']}>
+                          <div>
                             <input
                               className={style['qt-input']}
                               type="text"
