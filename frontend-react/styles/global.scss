@@ -20,10 +20,22 @@ $border-radius-lg: 0.2em;
 
 $dropdown-border-radius:50px;
 
+
 // ↑↑↑  變數覆蓋(Variable overrides) 要寫在這行"上面"  ↑↑↑
 // 導入所有 bootstrap 樣式
 @import '~bootstrap/scss/bootstrap';
 // ↓↓↓  其它客製樣式要寫在這行的"下面" ↓↓↓
+
+/* Toggle Switch 客製樣式 */
+.form-switch .form-check-input {
+  width: 2.8em;
+  height: 1.5em;
+
+  &:checked {
+    background-color: #EB6234;
+    border-color: #EB6234;
+  }
+}
 
 // google Noto Sans TC 字體
 @import 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap';

@@ -200,18 +200,21 @@ export default function CartMain() {
                       <h5 className={`col-6 ${style['cart-point-title']}`}>
                         點數折抵
                       </h5>
-                      <div
-                        className={`custom-control custom-switch custom-switch-lg col-6 d-flex justify-content-end ${style['cart-point-switch']}`}
-                      >
-                        <input
-                          type="checkbox"
-                          className={style['custom-control-input']}
-                          id="customSwitch2"
-                        />
-                        <label
-                          className={style['custom-control-label']}
-                          htmlFor="customSwitch2"
-                        />
+                      <div className={`col-6 d-flex justify-content-end`}>
+                        <div className="form-check form-switch">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckDefault"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="flexSwitchCheckDefault"
+                          >
+                            {' '}
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
