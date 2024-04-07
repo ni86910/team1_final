@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { IMG_PATH } from '@/configs'
-import { FaRegHeart, FaPlus } from 'react-icons/fa6'
 import style from '@/styles/product-detail.module.scss'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
 import Link from 'next/link'
+import { FaRegHeart, FaPlus, FaCartArrowDown } from 'react-icons/fa6'
+import { RxPlus, RxMinus, RxCross2 } from 'react-icons/rx'
+import { IMG_PATH } from '@/configs'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -22,16 +23,16 @@ export default function ProductDetail() {
     <>
       {/* Shop Details Section Begin */}
       <section className={`${style['shop-detail']} ${style['spad']}`}>
-        <div className={`container px-5`}>
+        <div className={`container px-2`}>
           <div className={`row`}>
-            <div className={`col-lg-12`}>
-              <div
+            <div className={`col-lg-12 mt-5`}>
+              {/* <div
                 className={`justify-content-center ${style['product-detail-breadcrumb']}`}
               >
                 <a href="#">首頁</a>
                 <a href="#">健康商城</a>
                 <span>商品詳細</span>
-              </div>
+              </div> */}
             </div>
             {/* Product Gallery Section Start */}
             <div
@@ -128,87 +129,99 @@ export default function ProductDetail() {
               </div>
               <br />
             </div>
+            {/* Product Gallery Section End */}
             {/* Product Options Section Start */}
             <div className={`col-xs-12 col-md-6 ${style['product-info']}`}>
-              <div className={style['product-detail-text']}>
+              <div className={`row ${style['product-detail-text']}`}>
                 <h2>女款棉質透氣訓練緊身褲</h2>
                 <h4>
                   NT$ 1,270.00 <span>NT$ 1,370</span>
                 </h4>
-                <div className={style['product-detail-option']}>
-                  <div className={style['product-detail-option-spec']}>
-                    <span
-                      className={`row justify-content-start`}
-                      style={{ fontWeight: 700, marginBottom: '10px' }}
-                    >
-                      請選擇規格:
-                    </span>
-                    <div className={`row ${style['choose-spec']}`}>
-                      <ul className={`d-flex justify-content-start`}>
-                        <a
-                          href="#"
-                          className={`col-4 ${style['choose-spec-option']}`}
-                        >
-                          1
-                        </a>
-                        <a
-                          href="#"
-                          className={`col-4 ${style['choose-spec-option']}`}
-                        >
-                          2
-                        </a>
-                        <a
-                          href="#"
-                          className={`col-4 ${style['choose-spec-option']}`}
-                        >
-                          3
-                        </a>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className={style['product-details-options-qty']}>
-                    {/* 數量增減的框還沒加上 */}
-                    <span
-                      className="row justify-content-start"
-                      style={{
-                        fontWeight: 700,
-                        marginTop: '30px',
-                        marginBottom: '10px',
-                      }}
-                    >
-                      數量:
-                    </span>
-                  </div>
-                </div>
-                <div className="row d-flex justify-content-center">
-                  <button
-                    href="#"
-                    className={`col-6 ${style['add-to-cart-btn']}`}
+              </div>
+              <div className={`row ${style['product-detail-option']}`}>
+                <div className={` ${style['product-detail-option-spec']}`}>
+                  <p
+                    className={``}
+                    style={{ fontWeight: 700, marginBottom: '10px' }}
                   >
-                    加入購物車
-                  </button>
-                  <button className={`col-6 ${style['primary-checkout-btn']}`}>
-                    <Link href="/cart/checkout">立即結帳</Link>
-                  </button>
+                    請選擇規格:
+                  </p>
+                  <div className={`${style['choose-spec']}`}>
+                    <ul className={`d-flex`}>
+                      <li className={`col-4`}>1</li>
+                      <li className={`col-4`}>2</li>
+                      <li className={`col-4`}>3</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className={`row ${style['product-details-options-qty']}`}>
+                  {/* 數量增減的框還沒加上 */}
+                  <p
+                    className={``}
+                    style={{
+                      fontWeight: 700,
+                      marginTop: '30px',
+                      marginBottom: '10px',
+                    }}
+                  >
+                    數量:
+                  </p>
+                  <td className={style['quantity-item']}>
+                    <div className={style['quantity']}>
+                      <span className={style['qt-minus']}>
+                        <RxMinus />
+                      </span>
+                      <div className={style['pro-qty-2']}>
+                        <input
+                          className={style['qt-input']}
+                          type="text"
+                          defaultValue={1}
+                        />
+                      </div>
+                      <span className={style['qt-plus']}>
+                        <RxPlus />
+                      </span>
+                    </div>
+                  </td>
+                </div>
+                <div className={style['product-details-stock-cate']}>
+                  <ul>
+                    <li>
+                      <span style={{ color: '#999999' }}>庫存數量:</span>{' '}
+                      <span style={{ color: '#EB6234' }}>23</span>
+                    </li>
+                    <li>
+                      <span style={{ color: '#999999' }}>商品分類:</span>{' '}
+                      <span style={{ color: '#EB6234' }}>
+                        服飾及配件＞配件專區
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </div>
-              <div className={style['product-details-btns-option']}>
-                <a href="#">
-                  <FaRegHeart /> 加入我的收藏
-                </a>{' '}
+              {/* 加入購物車/立即結帳按鈕 Start */}
+              <div className="row d-flex justify-content-center">
+                <Link href="#" className={`col-6 ${style['add-to-cart-btn']}`}>
+                  加入購物車
+                </Link>
+                <Link
+                  href="/cart/checkout"
+                  className={`col-6 ${style['primary-checkout-btn']}`}
+                >
+                  立即結帳
+                </Link>
               </div>
-              <div className={style['product-details-last-option']}>
-                <ul>
-                  <li>
-                    <span>庫存數量:</span> 23
-                  </li>
-                  <li>
-                    <span>商品分類:</span> 服飾及配件＞配件專區
-                  </li>
-                </ul>
+              {/* 加入購物車/立即結帳按鈕 End */}
+
+              <div
+                className={`d-flex justify-content-center ${style['product-details-btn-option']}`}
+              >
+                <Link href="#">
+                  <FaRegHeart /> 加入我的收藏
+                </Link>
               </div>
               <hr />
-              <p>
+              <p style={{ marginBottom: '80px' }}>
                 產品原名為Sato緊身褲，我們參考使用者的回饋全新設計Stretch緊身褲。更耐穿，更不透明，還可以讓你在運動提升自信。雙腿間搭配鑲布襯料，穿著更舒適。加寬腰帶，更為平坦。新款剪裁可貼合任何身形，提供最大的舒適感受。你會愛上這款全新Stretch緊身褲
               </p>
             </div>
@@ -228,98 +241,161 @@ export default function ProductDetail() {
           </div>
           <div className={`row`}>
             <div className={`col-lg-3 col-md-6 col-sm-6 col-sm-6`}>
-              <div className={style['related-product-item']}>
-                <div
-                  className={`${style['related-product-item-pic']} ${style['set-bg']}`}
+              <div className={style['product-item']}>
+                <Link
+                  href="//product-detail"
+                  className={`${style['product-item-pic']} ${style['set-bg']}`}
                 >
-                  <img src="img/products/product_acc_01_00_00.jpg" alt="" />
-                  <span className={style['label']}>新品</span>
-                  <ul className={style['product-hover']}>
-                    <li>
-                      <a href="#">
-                        <FaRegHeart />
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className={style['related-product-item-text']}>
-                  <h6>Piqué Biker Jacket</h6>
-                  <a href="#" className={style['add-cart']}>
-                    <FaPlus /> 加入購物車
-                  </a>
-                  <h5>$67.24</h5>
+                  <img
+                    src={`${IMG_PATH}/product_apparel_19_00_02.webp`}
+                    alt=""
+                  />
+                </Link>
+                <ul className={style['fav-button']}>
+                  <li>
+                    <Link
+                      href="#"
+                      style={{ color: '#ffffff', fontSize: '18px' }}
+                    >
+                      <FaRegHeart />
+                    </Link>
+                  </li>
+                </ul>
+                <ul className={style['add-cart-button']}>
+                  <li>
+                    <Link
+                      href="#"
+                      style={{ color: '#ffffff', fontSize: '18px' }}
+                    >
+                      <FaCartArrowDown />
+                    </Link>
+                  </li>
+                </ul>
+                <div className={`mt-3 ${style['product-item-text']}`}>
+                  <Link
+                    href="/product/product-detail"
+                    className={`${style['product-item-title']}`}
+                  >
+                    <p>平衡瑜珈墊11111</p>
+                  </Link>
+                  <span>NT$ 1,200</span>
                 </div>
               </div>
             </div>
             <div className={`col-lg-3 col-md-6 col-sm-6 col-sm-6`}>
-              <div className={style['related-product-item']}>
-                <div
-                  className={`${style['related-product-item-pic']} ${style['set-bg']}`}
+              <div className={style['product-item']}>
+                <Link
+                  href="//product-detail"
+                  className={`${style['product-item-pic']} ${style['set-bg']}`}
                 >
-                  <img src="img/products/product_relax_02_00_00.webp" alt="" />
-                  <ul className={style['product-hover']}>
-                    <li>
-                      <a href="#">
-                        <FaRegHeart />
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className={style['related-product-item-text']}>
-                  <h6>Piqué Biker Jacket</h6>
-                  <a href="#" className={style['add-cart']}>
-                    <FaPlus /> 加入購物車
-                  </a>
-                  <h5>$67.24</h5>
+                  <img src={`${IMG_PATH}/product_drink_02_00_01.jpg`} alt="" />
+                </Link>
+                <ul className={style['fav-button']}>
+                  <li>
+                    <Link
+                      href="#"
+                      style={{ color: '#ffffff', fontSize: '18px' }}
+                    >
+                      <FaRegHeart />
+                    </Link>
+                  </li>
+                </ul>
+                <ul className={style['add-cart-button']}>
+                  <li>
+                    <Link
+                      href="#"
+                      style={{ color: '#ffffff', fontSize: '18px' }}
+                    >
+                      <FaCartArrowDown />
+                    </Link>
+                  </li>
+                </ul>
+                <div className={`mt-3 ${style['product-item-text']}`}>
+                  <Link
+                    href="/product/product-detail"
+                    className={`${style['product-item-title']}`}
+                  >
+                    <p>平衡瑜珈墊11111</p>
+                  </Link>
+                  <span>NT$ 1,200</span>
                 </div>
               </div>
             </div>
             <div className={`col-lg-3 col-md-6 col-sm-6 col-sm-6`}>
-              <div
-                className={`${style['related-product-item']} ${style['sale']}`}
-              >
-                <div
-                  className={`${style['related-product-item-pic']} ${style['set-bg']}`}
+              <div className={style['product-item']}>
+                <Link
+                  href="//product-detail"
+                  className={`${style['product-item-pic']} ${style['set-bg']}`}
                 >
-                  <img src="img/products/product_bottle_01_01_00.webp" alt="" />
-                  <span className={style['label']}>特惠</span>
-                  <ul className={style['product-hover']}>
-                    <li>
-                      <a href="#">
-                        <FaRegHeart />
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className={style['related-product-item-text']}>
-                  <h6>Multi-pocket Chest Bag</h6>
-                  <a href="#" className={style['add-cart']}>
-                    <FaPlus /> 加入購物車
-                  </a>
-                  <h5>$43.48</h5>
+                  <img src={`${IMG_PATH}/product_gym_09_01_00.webp`} alt="" />
+                </Link>
+                <ul className={style['fav-button']}>
+                  <li>
+                    <Link
+                      href="#"
+                      style={{ color: '#ffffff', fontSize: '18px' }}
+                    >
+                      <FaRegHeart />
+                    </Link>
+                  </li>
+                </ul>
+                <ul className={style['add-cart-button']}>
+                  <li>
+                    <Link
+                      href="#"
+                      style={{ color: '#ffffff', fontSize: '18px' }}
+                    >
+                      <FaCartArrowDown />
+                    </Link>
+                  </li>
+                </ul>
+                <div className={`mt-3 ${style['product-item-text']}`}>
+                  <Link
+                    href="/product/product-detail"
+                    className={`${style['product-item-title']}`}
+                  >
+                    <p>平衡瑜珈墊11111</p>
+                  </Link>
+                  <span>NT$ 1,200</span>
                 </div>
               </div>
             </div>
             <div className={`col-lg-3 col-md-6 col-sm-6 col-sm-6`}>
-              <div className={style['related-product-item']}>
-                <div
-                  className={`${style['related-product-item-pic']} ${style['set-bg']}`}
+              <div className={style['product-item']}>
+                <Link
+                  href="//product-detail"
+                  className={`${style['product-item-pic']} ${style['set-bg']}`}
                 >
-                  <img src="img/products/product_bag_02_00_00.webp" alt="" />
-                  <ul className={style['product-hover']}>
-                    <li>
-                      <a href="#">
-                        <FaRegHeart />
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className={style['related-product-item-text']}>
-                  <h6>Diagonal Textured Cap</h6>
-                  <a href="#" className={style['add-cart']}>
-                    <FaPlus /> 加入購物車
-                  </a>
-                  <h5>$60.9</h5>
+                  <img src={`${IMG_PATH}/product_yoga_05_00_02.webp`} alt="" />
+                </Link>
+                <ul className={style['fav-button']}>
+                  <li>
+                    <Link
+                      href="#"
+                      style={{ color: '#ffffff', fontSize: '18px' }}
+                    >
+                      <FaRegHeart />
+                    </Link>
+                  </li>
+                </ul>
+                <ul className={style['add-cart-button']}>
+                  <li>
+                    <Link
+                      href="#"
+                      style={{ color: '#ffffff', fontSize: '18px' }}
+                    >
+                      <FaCartArrowDown />
+                    </Link>
+                  </li>
+                </ul>
+                <div className={`mt-3 ${style['product-item-text']}`}>
+                  <Link
+                    href="/product/product-detail"
+                    className={`${style['product-item-title']}`}
+                  >
+                    <p>平衡瑜珈墊11111</p>
+                  </Link>
+                  <span>NT$ 1,200</span>
                 </div>
               </div>
             </div>
