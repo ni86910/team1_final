@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from '@/styles/cart-main.module.scss'
 import Link from 'next/link'
 import { FaRegHeart } from 'react-icons/fa6'
 import { RxPlus, RxMinus, RxCross2 } from 'react-icons/rx'
 import { IoReturnDownBackOutline } from 'react-icons/io5'
 import { MdShoppingCartCheckout } from 'react-icons/md'
-
 import { IMG_PATH } from '@/configs'
 
 export default function CartMain() {
+  const [isToggled, setIsToggled] = useState(false)
+
+  const handleToggleSwitchChange = () => {
+    setIsToggled(!isToggled)
+  }
+
   return (
     <>
       {/* Shopping Cart Section Begin */}
@@ -207,6 +212,8 @@ export default function CartMain() {
                             type="checkbox"
                             role="switch"
                             id="flexSwitchCheckDefault"
+                            checked={isToggled}
+                            onChange={handleToggleSwitchChange}
                           />
                           <label
                             className="form-check-label"
@@ -226,7 +233,11 @@ export default function CartMain() {
                       </div>
                       <div className={`col-6 ${style['cart-point-input']}`}>
                         <label htmlFor="input_id">- NT$</label>
-                        <input type="text" placeholder=" " />
+                        {isToggled ? (
+                          <input type="text" placeholder=" " />
+                        ) : (
+                          <input type="text" placeholder=" " disabled />
+                        )}
                       </div>
                     </div>
                   </div>
