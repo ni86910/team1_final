@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from 'next/image'
 /* My module.scss */
 import style from '@/styles/profile.module.scss'
@@ -10,6 +10,11 @@ import { MdChangeCircle } from 'react-icons/md'
 import { FaStarOfLife } from 'react-icons/fa6'
 
 export default function ProfilePage() {
+  const [profile, setProfile] = useEffect([])
+  useEffect(()=>{
+    fetch(`${API_SEVER}`)
+  })
+
   // 上傳圖像
   const handleFileUpload = () => {
     document.getElementById('file0').click() // 點擊隱藏的檔案輸入欄位
@@ -130,7 +135,7 @@ export default function ProfilePage() {
                       type="email"
                       name="m_account"
                       id="m_account"
-                      placeholder="請輸入信箱"
+                      defaultValue={v.m_account}
                     />
                   </Form.Group>
                 </Form>
