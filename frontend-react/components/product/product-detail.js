@@ -166,7 +166,7 @@ export default function ProductDetail() {
                   >
                     數量:
                   </p>
-                  <td className={style['quantity-item']}>
+                  <div className={style['quantity-item']}>
                     <div className={style['quantity']}>
                       <span className={style['qt-minus']}>
                         <RxMinus />
@@ -182,7 +182,7 @@ export default function ProductDetail() {
                         <RxPlus />
                       </span>
                     </div>
-                  </td>
+                  </div>
                 </div>
                 <div className={style['product-details-stock-cate']}>
                   <ul>
