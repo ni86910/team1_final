@@ -18,6 +18,7 @@ import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules'
 
 export default function ProductDetail() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
+  const [count, setCount] = useState(0)
 
   return (
     <>
@@ -168,19 +169,29 @@ export default function ProductDetail() {
                   </p>
                   <div className={style['quantity-item']}>
                     <div className={style['quantity']}>
-                      <span className={style['qt-minus']}>
+                      <button
+                        className={style['qt-minus']}
+                        onClick={() => {
+                          setCount(count - 1)
+                        }}
+                      >
                         <RxMinus />
-                      </span>
+                      </button>
                       <div className={style['pro-qty-2']}>
                         <input
                           className={style['qt-input']}
                           type="text"
-                          defaultValue={1}
+                          Value={count}
                         />
                       </div>
-                      <span className={style['qt-plus']}>
+                      <button
+                        className={style['qt-plus']}
+                        onClick={() => {
+                          setCount(count + 1)
+                        }}
+                      >
                         <RxPlus />
-                      </span>
+                      </button>
                     </div>
                   </div>
                 </div>
