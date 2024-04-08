@@ -1706,13 +1706,8 @@ ol {
 	position: absolute;
 	right: -14px;
 	top: 0;
-<<<<<<< HEAD
-	content: ">";
-	font-family: "FontAwesome";
-=======
 	content: "＞";
 	font-family: 'Francois One';
->>>>>>> origin/main
 }
 
 .breadcrumb-links span {
