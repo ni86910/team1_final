@@ -63,11 +63,6 @@ export default function PointsPage() {
               <div className={style['points-number']}>50</div>
               <div>我的點數</div>
             </Col>
-
-            <Col className={style['point-right']}>
-              <div className={style['points-number']}>70</div>
-              <div>評論點數</div>
-            </Col>
           </Row>
           {/* First Point Container End */}
 
