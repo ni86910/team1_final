@@ -140,7 +140,7 @@ export default function MemberCenterPage() {
               <a className={style['a-color']} href="course-records.html">
                 <AiFillSchedule className={style['class-icons']} />
               </a>
-              課程預約
+              課程評價
             </Col>
           </Row>
           <Row className={style['list']}>
