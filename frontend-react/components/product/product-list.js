@@ -361,11 +361,11 @@ export default function ProductList() {
                           className={`${style['product-item-pic']} ${style['set-bg']}`}
                         >
                           <img
-                            src={
+                            src={`/img/products/${
                               v.image.includes(',')
-                                ? `/${v.image.split(',')[0]}`
-                                : `/${v.image}`
-                            }
+                                ? v.image.split(',')[0]
+                                : v.image
+                            }`}
                             alt={v.product_name}
                           />
                         </Link>
