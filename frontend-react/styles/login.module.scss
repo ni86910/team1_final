@@ -78,6 +78,10 @@ text-align: center;
     color: $primary-color;
   }
 }
+.error{
+  color: red;
+  font-size: 12px;
+}
 
 @media (max-width: 600px) {
   .login-section{
