@@ -1,0 +1,102 @@
+.info-section {
+  .img-box {
+    height: 500px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    .class-img {
+      object-fit: cover;
+    }
+  }
+  .control-bar {
+    height: 80px;
+    background-color: #2e2e2e;
+    .shortcut-group {
+      height: 100%;
+      margin: auto;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      .shortcut {
+        margin: 0 15px;
+      }
+    }
+  }
+  .content {
+    padding: 100px 0;
+    .text-box {
+      width: 60%;
+      margin: auto;
+      .class-name {
+        margin-bottom: 20px;
+      }
+    }
+  }
+  .search-class {
+    height: 200px;
+    background-color: #2e2e2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .search-class-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 80%;
+      .title {
+        display: flex;
+        align-items: center;
+        i {
+          color: chocolate;
+          font-size: larger;
+          margin-right: 20px;
+        }
+        h2 {
+          color: white;
+          font-size: x-large;
+        }
+      }
+      .select-group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 800px;
+        width: 100%;
+        margin-left: 20px;
+        .select-city,
+        .select-store {
+          height: 60px;
+          width: 45%;
+          min-width: 200px;
+          max-width: 400px;
+          background-color: #ededed;
+          border-radius: 50px;
+          padding: 0 40px;
+          margin: 10px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+      .search-btn {
+        width: 50px;
+        height: 50px;
+        background-color: chocolate;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50px;
+        .search {
+        }
+      }
+    }
+  }
+}
+.other-class-section {
+  height: 800px;
+}

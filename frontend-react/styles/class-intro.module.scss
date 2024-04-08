@@ -1,0 +1,183 @@
+$orange: #ed7c15;
+$black: #000000;
+$black2: #2e2e2e;
+$gray: #f1f1f1;
+$white: #ffffff;
+
+.banner {
+  margin-top: 100px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 700;
+  }
+}
+.intro-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  position: absolute;
+  left:0%;
+  transition: all .5s ease-in-out;
+  overflow: hidden;
+}
+.hide {
+  // display: none;
+  left:-100%;
+  // transition: left .5s ease-in-out;
+  // opacity: 0.5;
+  z-index: -1;
+}
+.category-nav {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  height: 100px;
+  width: 100%;
+  background: #f3f2ee;
+  // margin-top: 50px;
+  // margin-bottom: 50px;
+  .categories {
+    display: flex;
+    width: 60%;
+    height: 100%;
+    padding: 0;
+    justify-content: space-between;
+    align-items: center;
+    a {
+      font-size: 16px;
+      font-weight: 700;
+      color: #000000;
+      & :active {
+        color: $orange;
+      }
+      &:visited {
+        color: $black;
+      }
+      &:hover {
+        color: $orange;
+      }
+      transition: all 0.2s ease-in;
+    }
+  }
+  .more-btn {
+    background-color: $orange;
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    top: 25%;
+    left: 90%;
+  }
+}
+.category-intro {
+  background-color: $gray;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 120px;
+  width: 100%;
+  h2 {
+    font-size: 32px;
+    font-weight: 700;
+  }
+  .select-bar {
+    width: 280px;
+    height: 50px;
+    background-color: $orange;
+    border-radius: 50px;
+    line-height: 50px;
+    padding: 0 30px 0 30px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    p {
+      line-height: 50px;
+      font-weight: 700;
+      margin: 0;
+    }
+    i {
+      line-height: 50px;
+    }
+  }
+}
+.classes {
+  overflow: hidden;
+  width: 100%;
+  .class {
+    display: flex;
+    height: 500px;
+    // flex-wrap: wrap;
+    .img-box {
+      width: 55%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      img {
+        object-fit: cover;
+      }
+    }
+    .class-content {
+      background-color: $black2;
+      display: flex;
+      flex-direction: column;
+      padding: 70px 50px;
+      width: 45%;
+      min-width: 320px;
+      .class-content-box{
+        margin: auto;
+        .class-name {
+          font-size: 32px;
+          margin-bottom: 20px;
+          font-weight: 700;
+          color: white;
+        }
+        .class-info {
+          margin-bottom: 20px;
+          line-height: 28px;
+          letter-spacing: 0.5px;
+          color: white;
+
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2; //多行在这里修改数字即可
+          overflow:hidden;
+          -webkit-box-orient: vertical;
+        }
+        .learn-more {
+          width: 90px;
+          height: 90px;
+          background-color: $orange;
+          line-height: 90px;
+          text-align: center;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .class:nth-child(even){
+    flex-direction: row-reverse;
+    .class-content {
+      background-color: $gray;
+      .class-content-box{
+        .class-info,.class-name{
+          color: $black;
+        }
+      }
+    }
+  }
+}
