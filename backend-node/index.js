@@ -1,7 +1,7 @@
 import express from "express";
 // import sales from "./data/sales.json" assert { type: "json" };
 import upload from "./utils/upload-imgs.js";
-import admin2Router from "./routes/admin2.js";
+// import admin2Router from "./routes/admin2.js";
 import abRouter from "./routes/address-book.js";
 import session from "express-session";
 import mysql_session from "express-mysql-session";

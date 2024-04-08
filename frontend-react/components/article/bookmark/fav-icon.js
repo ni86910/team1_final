@@ -1,4 +1,4 @@
-import { FaBookmark, FaRegBookmark } from 'react-icons/fa6'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import style from '@/styles/jack-use/button.module.css'
 
 import React, { useState } from 'react'
@@ -14,7 +14,7 @@ function BookmarkButton({ onToggle }) {
 
   return (
     <button className={style['btn']} onClick={handleToggle}>
-      {isBookmarked ? <FaBookmark /> : <FaRegBookmark />}
+      {isBookmarked ? <FaHeart /> : <FaRegHeart />}
     </button>
   )
 }
