@@ -24,12 +24,15 @@ $white: #ffffff;
   height: fit-content;
   position: absolute;
   left:0%;
-  transition: left .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  overflow: hidden;
 }
 .hide {
-  display: none;
+  // display: none;
   left:-100%;
-  transition: left .5s ease-in-out;
+  // transition: left .5s ease-in-out;
+  // opacity: 0.5;
+  z-index: -1;
 }
 .category-nav {
   display: flex;
@@ -110,6 +113,8 @@ $white: #ffffff;
   }
 }
 .classes {
+  overflow: hidden;
+  width: 100%;
   .class {
     display: flex;
     height: 500px;
@@ -122,8 +127,7 @@ $white: #ffffff;
       overflow: hidden;
       position: relative;
       img {
-        width: 100%;
-        min-width: 650px;
+        object-fit: cover;
       }
     }
     .class-content {
@@ -160,6 +164,7 @@ $white: #ffffff;
           line-height: 90px;
           text-align: center;
           border-radius: 50%;
+          cursor: pointer;
         }
       }
     }

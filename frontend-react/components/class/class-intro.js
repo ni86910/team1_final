@@ -1,11 +1,14 @@
 import { useRef, useEffect, useState } from 'react'
 import style from '@/styles/class-intro.module.scss'
-import { FaSortDown } from 'react-icons/fa'
+import { FaSortDown } from 'react-icons/fa6'
 import Link from 'next/link'
 import { API_SERVER } from '../common/config'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 export default function ClassIntro({ setContainerHeight, tab }) {
+  const router = useRouter()
+
   // 用狀態接收fetch來的課程介紹資料
   const [introData, setIntroData] = useState()
 
@@ -18,17 +21,36 @@ export default function ClassIntro({ setContainerHeight, tab }) {
     tab === 'left'
       ? setContainerHeight(sectionRef.current.clientHeight + 'px')
       : () => {}
-  }, [tab])
+  }, [introData, tab])
 
-  // 取得課程介紹資料
+  // // 取得課程介紹資料
+  // useEffect(() => {
+  //   fetch(`${API_SERVER}/class`, { credentials: 'include' })
+  //     .then((r) => r.json())
+  //     .then((data) => {
+  //       console.log(data)
+  //       setIntroData(data)
+  //     })
+  // }, [])
+
+  // 取得課程類別介紹資料
   useEffect(() => {
-    fetch(`${API_SERVER}/class`, { credentials: 'include' })
-      .then((r) => r.json())
-      .then((data) => {
-        console.log(data)
-        setIntroData(data)
+    if (router.isReady) {
+      // 確保能得到pid
+      const class_type = router.query.class_type || '靜態課程'
+      // console.log(class_type)
+      console.log(router.query.class_type)
+      fetch(`${API_SERVER}/class?class_type=${class_type}`, {
+        credentials: 'include',
       })
-  }, [])
+        .then((r) => r.json())
+        .then((data) => {
+          console.log(data)
+          setIntroData(data)
+          // router.push(`?class_type=${class_type}`)
+        })
+    }
+  }, [router.isReady, router.query])
 
   return (
     <>
@@ -42,20 +64,29 @@ export default function ClassIntro({ setContainerHeight, tab }) {
       >
         <div className={style['category-nav']}>
           <div className={style['categories']}>
-            <Link href="">印度瑜珈</Link>
-            <Link href="">強力健身</Link>
-            <Link href="">活力有氧</Link>
-            <Link href="">空中瑜珈</Link>
-            <Link href="">健身</Link>
-            <Link href="">活力有氧</Link>
+            <Link href="?class_type=靜態課程" scroll={false}>
+              靜態課程
+            </Link>
+            <Link href="?class_type=飛輪課程" scroll={false}>
+              飛輪課程
+            </Link>
+            <Link href="?class_type=心肺訓練課程" scroll={false}>
+              心肺訓練課程
+            </Link>
+            <Link href="?class_type=舞蹈課程" scroll={false}>
+              舞蹈課程
+            </Link>
+            <Link href="?class_type=radical課程" scroll={false}>
+              radical課程
+            </Link>
           </div>
           <div className={style['more-btn']}>+</div>
         </div>
         <div className={style['category-intro']}>
-          <h2 className={style['category-name']}>靜態課程</h2>
-          <p className={style['category-desc']}>
-            靜態課程相關介紹，課程並包含完整的瑜珈、皮拉提斯、和緩運動。
-          </p>
+          <h2 className={style['category-name']}>
+            {introData ? introData[0].class_type : ''}
+          </h2>
+          <p className={style['category-desc']}>選擇課程以查看更多資訊</p>
           <div className={style['select-bar']}>
             <p>查看課程</p>
             <FaSortDown />
@@ -70,11 +101,9 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                 <div key={i} className={style['class']}>
                   <div className={style['img-box']}>
                     <Image
-                      src={`/img/class/class-page/${v['class_img']}`}
+                      src={`http://localhost:3001/imgs/class/class-page/${v['class_img']}`}
                       alt=""
-                      // fill={true}
-                      height={500}
-                      width={650}
+                      fill
                     />
                   </div>
                   <div className={style['class-content']}>
@@ -83,7 +112,15 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                       <p className={style['class-info']}>
                         {v['class_description']}
                       </p>
-                      <div className={style['learn-more']}>+</div>
+                      <div
+                        className={style['learn-more']}
+                        onClick={() => {
+                          router.push(`/class/${v.class_id}`)
+                        }}
+                        role="presentation"
+                      >
+                        +
+                      </div>
                     </div>
                   </div>
                 </div>
