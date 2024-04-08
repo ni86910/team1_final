@@ -1,0 +1,316 @@
+@import "variable";
+
+/*---------------------
+  Shopping Cart
+-----------------------*/
+
+.spad {
+    background-color: $gray-color;
+}
+
+.shopping-cart-table {
+	margin-bottom: 30px;
+	background-color: #ffffff;
+	// border-radius: 8px;
+    // box-shadow: 3px 3px 2px #b7b7b7;	
+	padding-left: 30px;
+	padding-top: 20px;
+	padding-right: 20px;
+}
+
+.shopping-cart-table table {
+	width: 100%;
+}
+
+.shopping-cart-table table thead {
+	border-bottom: 1px solid #f2f2f2;
+}
+
+.shopping-cart-table table thead tr th {
+	color: #111111;
+	font-size: 16px;
+	font-weight: 700;
+	text-transform: uppercase;
+	padding-bottom: 25px;
+}
+
+.shopping-cart-table table tbody tr {
+	border-bottom: 1px solid #f2f2f2;
+	
+}
+
+.shopping-cart-table table tbody tr td {
+	padding-bottom: 30px;
+	padding-top: 30px;
+}
+
+.shopping-cart-table table tbody tr td.product-cart-item {
+	width: 400px;
+}
+
+.shopping-cart-table table tbody tr td.product-cart-item .product-cart-item-pic {
+	float: left;
+	margin-right: 30px;
+	width: 90px;
+	height: 90px;
+}
+
+.shopping-cart-table table tbody tr td.product-cart-item .product-cart-item-text {
+	overflow: hidden;
+	padding-top: 21px;
+}
+
+.shopping-cart-table table tbody tr td.product-cart-item .product-cart-item-text h6 {
+	color: #111111;
+	font-size: 15px;
+	font-weight: 600;
+	margin-bottom: 5px;
+}
+
+.shopping-cart-table table tbody tr td.product-cart-item .product-cart-item-text h5 {
+	color: #000000;
+	font-weight: 700;
+    margin-top: 10px;
+}
+
+.product-cart-item-text span {
+    color: #666666;
+    font-size: 13px;
+}
+
+.shopping-cart-table table tbody tr td.quantity-item {
+	width: 150px;
+}
+
+
+.shopping-cart-table table tbody tr td.cart-full-price {
+	color: #EB6234;
+	font-size: 18px;
+	font-weight: 700;
+	width: 140px;
+}
+
+.quantity {
+	display: flex; /* 设置为 Flex 容器 */
+	flex-direction: row; /* 设置为行 */
+	justify-content: center; /* 水平居中对齐 */
+	align-items: center; /* 水平居中对齐 */
+	width: 100px;
+    margin: auto 15px;
+}
+
+/* 不再需要 display: inline-block; 和 width, height 属性 */
+
+.qt-input {
+    height: 32px;
+    width: 40px;
+	font-size: 16px;
+    font-weight: 600;
+	line-height: 100%;
+	text-align: center;
+    color: $primary-color;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+}
+
+.qt-plus, .qt-minus {
+    width: 68px;
+    height: 28px;
+	background: $gray-color;
+	border: 0.5px solid $gray-color;
+    border-radius: 50%;
+	padding: 1px 5px;
+	margin: 0 5px;
+	-webkit-transition: background .2s linear;
+	-moz-transition: background .2s linear;
+	-ms-transition: background .2s linear;
+	-o-transition: background .2s linear;
+	transition: background .2s linear;
+}
+
+.qt-plus:hover, .qt-minus:hover {
+	background: none;
+	color: $primary-color;
+	border: 0.5px solid $primary-color;
+	cursor: pointer;
+}
+
+/* 不再需要 .qt-plus 和 .qt-minus 分别设置 line-height 属性 */
+/* .qt-plus 和 .qt-minus 保持默认垂直排列 */
+/* 如果需要调整 .qt-plus 和 .qt-minus 的间距，可以添加 margin 或者调整 padding */
+
+.cross-icon {
+
+    &:hover{
+    color: $primary-color;
+    }
+}
+
+
+.continue-btn a {
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 5px;
+	text-align: center;
+	width: 200px;
+    border-radius: 50px;
+    padding: 14px 35px;
+    display: inline-block;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+}
+
+.continue-btn a:hover {
+    background-color: $primary-color;
+    color: #ffffff;
+    text-align: center;
+    width: 280px;    
+	letter-spacing: 10px;
+}
+
+
+.cart-point-BlockContainer {
+	margin-bottom: 60px;
+	width: 100%;
+	padding: 20px;
+	background: #ffffff;
+}
+
+.cart-point-BlockTitle h5{
+	font-weight: 700;
+	line-height: 100%;
+}
+
+.cart-point-switch {
+	line-height: 100%;
+}
+
+.cart-point-BlockRow {
+	margin-top: 12px;
+}
+
+.cart-point-status {
+	line-height: 100%;
+    margin-top: 10px;
+}
+
+.cart-point-points {
+    margin: 0 5px 0 5px;
+    color: $primary-color;
+    font-weight: 700;
+}
+
+.cart-point-input input {
+	width: 60px;
+	font-size: 16px;
+    color: $primary-color;
+    height: 32px;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+	line-height: 100%;
+    margin-left: 8px;
+    padding-left: 8px;
+}
+
+.cart-point-MaskContainer form {
+	position: relative;
+	width: 100%;
+}
+
+.cart-point-BlockRow form input {
+	font-size: 14px;
+	color: #b7b7b7;
+	height: 40px;
+	border: 1px solid #e1e1e1;
+	padding-left: 20px;
+	margin-right: 15px;
+}
+
+ /* Add class `.custom-switch-lg` to a `custom-switch` */
+ .custom-switch.custom-switch-lg {
+	padding-bottom: 1rem;
+	  padding-left: 2.25rem;
+  
+	& .custom-control-label {
+	  padding-left: .75rem;
+	  padding-top: 0.15rem;
+  
+	  &::before {
+		border-radius: 1rem;
+		height: 1.5rem;
+		width: 2.5rem;
+	  }
+  
+	  &::after {
+			  border-radius: .65rem;
+		height: calc(1.5rem - 4px);
+		width: calc(1.5rem - 4px);
+	  }
+	}
+	  
+	  .custom-control-input:checked ~ .custom-control-label::after{
+	transform: translateX(1rem);
+	  }
+  }
+
+
+.cart-total-BlockContainer {
+	margin-bottom: 60px;
+	width: 100%;
+	padding: 20px;
+	background: #ffffff;
+}
+
+.cart-total-MaskContainer h5 {
+    font-weight: 700;
+	color: #111111;
+	margin-bottom: 12px;
+}
+
+.cart-total-MaskContainer ul {
+	margin-bottom: 25px;
+}
+
+.cart-total-MaskContainer ul li {
+	list-style: none;
+	font-size: 16px;
+	color: #444444;
+	line-height: 40px;
+	overflow: hidden;
+}
+
+.cart-total-MaskContainer ul li span {
+	font-weight: 600;
+	float: right;
+}
+
+.cart-total-MaskContainer .cart-total-subtotal {
+	font-weight: 800;
+	color: #EB6234;
+	font-size: larger;
+}
+
+.cart-total-MaskContainer .primary-btn {
+	display: block;
+	padding: 12px 10px;
+    font-size: 18px;
+	text-align: center;
+	border-radius: 50px;
+	letter-spacing: 2px;
+	background-color: #000;
+	color: #ffffff;
+	transition: 0.3s;
+	-webkit-transition: 0.3s;
+}
+
+.cart-total-MaskContainer .primary-btn:hover {
+	display: block;
+	padding: 12px 10px;
+	text-align: center;
+	border-radius: 50px;
+	letter-spacing: 2px;
+	background-color: #F1600D;
+	color: #ffffff;
+}

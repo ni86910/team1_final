@@ -1,0 +1,44 @@
+@import "variable";
+
+/*---------------------
+  Order Confirmation Area
+-----------------------*/
+.order-confirmation {
+    background-color: $gray-color;
+}
+
+.order-confirmation-content {
+    margin-top: 50px;
+    border-radius: 20px;
+    background-color: #ffffff3d;
+}
+
+
+.order-number {
+    span {
+        color: $third-color;
+    }
+}
+
+.backtoshop-btn {
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    border-radius: 50px;
+    &:hover {
+        background-color: $primary-color;
+        color: #ffffff;
+        border: 1px solid $primary-color;
+    }
+}
+
+.checkorders-btn {
+    background-color: $primary-color;
+    color: #ffffff;
+    border-radius: 50px;
+    &:hover {
+        background-color: $primary-color;
+        color: #ffffff;
+        border: none;
+    }
+}
+
