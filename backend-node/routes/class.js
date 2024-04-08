@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
   const class_type = req.query.class_type ? req.query.class_type :'靜態課程'
 
   console.log('class_type:',class_type);
-  // JS是 non blocking io php 是blocking
+
   const sql = `SELECT * FROM class WHERE \`class_type\` = '${class_type}'`;
 
   // 下面不一定長這樣
