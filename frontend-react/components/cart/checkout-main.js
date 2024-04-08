@@ -250,9 +250,9 @@ export default function CheckoutMain() {
               <div
                 className={`row justify-content-center ${style['confirm-order-btn']}`}
               >
-                <a href="#">
+                <Link href="/cart/order-confirmation">
                   <FaRegCreditCard size={20} /> 送出訂單
-                </a>
+                </Link>
               </div>
             </div>
           </div>
