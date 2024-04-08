@@ -114,7 +114,7 @@ export default function RegisterPage() {
                             <FaStarOfLife className={style['icon-padding']} />
                             性別
                           </label>
-                          <div className="col-md-6">
+                          <div className={`col-md-6 ${style['Select']}`}>
                             <Form.Select aria-label="Default select example">
                               <option selected="">請選擇</option>
                               <option value="0">男生</option>
@@ -184,6 +184,7 @@ export default function RegisterPage() {
                         <div className="checkbox">
                           <input type="checkbox" defaultValue="" />
                           <Link
+                            href="#"
                             className={style['member-terms']}
                             onClick={handleShowModal}
                           >
