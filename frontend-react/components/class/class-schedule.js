@@ -91,11 +91,11 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
           <div className={style['class-type-group']}>
             <div className={`${style['class-type']} ${style['class-type-a']}`}>
               <FaSquareFull />
-              <span>進階課程</span>
+              <span>已額滿</span>
             </div>
             <div className={`${style['class-type']} ${style['class-type-b']}`}>
               <FaSquareFull />
-              <span>營養師課程</span>
+              <span>已過期</span>
             </div>
           </div>
           <ScrollSyncPane>
