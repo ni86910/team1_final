@@ -79,7 +79,6 @@
     transform-origin: center top;
     
     input[type=checkbox]:checked ~ &{
-  
       border: 1px solid $gray-deep-color;
       margin: 0 -20px 15px -20px;
       background: #fff;
@@ -91,12 +90,18 @@
     }
   }
 
+  .reset-filter-btn {
+    color: #111111;
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
   .all-product-link {
     color: $primary-color;
     font-weight: 600;
     &:hover {
       color: $primary-color;
-
     }
   }
 
@@ -195,9 +200,7 @@
 }
 
 .shop-product-option-right-sort {
-
   justify-content: end;
-
 
   select {
     border: none;
@@ -208,7 +211,6 @@
 }
 
 .shop-product-option-right-qty {
-
   justify-content: start;
 
   select {
@@ -216,7 +218,7 @@
     padding: 3px;
     margin-bottom: 30px;
     font-size: 16px;
-  }
+}
 }
 
 .shop-product-display {
