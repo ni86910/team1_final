@@ -48,6 +48,9 @@
   justify-content: space-around;
   align-items: center;
 }
+.order-first-Row{
+  margin-bottom: 20px;
+}
 .products-img{
   margin-right: 20px;
 }
@@ -63,8 +66,16 @@
 .header-text{
   display: flex;
   align-items: center;
+  text-align: center;
 } 
+.jpg7-11{
+  margin-right: 10px;
+}
 
-
-
+.straight-line{
+  border:1px solid $gray-color;
+  height:1px;
+  width:100%; 
+  margin: auto;
+}
 

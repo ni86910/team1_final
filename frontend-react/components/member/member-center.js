@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from '@/styles/member-center.module.scss'
 import SideBar from '@/styles/m-sidebar.module.scss'
 import Image from 'next/image'
 import Link from 'next/link'
+// 在 MemberCenterPage 組件中的 handleFileUpload 函數中調用 uploadImage 函數並更新用戶頭像信息
+import { uploadImage } from '@/utils/uploadImage'
+
 /* React-Bootstrap */
-import Nav from 'react-bootstrap/Nav'
-import Navbar from 'react-bootstrap/Navbar'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap'
+
 /* React-icon */
 import { ImTruck } from 'react-icons/im'
 import { FaHourglassStart, FaCoins } from 'react-icons/fa'
@@ -17,10 +17,19 @@ import { AiFillSchedule } from 'react-icons/ai'
 import { FaSackDollar, FaAddressCard } from 'react-icons/fa6'
 import { MdChangeCircle } from 'react-icons/md'
 
+
 export default function MemberCenterPage() {
+  const [profileImage, setProfileImage] = useState(
+    '/img/member/default-self.jpg'
+  )
+
   // 上傳圖像
-  const handleFileUpload = () => {
-    document.getElementById('file0').click() // 點擊隱藏的檔案輸入欄位
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0]
+    const imageUrl = await uploadImage(file)
+    if (imageUrl) {
+      setProfileImage(imageUrl)
+    }
   }
 
   return (
@@ -68,7 +77,7 @@ export default function MemberCenterPage() {
           <Row className={style['profile']}>
             <Col className={style['self-pic']}>
               <Image
-                src="/img/member/profile-dog.png"
+                src={profileImage}
                 width={150}
                 height={100}
                 alt="selfie"
@@ -76,7 +85,7 @@ export default function MemberCenterPage() {
               />
               <button
                 className={style['upload-text']}
-                onClick={handleFileUpload}
+                onClick={() => document.getElementById('file0').click()}
               >
                 <MdChangeCircle /> 更換頭像
                 <input
@@ -84,6 +93,7 @@ export default function MemberCenterPage() {
                   id="file0"
                   multiple="multiple"
                   style={{ display: 'none' }}
+                  onChange={handleFileUpload}
                 />
               </button>
             </Col>

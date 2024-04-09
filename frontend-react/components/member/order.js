@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 /* My module.scss */
@@ -17,6 +17,16 @@ import {
 /* React-icon */
 
 export default function OrderPage() {
+  const [accordionOpen, setAccordionOpen] = useState(null)
+
+  const handleAccordionToggle = (eventKey) => {
+    if (accordionOpen === eventKey) {
+      setAccordionOpen(null)
+    } else {
+      setAccordionOpen(eventKey)
+    }
+  }
+
   return (
     <>
       <section className={SideBar['member-center-container']}>
@@ -76,17 +86,17 @@ export default function OrderPage() {
                   <div className="p-2">訂購日期: 2024-01-02</div>
                 </Stack>
                 <Stack>
-                  <div className="p-2">購物車編號：TG240127AA00TT</div>
+                  <div className="p-2">訂單編號：TG240127AA00TT</div>
                   <div className="p-2">訂購總額： NT$1,999</div>
                 </Stack>
               </Col>
 
               <Accordion
-                defaultActiveKey="0"
                 className={style['first-accordion']}
+                activeKey={accordionOpen}
               >
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>
+                <Accordion.Item eventKey="1">
+                  <Accordion.Header onClick={() => handleAccordionToggle('1')}>
                     <div className={style['header-text']}>1項商品</div>
                   </Accordion.Header>
                   <Accordion.Body className={style['accordion-body']}>
@@ -100,7 +110,7 @@ export default function OrderPage() {
                     <Stack>
                       <div className="p-2">商品名稱: 屏東 / 黑法鬥</div>
                       <div className="p-2">規格: 黑/5歲</div>
-                      <div className="p-2">2024/02/06 取貨完成</div>
+                      <div className="p-2">2024-02-06 取貨完成</div>
                     </Stack>
                   </Accordion.Body>
                 </Accordion.Item>
@@ -110,7 +120,70 @@ export default function OrderPage() {
           {/* First order Container End */}
 
           {/* Second order Container Start */}
+          <Container>
+            <Row className={style['order-first-Row']}>
+              <Col className={style['order-first-col']}>
+                <Stack direction="horizontal" gap={3}>
+                  <div className="p-2">
+                    <Image
+                      src="/img/member/7-11.jpg"
+                      width={23}
+                      height={23}
+                      alt="7-11"
+                      className={style['jpg7-11']}
+                    />
+                    7-11取貨
+                  </div>
+                  <div className="p-2 ms-auto">信用卡3期 0利率</div>
+                  <div className="p-2">訂購日期: 2024-01-02</div>
+                </Stack>
+                <Stack>
+                  <div className="p-2">訂單編號：TG240127AA00TT</div>
+                  <div className="p-2">訂購總額： NT$3,999</div>
+                </Stack>
+              </Col>
 
+              <Accordion
+                className={style['first-accordion']}
+                activeKey={accordionOpen}
+              >
+                <Accordion.Item eventKey="2">
+                  <Accordion.Header onClick={() => handleAccordionToggle('2')}>
+                    <div className={style['header-text']}>1項商品</div>
+                  </Accordion.Header>
+                  <Accordion.Body className={style['accordion-body']}>
+                    <Image
+                      src="/img/member/profile-dog.png"
+                      width={100}
+                      height={100}
+                      alt="selfie"
+                      className={style['products-img']}
+                    />
+                    <Stack>
+                      <div className="p-2">商品名稱: 屏東 / 黑法鬥</div>
+                      <div className="p-2">規格: 黑/5歲</div>
+                      <div className="p-2">2024-02-06 取貨完成</div>
+                    </Stack>
+                  </Accordion.Body>
+                  <div className={style['straight-line']} />
+                  <Accordion.Body className={style['accordion-body']}>
+                    <Image
+                      src="/img/member/profile-dog.png"
+                      width={100}
+                      height={100}
+                      alt="selfie"
+                      className={style['products-img']}
+                    />
+                    <Stack>
+                      <div className="p-2">商品名稱: 屏東 / 黑法鬥</div>
+                      <div className="p-2">規格: 黑/2歲</div>
+                      <div className="p-2">2024-02-06 取貨完成</div>
+                    </Stack>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </Row>
+          </Container>
           {/* Second order Container Start */}
         </Container>
       </section>
