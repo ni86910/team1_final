@@ -34,8 +34,15 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
   // 取得section參照
   const sectionRef2 = useRef(null)
 
-  // 取得每周直條div的參照
-  const weekRefs = useRef([])
+  // // 取得每周直條div的參照
+  // const weekRefs = useRef([])
+
+  // 用陣列紀錄每一天的格子數
+  const [eachDayBoxes, setEachDayBoxes] = useState([])
+
+  useEffect(() => {
+    console.log('陣列:', eachDayBoxes)
+  }, [eachDayBoxes])
 
   //當tab跟 show改變時，設定container高度 為當前section(右側section)的高度
   useEffect(() => {
@@ -80,7 +87,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     }
   }, [router.query, router.isReady])
 
-  // 抓到資料後 就顯示下方課表
+  // 抓到資料後 就顯示下方課表 並產出比對用的陣列
   useEffect(() => {
     if (scheduleData && scheduleData.gotData) {
       setShow(true)
@@ -239,12 +246,19 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                   className={`${style['every-day-chart']} ${style['scrollbar']}`}
                 >
                   <div className={style['class-box-list']}>
+                    <div>eachDayBoxes: {`${eachDayBoxes}`}</div>
                     {/* 第一個map 一周七天 建立1個直排*7次 */}
                     {Array(7)
                       .fill(1)
                       .map((v, i) => {
                         return (
-                          <WeekCol key={i} scheduleData={scheduleData} i={i} />
+                          <WeekCol
+                            key={i}
+                            scheduleData={scheduleData}
+                            i={i}
+                            eachDayBoxes={eachDayBoxes}
+                            setEachDayBoxes={setEachDayBoxes}
+                          />
                         )
                       })}
                   </div>
