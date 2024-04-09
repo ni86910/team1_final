@@ -240,12 +240,10 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                 >
                   <div className={style['class-box-list']}>
                     {/*空格子 範例 <div className={style['class-box']}></div> */}
-                    {/* 第一個map 建立7個直排 */}
+                    {/* 第一個map 建立1個直排*7次 */}
                     {Array(7)
                       .fill(1)
                       .map((v, i) => {
-                        const aa = []
-
                         return (
                           <WeekCol key={i} scheduleData={scheduleData} i={i} />
                         )
