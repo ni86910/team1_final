@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 import style from '@/styles/login.module.scss'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -16,6 +16,19 @@ export default function LoginPage() {
     m_account: '',
     m_pwd: '',
   })
+
+  // 用於記住使用者帳號密碼資訊的狀態
+  const [rememberMe, setRememberMe] = useState(false)
+
+  // 在組件渲染時從本地存儲中讀取記住的使用者帳號密碼資訊
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user')
+    const storedRememberMe = localStorage.getItem('rememberMe')
+    if (storedUser && storedRememberMe) {
+      setUser(JSON.parse(storedUser))
+      setRememberMe(JSON.parse(storedRememberMe))
+    }
+  }, [])
 
   // 多欄位共用事件處理函式
   const handleFieldChange = (e) => {
@@ -73,6 +86,15 @@ export default function LoginPage() {
       return // 流程控制，有錯誤訊息則先跳出處理函式不繼續送到伺服器
     }
     // 這裡可以作自訂的表單檢查 --- END ---
+
+    // 如果使用者勾選了Remember Me，將使用者帳號密碼資訊保存到本地存儲中
+    if (rememberMe) {
+      localStorage.setItem('user', JSON.stringify(user))
+      localStorage.setItem('rememberMe', JSON.stringify(true))
+    } else {
+      localStorage.removeItem('user')
+      localStorage.removeItem('rememberMe')
+    }
 
     // 這裡之後送到伺服器(資料庫)中
   }
@@ -150,7 +172,13 @@ export default function LoginPage() {
                             className={`checkbox ${style['check-remember']}`}
                           >
                             <label>
-                              <input type="checkbox" defaultValue="" />
+                              <input
+                                type="checkbox"
+                                checked={rememberMe}
+                                onChange={(e) =>
+                                  setRememberMe(e.target.checked)
+                                }
+                              />
                               &nbsp;Remember me
                             </label>
                           </div>
