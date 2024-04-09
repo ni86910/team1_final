@@ -1,0 +1,28 @@
+.week-day {
+  padding: 0px;
+
+  .class-box {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 205px;
+    height: 200px;
+    border-top: 1px dashed rgb(72, 72, 72);
+    border-left: 1px dashed rgb(72, 72, 72);
+
+    .class-box-top {
+      font-weight: 700;
+      font-size: larger;
+    }
+  }
+
+  .type-a {
+    background-color: #3d85c6;
+    color: white;
+  }
+
+  .type-b {
+    background-color: #93c47d;
+  }
+}
