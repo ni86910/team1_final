@@ -44,7 +44,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     tab === 'right'
       ? setContainerHeight(sectionRef2.current.clientHeight + 'px')
       : () => {}
-  }, [tab, show]) // show 要同時設定高度
+  }, [tab, show, router.query, scheduleData]) // show 要同時設定高度
 
   // 取得課表資料
   const getScheduleData = async (
@@ -239,8 +239,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                   className={`${style['every-day-chart']} ${style['scrollbar']}`}
                 >
                   <div className={style['class-box-list']}>
-                    {/*空格子 範例 <div className={style['class-box']}></div> */}
-                    {/* 第一個map 建立1個直排*7次 */}
+                    {/* 第一個map 一周七天 建立1個直排*7次 */}
                     {Array(7)
                       .fill(1)
                       .map((v, i) => {

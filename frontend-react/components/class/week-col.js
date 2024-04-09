@@ -47,12 +47,11 @@ export default function WeekCol({ scheduleData, i }) {
           )
         }
       })}
-      {/*空格子 範例 <div className={style['class-box']}></div> */}
-      {/* 在這裡補生 有缺的格子 */}
 
+      {/* 在這裡補生 有缺的格子 */}
       {
-        <div className={style['class-box']}>
-          <p>{boxesCount}</p>
+        <div className={style['class-box']} style={{ position: 'relative' }}>
+          <p>扣除此空白格子，此欄共有{boxesCount - 1}個格子</p>
         </div>
       }
     </div>
