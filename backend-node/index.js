@@ -88,7 +88,7 @@ app.use('/class',classRouter)
 
 app.use('/product', productRouter)
 
-app.use('/profile', profileRouter)
+app.use('/member', profileRouter)
 
 // app.use('/gym',gymRouter)
 
