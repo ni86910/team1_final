@@ -34,6 +34,8 @@ export default function WeekCol({
   // 更新extraBoxesCount
   useEffect(() => {
     let result = maxCount - boxesCount
+
+    // result有時會是NaN因此要排除一下
     if (!result) {
       result = 0
     }
@@ -94,11 +96,6 @@ export default function WeekCol({
             )
           })
       )}
-      {/* {
-        <div className={style['class-box']} style={{ position: 'relative' }}>
-          <p>扣除此空白格子，此欄共有{boxesCount - 1}個格子</p>
-        </div>
-      } */}
     </div>
   )
 }

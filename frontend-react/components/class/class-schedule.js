@@ -152,10 +152,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
           <div>請先選擇地點</div>
         ) : (
           <>
-            <div
-              className={style['second-filter']}
-              // style={!show ? { display: 'none' } : {}}
-            >
+            <div className={style['second-filter']}>
               <div className={style['select-group']}>
                 <div className={style['class-category']}>
                   <span>所有類別</span>
@@ -172,10 +169,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
               </div>
             </div>
 
-            <div
-              className={style['schedule']}
-              // style={!show ? { display: 'none' } : {}}
-            >
+            <div className={style['schedule']}>
               <div className={style['list-head']}>
                 <div className={style['last-week']}>
                   <FaAngleLeft />
@@ -261,7 +255,6 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                   className={`${style['every-day-chart']} ${style['scrollbar']}`}
                 >
                   <div className={style['class-box-list']}>
-                    {/* <div>eachDayBoxes: {`${eachDayBoxes}`}</div> */}
                     {/* 第一個map 一周七天 建立1個直排*7次 */}
                     {Array(7)
                       .fill(1)
