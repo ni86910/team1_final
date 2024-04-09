@@ -33,15 +33,33 @@ router.get("/", async (req, res) => {
 
 // 抓所有的開課資料，並且只呈現要的欄位
 router.get("/schedule", async (req, res) => {
+
   // 設定dayjs，設定星期一為一周的第一天
   dayjs.locale("zh-cn", {
     weekStart: 1, // 1代表星期一，0代表星期天
   });
 
+
+  console.log('query中的場地名稱',req.query.gym_name);
+  // 至少有給場地才要抓資料
+
+  // fullData才是最後要輸出的資料，除了rows之外，還包含以下設定的
+  const fullData = {
+    mondayOfTheWeek: '',
+    sundayOfTheWeek: '',
+    gymName: '',
+    year: '',
+    month: '',
+    dateNumberArray: [],
+    gotData: false,
+    rows: [],
+};
+  if(req.query.gym_name !== undefined){
   //用變數去接 查詢字串的 date的值 若沒有則設定為當天，並格式化一下
   const date = req.query.date || dayjs().format("YYYY-MM-DD");
-  //若沒有場館名稱，則設定預設值
-  const gymName = req.query.gym_name || "賽特體適能";
+  //場館名稱
+  const gymName = req.query.gym_name ;
+
 
   // const test = dayjs(date).day();
   // const test2 = dayjs("2024-04-08").format("dddd");
@@ -79,8 +97,6 @@ router.get("/schedule", async (req, res) => {
     v.end_time = localEndTime;
   });
 
-  // fullData才是最後要輸出的資料，除了rows之外，還包含以下設定的
-  const fullData = {};
   fullData.mondayOfTheWeek = mondayOfTheWeek; // 星期一日期
   fullData.sundayOfTheWeek = sundayOfTheWeek; // 星期日日期
   fullData.gymName = gymName; // 場地名稱
@@ -104,8 +120,12 @@ router.get("/schedule", async (req, res) => {
     dayN = dayN.add(1, "days");
   }
   fullData.dateNumberArray = dateNumberArray;
+  
   fullData.rows = rows;// 資料庫資料
-  res.json(fullData);
+  if(rows[0]){fullData.gotData = true}
+  
+}
+res.json(fullData);
 });
 
 // 動態路由 接收課程名稱
