@@ -156,8 +156,8 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                   <span>上一周</span>
                 </div>
                 <div className={style['list-title']}>
-                  <h3>XX場館</h3>
-                  <h3>113 年 3 月份 課程表</h3>
+                  <h3>{scheduleData.gymName}</h3>
+                  <h3>{`${scheduleData.year} 年 ${scheduleData.month} 月份 課程表`}</h3>
                 </div>
                 <div className={style['next-week']}>
                   <span>下一周</span>
@@ -182,35 +182,49 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                 <div className={`${style['one-week']} ${style['scrollbar']}`}>
                   <ul className={style['week-ul']}>
                     <li className={style['week-li']}>
-                      <div className={style['date']}>04</div>
+                      <div className={style['date']}>
+                        {scheduleData.dateNumberArray[0]}
+                      </div>
                       <div className={style['week']}>星期一</div>
                     </li>
                     <li className={style['week-li']}>
-                      <div className={style['date']}>05</div>
+                      <div className={style['date']}>
+                        {scheduleData.dateNumberArray[1]}
+                      </div>
                       <div className={style['week']}>星期二</div>
                     </li>
                     <li className={style['week-li']}>
-                      <div className={style['date']}>06</div>
+                      <div className={style['date']}>
+                        {scheduleData.dateNumberArray[2]}
+                      </div>
                       <div className={style['week']}>星期三</div>
                     </li>
                     <li className={style['week-li']}>
-                      <div className={style['date']}>07</div>
+                      <div className={style['date']}>
+                        {scheduleData.dateNumberArray[3]}
+                      </div>
                       <div className={style['week']}>星期四</div>
                     </li>
                     <li className={style['week-li']}>
-                      <div className={style['date']}>08</div>
+                      <div className={style['date']}>
+                        {scheduleData.dateNumberArray[4]}
+                      </div>
                       <div className={style['week']}>星期五</div>
                     </li>
                     <li
                       className={`${style['week-li']} ${style['weekend-li']}`}
                     >
-                      <div className={style['date']}>09</div>
+                      <div className={style['date']}>
+                        {scheduleData.dateNumberArray[5]}
+                      </div>
                       <div className={style['week']}>星期六</div>
                     </li>
                     <li
                       className={`${style['week-li']} ${style['weekend-li']}`}
                     >
-                      <div className={style['date']}>10</div>
+                      <div className={style['date']}>
+                        {scheduleData.dateNumberArray[6]}
+                      </div>
                       <div className={style['week']}>星期日</div>
                     </li>
                   </ul>
@@ -221,135 +235,347 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                   className={`${style['every-day-chart']} ${style['scrollbar']}`}
                 >
                   <div className={style['class-box-list']}>
-                    <div className={`${style['week-day']} ${style['monday']}`}>
-                      <div
-                        className={`${style['class-box']} ${style['type-a']}`}
-                      >
-                        <div className={style['class-box-top']}>
-                          <span>活力有氧</span>
-                          <br />
-                          <span>09:00-10:00</span>
+                    {/* 第一個map 建立7個直排 */}
+                    {Array(7)
+                      .fill(1)
+                      .map((v, i) => {
+                        return (
+                          <div key={i} className={`${style['week-day']}`}>
+                            {/* 第二個map 每一直排再去生課程方塊 */}
+                            {scheduleData.rows.map((v2, i2) => {
+                              {
+                                /* classDay 開課時間是"幾號" */
+                              }
+                              const classDay = dayjs(v2.start_time).format('DD')
+                              {
+                                /* 若開課日跟 一周陣列的對應值相等 則return一個格子 */
+                              }
+                              if (
+                                classDay === scheduleData.dateNumberArray[i]
+                              ) {
+                                const startH = dayjs(v2.start_time).format('HH')
+                                const endH = dayjs(v2.end_time).format('HH')
+                                return (
+                                  <div key={i2} className={style['class-box']}>
+                                    <div className={style['class-box-top']}>
+                                      <span>{v2.class_name}</span>
+                                      <br />
+                                      <span>{`${startH}:00-${endH}:00`}</span>
+                                    </div>
+                                    <div className={style['class-box-bottom']}>
+                                      <span>001號教室</span>
+                                      <br />
+                                      <span>{v2.t_name}</span>
+                                    </div>
+                                  </div>
+                                )
+                              }
+                            })}
+                            {/* <div
+                              className={`${style['class-box']} ${style['type-a']}`}
+                            >
+                              <div className={style['class-box-top']}>
+                                <span>活力有氧</span>
+                                <br />
+                                <span>09:00-10:00</span>
+                              </div>
+                              <div className={style['class-box-bottom']}>
+                                <span>001號教室</span>
+                                <br />
+                                <span>Alex</span>
+                              </div>
+                            </div> */}
+                          </div>
+                        )
+                      })}
+                    {/* {scheduleData.rows.map((v, i) => {
+                      dayjs(v.start_time).format()
+                      return (
+                        <>
+                          <div className={`${style['week-day']}`}>
+                            <>
+                              <div
+                                className={`${style['class-box']} ${style['type-a']}`}
+                              >
+                                <div className={style['class-box-top']}>
+                                  <span>活力有氧</span>
+                                  <br />
+                                  <span>09:00-10:00</span>
+                                </div>
+                                <div className={style['class-box-bottom']}>
+                                  <span>001號教室</span>
+                                  <br />
+                                  <span>Alex</span>
+                                </div>
+                              </div>
+                              <div className={style['class-box']}>
+                                <div className={style['class-box-top']}>
+                                  <span>活力有氧</span>
+                                  <br />
+                                  <span>09:00-10:00</span>
+                                </div>
+                                <div className={style['class-box-bottom']}>
+                                  <span>001號教室</span>
+                                  <br />
+                                  <span>Alex</span>
+                                </div>
+                              </div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                            </>
+                          </div>
+                          <div className={`${style['week-day']}`}>
+                            <>
+                              <div className={style['class-box']}>
+                                <div className={style['class-box-top']}>
+                                  <span>活力有氧</span>
+                                  <br />
+                                  <span>09:00-10:00</span>
+                                </div>
+                                <div className={style['class-box-bottom']}>
+                                  <span>001號教室</span>
+                                  <br />
+                                  <span>Alex</span>
+                                </div>
+                              </div>
+                              <div
+                                className={`${style['class-box']} ${style['type-b']}`}
+                              >
+                                <div className={style['class-box-top']}>
+                                  <span>活力有氧</span>
+                                  <br />
+                                  <span>09:00-10:00</span>
+                                </div>
+                                <div className={style['class-box-bottom']}>
+                                  <span>001號教室</span>
+                                  <br />
+                                  <span>Alex</span>
+                                </div>
+                              </div>
+                              <div
+                                className={`${style['class-box']} ${style['type-a']}`}
+                              ></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                            </>
+                          </div>
+                          <div className={`${style['week-day']}`}>
+                            <>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div
+                                className={`${style['class-box']} ${style['type-b']}`}
+                              ></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                            </>
+                          </div>
+                          <div className={`${style['week-day']}`}>
+                            <>
+                              <div className={style['class-box ']}></div>
+                              <div className={style['class-box']}></div>
+                              <div
+                                className={`${style['class-box']} ${style['type-a']}`}
+                              ></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                            </>
+                          </div>
+                          <div className={`${style['week-day']}`}>
+                            <>
+                              <div
+                                className={`${style['class-box']} ${style['type-b']}`}
+                              ></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                            </>
+                          </div>
+                          <div className={`${style['week-day']}`}>
+                            <>
+                              <div className={style['class-box']}></div>
+                              <div
+                                className={`${style['class-box']} ${style['type-a']}`}
+                              ></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                            </>
+                          </div>
+                          <div className={`${style['week-day']}`}>
+                            <>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div
+                                className={`${style['class-box']} ${style['type-b']}`}
+                              ></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                              <div className={style['class-box']}></div>
+                            </>
+                          </div>
+                        </>
+                      )
+                    })} */}
+
+                    {/* <div className={`${style['week-day']} ${style['monday']}`}>
+                      <>
+                        <div
+                          className={`${style['class-box']} ${style['type-a']}`}
+                        >
+                          <div className={style['class-box-top']}>
+                            <span>活力有氧</span>
+                            <br />
+                            <span>09:00-10:00</span>
+                          </div>
+                          <div className={style['class-box-bottom']}>
+                            <span>001號教室</span>
+                            <br />
+                            <span>Alex</span>
+                          </div>
                         </div>
-                        <div className={style['class-box-bottom']}>
-                          <span>001號教室</span>
-                          <br />
-                          <span>Alex</span>
+                        <div className={style['class-box']}>
+                          <div className={style['class-box-top']}>
+                            <span>活力有氧</span>
+                            <br />
+                            <span>09:00-10:00</span>
+                          </div>
+                          <div className={style['class-box-bottom']}>
+                            <span>001號教室</span>
+                            <br />
+                            <span>Alex</span>
+                          </div>
                         </div>
-                      </div>
-                      <div className={style['class-box']}>
-                        <div className={style['class-box-top']}>
-                          <span>活力有氧</span>
-                          <br />
-                          <span>09:00-10:00</span>
-                        </div>
-                        <div className={style['class-box-bottom']}>
-                          <span>001號教室</span>
-                          <br />
-                          <span>Alex</span>
-                        </div>
-                      </div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                      </>
                     </div>
                     <div className={`${style['week-day']} ${style['tuesday']}`}>
-                      <div className={style['class-box']}>
-                        <div className={style['class-box-top']}>
-                          <span>活力有氧</span>
-                          <br />
-                          <span>09:00-10:00</span>
+                      <>
+                        <div className={style['class-box']}>
+                          <div className={style['class-box-top']}>
+                            <span>活力有氧</span>
+                            <br />
+                            <span>09:00-10:00</span>
+                          </div>
+                          <div className={style['class-box-bottom']}>
+                            <span>001號教室</span>
+                            <br />
+                            <span>Alex</span>
+                          </div>
                         </div>
-                        <div className={style['class-box-bottom']}>
-                          <span>001號教室</span>
-                          <br />
-                          <span>Alex</span>
+                        <div
+                          className={`${style['class-box']} ${style['type-b']}`}
+                        >
+                          <div className={style['class-box-top']}>
+                            <span>活力有氧</span>
+                            <br />
+                            <span>09:00-10:00</span>
+                          </div>
+                          <div className={style['class-box-bottom']}>
+                            <span>001號教室</span>
+                            <br />
+                            <span>Alex</span>
+                          </div>
                         </div>
-                      </div>
-                      <div
-                        className={`${style['class-box']} ${style['type-b']}`}
-                      >
-                        <div className={style['class-box-top']}>
-                          <span>活力有氧</span>
-                          <br />
-                          <span>09:00-10:00</span>
-                        </div>
-                        <div className={style['class-box-bottom']}>
-                          <span>001號教室</span>
-                          <br />
-                          <span>Alex</span>
-                        </div>
-                      </div>
-                      <div
-                        className={`${style['class-box']} ${style['type-a']}`}
-                      ></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
+                        <div
+                          className={`${style['class-box']} ${style['type-a']}`}
+                        ></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                      </>
                     </div>
                     <div
                       className={`${style['week-day']} ${style['wednesday']}`}
                     >
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div
-                        className={`${style['class-box']} ${style['type-b']}`}
-                      ></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
+                      <>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div
+                          className={`${style['class-box']} ${style['type-b']}`}
+                        ></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                      </>
                     </div>
                     <div
                       className={`${style['week-day']} ${style['thursday']}`}
                     >
-                      <div className={style['class-box ']}></div>
-                      <div className={style['class-box']}></div>
-                      <div
-                        className={`${style['class-box']} ${style['type-a']}`}
-                      ></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
+                      <>
+                        <div className={style['class-box ']}></div>
+                        <div className={style['class-box']}></div>
+                        <div
+                          className={`${style['class-box']} ${style['type-a']}`}
+                        ></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                      </>
                     </div>
                     <div className={`${style['week-day']} ${style['friday']}`}>
-                      <div
-                        className={`${style['class-box']} ${style['type-b']}`}
-                      ></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
+                      <>
+                        <div
+                          className={`${style['class-box']} ${style['type-b']}`}
+                        ></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                      </>
                     </div>
                     <div
                       className={`${style['week-day']} ${style['saturday']}`}
                     >
-                      <div className={style['class-box']}></div>
-                      <div
-                        className={`${style['class-box']} ${style['type-a']}`}
-                      ></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
+                      <>
+                        <div className={style['class-box']}></div>
+                        <div
+                          className={`${style['class-box']} ${style['type-a']}`}
+                        ></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                      </>
                     </div>
                     <div className={`${style['week-day']} ${style['sunday']}`}>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div
-                        className={`${style['class-box']} ${style['type-b']}`}
-                      ></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                      <div className={style['class-box']}></div>
-                    </div>
+                      <>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div
+                          className={`${style['class-box']} ${style['type-b']}`}
+                        ></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                        <div className={style['class-box']}></div>
+                      </>
+                    </div> */}
                   </div>
                 </div>
               </ScrollSyncPane>
