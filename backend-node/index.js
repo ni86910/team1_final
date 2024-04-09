@@ -15,6 +15,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import classRouter from './routes/class.js'
 import productRouter from './routes/product.js'
+import profileRouter from './routes/profile.js'
 
 // 建立一個session可以儲存的地方
 const MysqlStore = mysql_session(session);
@@ -86,6 +87,8 @@ app.use((req, res, next) => {
 app.use('/class',classRouter)
 
 app.use('/product', productRouter)
+
+app.use('/profile', profileRouter)
 
 // app.use('/gym',gymRouter)
 
