@@ -7,12 +7,18 @@ export default function WeekCol({
   i,
   setEachDayBoxes,
   eachDayBoxes,
+  maxCount,
 }) {
   // 取得單周colum的參照
   const weekRef = useRef()
 
   // 記錄單周colum的子元素數量
   const [boxesCount, setBoxesCount] = useState(0)
+
+  // 紀錄還要產生多少空白boxes
+  const [extraBoxesCount, setExtraBoxesCount] = useState(0)
+
+  // 更新單周colum的子元素數量
   useEffect(() => {
     const newCount = weekRef.current.childNodes.length
     setBoxesCount(newCount)
@@ -24,6 +30,16 @@ export default function WeekCol({
     // setEachDayBoxes([...nextArray, boxesCount])
     setEachDayBoxes((prevBoxes) => [...prevBoxes, boxesCount])
   }, [boxesCount])
+
+  // 更新extraBoxesCount
+  useEffect(() => {
+    let result = maxCount - boxesCount
+    if (!result) {
+      result = 0
+    }
+    setExtraBoxesCount(result)
+    console.log('額外box數量', extraBoxesCount, typeof extraBoxesCount)
+  }, [maxCount])
 
   return (
     <div ref={weekRef} className={`${style['week-day']}`}>
@@ -61,11 +77,28 @@ export default function WeekCol({
       })}
 
       {/* 在這裡補生 有缺的格子 */}
-      {
+      {extraBoxesCount < 0 ? (
+        <></>
+      ) : (
+        Array(extraBoxesCount)
+          .fill(1)
+          .map((v, i) => {
+            return (
+              <div
+                key={i}
+                className={style['class-box']}
+                style={{ position: 'relative' }}
+              >
+                <p>{extraBoxesCount}</p>
+              </div>
+            )
+          })
+      )}
+      {/* {
         <div className={style['class-box']} style={{ position: 'relative' }}>
           <p>扣除此空白格子，此欄共有{boxesCount - 1}個格子</p>
         </div>
-      }
+      } */}
     </div>
   )
 }

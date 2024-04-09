@@ -40,6 +40,9 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
   // 用陣列紀錄每一天的格子數
   const [eachDayBoxes, setEachDayBoxes] = useState([])
 
+  // 紀錄一周七天中 最多格子那天 的格子數量
+  const [maxCount, setMaxCount] = useState(0)
+
   useEffect(() => {
     console.log('陣列:', eachDayBoxes)
   }, [eachDayBoxes])
@@ -93,6 +96,18 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
       setShow(true)
     }
   }, [scheduleData])
+
+  useEffect(() => {
+    let i
+    let max = eachDayBoxes[0]
+    for (i = 0; i < eachDayBoxes.length; i++) {
+      if (eachDayBoxes[i] > max) {
+        max = eachDayBoxes[i]
+      }
+    }
+    setMaxCount(max)
+    console.log('max:', max)
+  }, [eachDayBoxes])
 
   return (
     <ScrollSync>
@@ -246,7 +261,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                   className={`${style['every-day-chart']} ${style['scrollbar']}`}
                 >
                   <div className={style['class-box-list']}>
-                    <div>eachDayBoxes: {`${eachDayBoxes}`}</div>
+                    {/* <div>eachDayBoxes: {`${eachDayBoxes}`}</div> */}
                     {/* 第一個map 一周七天 建立1個直排*7次 */}
                     {Array(7)
                       .fill(1)
@@ -258,6 +273,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                             i={i}
                             eachDayBoxes={eachDayBoxes}
                             setEachDayBoxes={setEachDayBoxes}
+                            maxCount={maxCount}
                           />
                         )
                       })}
