@@ -35,7 +35,6 @@ export default function Class() {
         <ClassIntro setContainerHeight={setContainerHeight} tab={tab} />
         <ClassSchedule setContainerHeight={setContainerHeight} tab={tab} />
       </div>
-      <ClassBook />
     </>
   )
 }

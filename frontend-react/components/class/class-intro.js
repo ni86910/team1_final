@@ -121,6 +121,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                       >
                         +
                       </div>
+                      {/* <Link href={`/class/${v.class_id}`}>aaa</Link> */}
                     </div>
                   </div>
                 </div>

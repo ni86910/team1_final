@@ -8,6 +8,8 @@ export default function WeekCol({
   setEachDayBoxes,
   eachDayBoxes,
   maxCount,
+  setPopClassBook,
+  setBookInfo,
 }) {
   // 取得單周colum的參照
   const weekRef = useRef()
@@ -62,7 +64,15 @@ export default function WeekCol({
           const endH = dayjs(v2.end_time).format('HH')
 
           return (
-            <div key={i2} className={style['class-box']}>
+            <div
+              key={i2}
+              className={style['class-box']}
+              role="presentation"
+              onClick={() => {
+                setPopClassBook(true)
+                setBookInfo(v2)
+              }}
+            >
               <div className={style['class-box-top']}>
                 <span>{v2.class_name}</span>
                 <br />
@@ -88,7 +98,7 @@ export default function WeekCol({
             return (
               <div
                 key={i}
-                className={style['class-box']}
+                className={style['class-box-empty']}
                 style={{ position: 'relative' }}
               >
                 <p>{extraBoxesCount}</p>

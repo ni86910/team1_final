@@ -8,6 +8,7 @@ router.get("/", async (req, res) => {
   const class_type = req.query.class_type ? req.query.class_type : "靜態課程";
 
   console.log("class_type:", class_type);
+console.log(req.query);
 
   const sql = `SELECT * FROM class WHERE \`class_type\` = '${class_type}'`;
 
@@ -94,7 +95,7 @@ router.get("/schedule", async (req, res) => {
   rows.forEach((v, i) => {
     const localStartTime = dayjs(v.start_time).format();
     const localEndTime = dayjs(v.end_time).format();
-    v.start_time = localStartTime;
+    v.start_time = localStartTime;// 塞回去
     v.end_time = localEndTime;
   });
 

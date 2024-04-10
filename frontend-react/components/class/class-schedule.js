@@ -13,6 +13,7 @@ import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import WeekCol from './week-col'
+import ClassBook from './class-book'
 
 export default function ClassSchedule({ setContainerHeight, tab }) {
   const router = useRouter()
@@ -34,14 +35,17 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
   // 取得section參照
   const sectionRef2 = useRef(null)
 
-  // // 取得每周直條div的參照
-  // const weekRefs = useRef([])
-
   // 用陣列紀錄每一天的格子數
   const [eachDayBoxes, setEachDayBoxes] = useState([])
 
   // 紀錄一周七天中 最多格子那天 的格子數量
   const [maxCount, setMaxCount] = useState(0)
+
+  // 控制預約頁面是否要出現
+  const [popClassBook, setPopClassBook] = useState(false)
+
+  // 控制預約頁面的資料呈現
+  const [bookInfo, setBookInfo] = useState({})
 
   useEffect(() => {
     console.log('陣列:', eachDayBoxes)
@@ -118,11 +122,6 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
             ? `${style['schedule-section']} ${style['show']}`
             : `${style['schedule-section']} ${style['hide']}`
         }
-
-        // style={{
-        //   left: tab === 'right' ? '0%' : `100%`,
-        //   // display: tab === 'right' ? 'flex' : `none`,
-        // }}
       >
         <div className={style['schedule-filter']}>
           <div className={style['text']}>
@@ -267,6 +266,8 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                             eachDayBoxes={eachDayBoxes}
                             setEachDayBoxes={setEachDayBoxes}
                             maxCount={maxCount}
+                            setPopClassBook={setPopClassBook}
+                            setBookInfo={setBookInfo}
                           />
                         )
                       })}
@@ -276,6 +277,12 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
             </div>
           </>
         )}
+        <ClassBook
+          popClassBook={popClassBook}
+          setPopClassBook={setPopClassBook}
+          scheduleData={scheduleData}
+          bookInfo={bookInfo}
+        />
       </section>
     </ScrollSync>
   )
