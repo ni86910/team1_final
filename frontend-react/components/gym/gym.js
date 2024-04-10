@@ -1,13 +1,26 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import style from '@/styles/jack-use/button.module.css'
 import { FaSearch } from 'react-icons/fa'
 import { FaPhone, FaClock, FaLocationDot } from 'react-icons/fa6'
 import Link from 'next/link'
+import { API_SERVER } from '@/configs/index'
 
 export default function GymPlace() {
+  // 用狀態接收fetch來的介紹資料
+  const [gymData, setGymData] = useState([])
+
+  useEffect(() => {
+    fetch(`${API_SERVER}/gym`, { credentials: 'include' })
+      .then((r) => r.json())
+      .then((data) => {
+        console.log(data)
+        setGymData(data)
+      })
+  }, [])
+
   return (
     <>
-      <section className="breadcrumb-option">
+      {/* <section className="breadcrumb-option">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
@@ -21,7 +34,7 @@ export default function GymPlace() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* Breadcrumb Section End */}
       <div className="container">
         <div className="row">
@@ -62,150 +75,45 @@ export default function GymPlace() {
             </button>
           </div>
         </form>
+
         <div className="row" style={{ marginBottom: 20 }}>
-          <div className="col-4">
-            <div className="card">
-              <div className="card-body">
-                <p className="card-text">高雄市</p>
-                <h5 className="card-title">高雄博愛</h5>
-                <p className="card-text">
-                  <FaPhone />
-                  07-3453838
-                </p>
-                <p className="card-text">
-                  <FaClock />
-                  周一至周日 08:00~24:00
-                </p>
-                <p className="card-text">
-                  <FaLocationDot />
-                  高雄市左營區博愛三路102號
-                </p>
-                <Link href={'#'} className={style['site-btn']}>
-                  課表查詢
-                </Link>
-                <br />
-                <br />
-                <Link
-                  href={'/gym/index-gym-detail'}
-                  className={style['site-btn']}
-                >
-                  查看更多資訊
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="col-4">
-            <div className="card">
-              <div className="card-body">
-                <p className="card-text">高雄市</p>
-                <h5 className="card-title">高雄博愛</h5>
-                <p className="card-text">07-3453838</p>
-                <p className="card-text">周一至周日 08:00~24:00</p>
-                <p className="card-text">高雄市左營區博愛三路102號</p>
-                <Link href={'#'} className={style['site-btn']}>
-                  課表查詢
-                </Link>
-                <br />
-                <br />
-                <Link
-                  href={'/gym/index-gym-detail'}
-                  className={style['site-btn']}
-                >
-                  查看更多資訊
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="col-4">
-            <div className="card">
-              <div className="card-body">
-                <p className="card-text">高雄市</p>
-                <h5 className="card-title">高雄博愛</h5>
-                <p className="card-text">07-3453838</p>
-                <p className="card-text">周一至周日 08:00~24:00</p>
-                <p className="card-text">高雄市左營區博愛三路102號</p>
-                <Link href={'#'} className={style['site-btn']}>
-                  課表查詢
-                </Link>
-                <br />
-                <br />
-                <Link
-                  href={'/gym/index-gym-detail'}
-                  className={style['site-btn']}
-                >
-                  查看更多資訊
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row" style={{ marginBottom: 20 }}>
-          <div className="col-4">
-            <div className="card">
-              <div className="card-body">
-                <p className="card-text">高雄市</p>
-                <h5 className="card-title">高雄博愛</h5>
-                <p className="card-text">07-3453838</p>
-                <p className="card-text">周一至周日 08:00~24:00</p>
-                <p className="card-text">高雄市左營區博愛三路102號</p>
-                <Link href={'#'} className={style['site-btn']}>
-                  課表查詢
-                </Link>
-                <br />
-                <br />
-                <Link
-                  href={'/gym/index-gym-detail'}
-                  className={style['site-btn']}
-                >
-                  查看更多資訊
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="col-4">
-            <div className="card">
-              <div className="card-body">
-                <p className="card-text">高雄市</p>
-                <h5 className="card-title">高雄博愛</h5>
-                <p className="card-text">07-3453838</p>
-                <p className="card-text">周一至周日 08:00~24:00</p>
-                <p className="card-text">高雄市左營區博愛三路102號</p>
-                <Link href={'#'} className={style['site-btn']}>
-                  課表查詢
-                </Link>
-                <br />
-                <br />
-                <Link
-                  href={'/gym/index-gym-detail'}
-                  className={style['site-btn']}
-                >
-                  查看更多資訊
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="col-4">
-            <div className="card">
-              <div className="card-body">
-                <p className="card-text">高雄市</p>
-                <h5 className="card-title">高雄博愛</h5>
-                <p className="card-text">07-3453838</p>
-                <p className="card-text">周一至周日 08:00~24:00</p>
-                <p className="card-text">高雄市左營區博愛三路102號</p>
-                <Link href={'#'} className={style['site-btn']}>
-                  課表查詢
-                </Link>
-                <br />
-                <br />
-                <Link
-                  href={'/gym/index-gym-detail'}
-                  className={style['site-btn']}
-                >
-                  查看更多資訊
-                </Link>
-              </div>
-            </div>
-          </div>
+          {gymData.map((v, i) => {
+            return (
+              <>
+                <div key={i} className="col-4" style={{ marginTop: 20 }}>
+                  <div className="card">
+                    <div className="card-body">
+                      <p className="card-text">{v.gym_area}</p>
+                      <h5 className="card-title">{v.gym_name}</h5>
+                      <p className="card-text">
+                        <FaPhone />
+                        {v.gym_phone}
+                      </p>
+                      <p className="card-text">
+                        <FaClock />
+                        {v.gym_opentime}
+                      </p>
+                      <p className="card-text">
+                        <FaLocationDot />
+                        {v.gym_address}
+                      </p>
+                      <Link href={'#'} className={style['site-btn']}>
+                        課表查詢
+                      </Link>
+                      <br />
+                      <br />
+                      <Link
+                        href={'/gym/index-gym-detail'}
+                        className={style['site-btn']}
+                      >
+                        查看更多資訊
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )
+          })}
         </div>
       </div>
     </>

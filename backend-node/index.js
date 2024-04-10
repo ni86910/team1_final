@@ -13,7 +13,9 @@ import bcrypt from "bcryptjs";
 // import wsServer from "./routes/ws-chat.js";
 // import wsServer from "./routes/ws-draw.js";
 import jwt from "jsonwebtoken";
-import classRouter from './routes/class.js'
+import gymRouter from './routes/gym.js'
+import articleRouter from './routes/article.js'
+import teamRouter from './routes/team.js'
 
 // 建立一個session可以儲存的地方
 const MysqlStore = mysql_session(session);
@@ -82,11 +84,11 @@ app.use((req, res, next) => {
 
 // 路由 (routes) 設定
 
-app.use('/class',classRouter)
+app.use('/gym',gymRouter)
 
-// app.use('/product',)
+app.use('/article',articleRouter)
 
-// app.use('/gym',gymRouter)
+app.use('/team',teamRouter)
 
 // *** 路由放在此段之前 ***
 // 設定靜態內容的資料夾

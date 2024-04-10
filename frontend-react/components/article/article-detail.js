@@ -7,26 +7,6 @@ import BookMark from './bookmark/bookmark'
 export default function ArticleDetail() {
   return (
     <>
-      {/* Breadcrumb Section Begin */}
-      <section className="breadcrumb-option">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="breadcrumb__text">
-                <h4>健康小知識</h4>
-                <div className="breadcrumb__links">
-                  <Link href="./index.html">首頁</Link>
-                  <span>
-                    健康小知識 &gt; 訓練專區 &gt; 靠運動預防肌少症
-                    放下啞鈴比舉起啞鈴更有效？
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* Breadcrumb Section End */}
       {/* Article Section Begin */}
       <div className="container">
         <div className="row">
