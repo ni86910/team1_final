@@ -1,4 +1,4 @@
-@import "variable";
+@import 'variable';
 
 %schedule-width {
   width: 1435px;
@@ -35,7 +35,6 @@
   }
 }
 
-
 .schedule-section {
   transition: width 0.1s ease-in-out;
   transition: height 0.1s ease-in-out;
@@ -48,6 +47,7 @@
   // height: unset;
   left: 100%;
   transition: left 0.5s ease-in-out;
+  margin-bottom: 50px;
   .schedule-filter {
     display: flex;
     flex-direction: column;
@@ -168,7 +168,8 @@
     align-items: center;
     width: 100%;
     transition: height 0.5s;
-    overflow: hidden;
+    // overflow: hidden;
+    
     .list-head {
       display: flex;
       align-items: center;
@@ -182,6 +183,7 @@
       line-height: 110px;
       position: sticky;
       top: 0;
+      z-index: 1;
       .next-week,
       .last-week {
         width: 78px;
@@ -220,7 +222,7 @@
       margin: auto;
       position: sticky;
       top: 120px;
-
+      z-index: 1;
       .class-type {
         margin: 0 20px;
 
@@ -250,6 +252,7 @@
       flex-direction: column;
       position: sticky;
       top: 167px;
+      z-index: 1;
       .week-ul {
         @extend %schedule-width;
         margin: auto;
@@ -288,7 +291,7 @@
       overflow-x: auto;
       display: flex;
       justify-content: flex-start;
-
+      overflow: hidden;
       .class-box-list {
         display: flex;
         padding: 0px;
@@ -297,6 +300,7 @@
         margin: auto;
         border-bottom: 5px solid #2e2e2e;
         border-right: 1px dashed rgb(72, 72, 72);
+        position: relative;
 
         .week-day {
           padding: 0px;

@@ -28,7 +28,7 @@ export default function ClassBook({ popClassBook, setPopClassBook, bookInfo }) {
         className={`${style['card']} ${style[popClassBook ? 'show-card' : '']}`}
       >
         <Link
-          href={'#'}
+          href={'/'}
           className={style['close']}
           onClick={(e) => {
             e.preventDefault()

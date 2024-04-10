@@ -49,8 +49,11 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
   // 控制預約頁面的資料呈現
   const [bookInfo, setBookInfo] = useState({})
 
+  // 紀錄還要產生多少空白boxes
+  const [extraBoxesCount, setExtraBoxesCount] = useState(0)
+
   useEffect(() => {
-    console.log('陣列:', eachDayBoxes)
+    console.log('記錄每一天的格子數:', eachDayBoxes)
   }, [eachDayBoxes])
 
   //當tab跟 show改變時，設定container高度 為當前section(右側section)的高度
@@ -58,7 +61,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     console.log('right-height:', sectionRef2.current.clientHeight)
 
     tab === 'right'
-      ? setContainerHeight(sectionRef2.current.clientHeight + 'px')
+      ? setContainerHeight(sectionRef2.current.clientHeight + 50)
       : () => {}
   }, [tab, show, router.query, scheduleData]) // show 要同時設定高度
 
@@ -91,8 +94,8 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
   useEffect(() => {
     if (router.isReady && router.query) {
       getScheduleData()
-      console.log(scheduleData)
-      console.log(router.query)
+      console.log('後端抓到的資料:', scheduleData)
+      console.log('router.query物件:', router.query)
     }
   }, [router.query, router.isReady])
 
@@ -112,7 +115,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
       }
     }
     setMaxCount(max)
-    console.log('max:', max)
+    console.log('每一天最多課程數:', max)
   }, [eachDayBoxes])
 
   return (
@@ -173,12 +176,15 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
             <div className={style['schedule']}>
               <div className={style['list-head']}>
                 <Link
-                  href={'#'}
+                  href={'/'}
                   className={style['last-week']}
                   onClick={(e) => {
                     e.preventDefault()
                     // 重置比較陣列，避免越積越多
                     setEachDayBoxes([])
+
+                    // 重置空格子數量
+                    setExtraBoxesCount(0)
 
                     // 有指定場館，才執行
                     if (router.query.gym_name && router.isReady) {
@@ -211,7 +217,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                   <h3>{`${scheduleData.year} 年 ${scheduleData.month} 月份 課程表`}</h3>
                 </div>
                 <Link
-                  href={'#'}
+                  href={'/'}
                   className={style['next-week']}
                   onClick={(e) => {
                     e.preventDefault()
@@ -219,6 +225,9 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                     if (router.query.gym_name && router.isReady) {
                       // 重置比較陣列，避免越積越多
                       setEachDayBoxes([])
+
+                      // 重置空格子數量
+                      setExtraBoxesCount(0)
 
                       // 獲得下周一的日期
                       const nextMonday = dayjs(
@@ -330,6 +339,8 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                             maxCount={maxCount}
                             setPopClassBook={setPopClassBook}
                             setBookInfo={setBookInfo}
+                            extraBoxesCount={extraBoxesCount}
+                            setExtraBoxesCount={setExtraBoxesCount}
                           />
                         )
                       })}
