@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import style from '@/styles/class-week-col.module.scss'
+import { useRouter } from 'next/router'
 
 export default function WeekCol({
   scheduleData,
@@ -11,6 +12,7 @@ export default function WeekCol({
   setPopClassBook,
   setBookInfo,
 }) {
+  const router = useRouter()
   // 取得單周colum的參照
   const weekRef = useRef()
 
@@ -24,14 +26,14 @@ export default function WeekCol({
   useEffect(() => {
     const newCount = weekRef.current.childNodes.length
     setBoxesCount(newCount)
-  }, [])
+  }, [router.query])
 
   // 把每周的子元素數量 存成陣列
   useEffect(() => {
     const nextArray = [...eachDayBoxes]
     // setEachDayBoxes([...nextArray, boxesCount])
     setEachDayBoxes((prevBoxes) => [...prevBoxes, boxesCount])
-  }, [boxesCount])
+  }, [boxesCount, router.query])
 
   // 更新extraBoxesCount
   useEffect(() => {
@@ -43,7 +45,7 @@ export default function WeekCol({
     }
     setExtraBoxesCount(result)
     console.log('額外box數量', extraBoxesCount, typeof extraBoxesCount)
-  }, [maxCount])
+  }, [maxCount, router.query])
 
   return (
     <div ref={weekRef} className={`${style['week-day']}`}>
@@ -71,6 +73,7 @@ export default function WeekCol({
               onClick={() => {
                 setPopClassBook(true)
                 setBookInfo(v2)
+                setExtraBoxesCount(0)
               }}
             >
               <div className={style['class-box-top']}>
@@ -101,7 +104,7 @@ export default function WeekCol({
                 className={style['class-box-empty']}
                 style={{ position: 'relative' }}
               >
-                <p>{extraBoxesCount}</p>
+                <p>額外產生{extraBoxesCount}格</p>
               </div>
             )
           })

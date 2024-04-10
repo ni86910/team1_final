@@ -10,12 +10,14 @@ import {
 } from 'react-icons/fa'
 import { API_SERVER } from '@/configs'
 import dayjs from 'dayjs'
+import weekday from 'dayjs/plugin/weekday'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import WeekCol from './week-col'
 import ClassBook from './class-book'
 
 export default function ClassSchedule({ setContainerHeight, tab }) {
+  dayjs.extend(weekday)
   const router = useRouter()
   // state 接收課表資料
   const [scheduleData, setScheduleData] = useState({
@@ -170,18 +172,78 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
 
             <div className={style['schedule']}>
               <div className={style['list-head']}>
-                <div className={style['last-week']}>
+                <Link
+                  href={'#'}
+                  className={style['last-week']}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    // 重置比較陣列，避免越積越多
+                    setEachDayBoxes([])
+
+                    // 有指定場館，才執行
+                    if (router.query.gym_name && router.isReady) {
+                      // 獲得上周一的日期
+                      const lastMonday = dayjs(
+                        scheduleData.mondayOfTheWeek
+                      ).subtract(7, 'day')
+
+                      // 要從dayjs物件轉成指定格式字串
+                      const lastMondayStr =
+                        dayjs(lastMonday).format('YYYY-MM-DD')
+
+                      // 原本的query物件展開 覆蓋新的date上去
+                      router.push(
+                        {
+                          query: { ...router.query, date: lastMondayStr },
+                        },
+                        undefined,
+                        { scroll: false }
+                      )
+                    }
+                  }}
+                  scroll={false}
+                >
                   <FaAngleLeft />
                   <span>上一周</span>
-                </div>
+                </Link>
                 <div className={style['list-title']}>
                   <h3>{scheduleData.gymName}</h3>
                   <h3>{`${scheduleData.year} 年 ${scheduleData.month} 月份 課程表`}</h3>
                 </div>
-                <div className={style['next-week']}>
+                <Link
+                  href={'#'}
+                  className={style['next-week']}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    // 有指定場館，才執行
+                    if (router.query.gym_name && router.isReady) {
+                      // 重置比較陣列，避免越積越多
+                      setEachDayBoxes([])
+
+                      // 獲得下周一的日期
+                      const nextMonday = dayjs(
+                        scheduleData.mondayOfTheWeek
+                      ).add(7, 'day')
+
+                      // 要從dayjs物件轉成指定格式字串
+                      const nextMondayStr =
+                        dayjs(nextMonday).format('YYYY-MM-DD')
+
+                      // 原本的query物件展開 覆蓋新的date上去
+                      router.push(
+                        {
+                          query: { ...router.query, date: nextMondayStr },
+                        },
+                        undefined,
+                        { scroll: false }
+                      )
+                    }
+                  }}
+                  scroll={false}
+                >
                   <span>下一周</span>
                   <FaAngleRight />
-                </div>
+                </Link>
               </div>
               <div className={style['class-type-group']}>
                 <div
