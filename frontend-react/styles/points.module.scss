@@ -1,0 +1,79 @@
+@import "variable";
+
+
+
+.btn{
+  width: 150px;
+  background-color: black;
+  color: white;
+  border-radius: 50px;
+  display: block;
+  padding: 5px;
+  text-align: center;
+  
+  &:hover{
+    background-color:$secondary-color;
+    color:white;
+    border-radius: 50px;
+  }
+}
+
+
+.point-section{
+  margin: 0px 190px;
+  padding: 50px 0px;
+  width:100%;
+}
+
+.point-title{
+  margin-bottom: 20px;
+  font-size: 20px;
+  display:flex;
+  &::before{
+    background-color: black;
+    border-radius: 40% / 10%;
+    content: "";
+    margin: 2px 7px 2px 0px;
+    width: 3px;
+  }
+}
+
+.point-first-row,
+.point-second-row
+{
+  background-color: white;
+  padding: 20px 0px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  .point-left,
+  .point-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .points-number{
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+  }
+}
+.point-left{
+  border-right: 2px solid $gray-deep-color;
+}
+.point-second-row{
+
+  margin-top: 50px;
+}
+
+.Tabs-color{
+  color:white;
+  background-color: black;
+  &:hover{
+    color:white;
+    background-color: $primary-color;
+  }
+}
+
+
+

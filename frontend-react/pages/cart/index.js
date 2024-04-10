@@ -10,7 +10,6 @@ export default function Cart() {
       <Head>
         <title>Fits U - 購物車</title>
       </Head>
-      <hr />
       <CartMain />
     </>
   )

@@ -10,7 +10,6 @@ export default function Shop() {
       <Head>
         <title>Fits U - 商品詳細</title>
       </Head>
-      <hr />
       <ProductDetail />
     </>
   )
