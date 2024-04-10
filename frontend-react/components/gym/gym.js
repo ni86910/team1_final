@@ -4,6 +4,7 @@ import { FaSearch } from 'react-icons/fa'
 import { FaPhone, FaClock, FaLocationDot } from 'react-icons/fa6'
 import Link from 'next/link'
 import { API_SERVER } from '@/configs/index'
+import Swiper from '@/components/gym/swiper/swiper'
 
 export default function GymPlace() {
   // 用狀態接收fetch來的介紹資料
@@ -20,24 +21,12 @@ export default function GymPlace() {
 
   return (
     <>
-      {/* <section className="breadcrumb-option">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="breadcrumb__text">
-                <h4>場地一覽</h4>
-                <div className="breadcrumb__links">
-                  <a href="./index.html">首頁</a>
-                  <span>場地一覽</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-      {/* Breadcrumb Section End */}
       <div className="container">
         <div className="row">
+          <div className="mt-4 text-center" style={{ marginTop: 20 }}>
+            <Swiper />
+          </div>
+
           <h4 className="mt-4 text-center">
             <FaLocationDot />
             尋找場地
@@ -103,7 +92,7 @@ export default function GymPlace() {
                       <br />
                       <br />
                       <Link
-                        href={'/gym/index-gym-detail'}
+                        href={`/gym/${v.gym_id}`}
                         className={style['site-btn']}
                       >
                         查看更多資訊

@@ -71,7 +71,7 @@ export default function Team() {
                   <div className="col-lg-3 col-md-6 col-sm-6" key={i}>
                     <div className="team__item">
                       <Image
-                        src="/img/team/team-1.jpg"
+                        src="/img/team/team-2.jpg"
                         alt=""
                         width={500}
                         height={350}
@@ -119,7 +119,7 @@ export default function Team() {
                         <div className="modal-body">
                           {/* Add modal body content here */}
                           <Image
-                            src="/img/team/team-1.jpg"
+                            src="/img/team/team-2.jpg"
                             alt=""
                             width={250}
                             height={300}

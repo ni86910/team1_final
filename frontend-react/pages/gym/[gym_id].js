@@ -98,17 +98,6 @@ export default function GymDetail() {
               <div className="col" style={{ marginBottom: 15 }}>
                 <h4 className="mt-4 text-center">廠館介紹</h4>
               </div>
-              {/* <iframe
-              title="場地地圖"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14726.470667809659!2d120.3089536!3d22.6680394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e050e941cadd3%3A0x8d563ee3e69c2101!2z5YGl6Lqr5bel5bugIEZpdG5lc3MgRmFjdG9yeSDljZrmhJvlu6A!5e0!3m2!1szh-TW!2stw!4v1710043145912!5m2!1szh-TW!2stw"
-              width={600}
-              height={450}
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              
-            /> */}
             </div>
             <div className="row" style={{ marginTop: 20 }}>
               <div className="col">

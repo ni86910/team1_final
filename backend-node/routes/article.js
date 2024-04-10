@@ -1,5 +1,6 @@
 import express from "express";
 import db from "./../utils/mysql2-connect.js";
+import dayjs from "dayjs";
 
 const router = express.Router();
 
@@ -21,6 +22,11 @@ router.get('/', async(req,res)=>{
         console.log(ex);
         return res.status(500).json({ error: '內部伺服器錯誤' });
     }
+    rows.forEach((v,i) => {
+      const localpostdate = dayjs(v.post_date).format('YYYY-DD-MM');
+      v.post_date = localpostdate;
+    })
+
     console.log('rows',rows);
     res.json(rows);
 });
@@ -39,6 +45,11 @@ router.get("/:article_id", async (req, res) => {
     } catch (ex) {
       console.log(ex);
     }
+
+    rows.forEach((v,i) => {
+      const localpostdate = dayjs(v.post_date).format('YYYY-DD-MM');
+      v.post_date = localpostdate;
+    })
     // 拿第一個物件
     res.json(rows[0]);
   });

@@ -19,6 +19,7 @@ export default function ArticleDetail() {
     publish: '',
     teacher_id: '',
     teacher_name: '',
+    article_image: '',
   })
 
   // fetch時要執行的function
@@ -56,11 +57,10 @@ export default function ArticleDetail() {
       ) : (
         <div className="container">
           <div className="row">
-            <h4 className="mt-4 text-center">
-              {/* 靠運動預防肌少症 放下啞鈴比舉起啞鈴更有效？ */}
-              {artInfo.title}
-            </h4>
-            <p className="mt-4">{artInfo.post_date} | 新手專區 | 徒手訓練</p>
+            <h4 className="mt-4 text-center">{artInfo.title}</h4>
+            <p className="mt-4">
+              {artInfo.post_date} | {artInfo.article_item}
+            </p>
             <div className="col">
               <BookMark />
             </div>
@@ -68,26 +68,15 @@ export default function ArticleDetail() {
           <div className="row">
             <div className="col text-center">
               <Image
-                src="/img/article/oldman.jpg"
+                src={`/img/article/${artInfo.article_image}`}
                 alt=""
                 width={900}
                 height={550}
               />
-              <p className="mt-4">{artInfo.content}</p>
+              <p className="mt-4" style={{ lineHeight: 2.5 }}>
+                {artInfo.content}
+              </p>
             </div>
-            <h5 className="mt-4" style={{ marginTop: 20, marginBottom: 20 }}>
-              離心運動 centrifugal exercise
-            </h5>
-            <p className="mt-4">
-              {/* 肌肉收縮分為離心收縮與向心收縮。以啞鈴訓練為例，當我們舉啞鈴時，肌肉產生的力量大於外在負荷的力量才能舉起它，此時肌肉是向心收縮；當我們放下啞鈴，也就是順著地心引力的施力過程，肌肉收縮的力量小於外在負荷所施與的力量，讓肌肉因離心收縮而延展中受到破壞，破壞程度比向心收縮劇烈，能達到最好的肌肉生長效果。離心運動正是針對肌肉離心收縮所設計的訓練方式。（資料來源／恆耀健康科技） */}
-            </p>
-            <h5 className="mt-4" style={{ marginTop: 20, marginBottom: 20 }}>
-              漸進式阻力訓練 progressive resistance training
-            </h5>
-            <p className="mt-4">
-              {/* 這是一種力量訓練方法，以對抗某種阻力的方式鍛鍊肌肉，施加阻力強度隨著訓練者的肌力增強而不斷逐漸增加。可利用運動訓練器械、自由重量或彈力帶等進行中度至高強度的訓練。
-              以往的研究紛紛指出，針對身體的大肌群施以低至中等強度漸進式阻力訓練，例如步行、使用橢圓機、騎自行車等有氧運動，便足夠誘發肌力進步；若肌少症老年人進行高強度阻力訓練，則可獲得最大程度的肌力進步及肌肉質量提升。 */}
-            </p>
           </div>
           <p className="mt-4">作者: {artInfo.teacher_name}</p>
           <div
