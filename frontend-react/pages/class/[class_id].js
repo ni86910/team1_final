@@ -4,6 +4,8 @@ import style from '@/styles/class-page.module.scss'
 import { FaBook, FaMagnifyingGlass, FaCaretDown } from 'react-icons/fa6'
 import { API_SERVER } from '@/configs/index'
 import Image from 'next/image'
+import ClassSwiper from '@/components/class/class-swiper'
+import Link from 'next/link'
 
 export default function ClassPage() {
   const router = useRouter()
@@ -44,7 +46,8 @@ export default function ClassPage() {
       console.log('class_id:', class_id)
       getClassData(class_id)
     }
-  }, [router.isReady])
+  }, [router.isReady, router])
+  console.log(classInfo)
 
   return (
     <>
@@ -63,23 +66,23 @@ export default function ClassPage() {
           <div className={style['control-bar']}>
             <div className={style['shortcut-group']}>
               <div className={style['shortcut']}>
-                <a href="">課程介紹</a>
+                <Link href="#content">課程介紹</Link>
               </div>
               <div className={style['shortcut']}>
-                <a href="">課表查詢</a>
+                <Link href="#search-class">課表查詢</Link>
               </div>
               <div className={style['shortcut']}>
-                <a href="">其他課程</a>
+                <Link href="#other-class-section">其他課程</Link>
               </div>
             </div>
           </div>
-          <div className={style['content']}>
+          <div id="content" className={style['content']}>
             <div className={style['text-box']}>
               <h2 className={style['class-name']}>{classInfo.class_name}</h2>
               <p className={style['text']}>{classInfo.class_description}</p>
             </div>
           </div>
-          <div className={style['search-class']}>
+          <div id="search-class" className={style['search-class']}>
             <div className={style['search-class-group']}>
               <div className={style['title']}>
                 <FaBook />
@@ -105,8 +108,17 @@ export default function ClassPage() {
         </section>
       )}
 
-      <section className={style['other-class-section']}>
-        <div className={style['other-class']}></div>
+      <section
+        id="other-class-section"
+        className={style['other-class-section']}
+      >
+        <div className={style['other-class']}>
+          <div className={style['text']}>
+            <h2>其他課程</h2>
+            <p>點擊查看更多相關課程</p>
+          </div>
+          <ClassSwiper classInfo={classInfo} />
+        </div>
       </section>
     </>
   )

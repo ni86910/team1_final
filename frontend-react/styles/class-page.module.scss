@@ -1,3 +1,5 @@
+@import 'variable';
+
 .info-section {
   .img-box {
     height: 500px;
@@ -22,6 +24,13 @@
       align-items: center;
       .shortcut {
         margin: 0 15px;
+        font-weight: 600;
+        a{
+          color: white;
+          &:hover {
+            color: $primary-color;
+          }
+        }
       }
     }
   }
@@ -32,11 +41,15 @@
       margin: auto;
       .class-name {
         margin-bottom: 20px;
+        font-weight: 600;
       }
     }
   }
   .search-class {
-    height: 200px;
+    padding: 50px 0;
+    min-height: 200px;
+    max-height: 600px;
+    height: fit-content;
     background-color: #2e2e2e;
     display: flex;
     align-items: center;
@@ -51,14 +64,13 @@
       .title {
         display: flex;
         align-items: center;
-        i {
-          color: chocolate;
-          font-size: larger;
-          margin-right: 20px;
-        }
+        color: chocolate;
+        font-size: larger;
         h2 {
           color: white;
           font-size: x-large;
+          margin-left: 20px;
+          font-weight: 600;
         }
       }
       .select-group {
@@ -98,5 +110,22 @@
   }
 }
 .other-class-section {
-  height: 800px;
+  height: 600px;
+  .other-class {
+    height: 100%;
+      width: 90%;
+      height: 100%;
+      margin: auto;
+      // background-color: burlywood;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    .text {
+      h2{
+        margin-bottom: 40px;
+        font-weight: 600;
+      }
+    }
+  }
 }

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { API_SERVER } from '../common/config'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { FaPlus } from 'react-icons/fa6'
 
 export default function ClassIntro({ setContainerHeight, tab }) {
   const router = useRouter()
@@ -119,7 +120,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                         }}
                         role="presentation"
                       >
-                        +
+                        <FaPlus />
                       </div>
                       {/* <Link href={`/class/${v.class_id}`}>aaa</Link> */}
                     </div>
