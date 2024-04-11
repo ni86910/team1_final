@@ -27,23 +27,6 @@ router.get("/", async (req, res) => {
     res.json(rows);
   });
 
-  // router.get("/index-gym-detail", async(req,res) => {
-  //   const gym_id = 1;
-  //   const sql = `SELECT * FROM gym WHERE gym_id = ${gym_id}` ;
-
-  //   let rows = [];
-  //   let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
-  //   //用await要捕捉錯誤 要像這樣，用.then 就用.catch
-  //   try {
-  //     [rows, fields] = await db.query(sql);
-      
-  //   } catch (ex) {
-  //     console.log(ex);
-  //   }
-  //   console.log('rows',rows);
-  //   res.json(rows);
-  // })
-
 // 動態路由 接收課程名稱
 router.get("/:gym_id", async (req, res) => {
     // 用變數接收動態路由

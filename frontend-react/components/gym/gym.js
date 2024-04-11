@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import style from '@/styles/jack-use/button.module.css'
-import { FaSearch } from 'react-icons/fa'
 import { FaPhone, FaClock, FaLocationDot } from 'react-icons/fa6'
 import Link from 'next/link'
 import { API_SERVER } from '@/configs/index'
@@ -9,6 +8,7 @@ import Swiper from '@/components/gym/swiper/swiper'
 export default function GymPlace() {
   // 用狀態接收fetch來的介紹資料
   const [gymData, setGymData] = useState([])
+  const [selectedArea, setSelectedArea] = useState('全部區域')
 
   useEffect(() => {
     fetch(`${API_SERVER}/gym`, { credentials: 'include' })
@@ -18,6 +18,14 @@ export default function GymPlace() {
         setGymData(data)
       })
   }, [])
+
+  const handleAreaChange = (e) => {
+    setSelectedArea(e.target.value) // 更新选择的区域
+  }
+
+  const filteredGymData = gymData.filter((item) => {
+    return selectedArea === '全部區域' || item.gym_area === selectedArea // 根据选择的区域进行过滤
+  })
 
   return (
     <>
@@ -36,7 +44,7 @@ export default function GymPlace() {
           </p>
         </div>
         <form
-          action=""
+          action="get"
           className="row justify-content-center"
           style={{ marginBottom: 20 }}
         >
@@ -47,6 +55,8 @@ export default function GymPlace() {
               className={style['select']}
               data-type="select"
               data-width="medium"
+              value={selectedArea}
+              onChange={handleAreaChange}
             >
               <option value="全部區域" selected="selected">
                 全部區域
@@ -58,15 +68,10 @@ export default function GymPlace() {
               <option value="高雄市">高雄市</option>
             </select>
           </div>
-          <div className="col-auto">
-            <button className={style['btn']} type="submit">
-              <FaSearch />
-            </button>
-          </div>
         </form>
 
         <div className="row" style={{ marginBottom: 20 }}>
-          {gymData.map((v, i) => {
+          {filteredGymData.map((v, i) => {
             return (
               <>
                 <div key={i} className="col-4" style={{ marginTop: 20 }}>

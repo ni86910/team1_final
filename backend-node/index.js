@@ -16,6 +16,7 @@ import jwt from "jsonwebtoken";
 import gymRouter from './routes/gym.js'
 import articleRouter from './routes/article.js'
 import teamRouter from './routes/team.js'
+import contactRouter from './routes/contact.js'
 
 // 建立一個session可以儲存的地方
 const MysqlStore = mysql_session(session);
@@ -89,6 +90,8 @@ app.use('/gym',gymRouter)
 app.use('/article',articleRouter)
 
 app.use('/team',teamRouter)
+
+app.use('/contact',contactRouter)
 
 // *** 路由放在此段之前 ***
 // 設定靜態內容的資料夾

@@ -1,25 +1,48 @@
-import React from 'react'
+import { useState } from 'react'
 import style from '@/styles/jack-use/button.module.css'
 import Link from 'next/link'
+import { API_SERVER } from '@/configs/index'
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    consult_id: 0,
+    consult_name: '',
+    consult_email: '',
+    request: '',
+    book_time: '',
+    consult_time: '',
+  })
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await fetch(`${API_SERVER}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data) // Handle response from server
+      } else {
+        console.error('Failed to submit form')
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+    }
+  }
+
   return (
     <>
-      <section className="breadcrumb-option">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="breadcrumb__text">
-                <h4>客服專區</h4>
-                <div className="breadcrumb__links">
-                  <Link href="./index.html">首頁</Link>
-                  <span>客服專區</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
       {/* Map Begin */}
       <div className="map">
         <iframe
@@ -69,11 +92,11 @@ export default function Contact() {
             </div>
             <div className="col-lg-6 col-md-6">
               <div className="contact__form">
-                <form action="">
+                <form action="post" onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="col-lg-12" style={{ marginBottom: 20 }}>
                       <select name="category" className="select" id="category">
-                        <option value="">選擇類別</option>
+                        <option value="All">選擇類別</option>
                         <option value="問題詢問">問題詢問</option>
                         <option value="異業/商品合作">異業/商品合作</option>
                         <option value="企業/特約商家申請">
@@ -91,7 +114,8 @@ export default function Contact() {
                       <textarea
                         name="message"
                         placeholder="Message"
-                        defaultValue={''}
+                        value={formData.message}
+                        onChange={handleChange}
                       />
                       <button type="reset" className={style['site-btn']}>
                         重新填寫

@@ -17,124 +17,107 @@ export default function Team() {
 
   return (
     <>
-      {/* Breadcrumb Section Begin */}
-      {/* <section className="breadcrumb-option">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="breadcrumb__text">
-                <h4>團隊介紹</h4>
-                <div className="breadcrumb__links">
-                  <a href="./index.html">首頁</a>
-                  <span>團隊介紹</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-      {/* Breadcrumb Section End */}
       {/* About Section Begin */}
-      <section className="about spad">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="about__pic">
-                <Image
-                  src="/img/team/about-us.jpg"
-                  width={1000}
-                  height={550}
-                  alt=""
-                />
-              </div>
+
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="about__pic">
+              <Image
+                src="/img/team/about-us.jpg"
+                width={1000}
+                height={550}
+                alt=""
+              />
             </div>
           </div>
         </div>
-      </section>
+      </div>
+
       {/* About Section End */}
       {/* Team Section Begin */}
-      <section className="team spad">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="section-title">
-                <span style={{ color: '#EB6234' }}>教練團隊</span>
-                <h2>Meet Our 教練團隊</h2>
-              </div>
+
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="section-title">
+              <span style={{ color: '#EB6234' }}>教練團隊</span>
+              <h2>Meet Our 教練團隊</h2>
             </div>
           </div>
+        </div>
 
-          <div className="row">
-            {teamData.map((v, i) => {
-              return (
-                <>
-                  <div className="col-lg-3 col-md-6 col-sm-6" key={i}>
-                    <div className="team__item">
-                      <Image
-                        src="/img/team/team-2.jpg"
-                        alt=""
-                        width={500}
-                        height={350}
-                        data-bs-toggle="modal"
-                        data-bs-target={`#modalJohnSmith${i}`}
-                      />
-                      <h4>
-                        {/* John Smith */}
-                        {v.teacher_name}
-                      </h4>
-                      <span>
-                        {/* 健身教練 */}
-                        {v.teacher_type}
-                      </span>
-                    </div>
+        <div className="row">
+          {teamData.map((v, i) => {
+            return (
+              <>
+                <div className="col-lg-3 col-md-6 col-sm-6" key={i}>
+                  <div className="team__item">
+                    <Image
+                      src="/img/team/team-2.jpg"
+                      alt=""
+                      width={500}
+                      height={350}
+                      data-bs-toggle="modal"
+                      data-bs-target={`#modalJohnSmith${i}`}
+                    />
+                    <h4>
+                      {/* John Smith */}
+                      {v.teacher_name}
+                    </h4>
+                    <span>
+                      {/* 健身教練 */}
+                      {v.teacher_type}
+                    </span>
                   </div>
-                </>
-              )
-            })}
-            {/* Modal for John Smith */}
-            {teamData.map((v, i) => {
-              return (
-                <>
-                  <div
-                    className="modal fade"
-                    id={`modalJohnSmith${i}`}
-                    tabIndex={-1}
-                    aria-labelledby="modalJohnSmithLabel"
-                    aria-hidden="true"
-                    key={i}
-                  >
-                    <div className="modal-dialog">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <h5 className="modal-title" id="modalJohnSmithLabel">
-                            {v.teacher_name} 資歷
-                          </h5>
-                          <button
-                            type="button"
-                            className="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                          />
-                        </div>
-                        <div className="modal-body">
-                          {/* Add modal body content here */}
-                          <Image
-                            src="/img/team/team-2.jpg"
-                            alt=""
-                            width={250}
-                            height={300}
-                          />
-                          <p>{v.teacher_type}</p>
-                        </div>
+                </div>
+              </>
+            )
+          })}
+          {/* Modal for John Smith */}
+          {teamData.map((v, i) => {
+            return (
+              <>
+                <div
+                  className="modal fade"
+                  id={`modalJohnSmith${i}`}
+                  tabIndex={-1}
+                  aria-labelledby="modalJohnSmithLabel"
+                  aria-hidden="true"
+                  key={i}
+                >
+                  <div className="modal-dialog">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="modalJohnSmithLabel">
+                          {v.teacher_name} 資歷
+                        </h5>
+                        <button
+                          type="button"
+                          className="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        />
+                      </div>
+                      <div className="modal-body">
+                        {/* Add modal body content here */}
+                        <Image
+                          src="/img/team/team-2.jpg"
+                          alt=""
+                          width={250}
+                          height={300}
+                        />
+                        <p>{v.teacher_type}</p>
                       </div>
                     </div>
                   </div>
-                </>
-              )
-            })}
-          </div>
+                </div>
+              </>
+            )
+          })}
         </div>
-      </section>
+      </div>
+
       {/* Team Section End */}
       {/* Client Section Begin */}
       <section className="clients spad">
