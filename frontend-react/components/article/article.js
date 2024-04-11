@@ -71,7 +71,7 @@ export default function Article() {
             return (
               <>
                 <div key={i} className="col-4" style={{ marginTop: 20 }}>
-                  <div className="card">
+                  <div className="card" style={{ height: 400 }}>
                     <div className="card-body">
                       <p className="card-text">{v.article_item}</p>
                       <Image
