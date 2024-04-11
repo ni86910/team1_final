@@ -18,7 +18,18 @@ import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules'
 
 export default function ProductDetail() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
-  const [count, setCount] = useState(0)
+
+  const [count, setCount] = useState(1)
+
+  const handleDecrease = () => {
+    if (count > 1) {
+      setCount(count - 1) // 減少count，但最小值只能是1
+    }
+  }
+
+  const handleIncrease = () => {
+    setCount(count + 1) // 增加count
+  }
 
   return (
     <>
@@ -171,9 +182,7 @@ export default function ProductDetail() {
                     <div className={style['quantity']}>
                       <button
                         className={style['qt-minus']}
-                        onClick={() => {
-                          setCount(count - 1)
-                        }}
+                        onClick={handleDecrease}
                       >
                         <RxMinus />
                       </button>
@@ -186,9 +195,7 @@ export default function ProductDetail() {
                       </div>
                       <button
                         className={style['qt-plus']}
-                        onClick={() => {
-                          setCount(count + 1)
-                        }}
+                        onClick={handleIncrease}
                       >
                         <RxPlus />
                       </button>
