@@ -52,12 +52,6 @@ export default function CheckoutMain() {
                       <div className={`col-9 ${style['checkout-option']}`}>
                         Email：oce*****@gmail.com
                       </div>
-                      <a
-                        href="#"
-                        className={`col-3 ${style['checkout-choose']}`}
-                      >
-                        變更 <IoIosArrowForward />
-                      </a>
                     </div>
                   </div>
                 </div>
@@ -85,17 +79,6 @@ export default function CheckoutMain() {
                         <label>
                           <input
                             type="radio"
-                            id="LinePay"
-                            name="payment"
-                            defaultValue={2}
-                          />
-                          LINE Pay
-                        </label>
-                      </div>
-                      <div className={style['checkout-payment']}>
-                        <label>
-                          <input
-                            type="radio"
                             id="cash"
                             name="payment"
                             defaultValue={3}
@@ -106,7 +89,7 @@ export default function CheckoutMain() {
                     </div>
                   </div>
                 </div>
-                <div className={style['checkout-BlockContainer']}>
+                {/* <div className={style['checkout-BlockContainer']}>
                   <div className={style['checkout-MaskContainer']}>
                     <div className={style['checkout-BlockTitle']}>
                       <h5>
@@ -129,7 +112,7 @@ export default function CheckoutMain() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className={style['checkout-BlockContainer']}>
                   <div className={style['checkout-MaskContainer']}>
                     <div className={style['checkout-BlockTitle']}>

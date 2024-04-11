@@ -12,8 +12,6 @@ export default function Checkout() {
         <title>Fits U - 結帳頁</title>
       </Head>
       <CheckoutMain />
-      <br />
-      <Link href="/cart">連至 購物車</Link>
     </>
   )
 }
