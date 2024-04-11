@@ -2,51 +2,32 @@ import { useRef, useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import style from '@/styles/class-week-col.module.scss'
 import { useRouter } from 'next/router'
+import { API_SERVER } from '@/configs'
 
 export default function WeekCol({
   scheduleData,
   i,
-  setEachDayBoxes,
-  eachDayBoxes,
-  maxCount,
   setPopClassBook,
   setBookInfo,
+  setParticipantData,
+  participantData,
 }) {
   const router = useRouter()
   // 取得單周colum的參照
   const weekRef = useRef()
 
-  // 記錄單天colum的子元素數量
-  const [boxesCount, setBoxesCount] = useState(0)
-
-  // 紀錄還要產生多少空白boxes
-  const [extraBoxesCount, setExtraBoxesCount] = useState(0)
-
-  // 更新單周colum的子元素數量
-  useEffect(() => {
-    const newCount = weekRef.current.childNodes.length
-    setBoxesCount(newCount)
-  }, [router.query])
-
-  // 把每周的子元素數量 存成陣列
-  useEffect(() => {
-    const nextArray = [...eachDayBoxes]
-    // setEachDayBoxes([...nextArray, boxesCount])
-    setEachDayBoxes((prevBoxes) => [...prevBoxes, boxesCount])
-  }, [boxesCount, router.query])
-
-  // 更新extraBoxesCount
-  useEffect(() => {
-    let result = maxCount - boxesCount
-
-    // result有時會是NaN因此要排除一下
-    if (!result) {
-      result = 0
+  // 抓參與人數
+  const getMaxParticipant = async (scheduleId) => {
+    const url = `${API_SERVER}/class/book/${scheduleId}`
+    try {
+      const r = await fetch(url)
+      const data = await r.json()
+      setParticipantData(data)
+      console.log(participantData)
+    } catch (e) {
+      console.log(e)
     }
-
-    setExtraBoxesCount(result)
-    console.log('額外box數量', extraBoxesCount, typeof extraBoxesCount)
-  }, [maxCount, router.query])
+  }
 
   return (
     <>
@@ -75,6 +56,7 @@ export default function WeekCol({
                 onClick={() => {
                   setPopClassBook(true)
                   setBookInfo(v2)
+                  getMaxParticipant(v2.class_schedule_id)
                 }}
               >
                 <div className={style['class-box-top']}>
@@ -93,23 +75,6 @@ export default function WeekCol({
         })}
 
         {/* 在這裡補生 有缺的格子 */}
-        {/* {extraBoxesCount < 0 ? (
-        <></>
-      ) : (
-        Array(extraBoxesCount)
-          .fill(1)
-          .map((v, i) => {
-            return (
-              <div
-                key={i}
-                className={style['class-box-empty']}
-                style={{ position: 'relative' }}
-              >
-                <p>額外產生{extraBoxesCount}格</p>
-              </div>
-            )
-          })
-      )} */}
       </div>
       <div className={style['background-col']} style={{ left: `${i * 205}px` }}>
         <div className={style['background-box']}></div>

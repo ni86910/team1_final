@@ -1,7 +1,7 @@
-@import "variable";
+@import 'variable';
 
 .overlay {
-  // z-index: 5;
+  z-index: 1;
   box-sizing: border-box;
   position: fixed;
   left: 0;
@@ -39,7 +39,7 @@
     z-index: 2;
     font-size: x-large;
     color: white;
-    &:hover{
+    &:hover {
       color: $primary-color;
     }
   }
@@ -116,6 +116,8 @@
             justify-content: center;
             span {
               width: 70%;
+              position: relative;
+              top: 5px;
               text-align: center;
               border-bottom: 2px solid rgb(221, 221, 221);
             }
@@ -124,6 +126,7 @@
           .day-number {
             font-size: x-large;
             font-weight: 700;
+            // height: 27px;
           }
         }
       }
@@ -145,6 +148,7 @@
           background-color: burlywood;
           border-radius: 20%;
           overflow: hidden;
+          position: relative;
         }
       }
     }
@@ -155,22 +159,26 @@
     background-color: white;
     box-shadow: 0px -1px 7px 0px rgba(202, 202, 202, 0.75);
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 40px;
+    .participant-count{
+      
+    }
     .button {
       cursor: pointer;
       height: 40px;
       width: 150px;
       border-radius: 100px;
-      margin-right: 40px;
+      // margin-right: 40px;
       text-align: center;
       line-height: 40px;
       font-weight: 600;
-      background-color:black;
+      background-color: black;
       color: white;
       &:hover {
-        background-color:$primary-color;
-      color: white;
+        background-color: $primary-color;
+        color: white;
       }
     }
   }

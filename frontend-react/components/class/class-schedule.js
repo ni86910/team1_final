@@ -31,30 +31,25 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     rows: [],
   })
 
+  // 參與人數資料
+  const [participantData, setParticipantData] = useState({
+    class_schedule_id: 0,
+    max_participant: 0,
+    current_participant: 0,
+    message: '',
+  })
+
   // state 控制 課表是否要出現
   const [show, setShow] = useState(false)
 
   // 取得section參照
   const sectionRef2 = useRef(null)
 
-  // 用陣列紀錄每一天的格子數
-  const [eachDayBoxes, setEachDayBoxes] = useState([])
-
-  // 紀錄一周七天中 最多格子那天 的格子數量
-  const [maxCount, setMaxCount] = useState(0)
-
   // 控制預約頁面是否要出現
   const [popClassBook, setPopClassBook] = useState(false)
 
-  // 控制預約頁面的資料呈現
+  // 預約頁面的資料呈現
   const [bookInfo, setBookInfo] = useState({})
-
-  // 紀錄還要產生多少空白boxes
-  const [extraBoxesCount, setExtraBoxesCount] = useState(0)
-
-  useEffect(() => {
-    console.log('記錄每一天的格子數:', eachDayBoxes)
-  }, [eachDayBoxes])
 
   //當tab跟 show改變時，設定container高度 為當前section(右側section)的高度
   useEffect(() => {
@@ -67,6 +62,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
 
   // 取得課表資料
   const getScheduleData = async (
+    signal,
     date = router.query.date || dayjs().format('YYYY-MM-DD'),
     gym_name = router.query.gym_name || undefined
   ) => {
@@ -74,7 +70,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
 
     // 開始fetch
     try {
-      const r = await fetch(url)
+      const r = await fetch(url, signal)
       const data = await r.json()
       // 這裡拿到的是物件
       if (typeof data === 'object' && data) {
@@ -92,10 +88,17 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
 
   // 查詢字串有更動，就去抓課表資料
   useEffect(() => {
+    const controller = new AbortController() // 取消的控制器
+    const signal = controller.signal
+
     if (router.isReady && router.query) {
-      getScheduleData()
-      console.log('後端抓到的資料:', scheduleData)
-      console.log('router.query物件:', router.query)
+      getScheduleData(signal).then((result) => {
+        console.log('router.query物件:', router.query)
+      })
+    }
+
+    return () => {
+      controller.abort() // 取消未完成的 ajax
     }
   }, [router.query, router.isReady])
 
@@ -106,17 +109,34 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     }
   }, [scheduleData])
 
+  /* AbortController範例 避免連續發fetch 回來時間不一定
   useEffect(() => {
-    let i
-    let max = eachDayBoxes[0]
-    for (i = 0; i < eachDayBoxes.length; i++) {
-      if (eachDayBoxes[i] > max) {
-        max = eachDayBoxes[i]
-      }
-    }
-    setMaxCount(max)
-    console.log('每一天最多課程數:', max)
-  }, [eachDayBoxes])
+    if (!router.isReady) return;
+    const controller = new AbortController(); // 取消的控制器
+    const signal = controller.signal;
+
+    console.log({ "location.search": location.search });
+    fetch(`${AB_LIST}${location.search}`, {
+      signal,
+      headers: { ...getAuthHeader() },
+    })
+      .then((r) => r.json())
+      .then((result) => {
+        console.log(result);
+        setListData(result);
+      })
+      .catch((ex) => {
+        // 用戶取消時會發生 exception
+        console.log({ ex });
+      });
+
+    return () => {
+      controller.abort(); // 取消未完成的 ajax
+    };
+  }, [router, render, auth]);
+  */
+
+  console.log('後端抓到的資料:', scheduleData)
 
   return (
     <ScrollSync>
@@ -144,7 +164,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
               </div>
             </div>
             <Link
-              href="?date=2024-04-09&gym_name=賽特體適能"
+              href="?date=2024-04-30&gym_name=賽特體適能"
               className={style['search']}
               scroll={false}
             >
@@ -180,11 +200,6 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                   className={style['last-week']}
                   onClick={(e) => {
                     e.preventDefault()
-                    // 重置比較陣列，避免越積越多
-                    setEachDayBoxes([])
-
-                    // 重置空格子數量
-                    setExtraBoxesCount(0)
 
                     // 有指定場館，才執行
                     if (router.query.gym_name && router.isReady) {
@@ -224,10 +239,6 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                     // 有指定場館，才執行
                     if (router.query.gym_name && router.isReady) {
                       // 重置比較陣列，避免越積越多
-                      setEachDayBoxes([])
-
-                      // 重置空格子數量
-                      setExtraBoxesCount(0)
 
                       // 獲得下周一的日期
                       const nextMonday = dayjs(
@@ -334,13 +345,10 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                             key={i}
                             scheduleData={scheduleData}
                             i={i}
-                            eachDayBoxes={eachDayBoxes}
-                            setEachDayBoxes={setEachDayBoxes}
-                            maxCount={maxCount}
                             setPopClassBook={setPopClassBook}
                             setBookInfo={setBookInfo}
-                            extraBoxesCount={extraBoxesCount}
-                            setExtraBoxesCount={setExtraBoxesCount}
+                            setParticipantData={setParticipantData}
+                            participantData={participantData}
                           />
                         )
                       })}
@@ -355,6 +363,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
           setPopClassBook={setPopClassBook}
           scheduleData={scheduleData}
           bookInfo={bookInfo}
+          participantData={participantData}
         />
       </section>
     </ScrollSync>

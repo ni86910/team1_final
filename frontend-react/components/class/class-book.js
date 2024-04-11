@@ -4,8 +4,14 @@ import Image from 'next/image'
 import dayjs from 'dayjs'
 import { FaTimes } from 'react-icons/fa'
 import Link from 'next/link'
+import { API_SERVER } from '@/configs'
 
-export default function ClassBook({ popClassBook, setPopClassBook, bookInfo }) {
+export default function ClassBook({
+  popClassBook,
+  setPopClassBook,
+  bookInfo,
+  participantData,
+}) {
   // 處理預約資料
   bookInfo.year = dayjs(bookInfo.start_time).format('YYYY年M月D號') //年
   bookInfo.day = dayjs(bookInfo.start_time).format('D') //日
@@ -28,7 +34,7 @@ export default function ClassBook({ popClassBook, setPopClassBook, bookInfo }) {
         className={`${style['card']} ${style[popClassBook ? 'show-card' : '']}`}
       >
         <Link
-          href={'/'}
+          href={'#'}
           className={style['close']}
           onClick={(e) => {
             e.preventDefault()
@@ -75,7 +81,13 @@ export default function ClassBook({ popClassBook, setPopClassBook, bookInfo }) {
               </div>
             </div>
             <div className={style['place']}>
-              <div className={style['place-img']}></div>
+              <div className={style['place-img']}>
+                <Image
+                  src={'/img/navbar-template/FITSU_little.png'}
+                  fill
+                  alt=""
+                ></Image>
+              </div>
               <div className={style['text']}>
                 <span>{bookInfo.gym_name}</span>
                 <p>{bookInfo.gym_description}</p>
@@ -84,6 +96,22 @@ export default function ClassBook({ popClassBook, setPopClassBook, bookInfo }) {
           </div>
         </div>
         <div className={style['bottom']}>
+          <div className={style['participant-count']}>
+            {/* 判斷是否額滿 */}
+            {participantData.current_participant >=
+            participantData.max_participant ? (
+              <>
+                <span>已額滿</span>
+              </>
+            ) : (
+              <>
+                <span>
+                  預約人數:{participantData.current_participant}/
+                  {participantData.max_participant}
+                </span>
+              </>
+            )}
+          </div>
           <div className={style['button']}>立即預約</div>
         </div>
       </div>
