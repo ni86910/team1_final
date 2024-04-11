@@ -29,7 +29,7 @@ export default function Navbar() {
       <div className={`offcanvas-menu-wrapper ${offcanvas}`}>
         <div className="offcanvas__option">
           <div className="offcanvas__links">
-            <a href="#">註冊</a>
+            <a href="/pages/member/register">註冊</a>
             <a href="#">常見問題</a>
           </div>
           <div className="offcanvas__top__hover">

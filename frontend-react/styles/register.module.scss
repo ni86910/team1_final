@@ -1,0 +1,81 @@
+@import "variable";
+
+
+
+.regist-section{
+  display: flex;
+  justify-content: center;
+  background-color:$gray-color;
+  padding: 100px 0px;
+  font-family: 微軟正黑體;
+  font-weight: bold;
+}
+
+.regist-headline{
+  text-align: center;
+};
+
+.register-text{
+  font-size: 24px;
+  background-color:$secondary-color;
+}
+
+.straight-line{
+  border:1px solid black;
+  height:1px;
+  width:300px; 
+  margin: auto;
+}
+
+.form-box{
+  margin-bottom: 15px;
+
+}
+
+.google-img{
+  width: 20px;
+  margin-right: 5px;
+}
+
+.google-btn,
+.register-btn{
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  margin-top: 20px;
+  border-radius: 50px;
+  &:hover{
+    background-color:$secondary-color;
+    color:white;
+    border-radius: 50px;
+  }
+}
+
+
+
+.member-terms{
+  color:black;
+  text-decoration: underline;
+  &:hover{
+    color:$secondary-color;
+    text-decoration: underline;
+  }
+}
+
+.label-text{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  .icon-padding{
+    padding-right:5px;
+    color: $primary-color;
+  }
+}
+
+.Select{
+  border-radius: 10px;
+}
+
+/*----------------------------------------*/
+/* Register CSS END
+/*----------------------------------------*/

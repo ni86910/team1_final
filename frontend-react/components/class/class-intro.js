@@ -19,7 +19,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
   useEffect(() => {
     console.log('left-height:', sectionRef.current.clientHeight)
     tab === 'left'
-      ? setContainerHeight(sectionRef.current.clientHeight + 'px')
+      ? setContainerHeight(sectionRef.current.clientHeight)
       : () => {}
   }, [introData, tab])
 
@@ -121,6 +121,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                       >
                         +
                       </div>
+                      {/* <Link href={`/class/${v.class_id}`}>aaa</Link> */}
                     </div>
                   </div>
                 </div>

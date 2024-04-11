@@ -1,0 +1,144 @@
+@import "variable";
+
+
+
+.btn{
+  width: 150px;
+  background-color: black;
+  color: white;
+  border-radius: 50px;
+  display: block;
+  padding: 5px;
+  text-align: center;
+  
+  &:hover{
+    background-color:$secondary-color;
+    color:white;
+    border-radius: 50px;
+  }
+}
+
+
+.profile-section{
+  margin: 0px 190px;
+  padding: 50px 0px;
+  width:100%;
+  .title{
+    margin-bottom: 20px;
+    font-size: 20px;
+    display:flex;
+    &::before{
+      background-color: rgb(7, 7, 9);
+      border-radius: 40% / 10%;
+      content: "";
+      margin: 2px 7px 2px 0px;
+      width: 3px;
+    }
+  }
+}
+
+.self-pic{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    .profile-img{
+      border: 3px solid $secondary-color;
+      border-radius: 20%;
+      width:100px;
+      }
+}
+
+.member-describe{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  .member-fit{
+    padding-top: 15px;
+    font-size: 14px;
+      .member-card{
+        width:200px;
+      }
+  }
+}
+.profile-img, .member-card{
+  width:100%;
+}
+
+.upload-text{
+  border: none;
+  background-color: white;
+  color: black;
+  padding-top: 5px;
+  font-family: 微軟正黑體;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  &:hover{
+    color:$primary-color
+  }
+    }
+
+.profile-first-row, 
+.profile{
+  background-color: white;
+  padding: 20px 0px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  .profile-col{
+  width: 100%;
+    .profile-row{
+    width: 100%;
+    display: flex;
+    }
+  }
+} 
+.label-name{
+  width:100%;
+  .label-text{
+    display: flex;
+    align-items: center;
+    .icon-padding{
+      padding-right:5px;
+      color: $primary-color;
+    }
+  }
+}
+.row-btn{
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.edit-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  background-color: black;
+  border: none;
+  font-family: 微軟正黑體;
+  font-weight: bold;
+  padding: 5px 30px;
+    &:hover{
+    background-color: $primary-color;
+  }
+}
+
+
+/* 在你的樣式表中添加這些CSS規則 */
+@media (max-width: 600px) {
+  .col-6 {
+    width: 100% !important; /* 在小於600px的螢幕上，使列佔據整個寬度 */
+  }
+
+  .list-text {
+    font-size: 14px; /* 調整文字大小 */
+  }
+
+  .btn {
+    width: 100%; /* 讓按鈕佔據整個寬度 */
+  }
+}

@@ -1,0 +1,172 @@
+@import "variable";
+
+
+
+.btn{
+  width: 150px;
+  background-color: black;
+  color: white;
+  border-radius: 50px;
+  display: block;
+  padding: 5px;
+  text-align: center;
+  
+  &:hover{
+    background-color:$secondary-color;
+    color:white;
+    border-radius: 50px;
+  }
+}
+
+
+.member-section{
+  margin: 0px 190px;
+  padding: 50px 0px;
+  width:100%;
+}
+
+.title{
+  margin-bottom: 20px;
+  font-size: 20px;
+  display:flex;
+  &::before{
+    background-color: rgb(7, 7, 9);
+    border-radius: 40% / 10%;
+    content: "";
+    margin: 2px 7px 2px 0px;
+    width: 3px;
+  }
+}
+
+
+.self-pic{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    .profile-img{
+      border: 3px solid $secondary-color;
+      border-radius: 20%;
+      width:100px;
+      }
+}
+
+.upload-text{
+  border: none;
+  background-color: white;
+  color: black;
+  padding-top: 5px;
+  font-family: 微軟正黑體;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  &:hover{
+    color:$primary-color
+  }
+    }
+
+.profile, 
+.list{
+  background-color: white;
+  padding: 10px 0px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+} 
+
+.member-describe{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  .member-fit{
+    padding-top: 15px;
+    font-size: 14px;
+      .member-card{
+        width:200px;
+      }
+  }
+}
+.profile-img, .member-card{
+  width:100%;
+
+}
+
+.member-date{
+  font-size: 14px;
+  color: red;
+}
+
+.order-list{
+  border: 1px solid black;
+  background-color: white;
+}
+
+.list-text{
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  &:hover{
+    color:$primary-color
+  }
+}
+.a-color{
+  color:black;
+&:hover{
+  color:$primary-color;
+  }
+}
+.glasshour, .truck, .icons{
+  padding:2.5px;
+  font-size: 1.5em;
+}
+
+.user-icons, .class-icons{
+  padding:2px;
+  font-size: 2em;
+}
+
+@keyframes glasshour {
+  from {
+    color: $third-color;
+    transform: rotate(-180deg);
+  }
+  to {
+    color: red;
+    transform: rotate(180deg);
+  }
+}.glasshour:hover{
+  animation: glasshour 2.5s;
+}
+
+@keyframes truck {
+  from {
+    color: $third-color;
+    transform: translateX(0px);
+  }
+  to {
+    color: red;
+    transform: translateX(50px);
+  }
+}.truck:hover{
+  animation: truck 1.5s;
+}
+
+/* 在你的樣式表中添加這些CSS規則 */
+@media (max-width: 600px) {
+  .col-6 {
+    width: 100% !important; /* 在小於600px的螢幕上，使列佔據整個寬度 */
+  }
+
+  .list-text {
+    font-size: 14px; /* 調整文字大小 */
+  }
+
+  .btn {
+    width: 100%; /* 讓按鈕佔據整個寬度 */
+  }
+}

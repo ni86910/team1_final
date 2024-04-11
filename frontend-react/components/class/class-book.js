@@ -1,29 +1,46 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import style from '@/styles/class-book.module.scss'
 import Image from 'next/image'
+import dayjs from 'dayjs'
+import { FaTimes } from 'react-icons/fa'
+import Link from 'next/link'
 
-export default function ClassBook() {
-  const [showOverlay, setShowOverlay] = useState('show-overlay')
-  const [showCard, setShowCard] = useState('show-card')
+export default function ClassBook({ popClassBook, setPopClassBook, bookInfo }) {
+  // 處理預約資料
+  bookInfo.year = dayjs(bookInfo.start_time).format('YYYY年M月D號') //年
+  bookInfo.day = dayjs(bookInfo.start_time).format('D') //日
+  bookInfo.startH = dayjs(bookInfo.start_time).format('HH:00') // start時
+  bookInfo.endH = dayjs(bookInfo.end_time).format('HH:00') // end時
+  bookInfo.monthWord = dayjs(bookInfo.start_time).format('MMM') // 月份英文
 
   return (
     <>
       <div
-        className={`${style['overlay']} ${style[showOverlay]}`}
+        className={`${style['overlay']} ${
+          style[popClassBook ? 'show-overlay' : '']
+        }`}
         role="presentation"
         onClick={() => {
-          setShowOverlay('')
-          setShowCard('')
+          setPopClassBook(false)
         }}
       ></div>
-      <div className={`${style['card']} ${style[showCard]}`}>
-        <div className={style['close']}>
-          <i>X</i>
-        </div>
+      <div
+        className={`${style['card']} ${style[popClassBook ? 'show-card' : '']}`}
+      >
+        <Link
+          href={'/'}
+          className={style['close']}
+          onClick={(e) => {
+            e.preventDefault()
+            setPopClassBook(false)
+          }}
+        >
+          <FaTimes />
+        </Link>
         <div className={style['img-box']}>
           <div className={style['img-cover']}></div>
           <Image
-            src="/img/class/2_20221229164722batp5kE9j10.jpg"
+            src={`http://localhost:3001/imgs/class/class-page/${bookInfo.class_img}`}
             width={800}
             height={500}
             // objectFit="contain"
@@ -32,34 +49,36 @@ export default function ClassBook() {
           />
         </div>
         <div className={style['content']}>
-          <h1>Boxing : Basics 60</h1>
+          <h1>{bookInfo.class_name}</h1>
           <div className={style['info']}>
             <div className={style['date']}>
               <div className={style['date-thumbnail']}>
                 <div className={style['week-day']}>
-                  <span>Mon</span>
+                  <span>{bookInfo.monthWord}</span>
                 </div>
                 <div className={style['day-number']}>
-                  <span>25</span>
+                  <span>{bookInfo.day}</span>
                 </div>
               </div>
               <div className={style['text']}>
-                <span className={style['']}>2024年3月25號</span>
-                <p>10:00 - 11:00</p>
+                <span className={style['']}>{bookInfo.year}</span>
+                <p>
+                  {bookInfo.startH} - {bookInfo.endH}
+                </p>
               </div>
             </div>
             <div className={style['teacher']}>
               <div className={style['avatar']}></div>
               <div className={style['text']}>
-                <span>Luciano</span>
+                <span>{bookInfo.t_name}</span>
                 <p>教練</p>
               </div>
             </div>
             <div className={style['place']}>
               <div className={style['place-img']}></div>
               <div className={style['text']}>
-                <span>大大健身房</span>
-                <p>高雄市前金區XX街2號</p>
+                <span>{bookInfo.gym_name}</span>
+                <p>{bookInfo.gym_description}</p>
               </div>
             </div>
           </div>

@@ -1,0 +1,70 @@
+@import "variable";
+
+
+
+.btn{
+  width: 150px;
+  background-color: black;
+  color: white;
+  border-radius: 50px;
+  display: block;
+  padding: 5px;
+  text-align: center;
+  
+  &:hover{
+    background-color:$secondary-color;
+    color:white;
+    border-radius: 50px;
+  }
+}
+
+
+.order-section{
+  margin: 0px 190px;
+  padding: 50px 0px;
+  width:100%;
+}
+
+.order-title{
+  margin-bottom: 20px;
+  font-size: 20px;
+  display:flex;
+  &::before{
+    background-color: black;
+    border-radius: 40% / 10%;
+    content: "";
+    margin: 2px 7px 2px 0px;
+    width: 3px;
+  }
+}
+
+
+.order-first-col{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 00px 0px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.products-img{
+  margin-right: 20px;
+}
+.first-accordion{
+  padding: 0px;
+   .accordion-body{
+  display: flex;
+  flex-direction: row;
+  padding-left: 10px;
+  }
+}
+
+.header-text{
+  display: flex;
+  align-items: center;
+} 
+
+
+
+
