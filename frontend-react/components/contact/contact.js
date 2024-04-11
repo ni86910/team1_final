@@ -5,12 +5,10 @@ import { API_SERVER } from '@/configs/index'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    consult_id: 0,
+    consult_type: '',
     consult_name: '',
     consult_email: '',
     request: '',
-    book_time: '',
-    consult_time: '',
   })
 
   const handleChange = (e) => {
@@ -95,24 +93,44 @@ export default function Contact() {
                 <form action="post" onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="col-lg-12" style={{ marginBottom: 20 }}>
-                      <select name="category" className="select" id="category">
-                        <option value="All">選擇類別</option>
-                        <option value="問題詢問">問題詢問</option>
-                        <option value="異業/商品合作">異業/商品合作</option>
-                        <option value="企業/特約商家申請">
+                      <select
+                        name="consult_type"
+                        className="select"
+                        onChange={handleChange}
+                      >
+                        <option value="問題詢問" onChange={handleChange}>
+                          問題詢問
+                        </option>
+                        <option value="異業/商品合作" onChange={handleChange}>
+                          異業/商品合作
+                        </option>
+                        <option
+                          value="企業/特約商家申請"
+                          onChange={handleChange}
+                        >
                           企業/特約商家申請
                         </option>
                       </select>
                     </div>
                     <div className="col-lg-6">
-                      <input type="text" name="name" placeholder="Name" />
+                      <input
+                        type="text"
+                        name="consult_name"
+                        placeholder="Name"
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="col-lg-6">
-                      <input type="email" name="email" placeholder="Email" />
+                      <input
+                        type="email"
+                        name="consult_email"
+                        placeholder="Email"
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="col-lg-12">
                       <textarea
-                        name="message"
+                        name="request"
                         placeholder="Message"
                         value={formData.message}
                         onChange={handleChange}

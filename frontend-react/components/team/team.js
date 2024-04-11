@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { API_SERVER } from '@/configs/index'
+import style from '@/styles/jack-use/button.module.css'
 
 export default function Team() {
   // 用狀態接收fetch來的介紹資料
   const [teamData, setTeamData] = useState([])
+  const [selectedTeam, setSelectedTeam] = useState('全部總類')
 
   useEffect(() => {
     fetch(`${API_SERVER}/team`, { credentials: 'include' })
@@ -14,6 +16,14 @@ export default function Team() {
         setTeamData(data)
       })
   }, [])
+
+  const handleTeamChange = (e) => {
+    setSelectedTeam(e.target.value) // 更新选择的区域
+  }
+
+  const filteredTeamData = teamData.filter((item) => {
+    return selectedTeam === '全部總類' || item.teacher_type === selectedTeam // 根据选择的区域进行过滤
+  })
 
   return (
     <>
@@ -44,11 +54,34 @@ export default function Team() {
               <span style={{ color: '#EB6234' }}>教練團隊</span>
               <h2>Meet Our 教練團隊</h2>
             </div>
+            <form
+              action="get"
+              className="row justify-content-center"
+              style={{ marginBottom: 20 }}
+            >
+              <div className="col-auto">
+                <select
+                  name="area"
+                  id="area"
+                  className={style['select']}
+                  data-type="select"
+                  data-width="medium"
+                  value={selectedTeam}
+                  onChange={handleTeamChange}
+                >
+                  <option value="全部總類" selected="selected">
+                    全部總類
+                  </option>
+                  <option value="教練">教練</option>
+                  <option value="營養師">營養師</option>
+                </select>
+              </div>
+            </form>
           </div>
         </div>
 
         <div className="row">
-          {teamData.map((v, i) => {
+          {filteredTeamData.map((v, i) => {
             return (
               <>
                 <div className="col-lg-3 col-md-6 col-sm-6" key={i}>
@@ -61,14 +94,8 @@ export default function Team() {
                       data-bs-toggle="modal"
                       data-bs-target={`#modalJohnSmith${i}`}
                     />
-                    <h4>
-                      {/* John Smith */}
-                      {v.teacher_name}
-                    </h4>
-                    <span>
-                      {/* 健身教練 */}
-                      {v.teacher_type}
-                    </span>
+                    <h4>{v.teacher_name}</h4>
+                    <span>{v.teacher_type}</span>
                   </div>
                 </div>
               </>

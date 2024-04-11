@@ -75,7 +75,7 @@ export default function GymPlace() {
             return (
               <>
                 <div key={i} className="col-4" style={{ marginTop: 20 }}>
-                  <div className="card">
+                  <div className="card" style={{ height: 330 }}>
                     <div className="card-body">
                       <p className="card-text">{v.gym_area}</p>
                       <h5 className="card-title">{v.gym_name}</h5>

@@ -1,7 +1,6 @@
 import express from "express";
 import db from "./../utils/mysql2-connect.js";
 import dayjs from "dayjs";
-import { z } from "zod";
 
 const router = express.Router();
 
@@ -25,14 +24,12 @@ router.post('/', async (req,res) => {
         //     return res.json(output);
         // }
 
-    const sql = "INSERT INTO consult (`consult_id`,`consult_name`,`consult_email`,`request`, `book_time`, `consult_time`) VALUES (?,?,?,?,NOW(),NOW())";
+    const sql = "INSERT INTO consult (`consult_type`,`consult_name`,`consult_email`,`request`) VALUES (?,?,?,?)";
     const [result] = await db.query(sql, [
-        req.body.consult_id,
+        req.body.consult_type,
         req.body.consult_name,
         req.body.consult_email,
         req.body.request,
-        req.body.book_time,
-        req.body.consult_time,
         ]);
     if (result.affectedRows) {
     res.json(output);

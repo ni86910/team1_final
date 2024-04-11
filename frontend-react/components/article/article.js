@@ -39,7 +39,7 @@ export default function Article() {
           <h4 className="mt-4 text-center">文章內容</h4>
 
           <p className="mt-4 text-center">
-            營業據點遍佈全台各地，提供給您最完整的服務。請依據您的需求，選取地區與廠館，即能尋找離您最近的據點！
+            我們提供最新、最實用的健身相關知識。
           </p>
         </div>
         <form
@@ -81,8 +81,11 @@ export default function Article() {
                         width={300}
                         height={200}
                       />
+
                       <Link href={`/article/${v.article_id}`}>
-                        <h5 className="card-title">{v.title}</h5>
+                        <h5 className="card-title" style={{ color: 'black' }}>
+                          {v.title}
+                        </h5>
                       </Link>
                       <p className="card-text">發表日期: {v.post_date}</p>
                       <p className="card-text">作者: {v.teacher_name}</p>
