@@ -25,10 +25,14 @@ export default function Article() {
     setSelectedCategory(selectedValue) // 更新选择的区域
 
     // 更新 URL 参数
-    router.push({
-      pathname: '/article',
-      query: { article: selectedValue },
-    })
+    router.push(
+      {
+        pathname: '/article',
+        query: { article: selectedValue },
+      },
+      undefined,
+      { scroll: false }
+    )
   }
 
   const filteredArtData = artData.filter((item) => {

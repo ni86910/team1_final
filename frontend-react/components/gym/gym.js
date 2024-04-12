@@ -26,10 +26,14 @@ export default function GymPlace() {
     setSelectedArea(selectedValue) // 更新选择的区域
 
     // 更新 URL 参数
-    router.push({
-      pathname: '/gym',
-      query: { gym: selectedValue },
-    })
+    router.push(
+      {
+        pathname: '/gym',
+        query: { gym: selectedValue },
+      },
+      undefined,
+      { scroll: false }
+    )
   }
 
   const filteredGymData = gymData.filter((item) => {

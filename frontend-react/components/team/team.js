@@ -25,10 +25,14 @@ export default function Team() {
     setSelectedTeam(selectedValue) // 更新选择的区域
 
     // 更新 URL 参数
-    router.push({
-      pathname: '/team',
-      query: { team: selectedValue },
-    })
+    router.push(
+      {
+        pathname: '/team',
+        query: { team: selectedValue },
+      },
+      undefined,
+      { scroll: false }
+    )
   }
 
   const filteredTeamData = teamData.filter((item) => {

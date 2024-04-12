@@ -32,6 +32,7 @@ export default function GymDetail() {
     gym_opentime: '',
     gym_phone: '',
     gym_address: '',
+    gym_position: '',
   })
 
   // fetch時要執行的function
@@ -98,6 +99,13 @@ export default function GymDetail() {
               <div className="col" style={{ marginBottom: 15 }}>
                 <h4 className="mt-4 text-center">廠館介紹</h4>
               </div>
+              <iframe
+                title="場地地圖"
+                src={`${gymInfo.gym_position}`}
+                frameborder="0"
+                width={600}
+                height={450}
+              ></iframe>
             </div>
             <div className="row" style={{ marginTop: 20 }}>
               <div className="col">
