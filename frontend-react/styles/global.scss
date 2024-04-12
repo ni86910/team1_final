@@ -26,8 +26,11 @@ $dropdown-border-radius:50px;
 @import '~bootstrap/scss/bootstrap';
 // ↓↓↓  其它客製樣式要寫在這行的"下面" ↓↓↓
 
-/* Register- Select */
+/* Register- Select 註冊頁面 */
 .form-select {
+  border-radius: 10px;
+}
+.form-control{
   border-radius: 10px;
 }
 
@@ -42,7 +45,7 @@ $dropdown-border-radius:50px;
   }
 }
 
-/* Order- Accordion */
+/* Order- Accordion 訂單頁面 */
 .accordion-header{
 background-color: black;
 color:white;
