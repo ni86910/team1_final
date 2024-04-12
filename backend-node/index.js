@@ -17,6 +17,9 @@ import classRouter from './routes/class.js'
 import productRouter from './routes/product.js'
 import profileRouter from './routes/profile.js'
 
+
+
+
 // 建立一個session可以儲存的地方
 const MysqlStore = mysql_session(session);
 const sessionStore = new MysqlStore({}, db);
@@ -69,7 +72,7 @@ app.use((req, res, next) => {
     try {
       const payload = jwt.verify(token, process.env.JWT_SECRET);
       res.locals.jwt = payload; // 透過 res 往下傳
-    } catch (ex) {}
+    } catch (ex) {console.log(ex)}
   }
   /*
   // 測試時使用
@@ -84,11 +87,106 @@ app.use((req, res, next) => {
 
 // 路由 (routes) 設定
 
+
 app.use('/class',classRouter)
 
 app.use('/product', productRouter)
 
 app.use('/member', profileRouter)
+/*
+app.use('/', loginRouter)
+app.use('/', jwtRouter)
+app.use('/', jwtdataRouter)
+app.use('/', logoutRouter)
+*/
+
+// 登入
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.post("/login", async (req, res) => {
+  const output = {
+    success: false,
+    body: req.body,
+  };
+  const { m_account, m_pwd } = req.body;
+
+  const sql = "SELECT * FROM member WHERE m_account=?";
+  const [rows] = await db.query(sql, [m_account]);
+
+  if (!rows.length) {
+    // 帳號是錯誤的
+    return res.json(output);
+  }
+
+  const result = await bcrypt.compare(m_pwd, rows[0].m_pwd);
+  output.success = result;
+  if (result) {
+    // 密碼是正確的
+
+    // 使用 session 記住用戶
+    req.session.admin = {
+      member_id: rows[0].member_id,
+      m_account,
+      m_name: rows[0].m_name,
+    };
+  }
+  res.json(output);
+});
+
+// 登入後回傳 JWT
+app.post("/login-jwt", async (req, res) => {
+  const output = {
+    success: false,
+    body: req.body,
+  };
+  const { m_account, m_pwd } = req.body;
+
+  const sql = "SELECT * FROM member WHERE m_account=?";
+  const [rows] = await db.query(sql, [m_account]);
+
+  if (!rows.length) {
+    // 帳號是錯誤的
+    output.message = '帳號錯誤'
+    return res.json(output);
+  }
+
+  const result = await bcrypt.compare(m_pwd, rows[0].m_pwd);
+  output.success = result;
+  if (result) {
+    const token = jwt.sign(
+      {
+        member_id: rows[0].member_id,
+        m_account,
+      },
+      process.env.JWT_SECRET
+    );
+
+    // 使用 JWT
+    output.data = {
+      member_id: rows[0].member_id,
+      m_account,
+      m_name: rows[0].m_name,
+      token,
+    };
+  }
+  res.json(output);
+});
+
+app.get("/jwt-data", (req, res) => {
+  res.json(res.locals.jwt);
+});
+
+app.get("/logout", (req, res) => {
+  delete req.session.admin; // 移除 admin 這個屬性
+  res.redirect("/");
+});
+
+
+
+
+
 
 // app.use('/gym',gymRouter)
 
