@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/profile", async (req, res) => {
   
-    const sql = "SELECT * FROM member LIMIT 1"; // 添加 LIMIT 1 以僅返回第一筆資料
+    const sql = `SELECT * FROM \`member\` WHERE m_account `; // 添加 LIMIT 1 以僅返回第一筆資料
 
     try {
       const [rows, fields] = await db.query(sql);
@@ -24,6 +24,8 @@ router.get("/profile", async (req, res) => {
     }
   });
 
+  export default router;
+
   /* 
   const [rows, fields] = await db.query(sql);：此行代碼使用資料庫查詢函數（假設是db.query）來執行SQL查詢，並將結果儲存在rows和fields中。rows是包含檢索到的資料行的陣列，fields是資料表的字段信息。
 
@@ -38,4 +40,4 @@ router.get("/profile", async (req, res) => {
   const formattedDate：將格式化後的日期存儲在formattedDate變數中。
   rows[0].birthdate = formattedDate;：將格式化後的日期賦值給rows陣列中的第一個資料行的birthdate字段。這樣就完成了日期格式的轉換。 */
   
-export default router;
+

@@ -1,5 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
+import { useAuth } from '@/context/auth-context' // 登出
+
 /* My module.scss */
 import style from '@/styles/points.module.scss'
 import SideBar from '@/styles/m-sidebar.module.scss'
@@ -17,32 +19,44 @@ import {
 /* React-icon */
 
 export default function PointsPage() {
+  const { logout } = useAuth() // 登出
+
   return (
     <>
       <section className={SideBar['member-center-container']}>
         {/* Side Bar Begin */}
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
-            <Navbar.Brand href="#points" className={SideBar['text-h4']}>
+            <Navbar.Brand href="/memberpoints" className={SideBar['text-h4']}>
               我的點數
             </Navbar.Brand>
             <Nav className={`me-auto ${SideBar['nav-side']}`}>
-              <Link className={SideBar['Nav-link']} href="#member-center">
+              <Link className={SideBar['Nav-link']} href="/membermember-center">
                 會員中心
               </Link>
-              <Link className={SideBar['Nav-link']} href="#profile">
+              <Link className={SideBar['Nav-link']} href="/memberprofile">
                 個人資料
               </Link>
-              <Link className={SideBar['Nav-link']} href="#order">
+              <Link className={SideBar['Nav-link']} href="/memberorder">
                 我的訂單
               </Link>
-              <Link className={SideBar['Nav-link']} href="#course-records">
+              <Link
+                className={SideBar['Nav-link']}
+                href="/membercourse-records"
+              >
                 課程紀錄
               </Link>
-              <Link className={SideBar['Nav-link']} href="#favorite">
+              <Link className={SideBar['Nav-link']} href="/memberfavorite">
                 我的收藏
               </Link>
-              <Link className={SideBar['Nav-link']} href="#logout">
+              <Link
+                className={SideBar['Nav-link']}
+                href="/memberlogout"
+                onClick={(e) => {
+                  e.preventDefault()
+                  logout()
+                }}
+              >
                 登出
               </Link>
             </Nav>

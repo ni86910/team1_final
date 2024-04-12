@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 import { uploadImage } from '@/utils/uploadImage'
 import { API_SERVER } from '../common/config'
+import { useAuth } from '@/context/auth-context' // 登出
+import Image from 'next/image'
+import Link from 'next/link'
+
 /* My module.scss */
 import style from '@/styles/profile.module.scss'
 import SideBar from '@/styles/m-sidebar.module.scss'
@@ -12,6 +15,8 @@ import { MdChangeCircle } from 'react-icons/md'
 import { FaStarOfLife } from 'react-icons/fa6'
 
 export default function ProfilePage() {
+  const { logout } = useAuth() // 登出
+
   const [profile, setProfile] = useState({})
   const [newProfileImage, setNewProfileImage] = useState(null)
   const [isEditing, setIsEditing] = useState(false) // 新增編輯狀態
@@ -19,7 +24,9 @@ export default function ProfilePage() {
   useEffect(() => {
     fetch(`${API_SERVER}/member/profile`, { credentials: 'include' })
       .then((response) => response.json())
-      .then((data) => setProfile(data))
+      .then((data) => {
+        setProfile(data)
+      })
       .catch((error) => console.error('獲取資料時出錯:', error))
   }, [])
 
@@ -88,28 +95,38 @@ export default function ProfilePage() {
         {/* Side Bar Begin */}
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
-            <Navbar.Brand href="#profile" className={SideBar['text-h4']}>
+            <Navbar.Brand href="/memberprofile" className={SideBar['text-h4']}>
               個人資料
             </Navbar.Brand>
             <Nav className={`me-auto ${SideBar['nav-side']}`}>
-              <Nav.Link className={SideBar['Nav-link']} href="#member-center">
+              <Link className={SideBar['Nav-link']} href="/membermember-center">
                 會員中心
-              </Nav.Link>
-              <Nav.Link className={SideBar['Nav-link']} href="#order">
+              </Link>
+              <Link className={SideBar['Nav-link']} href="/memberorder">
                 我的訂單
-              </Nav.Link>
-              <Nav.Link className={SideBar['Nav-link']} href="#course-records">
+              </Link>
+              <Link
+                className={SideBar['Nav-link']}
+                href="/membercourse-records"
+              >
                 課程紀錄
-              </Nav.Link>
-              <Nav.Link className={SideBar['Nav-link']} href="#points">
+              </Link>
+              <Link className={SideBar['Nav-link']} href="/memberpoints">
                 我的點數
-              </Nav.Link>
-              <Nav.Link className={SideBar['Nav-link']} href="#favorite">
+              </Link>
+              <Link className={SideBar['Nav-link']} href="/memberfavorite">
                 我的收藏
-              </Nav.Link>
-              <Nav.Link className={SideBar['Nav-link']} href="#logout">
+              </Link>
+              <Link
+                className={SideBar['Nav-link']}
+                href="/memberlogout"
+                onClick={(e) => {
+                  e.preventDefault()
+                  logout()
+                }}
+              >
                 登出
-              </Nav.Link>
+              </Link>
             </Nav>
           </Container>
         </Navbar>
@@ -137,13 +154,20 @@ export default function ProfilePage() {
                   className={style['upload-text']}
                   onClick={() => document.getElementById('file0').click()}
                   disabled={!isEditing} // 根據編輯狀態設定按鈕是否可用
+                  style={{
+                    color: isEditing ? '#EB6234' : 'gray',
+                    backgroundColor: isEditing ? 'white' : '#f0f0f0',
+                  }}
                 >
                   <MdChangeCircle /> 更換頭像
                   <input
                     type="file"
                     id="file0"
                     onChange={handleFileUpload}
-                    style={{ display: 'none' }}
+                    style={{
+                      display: 'none',
+                      backgroundColor: isEditing ? 'white' : '#f0f0f0',
+                    }}
                   />
                 </button>
               </Col>
@@ -157,6 +181,7 @@ export default function ProfilePage() {
                   width={200}
                   height={110}
                   alt="member-card"
+                  priority={true}
                   className={style['member-card']}
                 />
               </Col>
@@ -177,7 +202,10 @@ export default function ProfilePage() {
                       姓名
                     </Form.Label>
                     <Form.Control
-                      style={{ borderRadius: '10px' }}
+                      style={{
+                        borderRadius: '10px',
+                        backgroundColor: isEditing ? 'white' : '#f0f0f0',
+                      }}
                       type="text"
                       name="m_name"
                       id="m_name"
@@ -196,7 +224,10 @@ export default function ProfilePage() {
                       <div>信箱</div>
                     </Form.Label>
                     <Form.Control
-                      style={{ borderRadius: '10px' }}
+                      style={{
+                        borderRadius: '10px',
+                        backgroundColor: isEditing ? 'white' : '#f0f0f0',
+                      }}
                       type="email"
                       name="m_account"
                       id="m_account"
@@ -223,6 +254,7 @@ export default function ProfilePage() {
                       id="birthday"
                       value={profile.birthday || ''}
                       onChange={handleInputChange}
+                      disabled
                     />
                   </Form.Group>
                 </Form>
@@ -240,13 +272,14 @@ export default function ProfilePage() {
                     <Form.Select
                       aria-label="Default select example"
                       value={profile.gender || ''}
-                      onChange={handleInputChange}
+                      onChange={(event) => handleInputChange(event)} // 修改這裡，將事件傳遞給 handleInputChange 函數
                       name="gender"
                       id="gender"
+                      disabled
                     >
-                      <option>Open this select menu</option>
-                      <option value="0">男生</option>
-                      <option value="1">女生</option>
+                      <option value="">選擇性別</option>
+                      <option value="男">男生</option>
+                      <option value="女">女生</option>
                     </Form.Select>
                   </Form.Group>
                 </Form>
@@ -261,7 +294,10 @@ export default function ProfilePage() {
                       手機
                     </Form.Label>
                     <Form.Control
-                      style={{ borderRadius: '10px' }}
+                      style={{
+                        borderRadius: '10px',
+                        backgroundColor: isEditing ? 'white' : '#f0f0f0',
+                      }}
                       type="text"
                       name="mobile"
                       id="mobile"
@@ -279,9 +315,12 @@ export default function ProfilePage() {
                     地址
                   </Form.Label>
                   <Form.Control
-                    style={{ borderRadius: '10px' }}
+                    style={{
+                      borderRadius: '10px',
+                      backgroundColor: isEditing ? 'white' : '#f0f0f0',
+                    }}
                     as="textarea"
-                    rows={2}
+                    rows={1}
                     name="address"
                     id="address"
                     value={profile.address || ''}
@@ -295,14 +334,14 @@ export default function ProfilePage() {
               <Col xs="auto">
                 {isEditing ? ( // 根據編輯狀態顯示不同的按鈕
                   <Button type="submit" className={style['edit-btn']}>
-                    儲存
+                    確認修改
                   </Button>
                 ) : (
                   <Button
                     onClick={() => setIsEditing(true)}
                     className={style['edit-btn']}
                   >
-                    確認修改
+                    我要編輯
                   </Button>
                 )}
               </Col>

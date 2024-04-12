@@ -1,9 +1,10 @@
 import React from 'react'
+import { useAuth } from '@/context/auth-context' //登出
 import Image from 'next/image'
+import Link from 'next/link'
 /* My module.scss */
 import style from '@/styles/favorite.module.scss'
 import SideBar from '@/styles/m-sidebar.module.scss'
-import Link from 'next/link'
 /* React-Bootstrap */
 import {
   Nav,
@@ -19,6 +20,8 @@ import {
 import { FaHeart } from 'react-icons/fa'
 
 export default function FavoritePage() {
+  const { logout } = useAuth()
+
   // 假設您已經有了名為 classScheduleFavorites、productFavorites 和 articleFavorites 的收藏列表
   const classScheduleFavorites = [
     { class_id: 1, class_name: '課程1', class_img: '圖片1' },
@@ -45,26 +48,41 @@ export default function FavoritePage() {
 
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
-            <Navbar.Brand href="#favorite" className={SideBar['text-h4']}>
+            <Navbar.Brand
+              href="/member/favorite"
+              className={SideBar['text-h4']}
+            >
               我的收藏
             </Navbar.Brand>
             <Nav className={`me-auto ${SideBar['nav-side']}`}>
-              <Link className={SideBar['Nav-link']} href="#member-center">
+              <Link
+                className={SideBar['Nav-link']}
+                href="/member/member-center"
+              >
                 會員中心
               </Link>
-              <Link className={SideBar['Nav-link']} href="#profile">
+              <Link className={SideBar['Nav-link']} href="/member/profile">
                 個人資料
               </Link>
-              <Link className={SideBar['Nav-link']} href="#order">
+              <Link className={SideBar['Nav-link']} href="/member/order">
                 我的訂單
               </Link>
-              <Link className={SideBar['Nav-link']} href="#course-records">
+              <Link
+                className={SideBar['Nav-link']}
+                href="/member/course-records"
+              >
                 課程紀錄
               </Link>
-              <Link className={SideBar['Nav-link']} href="#points">
+              <Link className={SideBar['Nav-link']} href="/member/points">
                 我的點數
               </Link>
-              <Link className={SideBar['Nav-link']} href="#logout">
+              <Link
+                className={SideBar['Nav-link']}
+                onClick={(e) => {
+                  e.preventDefault()
+                  logout()
+                }}
+              >
                 登出
               </Link>
             </Nav>

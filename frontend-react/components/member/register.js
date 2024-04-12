@@ -9,7 +9,12 @@ export default function RegisterPage() {
   const [showModal, setShowModal] = useState(false)
 
   const handleCloseModal = () => setShowModal(false)
-  const handleShowModal = () => setShowModal(true)
+  const handleShowModal = () => {
+    setShowModal(true)
+    // 在這裡改變連結的樣式
+    const memberTermsLink = document.querySelector(`.${style['member-terms']}`)
+    memberTermsLink.style.color = 'orange'
+  }
 
   return (
     <>
@@ -28,7 +33,7 @@ export default function RegisterPage() {
                       會員註冊
                     </div>
                     <div className="card-body">
-                      <form action="#" method="#">
+                      <form method="post">
                         <button
                           type="submit"
                           className={`btn ${style['google-btn']}`}
@@ -248,7 +253,10 @@ export default function RegisterPage() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button
+            onClick={handleCloseModal}
+            className={`btn ${style['register-btn']}`}
+          >
             關閉
           </Button>
         </Modal.Footer>
