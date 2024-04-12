@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import style from '@/styles/jack-use/button.module.css'
 import { FaPhone, FaClock, FaLocationDot } from 'react-icons/fa6'
 import Link from 'next/link'
@@ -6,6 +7,7 @@ import { API_SERVER } from '@/configs/index'
 import Swiper from '@/components/gym/swiper/swiper'
 
 export default function GymPlace() {
+  const router = useRouter()
   // 用狀態接收fetch來的介紹資料
   const [gymData, setGymData] = useState([])
   const [selectedArea, setSelectedArea] = useState('全部區域')
@@ -20,7 +22,14 @@ export default function GymPlace() {
   }, [])
 
   const handleAreaChange = (e) => {
-    setSelectedArea(e.target.value) // 更新选择的区域
+    const selectedValue = e.target.value
+    setSelectedArea(selectedValue) // 更新选择的区域
+
+    // 更新 URL 参数
+    router.push({
+      pathname: '/gym',
+      query: { gym: selectedValue },
+    })
   }
 
   const filteredGymData = gymData.filter((item) => {

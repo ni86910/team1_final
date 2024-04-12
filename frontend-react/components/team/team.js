@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { API_SERVER } from '@/configs/index'
 import style from '@/styles/jack-use/button.module.css'
+import Swiper from '@/components/team/swiper/swiper'
 
 export default function Team() {
+  const router = useRouter()
   // 用狀態接收fetch來的介紹資料
   const [teamData, setTeamData] = useState([])
   const [selectedTeam, setSelectedTeam] = useState('全部總類')
@@ -18,7 +21,14 @@ export default function Team() {
   }, [])
 
   const handleTeamChange = (e) => {
-    setSelectedTeam(e.target.value) // 更新选择的区域
+    const selectedValue = e.target.value
+    setSelectedTeam(selectedValue) // 更新选择的区域
+
+    // 更新 URL 参数
+    router.push({
+      pathname: '/team',
+      query: { team: selectedValue },
+    })
   }
 
   const filteredTeamData = teamData.filter((item) => {
@@ -30,15 +40,10 @@ export default function Team() {
       {/* About Section Begin */}
 
       <div className="container">
-        <div className="row">
+        <div className="row" style={{ marginTop: 20 }}>
           <div className="col-lg-12">
             <div className="about__pic">
-              <Image
-                src="/img/team/about-us.jpg"
-                width={1000}
-                height={550}
-                alt=""
-              />
+              <Swiper />
             </div>
           </div>
         </div>
@@ -98,20 +103,13 @@ export default function Team() {
                     <span>{v.teacher_type}</span>
                   </div>
                 </div>
-              </>
-            )
-          })}
-          {/* Modal for John Smith */}
-          {teamData.map((v, i) => {
-            return (
-              <>
+
                 <div
                   className="modal fade"
                   id={`modalJohnSmith${i}`}
                   tabIndex={-1}
                   aria-labelledby="modalJohnSmithLabel"
                   aria-hidden="true"
-                  key={i}
                 >
                   <div className="modal-dialog">
                     <div className="modal-content">
@@ -147,100 +145,100 @@ export default function Team() {
 
       {/* Team Section End */}
       {/* Client Section Begin */}
-      <section className="clients spad">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="section-title">
-                <span style={{ color: '#EB6234' }}>合作夥伴</span>
-                <h2>Happy Clients</h2>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-3 col-md-4 col-sm-4 col-6">
-              <a href="#" className="client__item">
-                <Image
-                  src="/img/team/client-1.png"
-                  alt=""
-                  width={60}
-                  height={70}
-                />
-              </a>
-            </div>
-            <div className="col-lg-3 col-md-4 col-sm-4 col-6">
-              <a href="#" className="client__item">
-                <Image
-                  src="/img/team/client-2.png"
-                  alt=""
-                  width={60}
-                  height={70}
-                />
-              </a>
-            </div>
-            <div className="col-lg-3 col-md-4 col-sm-4 col-6">
-              <a href="#" className="client__item">
-                <Image
-                  src="/img/team/client-3.png"
-                  alt=""
-                  width={60}
-                  height={70}
-                />
-              </a>
-            </div>
-            <div className="col-lg-3 col-md-4 col-sm-4 col-6">
-              <a href="#" className="client__item">
-                <Image
-                  src="/img/team/client-4.png"
-                  alt=""
-                  width={60}
-                  height={70}
-                />
-              </a>
-            </div>
-            <div className="col-lg-3 col-md-4 col-sm-4 col-6">
-              <a href="#" className="client__item">
-                <Image
-                  src="/img/team/client-5.png"
-                  alt=""
-                  width={60}
-                  height={70}
-                />
-              </a>
-            </div>
-            <div className="col-lg-3 col-md-4 col-sm-4 col-6">
-              <a href="#" className="client__item">
-                <Image
-                  src="/img/team/client-6.png"
-                  alt=""
-                  width={60}
-                  height={70}
-                />
-              </a>
-            </div>
-            <div className="col-lg-3 col-md-4 col-sm-4 col-6">
-              <a href="#" className="client__item">
-                <Image
-                  src="/img/team/client-7.png"
-                  alt=""
-                  width={60}
-                  height={70}
-                />
-              </a>
-            </div>
-            <div className="col-lg-3 col-md-4 col-sm-4 col-6">
-              <a href="#" className="client__item">
-                <Image
-                  src="/img/team/client-8.png"
-                  alt=""
-                  width={60}
-                  height={70}
-                />
-              </a>
+
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="section-title">
+              <span style={{ color: '#EB6234' }}>合作夥伴</span>
+              <h2>Happy Clients</h2>
             </div>
           </div>
         </div>
-      </section>
+        <div className="row">
+          <div className="col-lg-3 col-md-4 col-sm-4 col-6">
+            <div className="client__item">
+              <Image
+                src="/img/team/client-1.png"
+                alt=""
+                width={60}
+                height={70}
+              />
+            </div>
+          </div>
+          <div className="col-lg-3 col-md-4 col-sm-4 col-6">
+            <div className="client__item">
+              <Image
+                src="/img/team/client-2.png"
+                alt=""
+                width={60}
+                height={70}
+              />
+            </div>
+          </div>
+          <div className="col-lg-3 col-md-4 col-sm-4 col-6">
+            <div className="client__item">
+              <Image
+                src="/img/team/client-3.png"
+                alt=""
+                width={60}
+                height={70}
+              />
+            </div>
+          </div>
+          <div className="col-lg-3 col-md-4 col-sm-4 col-6">
+            <div className="client__item">
+              <Image
+                src="/img/team/client-4.png"
+                alt=""
+                width={60}
+                height={70}
+              />
+            </div>
+          </div>
+          <div className="col-lg-3 col-md-4 col-sm-4 col-6">
+            <div className="client__item">
+              <Image
+                src="/img/team/client-5.png"
+                alt=""
+                width={60}
+                height={70}
+              />
+            </div>
+          </div>
+          <div className="col-lg-3 col-md-4 col-sm-4 col-6">
+            <div className="client__item">
+              <Image
+                src="/img/team/client-6.png"
+                alt=""
+                width={60}
+                height={70}
+              />
+            </div>
+          </div>
+          <div className="col-lg-3 col-md-4 col-sm-4 col-6">
+            <div className="client__item">
+              <Image
+                src="/img/team/client-7.png"
+                alt=""
+                width={60}
+                height={70}
+              />
+            </div>
+          </div>
+          <div className="col-lg-3 col-md-4 col-sm-4 col-6">
+            <div className="client__item">
+              <Image
+                src="/img/team/client-8.png"
+                alt=""
+                width={60}
+                height={70}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Client Section End */}
     </>
   )

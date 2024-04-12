@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import style from '@/styles/jack-use/button.module.css'
 import Swiper from '@/components/article/swiper/swiper'
 import Image from 'next/image'
@@ -8,6 +9,7 @@ import { ARTICLE_ITEM } from '@/configs/index'
 export default function Article() {
   const [artData, setArtData] = useState([])
   const [selectedCategory, setSelectedCategory] = useState('全部文章') // 默认选中全部文章
+  const router = useRouter()
 
   useEffect(() => {
     fetch(ARTICLE_ITEM, { credentials: 'include' })
@@ -19,7 +21,14 @@ export default function Article() {
   }, [])
 
   const handleSelectChange = (e) => {
-    setSelectedCategory(e.target.value) // 更新选择的区域
+    const selectedValue = e.target.value
+    setSelectedCategory(selectedValue) // 更新选择的区域
+
+    // 更新 URL 参数
+    router.push({
+      pathname: '/article',
+      query: { article: selectedValue },
+    })
   }
 
   const filteredArtData = artData.filter((item) => {

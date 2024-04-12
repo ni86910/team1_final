@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import style from '@/styles/jack-use/button.module.css'
 import Image from 'next/image'
-import Link from 'next/link'
 import BookMark from '@/components/article/bookmark/bookmark'
 import { useRouter } from 'next/router'
 import { API_SERVER } from '@/configs/index'
@@ -93,7 +92,7 @@ export default function ArticleDetail() {
               {' '}
               {/* 使用 mx-auto 使其水平置中 */}
               <div className="contact__form">
-                <form action="#">
+                <form action="post">
                   <div className="row">
                     <div className="col">
                       <input

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import style from '@/styles/jack-use/button.module.css'
-import Link from 'next/link'
 import { API_SERVER } from '@/configs/index'
 
 export default function Contact() {
@@ -95,7 +94,7 @@ export default function Contact() {
                     <div className="col-lg-12" style={{ marginBottom: 20 }}>
                       <select
                         name="consult_type"
-                        className="select"
+                        className=""
                         onChange={handleChange}
                       >
                         <option value="問題詢問" onChange={handleChange}>
