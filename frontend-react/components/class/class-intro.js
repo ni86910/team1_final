@@ -65,19 +65,84 @@ export default function ClassIntro({ setContainerHeight, tab }) {
       >
         <div className={style['category-nav']}>
           <div className={style['categories']}>
-            <Link href="?class_type=靜態課程" scroll={false}>
+            <Link
+              href="?class_type=靜態課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: '靜態課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               靜態課程
             </Link>
-            <Link href="?class_type=飛輪課程" scroll={false}>
+            <Link
+              href="?class_type=飛輪課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: '飛輪課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               飛輪課程
             </Link>
-            <Link href="?class_type=心肺訓練課程" scroll={false}>
+            <Link
+              href="?class_type=心肺訓練課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: '心肺訓練課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               心肺訓練課程
             </Link>
-            <Link href="?class_type=舞蹈課程" scroll={false}>
+            <Link
+              href="?class_type=舞蹈課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: '舞蹈課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               舞蹈課程
             </Link>
-            <Link href="?class_type=radical課程" scroll={false}>
+            <Link
+              href="?class_type=radical課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: 'radical課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               radical課程
             </Link>
           </div>

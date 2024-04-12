@@ -15,6 +15,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import WeekCol from './week-col'
 import ClassBook from './class-book'
+import { useDraggable } from 'react-use-draggable-scroll'
 
 export default function ClassSchedule({ setContainerHeight, tab }) {
   dayjs.extend(weekday)
@@ -39,11 +40,15 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     message: '',
   })
 
-  // state 控制 課表是否要出現
-  const [show, setShow] = useState(false)
+  // 取得要拖曳滾動的元素參照 會出錯QQ
+  const dragScrollRef = useRef()
+  // const { events } = useDraggable(dragScrollRef)
 
   // 取得section參照
   const sectionRef2 = useRef(null)
+
+  // state 控制 課表是否要出現
+  const [show, setShow] = useState(false)
 
   // 控制預約頁面是否要出現
   const [popClassBook, setPopClassBook] = useState(false)
@@ -107,7 +112,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     if (scheduleData && scheduleData.gotData) {
       setShow(true)
     }
-  }, [scheduleData])
+  }, [scheduleData, router])
 
   /* AbortController範例 避免連續發fetch 回來時間不一定
   useEffect(() => {
@@ -280,7 +285,11 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                 </div>
               </div>
               <ScrollSyncPane>
-                <div className={`${style['one-week']} ${style['scrollbar']}`}>
+                <div
+                  className={`${style['one-week']} ${style['scrollbar']}`}
+                  // {...events}
+                  // ref={dragScrollRef}
+                >
                   <ul className={style['week-ul']}>
                     <li className={style['week-li']}>
                       <div className={style['date']}>
