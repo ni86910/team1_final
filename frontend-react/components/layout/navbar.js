@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import {
   FaRegHeart,
   FaUser,
@@ -45,18 +46,18 @@ export default function Navbar() {
           </div>
         </div>
         <div className="offcanvas__nav__option">
-          <a href="#" className="search-switch">
+          <Link href="#" className="search-switch">
             <Image
               src="/img/navbar-template/icon/search_w.png"
               width={19}
               height={19}
               alt=""
             />
-          </a>
-          <a href="#">
+          </Link>
+          <Link href="#">
             <FaRegHeart />
-          </a>
-          <a href="#">
+          </Link>
+          <Link href="#">
             <Image
               src="/img/navbar-template/icon/cart.png"
               width={19}
@@ -64,7 +65,7 @@ export default function Navbar() {
               alt=""
             />
             <span>1</span>
-          </a>
+          </Link>
           <div className="quantity">共 1 件商品</div>
         </div>
         <div id="mobile-menu-wrap" />
@@ -86,15 +87,18 @@ export default function Navbar() {
               <div className="col-lg-6 col-md-5">
                 <div className="header-top-right">
                   <div className="header-top-links">
-                    <a href="#" style={{ color: '#EB6234', fontSize: 14 }}>
+                    <Link
+                      href="/member/login"
+                      style={{ color: '#EB6234', fontSize: 14 }}
+                    >
                       登入會員
-                    </a>
+                    </Link>
                     <span style={{ color: '#cccccc', fontSize: 14 }}>
                       還不是會員?
                     </span>{' '}
-                    <a href="#" style={{ fontSize: 14 }}>
+                    <Link href="/member/register" style={{ fontSize: 14 }}>
                       註冊
-                    </a>
+                    </Link>
                   </div>
                   <div className="header-top-hover">
                     <span style={{ fontSize: 14 }}>
@@ -115,47 +119,47 @@ export default function Navbar() {
           <div className="row">
             <div className="col-lg-3 col-md-3">
               <div className="header_logo">
-                <a href="#">
-                  <img src="/public_img/FITS U_RESIZE.png" alt="" />
-                </a>
+                <Link href="#">
+                  <Image src="/public_img/FITS U_RESIZE.png" alt="" />
+                </Link>
               </div>
             </div>
             <div className="col-lg-6 col-md-6 align-self-center d-flex justify-content-between">
               <nav className="header-menu mobile-menu">
                 <ul>
                   <li>
-                    <a href="#">
+                    <Link href="#">
                       課程預約 <FaRegClock />
-                    </a>
+                    </Link>
                   </li>
                   <li className="active">
-                    <a href="#">
+                    <Link href="#">
                       健康商城 <FaStore />
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="#">
+                    <Link href="#">
                       了解更多 <IoIosArrowDown />
-                    </a>
+                    </Link>
                     <ul className="dropdown">
                       <li>
-                        <a href="#">健康小知識</a>
+                        <Link href="#">健康小知識</Link>
                       </li>
                       <li>
-                        <a href="#">常見問題</a>
+                        <Link href="#">常見問題</Link>
                       </li>
                     </ul>
                   </li>
                   <li>
-                    <a href="#">
+                    <Link href="#">
                       關於我們 <IoIosArrowDown />
-                    </a>
+                    </Link>
                     <ul className="dropdown">
                       <li>
-                        <a href="#">團隊介紹</a>
+                        <Link href="#">團隊介紹</Link>
                       </li>
                       <li>
-                        <a href="#">場地一覽</a>
+                        <Link href="#">場地一覽</Link>
                       </li>
                     </ul>
                   </li>
@@ -164,15 +168,15 @@ export default function Navbar() {
             </div>
             <div className="col-lg-2 col-md-2 d-flex justify-content-end">
               <div className="header-nav-option">
-                <a href="#">
+                <Link href="#">
                   <FaRegHeart />
-                </a>
-                <a href="#">
+                </Link>
+                <Link href="#">
                   <FaUser />
-                </a>
-                <a href="#">
+                </Link>
+                <Link href="#">
                   <FaBasketShopping /> <span>1</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -190,7 +194,7 @@ export default function Navbar() {
               <div className={`breadcrumb-text`}>
                 <h4>健康商城</h4>
                 <div className={`breadcrumb-links`}>
-                  <a href="#">首頁</a>
+                  <Link href="#">首頁</Link>
                   <span>所有商品</span>
                 </div>
               </div>
