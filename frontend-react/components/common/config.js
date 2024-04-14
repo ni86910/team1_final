@@ -3,7 +3,7 @@ export const API_SERVER = 'http://localhost:3001'
 export const LOGIN_POST = `${API_SERVER}/login` // POST
 
 export const AB_LIST = `${API_SERVER}/member/api`
-export const AB_ADD_POST = `${API_SERVER}/member/add` // POST
+export const REGISTER_POST = `${API_SERVER}/member/register` // POST
 
 // AB_ITEM_DELETE: `${AB_ITEM_DELETE}/17`
 export const AB_ITEM_DELETE = `${API_SERVER}/member` // DELETE

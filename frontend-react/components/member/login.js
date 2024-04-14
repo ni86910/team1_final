@@ -19,7 +19,7 @@ export default function LoginPage() {
     login(m_account, m_pwd).then((result) => {
       if (result) {
         alert('登入成功')
-        router.push('/')
+        router.push('/member/profile')
       } else {
         alert('登入失敗')
       }
