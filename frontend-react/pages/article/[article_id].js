@@ -146,7 +146,7 @@ export default function ArticleDetail() {
             <p className="mt-4">作者: {artInfo.teacher_name}</p>
           </div>
 
-          <h4 className="mt-4 text-center">留言板</h4>
+          <h4 className="mt-4">留言板</h4>
           <>
             {/* 檢查 artInfo.message 是否為空，如果為空，顯示空表格或提示消息 */}
             {artInfo.message.length === 0 ? (
