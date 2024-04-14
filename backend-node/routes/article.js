@@ -31,10 +31,12 @@ router.get('/', async(req,res)=>{
 router.get("/:article_id", async (req, res) => {
     // 用變數接收動態路由
     const article_id = req.params.article_id
-    const sql = `SELECT * FROM article WHERE article_id = ${article_id}`;
-  
+    const sql = `SELECT * FROM article WHERE article_id = ${article_id} `;
+    const sql2 = `SELECT * FROM article_message WHERE article_id = ${article_id} `;
     let rows = [];
     let fields;
+    let rows2 = [];
+    let fields2;
   
     try {
       [rows, fields] = await db.query(sql);
@@ -46,12 +48,41 @@ router.get("/:article_id", async (req, res) => {
       console.log(ex);
     }
 
+    try {
+      [rows2, fields2] = await db.query(sql2);
+
+    } catch (ex) {
+      console.log(ex);
+    }
     
     // 拿第一個物件
-    res.json(rows[0]);
+    res.json({...rows[0],message:rows2});
+    
   });
 
-  router.put("/:article_id", async (req, res) => {
-      
+  // 新增每篇文章留言
+  router.post("/:article_id", async (req,res) => {
+    const output = {
+      success: false,
+      postData: req.body,
+      error: "",
+      code: 0,
+      };
+
+      const sql = "INSERT INTO article_message (`article_id`,`message_name`,`message_email`,`message_content`) VALUES (?,?,?,?)";
+
+      const [result] = await db.query(sql, [
+        req.body.article_id,
+        req.body.message_name,
+        req.body.message_email,
+        req.body.message_content,
+      ]);
+      if (result.affectedRows) {
+        res.json(output);
+      }
   })
+
+  // router.put("/:article_id", async (req, res) => {
+      
+  // })
 export default router;

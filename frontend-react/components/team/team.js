@@ -18,7 +18,10 @@ export default function Team() {
         console.log(data)
         setTeamData(data)
       })
-  }, [])
+    if (router.query.team) {
+      setSelectedTeam(router.query.team)
+    }
+  }, [router.isReady])
 
   const handleTeamChange = (e) => {
     const selectedValue = e.target.value
