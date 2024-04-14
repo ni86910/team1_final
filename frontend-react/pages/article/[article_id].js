@@ -164,7 +164,7 @@ export default function ArticleDetail() {
                       <tbody>
                         {/* 在這裡顯示提示消息，例如 "目前沒有留言。" */}
                         <tr>
-                          <td colSpan="4">目前沒有留言。</td>
+                          <td colSpan="3">目前沒有留言。</td>
                         </tr>
                       </tbody>
                     </table>

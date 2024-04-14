@@ -9,24 +9,24 @@
 .my-table thead {
     background-color: #EB6234; /* 背景色 */
     color: #fff; /* 文字顏色 */
+    text-align: left;
 }
 
 .my-table thead th {
     padding: 12px; /* 表頭的填充 */
-    text-align: center; 
-    
+    text-align: left; 
 }
 
 /* 設置表身樣式 */
 .my-table tbody td {
     padding: 12px; /* 表身的填充 */
     border-bottom: 1px solid #E6E6E6; /* 底部邊框 */
-    text-align: center;
+    text-align: left;
 }
 
 /* 佔位符行的樣式 */
 .my-table tbody td[colspan] {
-    text-align: center; /* 文字居中 */
+    text-align: left; /* 文字居中 */
     color: #000; /* 文字顏色 */
 }
 
