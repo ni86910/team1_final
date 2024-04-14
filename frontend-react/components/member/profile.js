@@ -13,28 +13,39 @@ import { Button, Nav, Navbar, Form, Container, Row, Col } from 'react-bootstrap'
 /* React-icon */
 import { MdChangeCircle } from 'react-icons/md'
 import { FaStarOfLife } from 'react-icons/fa6'
+import { Router, useRouter } from 'next/router'
 
 export default function ProfilePage() {
-  const { logout } = useAuth() // 登出
+  const router = useRouter()
+
+  const { auth, logout, getAuthHeader } = useAuth() // 登出
 
   const [profile, setProfile] = useState({})
   const [newProfileImage, setNewProfileImage] = useState(null)
   const [isEditing, setIsEditing] = useState(false) // 新增編輯狀態
 
   useEffect(() => {
-    fetch(`${API_SERVER}/member/profile`, { credentials: 'include' })
-      .then((response) => response.json())
-      .then((data) => {
-        setProfile(data)
+    console.log(auth)
+    if (auth.member_id) {
+      fetch(`${API_SERVER}/profile`, {
+        //credentials: 'include',
+        headers: new Headers({
+          Authorization: `Bearer ${auth.token}`,
+        }),
       })
-      .catch((error) => console.error('獲取資料時出錯:', error))
-  }, [])
+        .then((response) => response.json())
+        .then((data) => {
+          setProfile(data)
+        })
+        .catch((error) => console.error('獲取資料時出錯:', error))
+    }
+  }, [auth.member_id])
 
   const sendData = async (event) => {
     event.preventDefault()
 
     try {
-      const response = await fetch(`${API_SERVER}/member/profile`, {
+      const response = await fetch(`${API_SERVER}/profile`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -95,34 +106,39 @@ export default function ProfilePage() {
         {/* Side Bar Begin */}
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
-            <Navbar.Brand href="/memberprofile" className={SideBar['text-h4']}>
+            <Navbar.Brand href="/member/profile" className={SideBar['text-h4']}>
               個人資料
             </Navbar.Brand>
             <Nav className={`me-auto ${SideBar['nav-side']}`}>
-              <Link className={SideBar['Nav-link']} href="/membermember-center">
+              <Link
+                className={SideBar['Nav-link']}
+                href="/member/member-center"
+              >
                 會員中心
               </Link>
-              <Link className={SideBar['Nav-link']} href="/memberorder">
+              <Link className={SideBar['Nav-link']} href="/member/order">
                 我的訂單
               </Link>
               <Link
                 className={SideBar['Nav-link']}
-                href="/membercourse-records"
+                href="/member/course-records"
               >
                 課程紀錄
               </Link>
-              <Link className={SideBar['Nav-link']} href="/memberpoints">
+              <Link className={SideBar['Nav-link']} href="/member/points">
                 我的點數
               </Link>
-              <Link className={SideBar['Nav-link']} href="/memberfavorite">
+              <Link className={SideBar['Nav-link']} href="/member/favorite">
                 我的收藏
               </Link>
               <Link
                 className={SideBar['Nav-link']}
-                href="/memberlogout"
+                href={'#'}
                 onClick={(e) => {
                   e.preventDefault()
                   logout()
+                  alert('你已成功登出')
+                  router.push('/member/login')
                 }}
               >
                 登出

@@ -3,9 +3,11 @@ import db from "./../utils/mysql2-connect.js";
 
 const router = express.Router();
 
-router.get("/profile", async (req, res) => {
+router.get("/", async (req, res) => {
+  console.log('jwt=',res.locals.jwt)
+
   
-    const sql = `SELECT * FROM \`member\` WHERE m_account `; // 添加 LIMIT 1 以僅返回第一筆資料
+    const sql = `SELECT * FROM \`member\` WHERE m_account ='${res.locals.jwt.m_account}'`; 
 
     try {
       const [rows, fields] = await db.query(sql);
@@ -16,11 +18,11 @@ router.get("/profile", async (req, res) => {
         
         res.json(rows[0]);
       } else {
-        res.status(404).json({ error: "No member data found" }); // 如果找不到任何資料，返回 404 錯誤
+        res.status(204).json({ error: "No member data found" }); 
       }
     } catch (ex) {
       console.log(ex);
-      res.status(500).json({ error: "Internal Server Error" }); // 如果發生錯誤，返回 500 錯誤
+      res.status(200).json({ error: "Internal Server Error" }); 
     }
   });
 
