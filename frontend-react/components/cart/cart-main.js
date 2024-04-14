@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from '@/styles/cart-main.module.scss'
 import Link from 'next/link'
 import { FaRegHeart } from 'react-icons/fa6'
 import { RxPlus, RxMinus, RxCross2 } from 'react-icons/rx'
 import { IoReturnDownBackOutline } from 'react-icons/io5'
 import { MdShoppingCartCheckout } from 'react-icons/md'
-
 import { IMG_PATH } from '@/configs'
 
 export default function CartMain() {
+  const [isToggled, setIsToggled] = useState(false)
+
+  const handleToggleSwitchChange = () => {
+    setIsToggled(!isToggled)
+  }
+
   return (
     <>
       {/* Shopping Cart Section Begin */}
@@ -46,7 +51,7 @@ export default function CartMain() {
                           <span className={style['qt-minus']}>
                             <RxMinus />
                           </span>
-                          <div className={style['pro-qty-2']}>
+                          <div>
                             <input
                               className={style['qt-input']}
                               type="text"
@@ -200,18 +205,23 @@ export default function CartMain() {
                       <h5 className={`col-6 ${style['cart-point-title']}`}>
                         點數折抵
                       </h5>
-                      <div
-                        className={`custom-control custom-switch custom-switch-lg col-6 d-flex justify-content-end ${style['cart-point-switch']}`}
-                      >
-                        <input
-                          type="checkbox"
-                          className={style['custom-control-input']}
-                          id="customSwitch2"
-                        />
-                        <label
-                          className={style['custom-control-label']}
-                          htmlFor="customSwitch2"
-                        />
+                      <div className={`col-6 d-flex justify-content-end`}>
+                        <div className="form-check form-switch">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckDefault"
+                            checked={isToggled}
+                            onChange={handleToggleSwitchChange}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="flexSwitchCheckDefault"
+                          >
+                            {' '}
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -223,7 +233,11 @@ export default function CartMain() {
                       </div>
                       <div className={`col-6 ${style['cart-point-input']}`}>
                         <label htmlFor="input_id">- NT$</label>
-                        <input type="text" placeholder=" " />
+                        {isToggled ? (
+                          <input type="text" placeholder=" " />
+                        ) : (
+                          <input type="text" placeholder=" " disabled />
+                        )}
                       </div>
                     </div>
                   </div>

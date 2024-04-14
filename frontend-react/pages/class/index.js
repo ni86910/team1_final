@@ -13,7 +13,7 @@ export default function Class() {
   const [tab, setTab] = useState('left')
 
   // 決定ClassIntro跟ClassSchedule 的容器高度
-  const [ContainerHeight, setContainerHeight] = useState('')
+  const [ContainerHeight, setContainerHeight] = useState(0)
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function Class() {
         style={{
           display: 'flex',
           width: '100%',
-          height: ContainerHeight || '800px',
+          height: `${ContainerHeight}px` || '800px',
           position: 'relative',
           overflow: 'clip',
           // 這裡overflow hidden的話 課表的sticky會沒作用
@@ -35,7 +35,6 @@ export default function Class() {
         <ClassIntro setContainerHeight={setContainerHeight} tab={tab} />
         <ClassSchedule setContainerHeight={setContainerHeight} tab={tab} />
       </div>
-      <ClassBook />
     </>
   )
 }

@@ -39,6 +39,7 @@ export default function ClassPage() {
   // router.isReady時 就要去fetch資料
   useEffect(() => {
     if (router.isReady) {
+      console.log(router.query)
       const { class_id } = router.query
       console.log('class_id:', class_id)
       getClassData(class_id)

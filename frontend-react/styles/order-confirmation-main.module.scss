@@ -7,10 +7,18 @@
     background-color: $gray-color;
 }
 
+.order-confirmation-img {
+    overflow:hidden;
+}
+
 .order-confirmation-content {
     margin-top: 50px;
     border-radius: 20px;
-    background-color: #ffffff3d;
+    background-color: #ffffff;
+    // background-color: #ffffff3d;
+    // img {
+    //     filter: drop-shadow(0 0 0.75rem #a898988b);
+    // }
 }
 
 
@@ -32,13 +40,14 @@
 }
 
 .checkorders-btn {
+    border: 1px solid $primary-color;
     background-color: $primary-color;
     color: #ffffff;
     border-radius: 50px;
     &:hover {
+        border: 1px solid $primary-color;
         background-color: $primary-color;
         color: #ffffff;
-        border: none;
     }
 }
 

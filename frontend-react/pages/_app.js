@@ -6,6 +6,7 @@ import DefaultLayout from '@/components/layout/default-layout'
 // import '@/styles/jack-use/place-search.css'
 import '@/styles/jack-use/carousel.css'
 import '@/styles/jack-use/accordion.css'
+import { AuthContextProvider } from '@/context/auth-context'
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -18,5 +19,9 @@ export default function MyApp({ Component, pageProps }) {
   const getLayout =
     Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>)
 
-  return getLayout(<Component {...pageProps} />)
+  return getLayout(
+    <AuthContextProvider>
+      <Component {...pageProps} />
+    </AuthContextProvider>
+  )
 }
