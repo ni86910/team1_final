@@ -1,5 +1,7 @@
+@import "variable";
+
 .overlay {
-  z-index: 5;
+  // z-index: 5;
   box-sizing: border-box;
   position: fixed;
   left: 0;
@@ -10,9 +12,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: -1;
   opacity: 0;
   transition: all 0.5s ease-in-out;
+  pointer-events: none;
 }
 .card {
   width: 800px;
@@ -29,11 +31,17 @@
   left: 50%;
   transform: translate(-50%, -50%);
   transition: all 0.5s ease-in-out;
-
+  z-index: 2;
   .close {
     position: absolute;
-    top: 20px;
+    top: 10px;
     right: 20px;
+    z-index: 2;
+    font-size: x-large;
+    color: white;
+    &:hover{
+      color: $primary-color;
+    }
   }
   .img-box {
     height: fit-content;
@@ -55,7 +63,7 @@
     }
   }
   .content {
-    height: 180px;
+    height: 200px;
     display: flex;
     justify-content: space-around;
     flex-direction: column;
@@ -150,20 +158,27 @@
     justify-content: flex-end;
     align-items: center;
     .button {
+      cursor: pointer;
       height: 40px;
       width: 150px;
       border-radius: 100px;
-      background-color: rgb(255, 136, 0);
       margin-right: 40px;
       text-align: center;
       line-height: 40px;
       font-weight: 600;
+      background-color:black;
+      color: white;
+      &:hover {
+        background-color:$primary-color;
+      color: white;
+      }
     }
   }
 }
 .show-overlay {
-  z-index: unset;
   opacity: 1;
+  display: unset;
+  pointer-events: unset;
 }
 .show-card {
   top: 50%;
