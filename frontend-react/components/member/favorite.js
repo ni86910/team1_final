@@ -45,7 +45,6 @@ export default function FavoritePage() {
     <>
       <section className={SideBar['member-center-container']}>
         {/* Side Bar Begin */}
-
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
             <Navbar.Brand
@@ -78,6 +77,7 @@ export default function FavoritePage() {
               </Link>
               <Link
                 className={SideBar['Nav-link']}
+                href="/member/logout"
                 onClick={(e) => {
                   e.preventDefault()
                   logout()

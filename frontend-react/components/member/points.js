@@ -27,31 +27,34 @@ export default function PointsPage() {
         {/* Side Bar Begin */}
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
-            <Navbar.Brand href="/memberpoints" className={SideBar['text-h4']}>
+            <Navbar.Brand href="/member/points" className={SideBar['text-h4']}>
               我的點數
             </Navbar.Brand>
             <Nav className={`me-auto ${SideBar['nav-side']}`}>
-              <Link className={SideBar['Nav-link']} href="/membermember-center">
+              <Link
+                className={SideBar['Nav-link']}
+                href="/member/member-center"
+              >
                 會員中心
               </Link>
-              <Link className={SideBar['Nav-link']} href="/memberprofile">
+              <Link className={SideBar['Nav-link']} href="/member/profile">
                 個人資料
               </Link>
-              <Link className={SideBar['Nav-link']} href="/memberorder">
+              <Link className={SideBar['Nav-link']} href="/member/order">
                 我的訂單
               </Link>
               <Link
                 className={SideBar['Nav-link']}
-                href="/membercourse-records"
+                href="/member/course-records"
               >
                 課程紀錄
               </Link>
-              <Link className={SideBar['Nav-link']} href="/memberfavorite">
+              <Link className={SideBar['Nav-link']} href="/member/favorite">
                 我的收藏
               </Link>
               <Link
                 className={SideBar['Nav-link']}
-                href="/memberlogout"
+                href="/member/logout"
                 onClick={(e) => {
                   e.preventDefault()
                   logout()
