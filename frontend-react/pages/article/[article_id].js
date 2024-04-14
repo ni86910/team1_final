@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import style from '@/styles/jack-use/button.module.css'
+import styles from '@/styles/jack-use/table.module.css'
 import Image from 'next/image'
 import BookMark from '@/components/article/bookmark/bookmark'
 import { useRouter } from 'next/router'
@@ -152,7 +153,7 @@ export default function ArticleDetail() {
               <>
                 <div className="row">
                   <div className="mt-4 text-center">
-                    <table className="table">
+                    <table className={styles['my-table']}>
                       <thead>
                         <tr>
                           <th scope="col">ID</th>
@@ -175,7 +176,7 @@ export default function ArticleDetail() {
               artInfo.message.map((v, i) => (
                 <div className="row" key={i}>
                   <div className="mt-4 text-center">
-                    <table className="table">
+                    <table className={styles['my-table']}>
                       <thead>
                         <tr>
                           <th scope="col">留言者ID</th>
@@ -185,7 +186,7 @@ export default function ArticleDetail() {
                       </thead>
                       <tbody>
                         <tr>
-                          <th scope="row">{v.message_id}</th>
+                          <td>{v.message_id}</td>
                           <td>{v.message_name}</td>
                           <td>{v.message_content}</td>
                         </tr>
