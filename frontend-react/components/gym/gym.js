@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import style from '@/styles/jack-use/button.module.css'
+import TOP from '@/components/TOPbutton/top'
 import { FaPhone, FaClock, FaLocationDot } from 'react-icons/fa6'
 import Link from 'next/link'
 import { API_SERVER } from '@/configs/index'
@@ -126,6 +127,7 @@ export default function GymPlace() {
           })}
         </div>
       </div>
+      <TOP />
     </>
   )
 }

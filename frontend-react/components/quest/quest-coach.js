@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Myaccordion from '../accordion/Myaccordion'
 import { questions } from '@/pages/api/accordion-data'
 import Link from 'next/link'
+import TOP from '@/components/TOPbutton/top'
 
 export default function QuestCoach() {
   const [data, setData] = useState(questions)
@@ -70,6 +71,7 @@ export default function QuestCoach() {
         </div>
       </div>
       {/* main Section end */}
+      <TOP />
     </>
   )
 }

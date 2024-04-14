@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import TOP from '@/components/TOPbutton/top'
 import { API_SERVER } from '@/configs/index'
 import style from '@/styles/jack-use/button.module.css'
 import Swiper from '@/components/team/swiper/swiper'
@@ -247,6 +248,7 @@ export default function Team() {
       </div>
 
       {/* Client Section End */}
+      <TOP />
     </>
   )
 }

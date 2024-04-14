@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Myaccordion from '@/components/accordion/Myaccordion'
+import TOP from '@/components/TOPbutton/top'
 import { questions } from '@/pages/api/accordion-data'
 import Image from 'next/image'
 import {
@@ -197,6 +198,7 @@ export default function GymDetail() {
           </div>
         </section>
       )}
+      <TOP />
     </>
   )
 }
