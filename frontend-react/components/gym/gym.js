@@ -19,7 +19,10 @@ export default function GymPlace() {
         console.log(data)
         setGymData(data)
       })
-  }, [])
+    if (router.query.gym) {
+      setSelectedArea(router.query.gym)
+    }
+  }, [router.isReady])
 
   const handleAreaChange = (e) => {
     const selectedValue = e.target.value

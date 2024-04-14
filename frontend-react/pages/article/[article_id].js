@@ -21,6 +21,19 @@ export default function ArticleDetail() {
     article_image: '',
   })
 
+  //文章分段
+  const text2jsx = (text) => {
+    return text.split('\n\n').map((v, i) => (
+      <div className="article-section" key={i}>
+        {v.split('\n').map((v2, i2) => (
+          <div className="article-p" key={`${i}-${i2}`}>
+            {v2}
+          </div>
+        ))}
+      </div>
+    ))
+  }
+
   // fetch時要執行的function
   const getArticleData = async (article_id) => {
     const url = `${API_SERVER}/article/${article_id}`
@@ -72,12 +85,14 @@ export default function ArticleDetail() {
                 width={900}
                 height={550}
               />
-              <p className="mt-4" style={{ lineHeight: 2.5 }}>
-                {artInfo.content}
-              </p>
             </div>
+            <div className="mt-4" style={{ lineHeight: 2.5 }}>
+              {text2jsx(artInfo.content)}
+            </div>
+
+            <p className="mt-4">作者: {artInfo.teacher_name}</p>
           </div>
-          <p className="mt-4">作者: {artInfo.teacher_name}</p>
+
           <div
             className="row"
             style={{ backgroundColor: '#E6E6E6', marginBottom: 20 }}
@@ -89,7 +104,6 @@ export default function ArticleDetail() {
               </p>
             </div>
             <div className="col-lg-6 col-md-6 mx-auto">
-              {' '}
               {/* 使用 mx-auto 使其水平置中 */}
               <div className="contact__form">
                 <form action="post">
@@ -113,7 +127,6 @@ export default function ArticleDetail() {
                         className="form-control"
                         placeholder="Message"
                         rows={4}
-                        defaultValue={''}
                       />
                       <div className="text-center" style={{ marginBottom: 10 }}>
                         <button type="reset" className={style['site-btn']}>

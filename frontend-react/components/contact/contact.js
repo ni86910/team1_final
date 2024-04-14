@@ -44,12 +44,14 @@ export default function Contact() {
         alert('表單提交成功！')
 
         // 重置表单数据
-        setFormData({
-          consult_type: '',
-          consult_name: '',
-          consult_email: '',
-          request: '',
-        })
+
+        e.target.reset()
+        // setFormData({
+        //   consult_type: '',
+        //   consult_name: '',
+        //   consult_email: '',
+        //   request: '',
+        // })
 
         const data = await response.json()
         console.log(data) // Handle response from server

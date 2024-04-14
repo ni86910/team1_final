@@ -18,7 +18,11 @@ export default function Article() {
         console.log(data)
         setArtData(data)
       })
-  }, [])
+    if (router.query.article) {
+      // console.log(router.query.article)
+      setSelectedCategory(router.query.article)
+    }
+  }, [router.isReady])
 
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value
@@ -40,6 +44,7 @@ export default function Article() {
       selectedCategory === '全部文章' || item.article_item === selectedCategory
     ) // 根据选择的区域进行过滤
   })
+  console.log(router.query.article)
 
   return (
     <>
@@ -70,9 +75,7 @@ export default function Article() {
               value={selectedCategory}
               onChange={handleSelectChange}
             >
-              <option value="全部文章" selected="selected">
-                全部文章
-              </option>
+              <option value="全部文章">全部文章</option>
               <option value="運動健身">運動健身</option>
               <option value="健康飲食">健康飲食</option>
             </select>

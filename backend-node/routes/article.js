@@ -50,4 +50,8 @@ router.get("/:article_id", async (req, res) => {
     // 拿第一個物件
     res.json(rows[0]);
   });
+
+  router.put("/:article_id", async (req, res) => {
+      
+  })
 export default router;
