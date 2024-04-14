@@ -120,7 +120,12 @@ export default function Navbar() {
             <div className="col-lg-3 col-md-3">
               <div className="header_logo">
                 <Link href="#">
-                  <Image src="/public_img/FITS U_RESIZE.png" alt="" />
+                  <Image
+                    src="/public_img/FITS U_RESIZE.png"
+                    alt=""
+                    width={180}
+                    height={108}
+                  />
                 </Link>
               </div>
             </div>
