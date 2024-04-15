@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import {
   FaRegHeart,
   FaUser,
@@ -8,6 +9,8 @@ import {
   FaStore,
 } from 'react-icons/fa6'
 import { IoIosArrowDown } from 'react-icons/io'
+import { MdOutlineSort } from 'react-icons/md'
+import { TiArrowSortedDown } from 'react-icons/ti'
 
 export default function Navbar() {
   const [offcanvas, setOffcanvas] = useState('')
@@ -19,22 +22,16 @@ export default function Navbar() {
   return (
     <>
       {/* Offcanvas Menu Begin */}
-      <div
-        className={`offcanvas-menu-overlay ${offcanvas}`}
-        onClick={openCanvasHandler}
-        onKeyPress={() => {}}
-        role="button"
-        tabIndex="0"
-      />
+      <div className={`offcanvas-menu-overlay ${offcanvas}`} />
       <div className={`offcanvas-menu-wrapper ${offcanvas}`}>
-        <div className="offcanvas__option">
-          <div className="offcanvas__links">
-            <a href="/pages/member/register">註冊</a>
-            <a href="#">常見問題</a>
+        <div className="offcanvas-option">
+          <div className="offcanvas-links">
+            <Link href="#">註冊</Link>
+            <Link href="#">常見問題</Link>
           </div>
-          <div className="offcanvas__top__hover">
+          <div className="offcanvas-top-hover">
             <span>
-              會員專區 <i className="arrow_carrot-down" />
+              會員專區 <TiArrowSortedDown />
             </span>
             <ul>
               <li>會員資料</li>
@@ -44,19 +41,19 @@ export default function Navbar() {
             </ul>
           </div>
         </div>
-        <div className="offcanvas__nav__option">
-          <a href="#" className="search-switch">
+        <div className="offcanvas-nav-option">
+          <Link href="#" className="search-switch">
             <Image
               src="/img/navbar-template/icon/search_w.png"
               width={19}
               height={19}
               alt=""
             />
-          </a>
-          <a href="#">
+          </Link>
+          <Link href="#">
             <FaRegHeart />
-          </a>
-          <a href="#">
+          </Link>
+          <Link href="#">
             <Image
               src="/img/navbar-template/icon/cart.png"
               width={19}
@@ -64,11 +61,11 @@ export default function Navbar() {
               alt=""
             />
             <span>1</span>
-          </a>
+          </Link>
           <div className="quantity">共 1 件商品</div>
         </div>
         <div id="mobile-menu-wrap" />
-        <div className="offcanvas__text">
+        <div className="offcanvas-text">
           <p>現在加入菲特友，開啟專屬您的運動計畫!</p>
         </div>
       </div>
@@ -86,15 +83,18 @@ export default function Navbar() {
               <div className="col-lg-6 col-md-5">
                 <div className="header-top-right">
                   <div className="header-top-links">
-                    <a href="#" style={{ color: '#EB6234', fontSize: 14 }}>
+                    <Link
+                      href="/member/login"
+                      style={{ color: '#EB6234', fontSize: 14 }}
+                    >
                       登入會員
-                    </a>
+                    </Link>
                     <span style={{ color: '#cccccc', fontSize: 14 }}>
                       還不是會員?
                     </span>{' '}
-                    <a href="#" style={{ fontSize: 14 }}>
+                    <Link href="/member/register" style={{ fontSize: 14 }}>
                       註冊
-                    </a>
+                    </Link>
                   </div>
                   <div className="header-top-hover">
                     <span style={{ fontSize: 14 }}>
@@ -115,47 +115,52 @@ export default function Navbar() {
           <div className="row">
             <div className="col-lg-3 col-md-3">
               <div className="header_logo">
-                <a href="#">
-                  <img src="/public_img/FITS U_RESIZE.png" alt="" />
-                </a>
+                <Link href="#">
+                  <Image
+                    src="/public_img/FITS U_RESIZE.png"
+                    alt=""
+                    width={180}
+                    height={108}
+                  />
+                </Link>
               </div>
             </div>
             <div className="col-lg-6 col-md-6 align-self-center d-flex justify-content-between">
               <nav className="header-menu mobile-menu">
                 <ul>
                   <li>
-                    <a href="#">
+                    <Link href="#">
                       課程預約 <FaRegClock />
-                    </a>
+                    </Link>
                   </li>
                   <li className="active">
-                    <a href="#">
+                    <Link href="#">
                       健康商城 <FaStore />
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="#">
+                    <Link href="#">
                       了解更多 <IoIosArrowDown />
-                    </a>
+                    </Link>
                     <ul className="dropdown">
                       <li>
-                        <a href="#">健康小知識</a>
+                        <Link href="#">健康小知識</Link>
                       </li>
                       <li>
-                        <a href="#">常見問題</a>
+                        <Link href="#">常見問題</Link>
                       </li>
                     </ul>
                   </li>
                   <li>
-                    <a href="#">
+                    <Link href="#">
                       關於我們 <IoIosArrowDown />
-                    </a>
+                    </Link>
                     <ul className="dropdown">
                       <li>
-                        <a href="#">團隊介紹</a>
+                        <Link href="#">團隊介紹</Link>
                       </li>
                       <li>
-                        <a href="#">場地一覽</a>
+                        <Link href="#">場地一覽</Link>
                       </li>
                     </ul>
                   </li>
@@ -164,20 +169,26 @@ export default function Navbar() {
             </div>
             <div className="col-lg-2 col-md-2 d-flex justify-content-end">
               <div className="header-nav-option">
-                <a href="#">
+                <Link href="#">
                   <FaRegHeart />
-                </a>
-                <a href="#">
+                </Link>
+                <Link href="#">
                   <FaUser />
-                </a>
-                <a href="#">
+                </Link>
+                <Link href="#">
                   <FaBasketShopping /> <span>1</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
-          <div className="canvas-open">
-            <i className="fa fa-bars" />
+          <div
+            className="canvas-open"
+            onClick={openCanvasHandler}
+            onKeyPress={() => {}}
+            role="button"
+            tabIndex="0"
+          >
+            <MdOutlineSort />
           </div>
         </div>
       </header>
@@ -190,7 +201,7 @@ export default function Navbar() {
               <div className={`breadcrumb-text`}>
                 <h4>健康商城</h4>
                 <div className={`breadcrumb-links`}>
-                  <a href="#">首頁</a>
+                  <Link href="#">首頁</Link>
                   <span>所有商品</span>
                 </div>
               </div>

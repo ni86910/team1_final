@@ -1,6 +1,5 @@
 @import "variable";
 
-
 /*---------------------
   Product Category
 -----------------------*/
@@ -227,6 +226,10 @@
 
 .product-item-pic {
   img {
+    width: 297px;
+    height: 297px;
+    object-fit: cover;
+
     &:hover {
       filter: brightness(0.9);
       transition: all 0.4s ease-in-out 0s;
@@ -258,7 +261,7 @@
     opacity: 1;
     transition: all .4s;
     &:hover {
-      background-color: $secondary-color;
+      background-color: $primary-color;
     }
   }
 }
@@ -266,33 +269,34 @@
 .fav-button {
     width: 40px;
     height: 40px;
-    background-color: $primary-color;
+    background-color: #000000;
     padding-top: 5px;
     text-align: center;
     box-shadow: 0 8px 24px hsla(0,0%, 0%, .15);
     opacity: 0;
     position: absolute;
     top: 15px;
-    right: 15px;
+    right: 30px;
     transition: all .3s;
     }
 
   .add-cart-button {
     width: 40px;
     height: 40px;
-    background-color: $primary-color;
+    background-color: #000000;
     padding-top: 5px;
     text-align: center;
     box-shadow: 0 8px 24px hsla(0,0%, 0%, .15);
     opacity: 0;
     position: absolute;
     top: 68px;
-    right: 15px;
+    right: 30px;
     transition: all .3s;
     }
 
 .product-item-text {
   margin-top: 20px;
+  margin-bottom: 50px;
 
   span {
     font-size: 18px;

@@ -1,0 +1,49 @@
+.article-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  background-color: #ffffff;
+}
+.article-container .search-border {
+  border-radius: 50px;
+}
+.article-container .btn {
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 50%;
+}
+
+.item {
+  margin-right: 10px;
+}
+.item a {
+  color: #000000;
+  text-decoration: none;
+}
+.item a:hover {
+  color: #EB6234;
+}
+
+.navbar {
+  margin-top: 10px;
+}
+
+.article-title {
+  color: #000000;
+  margin-bottom: 20px;
+}
+.article-title:hover {
+  color: #EB6234;
+}
+
+.article-next {
+  color: #000000;
+}
+.article-next a {
+  color: #000000;
+  text-decoration: none;
+}
+.article-next a:hover {
+  color: #EB6234;
+}

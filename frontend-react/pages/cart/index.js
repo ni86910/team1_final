@@ -4,7 +4,7 @@ import CartMain from '@/components/cart/cart-main'
 // import Loader from '@/components/product-b/loader'
 // import LoadingBar from 'react-top-loading-bar'
 
-export default function Cart() {
+export default function Index() {
   return (
     <>
       <Head>

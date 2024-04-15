@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import style from '@/styles/product-detail.module.scss'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -18,6 +18,18 @@ import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules'
 
 export default function ProductDetail() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
+
+  const [count, setCount] = useState(1)
+
+  const handleDecrease = () => {
+    if (count > 1) {
+      setCount(count - 1) // 減少count，但最小值只能是1
+    }
+  }
+
+  const handleIncrease = () => {
+    setCount(count + 1) // 增加count
+  }
 
   return (
     <>
@@ -168,19 +180,25 @@ export default function ProductDetail() {
                   </p>
                   <div className={style['quantity-item']}>
                     <div className={style['quantity']}>
-                      <span className={style['qt-minus']}>
+                      <button
+                        className={style['qt-minus']}
+                        onClick={handleDecrease}
+                      >
                         <RxMinus />
-                      </span>
+                      </button>
                       <div className={style['pro-qty-2']}>
                         <input
                           className={style['qt-input']}
                           type="text"
-                          defaultValue={1}
+                          Value={count}
                         />
                       </div>
-                      <span className={style['qt-plus']}>
+                      <button
+                        className={style['qt-plus']}
+                        onClick={handleIncrease}
+                      >
                         <RxPlus />
-                      </span>
+                      </button>
                     </div>
                   </div>
                 </div>
