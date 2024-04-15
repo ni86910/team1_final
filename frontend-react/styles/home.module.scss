@@ -407,6 +407,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        @include pad {
+          display: none;
+        }
         span {
           border-bottom: 5px solid white;
           text-shadow: -3px 4px 6px rgba(0,0,0,0.6);
