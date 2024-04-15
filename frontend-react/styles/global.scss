@@ -11,7 +11,7 @@ $third-color: #FF965A;
 $heading-color: #111111;
 $gray-color: #E6E6E6; 
 $gray-deep-color: #cccccc;
-$support-color: #F3F2EE;
+$support-color: #F3F2EE; 
 
 // 按鈕圓角邊 button radius
 $border-radius: 0em;
@@ -25,8 +25,12 @@ $dropdown-border-radius:50px;
 // 導入所有 bootstrap 樣式
 @import '~bootstrap/scss/bootstrap';
 // ↓↓↓  其它客製樣式要寫在這行的"下面" ↓↓↓
-// Register css
+
+/* Register- Select 註冊頁面 */
 .form-select {
+  border-radius: 10px;
+}
+.form-control{
   border-radius: 10px;
 }
 
@@ -40,6 +44,23 @@ $dropdown-border-radius:50px;
     border-color: #EB6234;
   }
 }
+
+/* Order- Accordion 訂單頁面 */
+.accordion-header{
+background-color: black;
+color:white;
+}
+.accordion-button {
+  font-family: 微軟正黑體;
+  font-weight: bold;
+}
+.accordion-button:not(.collapsed){
+  font-family: 微軟正黑體;
+  font-weight: bold;
+  background-color: $primary-color;
+  color: white;
+}
+
 
 // google Noto Sans TC 字體
 @import 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap';

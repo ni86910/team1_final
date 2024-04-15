@@ -49,6 +49,37 @@
     margin: 0px 0px 20px 0px;
     border-bottom: 2px solid $primary-color;
     color:black;
-}   
+}  
+
+.menu-btn span {
+  display: block;
+  width: 30px;
+  height: 3px;
+  background-color: #333;
+  margin-bottom: 5px;
+  transition: all 0.3s;
+}
+
+.m-sidebar.small-screen {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.m-sidebar.small-screen .m-container {
+  padding-top: 60px;
+}
+
+.menu-btn {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+// RWD
 
 

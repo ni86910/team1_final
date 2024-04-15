@@ -1,15 +1,141 @@
 import React, { useState } from 'react'
 import style from '@/styles/register.module.scss'
 import Image from 'next/image'
+import Link from 'next/link'
+/* Bootstrap */
 import { Button, Modal, Form } from 'react-bootstrap'
 import { FaStarOfLife } from 'react-icons/fa6'
-import Link from 'next/link'
+
+import { REGISTER_POST } from '@/components/common/config'
+import { useRouter } from 'next/router'
+
+/* 錯誤訊息樣式 */
+const redBorder = {
+  border: '1px solid red',
+}
+const redText = {
+  color: 'red',
+}
 
 export default function RegisterPage() {
+  const router = useRouter()
+  // 條款彈窗
   const [showModal, setShowModal] = useState(false)
+  // 會員條款
+  const [agreedToTerms, setAgreedToTerms] = useState(false)
+
+  const [formData, setFormData] = useState({
+    m_name: '',
+    m_account: '',
+    m_pwd: '',
+    gender: '',
+    birthday: '',
+    mobile: '',
+    address: '',
+  })
+  // 欄位預設的錯誤訊息
+  const [errorMsg, setErrorMsg] = useState({
+    m_name: '',
+    m_account: '',
+    mobile: '',
+  })
+  // 整個表單有沒有通過檢查
+  const [isPass, setIsPass] = useState(false)
+
+  // 驗證: 姓名
+  const validateName = (m_name) => {
+    // 名子不得小於2個字
+    return m_name.toString().length >= 2
+  }
+  // 驗證: 帳號
+  const validateEmail = (email) => {
+    return email.toString().indexOf('@') >= 0 // 粗略的判斷方式
+  }
+
+  // 驗證: 手機
+  const validateMobile = (mobile) => {
+    return /^09\d{2}-?\d{3}-?\d{3}$/.test(mobile)
+  }
+
+  const fieldChanged = (e) => {
+    const newFormData = { ...formData, [e.target.name]: e.target.value }
+    setFormData(newFormData)
+  }
+
+  const nameBlur = () => {
+    if (!validateName(formData.m_name)) {
+      setErrorMsg({ ...errorMsg, m_name: '請輸入正確的姓名' })
+      return false
+    } else {
+      setErrorMsg({ ...errorMsg, m_name: '' })
+      return true
+    }
+  }
+  const emailBlur = () => {
+    if (!validateEmail(formData.m_account)) {
+      setErrorMsg({ ...errorMsg, m_account: '請輸入正確的 Email' })
+      return false
+    } else {
+      setErrorMsg({ ...errorMsg, m_account: '' })
+      return true
+    }
+  }
+
+  const mobileBlur = () => {
+    if (!validateMobile(formData.mobile)) {
+      setErrorMsg({ ...errorMsg, mobile: '請輸入正確的手機號碼' })
+      return false
+    } else {
+      setErrorMsg({ ...errorMsg, mobile: '' })
+      return true
+    }
+  }
+
+  const onSubmit = async (e) => {
+    e.preventDefault() // 表單不要以傳統方式送出
+
+    // 驗證所有欄位
+    const tmpIsPass = nameBlur() && emailBlur() && mobileBlur()
+    setIsPass(tmpIsPass)
+
+    if (tmpIsPass) {
+      //console.log("表單送出");
+      // 表單驗證通過，進行資料提交
+      const r = await fetch(REGISTER_POST, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await r.json()
+
+      console.log(result)
+      if (result.success) {
+        alert('資料新增成功')
+        router.push('/member/login')
+      } else {
+        alert('資料沒有新增')
+      }
+    } else {
+      alert('必填欄位請填入符合格式的值')
+    }
+    if (!agreedToTerms) {
+      alert('請勾選會員條款')
+      return // 停止表單提交
+    }
+  }
+
+  // 會員條款的彈窗
 
   const handleCloseModal = () => setShowModal(false)
-  const handleShowModal = () => setShowModal(true)
+  const handleShowModal = () => {
+    setShowModal(true)
+    // 在這裡改變連結的樣式
+    const memberTermsLink = document.querySelector(`.${style['member-terms']}`)
+    memberTermsLink.style.color = 'orange'
+  }
 
   return (
     <>
@@ -28,7 +154,7 @@ export default function RegisterPage() {
                       會員註冊
                     </div>
                     <div className="card-body">
-                      <form action="#" method="#">
+                      <form name="form1" onSubmit={onSubmit}>
                         <button
                           type="submit"
                           className={`btn ${style['google-btn']}`}
@@ -57,13 +183,19 @@ export default function RegisterPage() {
                           </label>
                           <div className="col-md-6">
                             <input
-                              style={{ borderRadius: '10px' }}
                               type="text"
                               id="m_name"
                               className="form-control"
                               name="m_name"
                               placeholder="請輸入名稱"
+                              value={formData.m_name}
+                              onChange={fieldChanged}
+                              onBlur={nameBlur}
+                              style={errorMsg.m_name ? redBorder : {}}
                             />
+                            <div className="form-text" style={redText}>
+                              {errorMsg.m_name}
+                            </div>
                           </div>
                         </div>
                         <div className={`form-group row ${style['form-box']}`}>
@@ -76,14 +208,19 @@ export default function RegisterPage() {
                           </label>
                           <div className="col-md-6">
                             <input
-                              style={{ borderRadius: '10px' }}
                               type="email"
                               id="m_account"
                               className="form-control"
                               name="m_account"
                               placeholder="請輸入信箱"
-                              required=""
+                              value={formData.m_account}
+                              onChange={fieldChanged}
+                              onBlur={emailBlur}
+                              style={errorMsg.m_account ? redBorder : {}}
                             />
+                            <div className="form-text" style={redText}>
+                              {errorMsg.m_acount}
+                            </div>
                           </div>
                         </div>
                         <div className={`form-group row ${style['form-box']}`}>
@@ -96,13 +233,13 @@ export default function RegisterPage() {
                           </label>
                           <div className="col-md-6">
                             <input
-                              style={{ borderRadius: '10px' }}
                               type="password"
                               id="m_pwd"
                               className="form-control"
                               name="m_pwd"
                               placeholder="請輸入4-6位數密碼"
-                              required=""
+                              onChange={fieldChanged}
+                              style={errorMsg.m_pwd ? redBorder : {}}
                             />
                           </div>
                         </div>
@@ -114,11 +251,17 @@ export default function RegisterPage() {
                             <FaStarOfLife className={style['icon-padding']} />
                             性別
                           </label>
-                          <div className={`col-md-6 ${style['Select']}`}>
-                            <Form.Select aria-label="Default select example">
-                              <option selected="">請選擇</option>
-                              <option value="0">男生</option>
-                              <option value="1">女生</option>
+                          <div className="col-md-6">
+                            <Form.Select
+                              name="gender"
+                              aria-label="Default select example"
+                              style={errorMsg.gender ? redBorder : {}}
+                              value={formData.gender}
+                              onChange={fieldChanged}
+                            >
+                              <option select="">請選擇</option>
+                              <option value="男">男生</option>
+                              <option value="女">女生</option>
                             </Form.Select>
                           </div>
                         </div>
@@ -132,11 +275,13 @@ export default function RegisterPage() {
                           </label>
                           <div className="col-md-6">
                             <input
-                              style={{ borderRadius: '10px' }}
                               type="date"
                               id="birthday"
                               className="form-control"
                               name="birthday"
+                              value={formData.birthday}
+                              onChange={fieldChanged}
+                              style={errorMsg.birthday ? redBorder : {}}
                             />
                           </div>
                         </div>
@@ -150,14 +295,19 @@ export default function RegisterPage() {
                           </label>
                           <div className="col-md-6">
                             <input
-                              style={{ borderRadius: '10px' }}
                               type="text"
                               id="mobile"
                               className="form-control"
                               name="mobile"
                               placeholder="請輸入手機號碼"
-                              required=""
+                              value={formData.mobile}
+                              onChange={fieldChanged}
+                              onBlur={mobileBlur}
+                              style={errorMsg.mobile ? redBorder : {}}
                             />
+                            <div className="form-text" style={redText}>
+                              {errorMsg.mobile}
+                            </div>
                           </div>
                         </div>
                         <div className={`form-group row ${style['form-box']}`}>
@@ -170,19 +320,23 @@ export default function RegisterPage() {
                           </label>
                           <div className="col-md-6">
                             <textarea
-                              style={{ borderRadius: '10px' }}
                               type="text"
                               className="form-control"
                               id="address"
                               name="address"
                               col={20}
                               rows={2}
-                              defaultValue={''}
+                              value={formData.address}
+                              onChange={fieldChanged}
+                              style={errorMsg.address ? redBorder : {}}
                             />
                           </div>
                         </div>
                         <div className="checkbox">
-                          <input type="checkbox" defaultValue="" />
+                          <input
+                            type="checkbox"
+                            onChange={(e) => setAgreedToTerms(e.target.checked)}
+                          />
                           <Link
                             href="#"
                             className={style['member-terms']}
@@ -248,7 +402,10 @@ export default function RegisterPage() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button
+            onClick={handleCloseModal}
+            className={`btn ${style['register-btn']}`}
+          >
             關閉
           </Button>
         </Modal.Footer>

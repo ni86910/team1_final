@@ -1,9 +1,23 @@
-import React from 'react'
-import style from '@/styles/forget-password.module.scss'
-import Image from 'next/image'
+import React, { useState } from 'react'
+import { Col, Button } from 'react-bootstrap'
 import { FaStarOfLife } from 'react-icons/fa6'
+import style from '@/styles/forget-password.module.scss'
+
+import { MdChangeCircle } from 'react-icons/md'
 
 export default function ForgetPasswordPage() {
+  const [randomCode, setRandomCode] = useState('')
+
+  // 生成隨機的四位數字驗證碼
+  const generateRandomCode = () => {
+    const code = Math.floor(1000 + Math.random() * 9000)
+    setRandomCode(code.toString())
+  }
+
+  // 初始化時生成一次驗證碼
+  useState(() => {
+    generateRandomCode()
+  }, [])
   return (
     <>
       <section className={style['forget-section']}>
@@ -33,7 +47,7 @@ export default function ForgetPasswordPage() {
                               <FaStarOfLife className={style['icon-padding']} />
                               會員帳號
                             </label>
-                            <div className="col-md-6">
+                            <div className="col-md-4 col-form-label text-md-right">
                               <input
                                 style={{ borderRadius: '10px' }}
                                 type="email"
@@ -45,49 +59,46 @@ export default function ForgetPasswordPage() {
                               />
                             </div>
                           </div>
+
                           <div
                             className={`form-group row ${style['forget-box']}`}
                           >
                             <label
-                              htmlFor="password"
+                              htmlFor="verify-code"
                               className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
                             >
                               <FaStarOfLife className={style['icon-padding']} />
                               驗證碼
                             </label>
-                            <div className="input_block">
-                              <p id="verify_code">圖片</p>
+                            <div
+                              className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
+                            >
                               <input
-                                style={{ borderRadius: '10px' }}
-                                id="validText"
+                                className={style['verify-box']}
                                 type="text"
-                                placeholder="請輸入驗證碼"
+                                placeholder=" 請輸入驗證碼"
                               />
-                              <canvas id="auth-code" />
-                              <button
-                                id="reBtn"
-                                style={{
-                                  left: 15,
-                                  bottom: 6,
-                                  borderStyle: 'none',
-                                  border: 'none',
-                                  outline: 'none',
-                                  fontSize: 20,
-                                  cursor: 'pointer',
-                                }}
-                              >
-                                換圖
-                              </button>
-                              <span id="result" style={{ color: 'red' }} />
                             </div>
                           </div>
-                          <button
-                            type="submit"
-                            className={`btn ${style['forget-btn']}`}
-                          >
+                          <Col className={style['verify-col']}>
+                            <div
+                              id="verify-code"
+                              className={style['verify-number']}
+                            >
+                              {randomCode}
+                            </div>
+                            <Button
+                              className={style['changg']}
+                              onClick={generateRandomCode}
+                            >
+                              <MdChangeCircle size={'30px'} />
+                            </Button>
+                          </Col>
+
+                          <Button type="submit" className={style['forget-btn']}>
                             <span className="glyphicon glyphicon-off" />
                             確認
-                          </button>
+                          </Button>
                         </form>
                       </div>
                     </div>

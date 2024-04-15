@@ -1,80 +1,29 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { useAuth } from '@/context/auth-context'
+import { useRouter } from 'next/router'
 import style from '@/styles/login.module.scss'
 import Image from 'next/image'
 import Link from 'next/link'
+
 import { FaStarOfLife } from 'react-icons/fa6'
 
 export default function LoginPage() {
-  // 狀態為物件，屬性名稱對應到表單欄位的name屬性
-  const [user, setUser] = useState({
-    m_account: '',
-    m_pwd: '',
-  })
+  const router = useRouter()
+  const { login } = useAuth()
+  const [m_account, setAccount] = useState('')
+  const [m_pwd, setPassword] = useState('')
 
-  // 記錄錯誤訊息用的狀態
-  const [error, setError] = useState({
-    m_account: '',
-    m_pwd: '',
-  })
-
-  // 多欄位共用事件處理函式
-  const handleFieldChange = (e) => {
-    console.log(e.target.name, e.target.value, e.target.type)
-
-    //ES6新特性: computed property names(計算得到的屬性名稱)
-    // [e.target.name]: e.target.value
-    // ^^^^^^^^^^^^^^^ 這樣可以動態的設定物件的屬性名稱
-    // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Object_initializer#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E5%90%8D
-    const nextUser = { ...user, [e.target.name]: e.target.value }
-
-    setUser(nextUser)
-  }
-
-  // 表單送出的事件
-  const handleSubmit = (e) => {
-    // 取消表單送出的預設行為，要改用fetch/ajax來送出表單資料
+  const onSubmit = (e) => {
     e.preventDefault()
-    // e.target指的是表單
-
-    // 這裡可以作自訂的表單檢查 --- START ---
-    // 信號代表有沒有錯誤
-    let hasError = false
-    // 記錄錯誤的物件
-    const newError = {
-      m_account: '',
-      m_pwd: '',
-    }
-
-    // if(user.m_account)指的是"有填寫"的情況，所以反之為"沒填寫"的情況
-    if (!user.m_account) {
-      newError.m_account = '帳號為必填'
-      hasError = true
-    }
-
-    if (!user.m_pwd) {
-      newError.m_pwd = '密碼為必填'
-      hasError = true
-    }
-
-    if (user.m_pwd.length < 6) {
-      // 指定預設值語法，如果已經有上個錯誤訊息的話，不會再加入這個訊息
-      // 同欄位多個檢查時才會使用
-      newError.m_pwd ||= '密碼至少要6個字元'
-      hasError = true
-    }
-
-    if (user.m_pwd.length > 10) {
-      newError.m_pwd ||= '密碼至多為10個字元'
-      hasError = true
-    }
-
-    if (hasError) {
-      setError(newError)
-      return // 流程控制，有錯誤訊息則先跳出處理函式不繼續送到伺服器
-    }
-    // 這裡可以作自訂的表單檢查 --- END ---
-
-    // 這裡之後送到伺服器(資料庫)中
+    console.log({ m_account, m_pwd })
+    login(m_account, m_pwd).then((result) => {
+      if (result) {
+        alert('登入成功')
+        router.push('/member/profile')
+      } else {
+        alert('登入失敗')
+      }
+    })
   }
 
   return (
@@ -95,7 +44,7 @@ export default function LoginPage() {
                         會員登入
                       </div>
                       <div className="card-body">
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={onSubmit}>
                           <div
                             className={`form-group row ${style['account-box']}`}
                           >
@@ -113,13 +62,13 @@ export default function LoginPage() {
                                 type="email"
                                 id="m_account"
                                 name="m_account"
-                                value={user.m_account}
-                                onChange={handleFieldChange}
+                                value={m_account}
+                                onChange={(e) => setAccount(e.target.value)}
                                 placeholder="請輸入信箱"
                               />
                             </div>
                             <div className={style['error']}>
-                              {error.m_account}
+                              {/* {error.m_account} */}
                             </div>
                           </div>
                           <div
@@ -139,18 +88,18 @@ export default function LoginPage() {
                                 type="password"
                                 id="m_pwd"
                                 name="m_pwd"
-                                value={user.m_pwd}
-                                onChange={handleFieldChange}
+                                value={m_pwd}
+                                onChange={(e) => setPassword(e.target.value)}
                                 placeholder="請輸入4-6位數密碼"
                               />
                             </div>
-                            <div className={style['error']}>{error.m_pwd}</div>
+                            {/* <div className={style['error']}>{error.m_pwd}</div> */}
                           </div>
                           <div
                             className={`checkbox ${style['check-remember']}`}
                           >
                             <label>
-                              <input type="checkbox" defaultValue="" />
+                              <input type="checkbox" />
                               &nbsp;Remember me
                             </label>
                           </div>

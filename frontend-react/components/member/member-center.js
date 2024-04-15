@@ -1,14 +1,16 @@
-import React from 'react'
+import { useState } from 'react'
 import style from '@/styles/member-center.module.scss'
 import SideBar from '@/styles/m-sidebar.module.scss'
+import { useAuth } from '@/context/auth-context' // 登出
 import Image from 'next/image'
 import Link from 'next/link'
+
+// 在 MemberCenterPage 組件中的 handleFileUpload 函數中調用 uploadImage 函數並更新用戶頭像信息
+import { uploadImage } from '@/utils/uploadImage'
+
 /* React-Bootstrap */
-import Nav from 'react-bootstrap/Nav'
-import Navbar from 'react-bootstrap/Navbar'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap'
+
 /* React-icon */
 import { ImTruck } from 'react-icons/im'
 import { FaHourglassStart, FaCoins } from 'react-icons/fa'
@@ -18,9 +20,19 @@ import { FaSackDollar, FaAddressCard } from 'react-icons/fa6'
 import { MdChangeCircle } from 'react-icons/md'
 
 export default function MemberCenterPage() {
+  const { logout } = useAuth() // 登出
+
+  const [profileImage, setProfileImage] = useState(
+    '/img/member/default-self.jpg'
+  )
+
   // 上傳圖像
-  const handleFileUpload = () => {
-    document.getElementById('file0').click() // 點擊隱藏的檔案輸入欄位
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0]
+    const imageUrl = await uploadImage(file)
+    if (imageUrl) {
+      setProfileImage(imageUrl)
+    }
   }
 
   return (
@@ -30,26 +42,39 @@ export default function MemberCenterPage() {
 
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
-            <Navbar.Brand href="#member-center" className={SideBar['text-h4']}>
+            <Navbar.Brand
+              href="/member/member-center"
+              className={SideBar['text-h4']}
+            >
               會員中心
             </Navbar.Brand>
             <Nav className={`me-auto ${SideBar['nav-side']}`}>
-              <Link className={SideBar['Nav-link']} href="#profile">
+              <Link className={SideBar['Nav-link']} href="/member/profile">
                 個人資料
               </Link>
-              <Link className={SideBar['Nav-link']} href="#order">
+              <Link className={SideBar['Nav-link']} href="/member/order">
                 我的訂單
               </Link>
-              <Link className={SideBar['Nav-link']} href="#course-records">
+              <Link
+                className={SideBar['Nav-link']}
+                href="/member/course-records"
+              >
                 課程紀錄
               </Link>
-              <Link className={SideBar['Nav-link']} href="#points">
+              <Link className={SideBar['Nav-link']} href="/member/points">
                 我的點數
               </Link>
-              <Link className={SideBar['Nav-link']} href="#favorite">
+              <Link className={SideBar['Nav-link']} href="/member/favorite">
                 我的收藏
               </Link>
-              <Link className={SideBar['Nav-link']} href="#logout">
+              <Link
+                className={SideBar['Nav-link']}
+                href="/member/logout"
+                onClick={(e) => {
+                  e.preventDefault()
+                  logout()
+                }}
+              >
                 登出
               </Link>
             </Nav>
@@ -68,7 +93,7 @@ export default function MemberCenterPage() {
           <Row className={style['profile']}>
             <Col className={style['self-pic']}>
               <Image
-                src="/img/member/profile-dog.png"
+                src={profileImage}
                 width={150}
                 height={100}
                 alt="selfie"
@@ -76,7 +101,7 @@ export default function MemberCenterPage() {
               />
               <button
                 className={style['upload-text']}
-                onClick={handleFileUpload}
+                onClick={() => document.getElementById('file0').click()}
               >
                 <MdChangeCircle /> 更換頭像
                 <input
@@ -84,6 +109,7 @@ export default function MemberCenterPage() {
                   id="file0"
                   multiple="multiple"
                   style={{ display: 'none' }}
+                  onChange={handleFileUpload}
                 />
               </button>
             </Col>
