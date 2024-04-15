@@ -1,8 +1,11 @@
 import express from "express";
 import db from "./../utils/mysql2-connect.js";
 import dayjs from "dayjs";
-
+// 檢查空物件, 轉換req.params為數字
+import { getIdParam } from './../db-helpers/db-tool.js'
+import authenticate from './../middlewares/authenticate.js'
 const router = express.Router();
+const { Favorite } = db
 
 router.get('/', async(req,res)=>{
     // 構建 SQL 查詢
@@ -82,7 +85,69 @@ router.get("/:article_id", async (req, res) => {
       }
   })
 
-  // router.put("/:article_id", async (req, res) => {
-      
-  // })
+  // 獲得某會員id的有加入到我的最愛清單中的商品id們
+// 此路由只有登入會員能使用
+router.get('/:article_id', authenticate, async (req, res) => {
+  const userId = res.locals.jwt.id
+
+const pids = await Favorite.findAll({
+    attributes: ['pid'],
+    where: {
+      uid: userId,
+    },
+    raw: true, //只需要資料
+})
+
+  // 將結果中的pid取出變為一個純資料的陣列
+  const favorites = pids.map((v) => v.pid)
+
+  res.json({ status: 'success', data: { favorites } })
+})
+
+router.put('/:article_id', authenticate, async (req, res, next) => {
+  const pid = getIdParam(req)
+  const uid = req.user.id
+
+  const existFav = await Favorite.findOne({ where: { pid, uid } })
+  if (existFav) {
+    return res.json({ status: 'error', message: '資料已經存在，新增失敗' })
+  }
+
+  const newFav = await Favorite.create({ pid, uid })
+
+  // console.log(newFav.id)
+
+  // 沒有新增到資料
+  if (!newFav.id) {
+    return res.json({
+      status: 'error',
+      message: '新增失敗',
+    })
+  }
+
+  return res.json({ status: 'success', data: null })
+})
+
+router.delete('/:id', authenticate, async (req, res, next) => {
+  const pid = getIdParam(req)
+  const uid = req.user.id
+
+  const affectedRows = await Favorite.destroy({
+    where: {
+      pid,
+      uid,
+    },
+  })
+
+  // 沒有刪除到任何資料 -> 失敗或沒有資料被刪除
+  if (!affectedRows) {
+    return res.json({
+      status: 'error',
+      message: '刪除失敗',
+    })
+  }
+
+  // 成功
+  return res.json({ status: 'success', data: null })
+})
 export default router;

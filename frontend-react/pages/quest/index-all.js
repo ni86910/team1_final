@@ -1,6 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
-import QuestProduct from '@/components/quest/quest-product'
+import QuestAll from '@/components/quest/quest-all'
 
 export default function IndexProduct() {
   return (
@@ -8,7 +8,7 @@ export default function IndexProduct() {
       <Head>
         <title>常見問題</title>
       </Head>
-      <QuestProduct />
+      <QuestAll />
     </>
   )
 }

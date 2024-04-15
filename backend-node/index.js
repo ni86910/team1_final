@@ -22,9 +22,7 @@ import productRouter from './routes/product.js'
 import profileRouter from './routes/profile.js'
 import loginRouter from './routes/login.js'
 import logoutRouter from './routes/logout.js'
-import registerRouter from "./routes/register.js";
-
-
+import registerRouter from "./routes/register.js"
 
 
 
@@ -111,6 +109,11 @@ app.use('/', logoutRouter)
 
 app.use('/member', registerRouter)
 
+app.use('/team',teamRouter)
+
+app.use('/contact',contactRouter)
+
+// app.use('/favorites',favoritesRouter)
 /*
 
 app.use('/', jwtRouter)
@@ -162,16 +165,6 @@ app.post("/login-jwt", async (req, res) => {
 app.get("/jwt-data", (req, res) => {
   res.json(res.locals.jwt);
 });
-
-
-
-
-
-
-
-app.use('/team',teamRouter)
-
-app.use('/contact',contactRouter)
 
 // *** 路由放在此段之前 ***
 // 設定靜態內容的資料夾

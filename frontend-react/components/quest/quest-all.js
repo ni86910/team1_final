@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import Myaccordion from '../accordion/Myaccordion'
-import { questions } from '@/pages/api/accordion-data'
+import { questions } from '@/pages/api/accordion-data-allquest'
 import Link from 'next/link'
 import TOP from '@/components/TOPbutton/top'
 
-export default function QuestProduct() {
+export default function QuestAll() {
   const [data, setData] = useState(questions)
   return (
     <>
@@ -57,9 +57,9 @@ export default function QuestProduct() {
             <Link
               className="nav-link"
               style={{ color: 'black' }}
-              href="/quest/index-product"
+              href="/quest/index-all"
             >
-              商品相關
+              其他問題
             </Link>
           </li>
         </ul>

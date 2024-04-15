@@ -1,36 +1,47 @@
-.accordion {
-    max-width: 100%;
-    margin: 15px auto;
-  }
-  .accordion-item {
-    border-bottom: 1px solid #E6E6E6;
-  }
-  .accordion-item:last-child {
-    border-bottom: 1px solid #E6E6E6;
-  }
-  .accordion-header {
-    padding: 10px;
-    background-color: #FF965A;
-    cursor: pointer;
-  }
-  .accordion-header:hover {
-    background-color: #ED7C15;
-  }
-  .accordion-content {
-    display: none;
-    padding: 10px;
-  }
-  .accordion-item.active .accordion-content {
-    display: block;
-  }
-  @media screen and (max-width: 768px) {
-    .accordion-item {
-      border-bottom: none;
-    }
-    .accordion-header {
-      border-bottom: 1px solid #E6E6E6;
-    }
-    .accordion-content {
-      padding: 0;
-    }
-  }
+/* 手風琴容器的樣式 */
+.accordion-container {
+  border-radius: 5px; /* 圓角 */
+  margin: 0px; /* 上下間距 */
+  overflow: hidden; /* 隱藏超出部分 */
+  transition: all 0.5s ease; /* 整體過渡效果 */
+}
+
+/* 手風琴標題的樣式 */
+.accordion-header {
+  padding: 12px; /* 填充 */
+  background-color: #EB6234; /* 淺灰色背景 */
+  display: flex; /* Flexbox 布局 */
+  justify-content: space-between; /* 子元素兩端對齊 */
+  align-items: center; /* 垂直居中 */
+  border-bottom: 1px solid white;/* 底部邊框 */
+  font-weight: bold; /* 粗體 */
+}
+.accordion-header:hover {
+  padding: 12px; /* 填充 */
+  background-color: #FF965A; /* 淺灰色背景 */
+  display: flex; /* Flexbox 布局 */
+  justify-content: space-between; /* 子元素兩端對齊 */
+  align-items: center; /* 垂直居中 */
+  border-bottom: 1px solid white;/* 底部邊框 */
+  font-weight: bold; /* 粗體 */
+}
+
+/* 手風琴按鈕的樣式 */
+.accordion-btn {
+    border-radius: 5px; 
+    background: none; /* 無背景 */
+    border: none; /* 無邊框 */
+    font-size: 1.2rem; /* 字體大小 */
+    padding: 0; /* 無填充 */
+    cursor: pointer; /* 鼠標變為手型 */
+    outline: none; /* 無焦點樣式 */
+}
+
+/* 手風琴答案的樣式 */
+.answers {
+  padding: 12px; /* 填充 */
+  background-color: #E6E6E6; /* 白色背景 */
+  border-top: 1px solid #E6E6E6; /* 頂部邊框 */
+  margin: 0; /* 無間距 */
+  transition: max-height 0.5s ease; /* 過渡效果 */
+}
