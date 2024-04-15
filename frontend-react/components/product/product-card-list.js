@@ -48,7 +48,7 @@ export default function ProductCardList() {
           <div className={`col-lg-4 col-md-6 col-sm-6`} key={v.product_id}>
             <div className={style['product-item']}>
               <Link
-                href={`/detail/${v.product_id}`}
+                href={`/product/${v.product_id}`}
                 className={`${style['product-item-pic']} ${style['set-bg']}`}
               >
                 <img
@@ -74,7 +74,7 @@ export default function ProductCardList() {
               </ul>
               <div className={`mt-3 ${style['product-item-text']}`}>
                 <Link
-                  href={`/product-detail/${v.product_id}`}
+                  href={`/product/${v.product_id}`}
                   className={`${style['product-item-title']}`}
                 >
                   <p>{v.product_name}</p>

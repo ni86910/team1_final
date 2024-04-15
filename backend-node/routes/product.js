@@ -60,5 +60,20 @@ router.get("/", async (req, res) => {
   });
 });
 
+router.get("/:p_id", async (req, res) => {
+
+  const p_id = req.params.p_id
+  const sql = `SELECT * FROM product WHERE product_id = ${p_id}`;
+
+  let rows = [];
+  let fields; 
+  try {
+    [rows, fields] = await db.query(sql);
+  } catch (ex) {
+    console.log(ex);
+  }
+  res.json(rows);
+  
+});
 
 export default router;
