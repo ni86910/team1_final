@@ -32,8 +32,8 @@ export default function ProductList() {
                   <div className={`col-lg-6 col-md-6 col-sm-12`}>
                     <div className={style['shop-product-option-left']}>
                       <p>
-                        (還沒改好)顯示第 <span>1</span> – <span>12</span> 筆結果
-                        (共 <span>104</span> 筆)
+                        顯示第 <span>1</span> – <span>12</span> 筆結果 (共{' '}
+                        <span>104</span> 筆)
                       </p>
                     </div>
                   </div>
