@@ -26,6 +26,69 @@ router.get("/", async (req, res) => {
     }
   });
 
+  // 修改資料的表單
+router.get("/profile/:member_id", async (req, res) => {
+  const member_id = +req.params.member_id || 0;
+  if (!member_id) {
+    return res.redirect("/profile");
+  }
+  const sql = `SELECT * FROM member WHERE member_id=${member_id}`;
+  const [rows] = await db.query(sql);
+  if (!rows.length) {
+    return res.redirect("/profile");
+  }
+  const r = rows[0];
+  const d = dayjs(r.birthday);
+  r.birthday = d.isValid() ? d.format("YYYY-MM-DD") : "";
+  res.render("member/profile", r);
+});
+
+router.put("/profile/:member_id", async (req, res) => {
+  const output = {
+    success: false,
+    postData: req.body,
+    error: "",
+    code: 0,
+  };
+
+  let member_id = +req.params.member_id || 0;
+
+  let birthday = dayjs(req.body.birthday, "YYYY-MM-DD", true); // dayjs 物件
+  // 置換處理過的值
+  req.body.birthday = birthday.isValid() ? birthday.format("YYYY-MM-DD") : null;
+
+  // TODO: 資料格式檢查
+
+  const sql = "UPDATE `member` SET ? WHERE member_id=?";
+  try {
+    // 執行 SQL 時最好做錯誤處理
+    const [result] = await db.query(sql, [req.body, member_id]);
+    /*
+    {
+      "fieldCount": 0,
+      "affectedRows": 1,
+      "insertId": 0,
+      "info": "Rows matched: 1  Changed: 1  Warnings: 0",
+      "serverStatus": 2,
+      "warningStatus": 0,
+      "changedRows": 1
+    }
+    */
+    output.success = !!(result.affectedRows && result.changedRows);
+  } catch(ex){
+    output.error = ex.toString();
+  }
+  res.json(output);
+});
+
+router.get("/zod", (req, res) => {
+  const strSchema = z.string().min(4, { message: "請填寫長度四以上的字串" });
+
+  res.json({
+    result: strSchema.safeParse("12"),
+  });
+});
+
   export default router;
 
   /* 
