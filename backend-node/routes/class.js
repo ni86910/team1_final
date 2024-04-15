@@ -128,8 +128,127 @@ router.get("/schedule", async (req, res) => {
   res.json(fullData);
 });
 
+// 獲得開課收藏資訊
+router.get("/class_fav", async (req, res) => {
+  const output = {
+    member_id: 0,
+    class_schedule_id: 0,
+    alreadyFav: false,
+  };
+
+  console.log("query", req.query);
+  const member_id = req.query.member_id;
+  const class_schedule_id = req.query.class_schedule_id;
+
+  //把會員id跟開課id丟進回船傳
+  output.member_id = +member_id;
+  output.class_schedule_id = +class_schedule_id;
+
+  const sql = `SELECT * FROM \`fav\` 
+  WHERE \`member_id\`=${member_id} 
+  AND \`class_schedule_id\` = ${class_schedule_id};`;
+
+  let rows = [];
+  let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
+  //用await要捕捉錯誤 要像這樣，用.then 就用.catch
+  try {
+    [rows, fields] = await db.query(sql);
+  } catch (ex) {
+    console.log(ex);
+  }
+
+  // 有資料 aka 有收藏
+  if (rows[0]) {
+    output.alreadyFav = true;
+  } else {
+    output.alreadyFav = false;
+  }
+  console.log("rows", rows);
+  res.json(output);
+});
+
+// 新增課程收藏 資料放在body中
+router.post("/add-fav", async (req, res) => {
+  const output = {
+    member_id: 0,
+    class_schedule_id: 0,
+    addFav: false,
+    message: "",
+  };
+
+  console.log("body", req.body);
+  const member_id = +req.body.member_id;
+  const class_schedule_id = +req.body.class_schedule_id;
+
+  if (!member_id || !class_schedule_id) {
+    output.message = "會員ID或開課ID undefined 或者 不是數字";
+    res.json(output);
+  }
+
+  //把會員id跟開課id丟進回傳
+  output.member_id = +member_id;
+  output.class_schedule_id = +class_schedule_id;
+
+  const sql2 = "INSERT INTO `fav` SET ?";
+
+  const sql = `INSERT INTO \`fav\`(\`member_id\`, \`class_schedule_id\`) 
+  VALUES (${member_id},${class_schedule_id})`;
+
+let result
+  try {
+    [result] = await db.query(sql2, [req.body]);
+    output.addFav = !!result.affectedRows
+  } catch (ex) {
+    console.log(ex);
+  }
+
+  res.json(output);
+});
+
+// 刪除的路由
+router.delete("/remove-fav", async (req, res) => {
+  const output = {
+    member_id: 0,
+    class_schedule_id: 0,
+    removeFav: false,
+    message: "",
+  };
+
+  console.log("body", req.body);
+  const member_id = +req.body.member_id;
+  const class_schedule_id = +req.body.class_schedule_id;
+
+  if (!member_id || !class_schedule_id) {
+    output.message = "會員ID或開課ID undefined 或者 不是數字";
+    res.json(output);
+  }
+
+  //把會員id跟開課id丟進回傳
+  output.member_id = +member_id;
+  output.class_schedule_id = +class_schedule_id;
+
+
+  const sql = `DELETE FROM fav WHERE member_id=? AND class_schedule_id=? `; // 用問號 會自動跳脫，值 按照順序丟到下方陣列 包成陣列是為了應付所有的SQL語法
+  const [result] = await db.query(sql, [member_id,class_schedule_id]);
+
+  res.json(result);
+  /*
+  CRUD 除了select之外的語法，都是給這個
+  {
+    "fieldCount": 0,
+    "affectedRows": 1,
+    "insertId": 0,
+    "info": "",
+    "serverStatus": 2,
+    "warningStatus": 0,
+    "changedRows": 0
+}
+  */
+});
+
+// 獲得預約人數資訊
 router.get("/book/:class_schedule_id", async (req, res) => {
-  const result = {
+  const output = {
     class_schedule_id: 0,
     max_participant: 0,
     current_participant: 0,
@@ -140,8 +259,8 @@ router.get("/book/:class_schedule_id", async (req, res) => {
   console.log(class_schedule_id);
 
   if (!class_schedule_id) {
-    result.message = "動態路由不是數字";
-    return res.json(result);
+    output.message = "動態路由不是數字";
+    return res.json(output);
   }
 
   const sql = `SELECT COUNT(*) FROM \`class_book\` WHERE \`class_schedule_id\`= ${db.escape(
@@ -157,18 +276,17 @@ router.get("/book/:class_schedule_id", async (req, res) => {
     console.log(ex);
   }
   // 開課編號
-  result.class_schedule_id = class_schedule_id;
+  output.class_schedule_id = class_schedule_id;
 
   // 數出來是0筆
   if (rows[0]["COUNT(*)"] == 0) {
-    result.message = "沒有人預約此課程";
-    return res.json(result);
+    output.message = "沒有人預約此課程";
+    return res.json(output);
   }
 
   //有人預約
-  result.message = "此課程預約人數>0";
-  result.current_participant = rows[0]["COUNT(*)"];
-
+  output.message = "此課程預約人數>0";
+  output.current_participant = rows[0]["COUNT(*)"];
 
   // 抓最大開課人數
   const sql2 = `SELECT * FROM \`class_schedule\` WHERE \`class_schedule_id\`= ${db.escape(
@@ -183,10 +301,10 @@ router.get("/book/:class_schedule_id", async (req, res) => {
   } catch (ex) {
     console.log(ex);
   }
-console.log(rows2[0]['max_participant']);
-result.max_participant = rows2[0]['max_participant']
+  console.log(rows2[0]["max_participant"]);
+  output.max_participant = rows2[0]["max_participant"];
 
-  res.json(result);
+  res.json(output);
 });
 
 // 動態路由 接收課程名稱

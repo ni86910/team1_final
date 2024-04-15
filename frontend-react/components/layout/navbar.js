@@ -129,12 +129,12 @@ export default function Navbar() {
               <nav className="header-menu mobile-menu">
                 <ul>
                   <li>
-                    <Link href="#">
+                    <Link href="/class">
                       課程預約 <FaRegClock />
                     </Link>
                   </li>
                   <li className="active">
-                    <Link href="#">
+                    <Link href="/product">
                       健康商城 <FaStore />
                     </Link>
                   </li>
@@ -144,10 +144,13 @@ export default function Navbar() {
                     </Link>
                     <ul className="dropdown">
                       <li>
-                        <Link href="#">健康小知識</Link>
+                        <Link href="/article">健康小知識</Link>
                       </li>
                       <li>
-                        <Link href="#">常見問題</Link>
+                        <Link href="/quest">常見問題</Link>
+                      </li>
+                      <li>
+                        <Link href="/contact">客服專區</Link>
                       </li>
                     </ul>
                   </li>
@@ -157,10 +160,10 @@ export default function Navbar() {
                     </Link>
                     <ul className="dropdown">
                       <li>
-                        <Link href="#">團隊介紹</Link>
+                        <Link href="/team">團隊介紹</Link>
                       </li>
                       <li>
-                        <Link href="#">場地一覽</Link>
+                        <Link href="/gym">場地一覽</Link>
                       </li>
                     </ul>
                   </li>
@@ -172,7 +175,7 @@ export default function Navbar() {
                 <Link href="#">
                   <FaRegHeart />
                 </Link>
-                <Link href="#">
+                <Link href="/member/member-center">
                   <FaUser />
                 </Link>
                 <Link href="#">

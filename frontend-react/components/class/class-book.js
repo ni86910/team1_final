@@ -5,6 +5,7 @@ import dayjs from 'dayjs'
 import { FaTimes } from 'react-icons/fa'
 import Link from 'next/link'
 import { API_SERVER } from '@/configs'
+import ClassFav from './class-fav'
 
 export default function ClassBook({
   popClassBook,
@@ -18,6 +19,45 @@ export default function ClassBook({
   bookInfo.startH = dayjs(bookInfo.start_time).format('HH:00') // start時
   bookInfo.endH = dayjs(bookInfo.end_time).format('HH:00') // end時
   bookInfo.monthWord = dayjs(bookInfo.start_time).format('MMM') // 月份英文
+
+  // 檢查收藏按鈕是否被點擊，用來更新favInfo 的依據
+  const [toggleBtn, setToggleBtn] = useState(true)
+
+  // 儲存收藏資料
+  const [favInfo, setFavInfo] = useState({
+    member_id: 0,
+    class_schedule_id: 0,
+    alreadyFav: false,
+  })
+  // 抓收藏資料
+  useEffect(() => {
+    // 取得會員id
+    const member_data = JSON.parse(localStorage.getItem('Fit_U-auth'))
+    const class_schedule_id = bookInfo.class_schedule_id
+    const url = `${API_SERVER}/class/class_fav?member_id=${member_data.member_id}&class_schedule_id=${class_schedule_id}`
+
+    try {
+      fetch(url, {
+        method: 'GET', // 可以是 GET、POST、PUT、DELETE 等
+        headers: {
+          'Content-Type': 'application/json', // 設定 Content-Type 為 JSON
+        },
+        // 把會員ID跟該開課ID放到body中 傳給後端
+        // body: JSON.stringify({
+        //   member_id: member_data.member_id,
+        //   class_schedule_id: bookInfo.class_schedule_id,
+        // }), // 將 JavaScript 物件轉換成 JSON 字串
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          console.log('收藏資訊', data)
+          setFavInfo(data)
+        })
+    } catch (e) {
+      console.log(e)
+    }
+    console.log('bookInfo', participantData)
+  }, [popClassBook, toggleBtn]) // 1.有課程方塊被按到 或2.收藏按鈕被按到 時更新
 
   return (
     <>
@@ -44,7 +84,13 @@ export default function ClassBook({
           <FaTimes />
         </Link>
         <div className={style['img-box']}>
-          <div className={style['img-cover']}></div>
+          <div className={style['img-cover']}>
+            <ClassFav
+              favInfo={favInfo}
+              setToggleBtn={setToggleBtn}
+              toggleBtn={toggleBtn}
+            />
+          </div>
           <Image
             src={`http://localhost:3001/imgs/class/class-page/${bookInfo.class_img}`}
             width={800}
