@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import ProductCard from './product-card'
+import ProductCardList from './product-card-list'
 import ProductCategory from './product-category'
 import Link from 'next/link'
 import style from '@/styles/product-list.module.scss'
@@ -67,7 +67,7 @@ export default function ProductList() {
                     </div>
                   </div>
                   {/* 商品排序 End */}
-                  <ProductCard />
+                  <ProductCardList />
                 </div>
               </div>
             </div>

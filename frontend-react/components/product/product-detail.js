@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import style from '@/styles/product-detail.module.scss'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
