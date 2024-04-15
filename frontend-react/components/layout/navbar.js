@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import {
   FaRegHeart,
   FaUser,
@@ -8,6 +9,8 @@ import {
   FaStore,
 } from 'react-icons/fa6'
 import { IoIosArrowDown } from 'react-icons/io'
+import { MdOutlineSort } from 'react-icons/md'
+import { TiArrowSortedDown } from 'react-icons/ti'
 
 export default function Navbar() {
   const [offcanvas, setOffcanvas] = useState('')
@@ -19,22 +22,16 @@ export default function Navbar() {
   return (
     <>
       {/* Offcanvas Menu Begin */}
-      <div
-        className={`offcanvas-menu-overlay ${offcanvas}`}
-        onClick={openCanvasHandler}
-        onKeyPress={() => {}}
-        role="button"
-        tabIndex="0"
-      />
+      <div className={`offcanvas-menu-overlay ${offcanvas}`} />
       <div className={`offcanvas-menu-wrapper ${offcanvas}`}>
-        <div className="offcanvas__option">
-          <div className="offcanvas__links">
-            <a href="/pages/member/register">註冊</a>
-            <a href="#">常見問題</a>
+        <div className="offcanvas-option">
+          <div className="offcanvas-links">
+            <Link href="#">註冊</Link>
+            <Link href="#">常見問題</Link>
           </div>
-          <div className="offcanvas__top__hover">
+          <div className="offcanvas-top-hover">
             <span>
-              會員專區 <i className="arrow_carrot-down" />
+              會員專區 <TiArrowSortedDown />
             </span>
             <ul>
               <li>會員資料</li>
@@ -44,7 +41,7 @@ export default function Navbar() {
             </ul>
           </div>
         </div>
-        <div className="offcanvas__nav__option">
+        <div className="offcanvas-nav-option">
           <a href="#" className="search-switch">
             <Image
               src="/img/navbar-template/icon/search_w.png"
@@ -68,7 +65,7 @@ export default function Navbar() {
           <div className="quantity">共 1 件商品</div>
         </div>
         <div id="mobile-menu-wrap" />
-        <div className="offcanvas__text">
+        <div className="offcanvas-text">
           <p>現在加入菲特友，開啟專屬您的運動計畫!</p>
         </div>
       </div>
@@ -176,8 +173,14 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-          <div className="canvas-open">
-            <i className="fa fa-bars" />
+          <div
+            className="canvas-open"
+            onClick={openCanvasHandler}
+            onKeyPress={() => {}}
+            role="button"
+            tabIndex="0"
+          >
+            <MdOutlineSort />
           </div>
         </div>
       </header>
