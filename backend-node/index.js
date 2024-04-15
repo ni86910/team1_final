@@ -104,12 +104,7 @@ app.use('/', logoutRouter)
 
 app.use('/member', registerRouter)
 
-/*
 
-app.use('/', jwtRouter)
-app.use('/', jwtdataRouter)
-app.use('/', logoutRouter)
-*/
 
 
 

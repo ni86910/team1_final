@@ -40,7 +40,7 @@ export default function RegisterPage() {
     mobile: '',
   })
   // 整個表單有沒有通過檢查
-  const [isPass, setIsPass] = useState(false)
+  const [setIsPass] = useState(false)
 
   // 驗證: 姓名
   const validateName = (m_name) => {
@@ -48,8 +48,10 @@ export default function RegisterPage() {
     return m_name.toString().length >= 2
   }
   // 驗證: 帳號
-  const validateEmail = (email) => {
-    return email.toString().indexOf('@') >= 0 // 粗略的判斷方式
+  const validateEmail = (m_account) => {
+    return /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      m_account
+    ) // 粗略的判斷方式
   }
 
   // 驗證: 手機
@@ -58,7 +60,7 @@ export default function RegisterPage() {
   }
 
   const fieldChanged = (e) => {
-    const newFormData = { ...formData, [e.target.name]: e.target.value }
+    const newFormData = { ...formData, [e.target.m_name]: e.target.value }
     setFormData(newFormData)
   }
 

@@ -28,8 +28,6 @@ router.post("/register", async (req, res) => {
       m_pwd: z.string().min(6, { message: "密碼長度要大於等於 6" }), // 新增密碼檢查
   });
 
-
-
   const parseResult = formSchema.safeParse(req.body);
   if (!parseResult.success) {
     output.issues = parseResult.error.issues;
@@ -42,8 +40,8 @@ router.post("/register", async (req, res) => {
 
   try {
     // 將使用者密碼轉換成雜湊值
-    const hashedPassword = await bcrypt.hash(req.body.m_pwd, 10);
-    req.body.m_pwd = hashedPassword;
+    const hashPassword = await bcrypt.hash(req.body.m_pwd, 10);
+    req.body.m_pwd = hashPassword;
 
 
   /*
@@ -71,6 +69,11 @@ router.post("/register", async (req, res) => {
   output.error = error.toString();
 }
 res.json(output);
+
+// 要處理 multipart/form-data
+router.post("/register/multi", upload.none(), async (req, res) => {
+  res.json(req.body);
+});
   /*
 {
     "fieldCount": 0,
