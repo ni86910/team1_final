@@ -10,6 +10,7 @@ import { useAuth } from '@/context/auth-context'
 import Router, { useRouter } from 'next/router'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
+import toast, { Toaster } from 'react-hot-toast'
 
 export default function ClassBook({
   popClassBook,
@@ -71,6 +72,7 @@ export default function ClassBook({
 
   return (
     <>
+      <Toaster position="top-center" />
       <div
         className={`${style['overlay']} ${
           style[popClassBook ? 'show-overlay' : '']

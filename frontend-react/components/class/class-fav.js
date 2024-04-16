@@ -5,12 +5,16 @@ import { useAuth } from '@/context/auth-context'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import Router, { useRouter } from 'next/router'
+import toast, { Toaster } from 'react-hot-toast'
 
 import React, { useEffect, useState } from 'react'
 
 function ClassFav({ favInfo, setToggleBtn, toggleBtn }) {
   const router = useRouter()
   const { auth } = useAuth()
+  // hot toast 收藏訊息
+  const addFavToast = () => toast.success('加到收藏')
+  const removeFavToast = () => toast.success('移除收藏')
 
   // 尚未登入
   const notMember = () => {
@@ -47,6 +51,7 @@ function ClassFav({ favInfo, setToggleBtn, toggleBtn }) {
         .then((r) => r.json())
         .then((data) => {
           console.log('刪除結果', data)
+          removeFavToast()
           setToggleBtn(!toggleBtn)
         })
     } catch (e) {
@@ -70,6 +75,7 @@ function ClassFav({ favInfo, setToggleBtn, toggleBtn }) {
       })
         .then((r) => r.json())
         .then((data) => {
+          addFavToast()
           console.log('新增結果', data)
           setToggleBtn(!toggleBtn)
         })
