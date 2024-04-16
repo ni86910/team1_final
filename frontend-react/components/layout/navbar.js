@@ -18,7 +18,7 @@ import { useRouter } from 'next/router'
 export default function Navbar() {
   const router = useRouter()
   const [offcanvas, setOffcanvas] = useState('')
-  const { auth } = useAuth()
+  const { auth, logout } = useAuth()
 
   const openCanvasHandler = () => {
     offcanvas == 'active' ? setOffcanvas('') : setOffcanvas('active')
@@ -74,7 +74,15 @@ export default function Navbar() {
               >
                 我的訂單
               </li>
-              <li>登出</li>
+              <li
+                role="presentation"
+                onClick={() => {
+                  logout()
+                  alert('你已成功登出')
+                }}
+              >
+                登出
+              </li>
             </ul>
           </div>
         </div>
@@ -181,7 +189,19 @@ export default function Navbar() {
                           >
                             訂單紀錄
                           </li>
-                          {!auth.member_id ? '' : <li>登出</li>}
+                          {!auth.member_id ? (
+                            ''
+                          ) : (
+                            <li
+                              role="presentation"
+                              onClick={() => {
+                                logout()
+                                alert('你已成功登出')
+                              }}
+                            >
+                              登出
+                            </li>
+                          )}
                         </ul>
                       </>
                     )}
