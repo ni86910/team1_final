@@ -11,8 +11,11 @@ import {
 import { IoIosArrowDown } from 'react-icons/io'
 import { MdOutlineSort } from 'react-icons/md'
 import { TiArrowSortedDown } from 'react-icons/ti'
+import { useAuth } from '@/context/auth-context'
+import { useRouter } from 'next/router'
 
 export default function Navbar() {
+  const router = useRouter()
   const [offcanvas, setOffcanvas] = useState('')
 
   const openCanvasHandler = () => {
@@ -22,21 +25,53 @@ export default function Navbar() {
   return (
     <>
       {/* Offcanvas Menu Begin */}
-      <div className={`offcanvas-menu-overlay ${offcanvas}`} />
+      <div
+        className={`offcanvas-menu-overlay ${offcanvas}`}
+        role="presentation"
+        onClick={openCanvasHandler}
+      />
       <div className={`offcanvas-menu-wrapper ${offcanvas}`}>
         <div className="offcanvas-option">
           <div className="offcanvas-links">
-            <Link href="#">註冊</Link>
-            <Link href="#">常見問題</Link>
+            <Link href="/member/register" onClick={openCanvasHandler}>
+              註冊
+            </Link>
+            <Link href="/quest" onClick={openCanvasHandler}>
+              常見問題
+            </Link>
           </div>
           <div className="offcanvas-top-hover">
             <span>
               會員專區 <TiArrowSortedDown />
             </span>
             <ul>
-              <li>會員資料</li>
-              <li>預約課程一覽</li>
-              <li>歷史訂單</li>
+              <li
+                role="presentation"
+                onClick={() => {
+                  openCanvasHandler()
+                  router.push('/member/profile')
+                }}
+              >
+                會員資料
+              </li>
+              <li
+                role="presentation"
+                onClick={() => {
+                  openCanvasHandler()
+                  router.push('/member/course-records')
+                }}
+              >
+                課程紀錄
+              </li>
+              <li
+                role="presentation"
+                onClick={() => {
+                  openCanvasHandler()
+                  router.push('/member/order')
+                }}
+              >
+                我的訂單
+              </li>
               <li>登出</li>
             </ul>
           </div>
@@ -97,12 +132,32 @@ export default function Navbar() {
                     </Link>
                   </div>
                   <div className="header-top-hover">
-                    <span style={{ fontSize: 14 }}>
+                    <span
+                      style={{ fontSize: 14 }}
+                      role="presentation"
+                      onClick={() => {
+                        router.push('/member/member-center')
+                      }}
+                    >
                       會員專區 <i className="arrow_carrot-down" />
                     </span>
                     <ul>
-                      <li>會員資料</li>
-                      <li>訂單紀錄</li>
+                      <li
+                        role="presentation"
+                        onClick={() => {
+                          router.push('/member/profile')
+                        }}
+                      >
+                        會員資料
+                      </li>
+                      <li
+                        role="presentation"
+                        onClick={() => {
+                          router.push('/member/order')
+                        }}
+                      >
+                        訂單紀錄
+                      </li>
                       <li>登出</li>
                     </ul>
                   </div>
@@ -115,7 +170,7 @@ export default function Navbar() {
           <div className="row">
             <div className="col-lg-3 col-md-3">
               <div className="header_logo">
-                <Link href="#">
+                <Link href="/">
                   <Image
                     src="/public_img/FITS U_RESIZE.png"
                     alt=""
@@ -172,13 +227,13 @@ export default function Navbar() {
             </div>
             <div className="col-lg-2 col-md-2 d-flex justify-content-end">
               <div className="header-nav-option">
-                <Link href="#">
+                <Link href="/member/favorite">
                   <FaRegHeart />
                 </Link>
                 <Link href="/member/member-center">
                   <FaUser />
                 </Link>
-                <Link href="#">
+                <Link href="/cart">
                   <FaBasketShopping /> <span>1</span>
                 </Link>
               </div>

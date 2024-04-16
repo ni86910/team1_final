@@ -369,6 +369,7 @@ ol {
 	display: inline-block;
 	position: relative;
 	color: #ffffff;
+	cursor: pointer;
 }
 
 .header-top-hover:hover ul {
