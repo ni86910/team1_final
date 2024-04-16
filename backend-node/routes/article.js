@@ -128,7 +128,7 @@ router.put('/:article_id', authenticate, async (req, res, next) => {
   return res.json({ status: 'success', data: null })
 })
 
-router.delete('/:id', authenticate, async (req, res, next) => {
+router.delete('/:article_id', authenticate, async (req, res, next) => {
   const pid = getIdParam(req)
   const uid = req.user.id
 

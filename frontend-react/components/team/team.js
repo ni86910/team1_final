@@ -43,6 +43,19 @@ export default function Team() {
     return selectedTeam === '全部總類' || item.teacher_type === selectedTeam // 根据选择的区域进行过滤
   })
 
+  //文章分段
+  // const text2jsx = (text) => {
+  //   return text.split('\n\n').map((v, i) => (
+  //     <div className="team-section" key={i}>
+  //       {v.split('\n').map((v2, i2) => (
+  //         <div className="team-p" key={`${i}-${i2}`}>
+  //           {v2}
+  //         </div>
+  //       ))}
+  //     </div>
+  //   ))
+  // }
+
   return (
     <>
       {/* About Section Begin */}
@@ -100,7 +113,7 @@ export default function Team() {
                 <div className="col-lg-3 col-md-6 col-sm-6" key={i}>
                   <div className="team__item">
                     <Image
-                      src="/img/team/team-2.jpg"
+                      src={`/img/team/${v.teacher_image}`}
                       alt=""
                       width={500}
                       height={350}
@@ -135,12 +148,14 @@ export default function Team() {
                       <div className="modal-body">
                         {/* Add modal body content here */}
                         <Image
-                          src="/img/team/team-2.jpg"
+                          src={`/img/team/${v.teacher_image}`}
                           alt=""
                           width={250}
                           height={300}
                         />
-                        <p>{v.teacher_type}</p>
+                        <div>{v.teacher_type}</div>
+                        <br />
+                        <div>{v.teacher_describe}</div>
                       </div>
                     </div>
                   </div>
