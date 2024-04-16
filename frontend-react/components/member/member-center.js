@@ -18,9 +18,11 @@ import { BsBookmarkHeartFill } from 'react-icons/bs'
 import { AiFillSchedule } from 'react-icons/ai'
 import { FaSackDollar, FaAddressCard } from 'react-icons/fa6'
 import { MdChangeCircle } from 'react-icons/md'
+import Router, { useRouter } from 'next/router'
 
 export default function MemberCenterPage() {
-  const { logout } = useAuth() // 登出
+  const router = useRouter()
+  const { auth, logout } = useAuth() // 登出
 
   const [profileImage, setProfileImage] = useState(
     '/img/member/default-self.jpg'

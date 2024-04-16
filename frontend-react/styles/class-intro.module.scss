@@ -165,6 +165,10 @@ $white: #ffffff;
           text-align: center;
           border-radius: 50%;
           cursor: pointer;
+          
+          &:hover {
+            font-size: x-large;
+          }
         }
       }
     }
