@@ -3,7 +3,7 @@
 .vscode
 # 圖檔
 /public/img
-
+settings.json
 # dependencies
 /node_modules
 /.pnp
