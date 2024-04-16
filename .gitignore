@@ -4,3 +4,4 @@ package-lock.json
 
 frontend-react/public/img
 .vscode/settings.json
+frontend-react/.vscode/settings.json
