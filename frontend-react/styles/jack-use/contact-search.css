@@ -1,0 +1,15 @@
+
+select {
+  padding: 8px 20px; /* 上下間距和左右間距 */
+  border: 1px solid #E6E6E6; /* 邊框顏色 */
+  background-color: #ffffff; /* 背景顏色 */
+  color: black; /* 文字顏色 */
+  cursor: pointer; /* 滑鼠指針形狀 */
+  appearance: none; /* 移除原生樣式 */
+  -webkit-appearance: none; /* 移除 Safari 原生樣式 */
+  -moz-appearance: none; /* 移除 Firefox 原生樣式 */
+}
+select option {
+  padding: 8px 20px; /* 上下間距和左右間距 */
+  font-size: 14px; /* 字體大小 */
+}

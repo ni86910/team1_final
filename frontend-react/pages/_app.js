@@ -3,6 +3,9 @@ import '@/styles/global.scss'
 import '@/styles/style.css'
 import '@/styles/my-style.css'
 import DefaultLayout from '@/components/layout/default-layout'
+// import '@/styles/jack-use/place-search.css'
+import '@/styles/jack-use/carousel.css'
+import '@/styles/jack-use/accordion.css'
 import { AuthContextProvider } from '@/context/auth-context'
 
 export default function MyApp({ Component, pageProps }) {

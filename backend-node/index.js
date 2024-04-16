@@ -13,6 +13,10 @@ import bcrypt from "bcryptjs";
 // import wsServer from "./routes/ws-chat.js";
 // import wsServer from "./routes/ws-draw.js";
 import jwt from "jsonwebtoken";
+import gymRouter from './routes/gym.js'
+import articleRouter from './routes/article.js'
+import teamRouter from './routes/team.js'
+import contactRouter from './routes/contact.js'
 import classRouter from './routes/class.js'
 import productRouter from './routes/product.js'
 import profileRouter from './routes/profile.js'
@@ -91,6 +95,9 @@ app.use((req, res, next) => {
 
 // 路由 (routes) 設定
 
+app.use('/gym',gymRouter)
+
+app.use('/article',articleRouter)
 
 app.use('/class',classRouter)
 
@@ -157,7 +164,9 @@ app.get("/jwt-data", (req, res) => {
 
 
 
-// app.use('/gym',gymRouter)
+app.use('/team',teamRouter)
+
+app.use('/contact',contactRouter)
 
 // *** 路由放在此段之前 ***
 // 設定靜態內容的資料夾

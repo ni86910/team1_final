@@ -1,0 +1,55 @@
+.site-btn {
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  /* cursor: pointer; */
+  transition: background-color 0.5s;
+  border-radius: 50px;
+  margin: 0px 10px;
+  background-color: #000000;
+}
+
+.site-btn:hover {
+  color: #000000;
+  background-color: #EB6234;
+}
+
+.btn {
+  color: #fff;
+  background-color: #000000;
+  border-radius: 50%;
+  border: none;
+  width: 40px;
+  height: 40px;
+}
+.btn:hover{
+  color: #000000;
+  background-color: #EB6234;
+}
+
+.accordion-btn{
+  color: #000000;
+  background-color: #E6E6E6;
+  border-radius: 50px;
+  border: none;
+}
+
+.select {
+  padding: 8px 20px; /* 上下間距和左右間距 */
+  border-radius: 50px; /* 圓角 */
+  background-color: black; /* 背景顏色 */
+  text-align: center;
+  color: white; /* 文字顏色 */
+  cursor: pointer; /* 滑鼠指針形狀 */
+  appearance: none; /* 移除原生樣式 */
+  -webkit-appearance: none; /* 移除 Safari 原生樣式 */
+  -moz-appearance: none; /* 移除 Firefox 原生樣式 */
+}
+
+
+/* 選項樣式 */
+.select option {
+  padding: 8px 20px; /* 上下間距和左右間距 */
+  text-align: left;
+  font-size: 14px; /* 字體大小 */
+}

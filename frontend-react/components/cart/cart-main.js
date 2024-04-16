@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import style from '@/styles/cart-main.module.scss'
 import Link from 'next/link'
 import { FaRegHeart } from 'react-icons/fa6'
@@ -6,10 +6,12 @@ import { RxPlus, RxMinus, RxCross2 } from 'react-icons/rx'
 import { IoReturnDownBackOutline } from 'react-icons/io5'
 import { MdShoppingCartCheckout } from 'react-icons/md'
 import { IMG_PATH } from '@/configs'
+import { ProductRow } from './product-row'
 
 export default function CartMain() {
-  const [isToggled, setIsToggled] = useState(false)
+  const [count, setCount] = useState(0)
 
+  const [isToggled, setIsToggled] = useState(false)
   const handleToggleSwitchChange = () => {
     setIsToggled(!isToggled)
   }
@@ -32,157 +34,18 @@ export default function CartMain() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className={style['product-cart-item']}>
-                        <div className={style['product-cart-item-pic']}>
-                          <img
-                            src="img/products/product_drink_01_00_00.jpg"
-                            alt=""
-                          />
-                        </div>
-                        <div className={style['product-cart-item-text']}>
-                          <h6>【現貨速出】 RIOT 機能吸凍 (柳橙) 能量飲</h6>
-                          <span>Orange</span>
-                          <h5>NT$ 90</h5>
-                        </div>
-                      </td>
-                      <td className={style['quantity-item']}>
-                        <div className={style['quantity']}>
-                          <span className={style['qt-minus']}>
-                            <RxMinus />
-                          </span>
-                          <div>
-                            <input
-                              className={style['qt-input']}
-                              type="text"
-                              defaultValue={1}
-                            />
-                          </div>
-                          <span className={style['qt-plus']}>
-                            <RxPlus />
-                          </span>
-                        </div>
-                      </td>
-                      <td className={style['cart-full-price']}>NT$ 450</td>
-                      <td className={style['cart-close']}>
-                        <div className={style['cross-icon']}>
-                          <RxCross2 size={15} />
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={style['product-cart-item']}>
-                        <div className={style['product-cart-item-pic']}>
-                          <img
-                            src="img/products/product_gym_14_00_02.webp"
-                            alt=""
-                          />
-                        </div>
-                        <div className={style['product-cart-item-text']}>
-                          <h6>5kg 訓練彈力帶</h6>
-                          <span>藍</span>
-                          <h5>NT$ 99</h5>
-                        </div>
-                      </td>
-                      <td className={style['quantity-item']}>
-                        <div className={style['quantity']}>
-                          <span className={style['qt-minus']}>
-                            <RxMinus />
-                          </span>
-                          <div className={style['pro-qty-2']}>
-                            <input
-                              className={style['qt-input']}
-                              type="text"
-                              defaultValue={1}
-                            />
-                          </div>
-                          <span className={style['qt-plus']}>
-                            <RxPlus />
-                          </span>
-                        </div>
-                      </td>
-                      <td className={style['cart-full-price']}>NT$ 99</td>
-                      <td className={style['cart-close']}>
-                        <div className={style['cross-icon']}>
-                          <RxCross2 size={15} />
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={style['product-cart-item']}>
-                        <div className={style['product-cart-item-pic']}>
-                          <img
-                            src="img/products/product_apparel_18_00_00.jpg"
-                            alt=""
-                          />
-                        </div>
-                        <div className={style['product-cart-item-text']}>
-                          <h6>男款中階透氣短袖上衣</h6>
-                          <span>綠/ L</span>
-                          <h5>NT$ 399</h5>
-                        </div>
-                      </td>
-                      <td className={style['quantity-item']}>
-                        <div className={style['quantity']}>
-                          <span className={style['qt-minus']}>
-                            <RxMinus />
-                          </span>
-                          <div className={style['pro-qty-2']}>
-                            <input
-                              className={style['qt-input']}
-                              type="text"
-                              defaultValue={1}
-                            />
-                          </div>
-                          <span className={style['qt-plus']}>
-                            <RxPlus />
-                          </span>
-                        </div>
-                      </td>
-                      <td className={style['cart-full-price']}>NT$ 399</td>
-                      <td className={style['cart-close']}>
-                        <div className={style['cross-icon']}>
-                          <RxCross2 size={15} />
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={style['product-cart-item']}>
-                        <div className={style['product-cart-item-pic']}>
-                          <img
-                            src="img/products/product_acc_02_00_03.webp"
-                            alt=""
-                          />
-                        </div>
-                        <div className={style['product-cart-item-text']}>
-                          <h6>中階舒適止滑重訓手套</h6>
-                          <h5>NT$ 399</h5>
-                        </div>
-                      </td>
-                      <td className={style['quantity-item']}>
-                        <div className={style['quantity']}>
-                          <span className={style['qt-minus']}>
-                            <RxMinus />
-                          </span>
-                          <div className={style['pro-qty-2']}>
-                            <input
-                              className={style['qt-input']}
-                              type="text"
-                              defaultValue={1}
-                            />
-                          </div>
-                          <span className={style['qt-plus']}>
-                            <RxPlus />
-                          </span>
-                        </div>
-                      </td>
-                      <td className={style['cart-full-price']}>NT$ 399</td>
-                      <td className={style['cart-close']}>
-                        <div className={style['cross-icon']}>
-                          <RxCross2 size={15} />
-                        </div>
-                      </td>
-                    </tr>
+                    <ProductRow
+                      imgSrc="img/products/product_drink_01_00_00.jpg"
+                      productName="【現貨速出】 RIOT 機能吸凍 (柳橙) 能量飲"
+                      color="Orange"
+                      price={90}
+                    />
+                    <ProductRow
+                      imgSrc="img/products/product_gym_14_00_02.webp"
+                      productName="5kg 訓練彈力帶"
+                      color="藍"
+                      price={99}
+                    />
                   </tbody>
                 </table>
               </div>

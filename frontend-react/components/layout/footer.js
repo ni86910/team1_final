@@ -1,5 +1,12 @@
 import React from 'react'
 import Image from 'next/image'
+import {
+  FaClock,
+  FaPhone,
+  FaEnvelope,
+  FaLine,
+  FaFacebookSquare,
+} from 'react-icons/fa'
 
 export default function Footer() {
   return (
@@ -7,8 +14,8 @@ export default function Footer() {
       <div className="container">
         <div className="row">
           <div className="col-lg-3 col-md-6 col-sm-6">
-            <div className="footer__about">
-              <div className="footer__logo">
+            <div className="footer-about">
+              <div className="footer-logo">
                 <a href="#">
                   <img src="/img/navbar-template/FITS U_RESIZE.png" alt="" />
                 </a>
@@ -19,8 +26,34 @@ export default function Footer() {
               </a>
             </div>
           </div>
-          <div className="col-lg-2 col-md-3 col-sm-6">
-            <div className="footer__widget">
+          <div className="col-lg-3 col-md-6 col-sm-6">
+            <div className="footer-widget">
+              <ul>
+                <li>
+                  <FaClock />
+                  <span style={{ marginLeft: '8px' }}>AM 8:00 ~ PM 17:00</span>
+                </li>
+                <li>
+                  <FaPhone />
+                  <span style={{ marginLeft: '8px' }}>07-789-987</span>
+                </li>
+                <li>
+                  <FaEnvelope />
+                  <span style={{ marginLeft: '8px' }}>FitsU_789@gmail.com</span>
+                </li>
+                <li>
+                  <FaLine />
+                  <span style={{ marginLeft: '8px' }}>@FitsU_789</span>
+                </li>
+                <li>
+                  <FaFacebookSquare />
+                  <span style={{ marginLeft: '6px' }}>Fits U 健康平台</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="col-lg-2 col-md-4 col-sm-6">
+            <div className="footer-widget">
               <h6>關於我們</h6>
               <ul>
                 <li>
@@ -35,8 +68,8 @@ export default function Footer() {
               </ul>
             </div>
           </div>
-          <div className="col-lg-2 col-md-3 col-sm-6">
-            <div className="footer__widget">
+          <div className="col-lg-2 col-md-4 col-sm-6">
+            <div className="footer-widget">
               <h6>服務項目</h6>
               <ul>
                 <li>
@@ -51,8 +84,8 @@ export default function Footer() {
               </ul>
             </div>
           </div>
-          <div className="col-lg-2 col-md-3 col-sm-6">
-            <div className="footer__widget">
+          <div className="col-lg-2 col-md-4 col-sm-6">
+            <div className="footer-widget">
               <h6>條款與聲明</h6>
               <ul>
                 <li>
@@ -63,28 +96,6 @@ export default function Footer() {
                 </li>
                 <li>
                   <a href="#">退款政策</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="col-lg-2 col-md-3 col-sm-6">
-            <div className="footer__widget">
-              <h6> </h6>
-              <ul>
-                <li>
-                  <i className="fas fa-clock"></i> AM 8:00 ~ PM 17:00
-                </li>
-                <li>
-                  <i className="fas fa-phone"></i> 07-789-987
-                </li>
-                <li>
-                  <i className="fas fa-envelope"></i> FitsU_789@gmail.com
-                </li>
-                <li>
-                  <i className="fab fa-line"></i> @FitsU_789
-                </li>
-                <li>
-                  <i className="fab fa-facebook-square"></i> Fits U 健康平台
                 </li>
               </ul>
             </div>
