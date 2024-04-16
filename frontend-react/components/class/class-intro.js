@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { API_SERVER } from '../common/config'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { FaPlus } from 'react-icons/fa6'
 
 export default function ClassIntro({ setContainerHeight, tab }) {
   const router = useRouter()
@@ -64,19 +65,84 @@ export default function ClassIntro({ setContainerHeight, tab }) {
       >
         <div className={style['category-nav']}>
           <div className={style['categories']}>
-            <Link href="?class_type=靜態課程" scroll={false}>
+            <Link
+              href="?class_type=靜態課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: '靜態課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               靜態課程
             </Link>
-            <Link href="?class_type=飛輪課程" scroll={false}>
+            <Link
+              href="?class_type=飛輪課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: '飛輪課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               飛輪課程
             </Link>
-            <Link href="?class_type=心肺訓練課程" scroll={false}>
+            <Link
+              href="?class_type=心肺訓練課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: '心肺訓練課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               心肺訓練課程
             </Link>
-            <Link href="?class_type=舞蹈課程" scroll={false}>
+            <Link
+              href="?class_type=舞蹈課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: '舞蹈課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               舞蹈課程
             </Link>
-            <Link href="?class_type=radical課程" scroll={false}>
+            <Link
+              href="?class_type=radical課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: 'radical課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               radical課程
             </Link>
           </div>
@@ -119,7 +185,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                         }}
                         role="presentation"
                       >
-                        +
+                        <FaPlus />
                       </div>
                       {/* <Link href={`/class/${v.class_id}`}>aaa</Link> */}
                     </div>

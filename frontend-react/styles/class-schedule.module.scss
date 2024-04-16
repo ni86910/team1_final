@@ -80,16 +80,15 @@
         .filter-city,
         .filter-store {
           width: 400px;
-          // max-width: 400px;
           min-width: 200px;
           height: 60px;
+          padding: 0 40px;
+          margin: 10px 20px;
           background-color: #2e2e2e;
           border-radius: 100px;
           color: white;
           line-height: 60px;
           font-weight: 700;
-          padding: 0 40px;
-          margin: 10px 20px;
           display: flex;
           justify-content: space-between;
           align-items: center;
