@@ -17,7 +17,7 @@ import { useRouter } from 'next/router'
 export default function Navbar() {
   const router = useRouter()
   const [offcanvas, setOffcanvas] = useState('')
-  // const { auth } = useAuth()
+  const { auth } = useAuth()
 
   const openCanvasHandler = () => {
     offcanvas == 'active' ? setOffcanvas('') : setOffcanvas('active')
@@ -119,48 +119,71 @@ export default function Navbar() {
               <div className="col-lg-6 col-md-5">
                 <div className="header-top-right">
                   <div className="header-top-links">
-                    <Link
-                      href="/member/login"
-                      style={{ color: '#EB6234', fontSize: 14 }}
-                    >
-                      登入會員
-                    </Link>
-                    <span style={{ color: '#cccccc', fontSize: 14 }}>
-                      還不是會員?
-                    </span>{' '}
-                    <Link href="/member/register" style={{ fontSize: 14 }}>
-                      註冊
-                    </Link>
+                    {/* 登入與否 顯示不一樣的 */}
+                    {!auth.member_id ? (
+                      <>
+                        <Link
+                          href="/member/login"
+                          style={{ color: '#EB6234', fontSize: 14 }}
+                        >
+                          登入會員
+                        </Link>
+                        <span style={{ color: '#cccccc', fontSize: 14 }}>
+                          還不是會員?
+                        </span>{' '}
+                        <Link href="/member/register" style={{ fontSize: 14 }}>
+                          註冊
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <span
+                          style={{
+                            color: '#cccccc',
+                            fontSize: 14,
+                            fontWeight: 600,
+                          }}
+                        >
+                          Hi~ {auth.m_name}
+                        </span>
+                      </>
+                    )}{' '}
                   </div>
                   <div className="header-top-hover">
-                    <span
-                      style={{ fontSize: 14 }}
-                      role="presentation"
-                      onClick={() => {
-                        router.push('/member/member-center')
-                      }}
-                    >
-                      會員專區 <i className="arrow_carrot-down" />
-                    </span>
-                    <ul>
-                      <li
-                        role="presentation"
-                        onClick={() => {
-                          router.push('/member/profile')
-                        }}
-                      >
-                        會員資料
-                      </li>
-                      <li
-                        role="presentation"
-                        onClick={() => {
-                          router.push('/member/order')
-                        }}
-                      >
-                        訂單紀錄
-                      </li>
-                      <li>登出</li>
-                    </ul>
+                    {!auth.member_id ? (
+                      <></>
+                    ) : (
+                      <>
+                        <span
+                          style={{ fontSize: 14 }}
+                          role="presentation"
+                          onClick={() => {
+                            router.push('/member/member-center')
+                          }}
+                        >
+                          會員專區 <i className="arrow_carrot-down" />
+                        </span>
+                        <ul>
+                          <li
+                            role="presentation"
+                            onClick={() => {
+                              router.push('/member/profile')
+                            }}
+                          >
+                            會員資料
+                          </li>
+                          <li
+                            role="presentation"
+                            onClick={() => {
+                              router.push('/member/order')
+                            }}
+                          >
+                            訂單紀錄
+                          </li>
+                          {!auth.member_id ? '' : <li>登出</li>}
+                        </ul>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
