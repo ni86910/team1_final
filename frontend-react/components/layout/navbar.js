@@ -17,6 +17,7 @@ import { useRouter } from 'next/router'
 export default function Navbar() {
   const router = useRouter()
   const [offcanvas, setOffcanvas] = useState('')
+  // const { auth } = useAuth()
 
   const openCanvasHandler = () => {
     offcanvas == 'active' ? setOffcanvas('') : setOffcanvas('active')
