@@ -7,6 +7,7 @@ import {
   FaBasketShopping,
   FaRegClock,
   FaStore,
+  FaBook,
 } from 'react-icons/fa6'
 import { IoIosArrowDown } from 'react-icons/io'
 import { MdOutlineSort } from 'react-icons/md'
@@ -209,7 +210,7 @@ export default function Navbar() {
                 <ul>
                   <li>
                     <Link href="/class">
-                      課程預約 <FaRegClock />
+                      課程專區 <FaBook />
                     </Link>
                   </li>
                   <li className="active">
