@@ -169,7 +169,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
               </div>
             </div>
             <Link
-              href="?date=2024-04-30&gym_name=賽特體適能"
+              href="?date=2024-04-30&gym_name=健身工廠 台北信義"
               className={style['search']}
               scroll={false}
             >
