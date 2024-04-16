@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
+import Swal from 'sweetalert2'
 import style from '@/styles/login.module.scss'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -18,10 +19,22 @@ export default function LoginPage() {
     console.log({ m_account, m_pwd })
     login(m_account, m_pwd).then((result) => {
       if (result) {
-        alert('登入成功')
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '登入成功',
+          showConfirmButton: false,
+          timer: 2000,
+        })
         router.push('/member/profile')
       } else {
-        alert('登入失敗')
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: '登入失敗',
+          showConfirmButton: false,
+          timer: 2000,
+        })
       }
     })
   }

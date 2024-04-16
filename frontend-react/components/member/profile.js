@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { API_SERVER } from '../common/config'
 import { uploadImage } from '@/utils/uploadImage'
-import { useAuth } from '@/context/auth-context' // 登出
+import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
+import Swal from 'sweetalert2'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -49,6 +50,7 @@ export default function ProfilePage({ member_id }) {
     }
   }, [auth.member_id])
 
+  /*
   const sendData = async (event) => {
     event.preventDefault()
     try {
@@ -64,6 +66,7 @@ export default function ProfilePage({ member_id }) {
       console.error('發生錯誤:', error)
     }
   }
+*/
 
   const handleInputChange = (event) => {
     if (isEditing) {
@@ -183,12 +186,24 @@ export default function ProfilePage({ member_id }) {
 
     console.log(result)
     if (result.success) {
-      alert('資料修改成功')
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '資料新增成功',
+        showConfirmButton: false,
+        timer: 2000,
+      })
       console.log(document.referrer)
       setIsEditing(false)
       router.push('/member/profile')
     } else {
-      alert('資料沒有修改')
+      Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: '資料沒有修改',
+        showConfirmButton: false,
+        timer: 2000,
+      })
     }
   }
 
