@@ -6,6 +6,10 @@ import { FaTimes } from 'react-icons/fa'
 import Link from 'next/link'
 import { API_SERVER } from '@/configs'
 import ClassFav from './class-fav'
+import { useAuth } from '@/context/auth-context'
+import Router, { useRouter } from 'next/router'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 export default function ClassBook({
   popClassBook,
@@ -13,6 +17,10 @@ export default function ClassBook({
   bookInfo,
   participantData,
 }) {
+  const router = useRouter()
+  //取得已登入會員 的資訊 沒登入的話auth.member_id會是0
+  const { auth } = useAuth()
+
   // 處理預約資料
   bookInfo.year = dayjs(bookInfo.start_time).format('YYYY年M月D號') //年
   bookInfo.day = dayjs(bookInfo.start_time).format('D') //日
@@ -32,9 +40,11 @@ export default function ClassBook({
   // 抓收藏資料
   useEffect(() => {
     // 取得會員id
-    const member_data = JSON.parse(localStorage.getItem('Fit_U-auth'))
+    // const member_data = JSON.parse(localStorage.getItem('Fit_U-auth'))
+    const member_id = auth.member_id
+
     const class_schedule_id = bookInfo.class_schedule_id
-    const url = `${API_SERVER}/class/class_fav?member_id=${member_data.member_id}&class_schedule_id=${class_schedule_id}`
+    const url = `${API_SERVER}/class/class_fav?member_id=${member_id}&class_schedule_id=${class_schedule_id}`
 
     try {
       fetch(url, {
@@ -158,7 +168,32 @@ export default function ClassBook({
               </>
             )}
           </div>
-          <div className={style['button']}>立即預約</div>
+          <Link
+            className={style['button']}
+            // href={!auth.member_id ? '/member/login' : '#'}
+            href={'#'}
+            onClick={(e) => {
+              e.preventDefault()
+              !auth.member_id
+                ? Swal.fire({
+                    title: '您尚未登入',
+                    text: '無法預約課程',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#EB6234',
+                    cancelButtonColor: 'black',
+                    confirmButtonText: '前往登入',
+                    cancelButtonText: '繼續瀏覽',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      router.push('/member/login')
+                    }
+                  })
+                : console.log('收藏課程')
+            }}
+          >
+            立即預約
+          </Link>
         </div>
       </div>
     </>
