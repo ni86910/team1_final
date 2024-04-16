@@ -1,5 +1,6 @@
 import express from "express";
 import db from "./../utils/mysql2-connect.js";
+import dayjs from "dayjs";
 
 const router = express.Router();
 
@@ -43,13 +44,14 @@ router.get("/profile/:member_id", async (req, res) => {
   res.render("member/profile", r);
 });
 
-router.put("/profile/:member_id", async (req, res) => {
+router.put("/:member_id", async (req, res) => {
   const output = {
     success: false,
     postData: req.body,
     error: "",
     code: 0,
   };
+  console.log(req.body);
 
   let member_id = +req.params.member_id || 0;
 

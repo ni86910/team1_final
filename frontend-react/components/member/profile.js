@@ -135,21 +135,21 @@ export default function ProfilePage({ member_id }) {
     let tmpIsPass = true
     let tmpErrorMsg = { ...errorMsg }
     // 欄位資料驗證
-    if (!validateName(formData.m_name)) {
+    if (!validateName(profile.m_name)) {
       tmpErrorMsg = { ...tmpErrorMsg, m_name: '請輸入正確的姓名' }
       tmpIsPass = false
     } else {
       tmpErrorMsg = { ...tmpErrorMsg, m_name: '' }
     }
 
-    if (!validateEmail(formData.m_account)) {
+    if (!validateEmail(profile.m_account)) {
       tmpErrorMsg = { ...tmpErrorMsg, m_account: '請輸入正確的 Email' }
       tmpIsPass = false
     } else {
       tmpErrorMsg = { ...tmpErrorMsg, m_account: '' }
     }
 
-    if (!validateMobile(formData.mobile)) {
+    if (!validateMobile(profile.mobile)) {
       tmpErrorMsg = { ...tmpErrorMsg, mobile: '請輸入正確的手機號碼' }
       tmpIsPass = false
     } else {
@@ -166,12 +166,12 @@ export default function ProfilePage({ member_id }) {
       return // 沒通過檢查的話, 就返回
     }
 
-    const dataModified = { ...formData }
+    const dataModified = { ...profile }
     // 沒有要更動的欄位去掉
     delete dataModified.member_id
     delete dataModified.created_at
 
-    const r = await fetch(`${API_SERVER}/profile/${member_id}`, {
+    const r = await fetch(`${API_SERVER}/profile/${profile.member_id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -185,7 +185,8 @@ export default function ProfilePage({ member_id }) {
     if (result.success) {
       alert('資料修改成功')
       console.log(document.referrer)
-      router.back()
+      setIsEditing(false)
+      router.push('/member/profile')
     } else {
       alert('資料沒有修改')
     }
@@ -264,6 +265,7 @@ export default function ProfilePage({ member_id }) {
           <Form
             className={style['profile-row']}
             encType="application/x-www-form-urlencoded"
+            onSubmit={onSubmit}
           >
             <Row className={style['profile-first-row']}>
               <Col className={style['profile-first-col']}>
@@ -276,8 +278,11 @@ export default function ProfilePage({ member_id }) {
                     className={style['profile-img']}
                   />
                   <button
+                    type="button"
                     className={style['upload-text']}
-                    onClick={() => document.getElementById('file0').click()}
+                    onClick={(e) => {
+                      document.getElementById('file0').click()
+                    }}
                     disabled={!isEditing} // 根據編輯狀態設定按鈕是否可用
                     style={{
                       color: isEditing ? '#EB6234' : 'gray',
@@ -454,13 +459,7 @@ export default function ProfilePage({ member_id }) {
               <Row className={style['row-btn']}>
                 <Col xs="auto">
                   {isEditing ? ( // 根據編輯狀態顯示不同的按鈕
-                    <Button
-                      type="submit"
-                      className={style['edit-btn']}
-                      onClick={(e) => {
-                        e.preventDefault()
-                      }}
-                    >
+                    <Button type="submit" className={style['edit-btn']}>
                       確認修改
                     </Button>
                   ) : (
