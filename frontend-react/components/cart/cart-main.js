@@ -9,8 +9,8 @@ import { IMG_PATH } from '@/configs'
 import { ProductRow } from './product-row'
 
 export default function CartMain() {
-  const [count, setCount] = useState(0)
 
+  // 控制點數折抵 toggle button
   const [isToggled, setIsToggled] = useState(false)
   const handleToggleSwitchChange = () => {
     setIsToggled(!isToggled)
