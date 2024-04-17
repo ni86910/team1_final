@@ -80,6 +80,12 @@
         max-width: 800px;
         width: 100%;
         margin-left: 20px;
+        .filter-container{
+          max-width:400px ;
+          min-width: 200px;
+          height: 60px;
+          margin-right: 20px;
+        }
         .select-city,
         .select-store {
           height: 60px;
