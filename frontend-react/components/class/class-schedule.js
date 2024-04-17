@@ -157,7 +157,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
   */
 
   console.log('後端抓到的資料:', scheduleData)
-console.log('gymList',gymList);
+  console.log('gymList', gymList)
   return (
     <ScrollSync>
       <section
@@ -219,20 +219,25 @@ console.log('gymList',gymList);
                   )}
                 </select>
               </div>
-              {/* <div className={style['filter-city']}>
-                <span>高雄市</span>
-                <FaCaretDown />
-              </div>
-              <div className={style['filter-store']}>
-                <span>高雄鳳山館</span>
-                <FaCaretDown />
-              </div> */}
             </div>
             <Link
-              // href={`?gym_name=${gymName}`}
               href={`?date=2024-05-07&gym_name=${gymName}`}
               className={style['search']}
               scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: {
+                      ...router.query,
+                      date: '2024-05-07',
+                      gym_name: gymName,
+                    },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
               // onClick={(e) => {
               //   if (!gymName || gymName === '0') {
               //     e.preventDefault()
@@ -243,7 +248,7 @@ console.log('gymList',gymList);
             </Link>
           </div>
         </div>
-        {!show ? (
+        {!show || !scheduleData.gotData ? (
           <></>
         ) : (
           <>
