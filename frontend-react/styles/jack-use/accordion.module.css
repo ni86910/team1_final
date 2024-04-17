@@ -1,6 +1,5 @@
 /* 手風琴容器的樣式 */
 .accordion-container {
-  border-radius: 5px; /* 圓角 */
   margin: 0px; /* 上下間距 */
   overflow: hidden; /* 隱藏超出部分 */
 }
@@ -31,11 +30,10 @@
     font-size: 1.2rem; /* 字體大小 */
     padding: 0; /* 無填充 */
     cursor: pointer; /* 鼠標變為手型 */
-    /*outline: none;  無焦點樣式 */
+    outline: none;  /*無焦點樣式 */
+    color: black;
 }
-.accordion-btn.active{
-  background: none;
-}
+
 
 /* 手風琴答案的樣式 */
 .answers {
