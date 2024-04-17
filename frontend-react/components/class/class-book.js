@@ -134,7 +134,7 @@ export default function ClassBook({
             <div className={style['teacher']}>
               <div className={style['avatar']}></div>
               <div className={style['text']}>
-                <span>{bookInfo.t_name}</span>
+                <span>{bookInfo.teacher_name}</span>
                 <p>教練</p>
               </div>
             </div>
@@ -148,7 +148,7 @@ export default function ClassBook({
               </div>
               <div className={style['text']}>
                 <span>{bookInfo.gym_name}</span>
-                <p>{bookInfo.gym_description}</p>
+                <p>{bookInfo.gym_address}</p>
               </div>
             </div>
           </div>

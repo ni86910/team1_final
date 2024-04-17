@@ -68,7 +68,7 @@ router.get("/schedule", async (req, res) => {
 
     // console.log(gymName);
 
-    const sql = `SELECT class_schedule_id, start_time, end_time,launch, bookable, max_participant, t_name, gym_name, gym_description, max_contain, class_name, class_img, class_fee, class_type
+    const sql = `SELECT class_schedule_id, start_time, end_time,launch, bookable, max_participant, teacher_name, gym_name, gym_address, max_contain, class_name, class_img, class_fee, class_type
   FROM \`class_schedule\`
   JOIN \`teacher\` ON class_schedule.teacher_id = teacher.teacher_id
   JOIN \`gym\` ON class_schedule.gym_id = gym.gym_id
