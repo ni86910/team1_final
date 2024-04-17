@@ -89,8 +89,10 @@
       width: fit-content;
       font-weight: 600;
       position: relative;
-      top:20px
-
+      top:20px;
+      @include pad {
+        font-size: 48px;
+      }
     }
     .class-name {
       text-align: left;
