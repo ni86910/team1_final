@@ -44,17 +44,17 @@ export default function Team() {
   })
 
   //文章分段
-  // const text2jsx = (text) => {
-  //   return text.split('\n\n').map((v, i) => (
-  //     <div className="team-section" key={i}>
-  //       {v.split('\n').map((v2, i2) => (
-  //         <div className="team-p" key={`${i}-${i2}`}>
-  //           {v2}
-  //         </div>
-  //       ))}
-  //     </div>
-  //   ))
-  // }
+  const text2jsx = (text) => {
+    return text.split('\n\n').map((v1, i1) => (
+      <div className="team-section" key={i1}>
+        {v1.split('\n').map((v2, i2) => (
+          <div className="team-p" key={`${i1}-${i2}`}>
+            {v2}
+          </div>
+        ))}
+      </div>
+    ))
+  }
 
   return (
     <>
@@ -155,7 +155,7 @@ export default function Team() {
                         />
                         <div>{v.teacher_type}</div>
                         <br />
-                        <div>{v.teacher_describe}</div>
+                        <div>{text2jsx(v.teacher_describe)}</div>
                       </div>
                     </div>
                   </div>
