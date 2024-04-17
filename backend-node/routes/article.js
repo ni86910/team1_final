@@ -1,7 +1,6 @@
 import express from "express";
 import db from "./../utils/mysql2-connect.js";
 import dayjs from "dayjs";
-import authenticate from "./../middlewares/authenticate.js"; // 用於驗證用戶身份
 
 const router = express.Router();
 
@@ -85,7 +84,7 @@ router.post("/add-fav", async (req, res) => {
     output.message = "會員ID或文章ID undefined 或者 不是數字";
     res.json(output);
   }
-  //把會員id跟文章id丟進回船傳
+  //把會員id跟文章id丟進回傳 '+'轉換為數字
   output.member_id = +member_id;
   output.article_id = +article_id;
 

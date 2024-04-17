@@ -21,9 +21,9 @@ export default function MyAccordion({ question, answer }) {
         onClick={handleHeaderClick}
       >
         {question}
-        <button className={style['accordion-btn']}>
+        <div className={style['accordion-btn']}>
           {show ? <FaAngleUp /> : <FaAngleDown />}
-        </button>
+        </div>
       </div>
       {show && <p className={style['answers']}>{answer}</p>}
     </div>

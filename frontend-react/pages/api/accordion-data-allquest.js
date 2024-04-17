@@ -1,4 +1,4 @@
-export const questions = [
+export const questions2 = [
   {
     id: 1,
     question: '請問商品折扣都是固定的嗎？',

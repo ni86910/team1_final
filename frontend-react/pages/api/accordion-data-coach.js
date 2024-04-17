@@ -1,4 +1,4 @@
-export const questions = [
+export const questions1 = [
   {
     id: 1,
     question: '第一次來運動，我不會用器材怎麼辦？',

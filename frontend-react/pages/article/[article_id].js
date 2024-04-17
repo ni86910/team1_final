@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { useAuth } from '@/context/auth-context'
 import { API_SERVER } from '@/configs/index'
 
-export default function ArticleDetail(popArticle) {
+export default function ArticleDetail() {
   const router = useRouter()
   const { auth } = useAuth()
 
@@ -150,7 +150,7 @@ export default function ArticleDetail(popArticle) {
     } catch (e) {
       console.log(e)
     }
-  }, [popArticle, toggleBtn])
+  }, [toggleBtn])
 
   return (
     <>
@@ -214,7 +214,6 @@ export default function ArticleDetail(popArticle) {
                 </div>
               </>
             ) : (
-              /* 在這裡進行 artInfo.message 的 map 迭代 */
               <div className="row">
                 <div className="mt-4 text-center">
                   <table className={styles['my-table']}>
@@ -225,6 +224,7 @@ export default function ArticleDetail(popArticle) {
                         <th scope="col">Message</th>
                       </tr>
                     </thead>
+                    {/* 在這裡進行 artInfo.message 的 map 迭代 */}
                     {artInfo.message.map((v, i) => (
                       <tbody key={i}>
                         <tr>
