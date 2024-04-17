@@ -19,9 +19,8 @@ const redText = {
 
 export default function RegisterPage() {
   const router = useRouter()
-  // 條款彈窗
-  const [showModal, setShowModal] = useState(false)
   // 會員條款
+  const [showModal, setShowModal] = useState(false)
   const [agreedToTerms, setAgreedToTerms] = useState(false)
 
   const [formData, setFormData] = useState({
@@ -40,7 +39,7 @@ export default function RegisterPage() {
     mobile: '',
   })
   // 整個表單有沒有通過檢查
-  const [setIsPass] = useState(false)
+  const [isPass, setIsPass] = useState(false)
 
   // 驗證: 姓名
   const validateName = (m_name) => {
@@ -60,7 +59,7 @@ export default function RegisterPage() {
   }
 
   const fieldChanged = (e) => {
-    const newFormData = { ...formData, [e.target.m_name]: e.target.value }
+    const newFormData = { ...formData, [e.target.name]: e.target.value }
     setFormData(newFormData)
   }
 

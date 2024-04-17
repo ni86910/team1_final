@@ -71,9 +71,11 @@ router.post("/register", async (req, res) => {
 res.json(output);
 
 // 要處理 multipart/form-data
+/*
 router.post("/register/multi", upload.none(), async (req, res) => {
   res.json(req.body);
-});
+});*/
+
   /*
 {
     "fieldCount": 0,
