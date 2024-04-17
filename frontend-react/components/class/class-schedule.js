@@ -49,6 +49,16 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
   // 記錄選中的場館
   const [gymName, setGymName] = useState('')
 
+  //第二層選單
+  // 紀錄 課程類別 class_type_schedule
+  const [classtype_schedule, setClasstype_schedule] = useState('')
+
+  // 紀錄 課程名稱 class_name
+  const [className, setClassName] = useState('')
+
+  // 紀錄 老師名稱 teacher_name
+  const [teacherName, setTeacherName] = useState('')
+
   // 取得section參照
   const sectionRef2 = useRef(null)
 
@@ -74,9 +84,12 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
   const getScheduleData = async (
     signal,
     date = router.query.date || dayjs().format('YYYY-MM-DD'),
-    gym_name = router.query.gym_name || undefined
+    gym_name = router.query.gym_name || ''
   ) => {
-    const url = `${API_SERVER}/class/schedule?date=${date}&gym_name=${gym_name}`
+    const class_type_schedule = router.query.class_type_schedule || ''
+    const class_name = router.query.class_name || ''
+    const teacher_name = router.query.teacher_name || ''
+    const url = `${API_SERVER}/class/schedule?date=${date}&gym_name=${gym_name}&class_type_schedule = ${class_type_schedule}&class_name=${class_name}&teacher_name=${teacher_name}`
 
     // 開始fetch
     try {
@@ -110,14 +123,21 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     return () => {
       controller.abort() // 取消未完成的 ajax
     }
-  }, [router.query, router.isReady])
+  }, [router.query, router.isReady, router])
 
-  // 抓到資料後 就顯示下方課表 並產出比對用的陣列
+  // 抓到資料後 就顯示下方課表
   useEffect(() => {
     if (scheduleData && scheduleData.gotData) {
       setShow(true)
     }
-  }, [scheduleData, router])
+  }, [
+    scheduleData,
+    router.isReady,
+    router,
+    classtype_schedule,
+    className,
+    teacherName,
+  ])
 
   // 抓 該城市中的所有場館
   useEffect(() => {
@@ -158,6 +178,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
 
   console.log('後端抓到的資料:', scheduleData)
   console.log('gymList', gymList)
+  console.log('router.query', router.query)
   return (
     <ScrollSync>
       <section
@@ -248,19 +269,68 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
             </Link>
           </div>
         </div>
-        {!show || !scheduleData.gotData ? (
+        {!show || !scheduleData.gymName ? (
           <></>
         ) : (
           <>
+            {/* 
             <div className={style['second-filter']}>
               <div className={style['select-group']}>
                 <div className={style['class-category']}>
-                  <span>所有類別</span>
-                  <FaCaretDown />
+                  <select
+                    class="form-select form-select-lg mb-3"
+                    aria-label=".form-select-lg example"
+                    defaultValue="0"
+                    onChange={(e) => {
+                      // setClasstype_schedule(e.target.value)
+                      router.push(
+                        {
+                          query: {
+                            ...router.query,
+                            class_type_schedule: e.target.value,
+                          },
+                        },
+                        undefined,
+                        { scroll: false }
+                      )
+                    }}
+                  >
+                    <option value="0" disabled>
+                      選擇類別
+                    </option>
+                    <option value="靜態課程">靜態課程</option>
+                    <option value="飛輪課程">飛輪課程</option>
+                    <option value="心肺訓練課程">心肺訓練課程</option>
+                    <option value="舞蹈課程">舞蹈課程</option>
+                    <option value="radical課程">radical課程</option>
+                  </select>
                 </div>
                 <div className={style['class-name']}>
-                  <span>選擇課程</span>
-                  <FaCaretDown />
+                  <select
+                    class="form-select form-select-lg mb-3"
+                    aria-label=".form-select-lg example"
+                    defaultValue="0"
+                    onChange={(e) => {
+                      // setClasstype_schedule(e.target.value)
+                      // setClassName(e.target.value)
+                      router.push(
+                        {
+                          query: {
+                            ...router.query,
+                            class_name: e.target.value,
+                          },
+                        },
+                        undefined,
+                        { scroll: false }
+                      )
+                    }}
+                  >
+                    <option value="0" disabled>
+                      選擇課程
+                    </option>
+                    <option value="哈達瑜珈">哈達瑜珈</option>
+                    <option value="順位瑜珈">順位瑜珈</option>
+                  </select>
                 </div>
                 <div className={style['class-teacher']}>
                   <span>所有老師</span>
@@ -268,7 +338,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                 </div>
               </div>
             </div>
-
+ */}
             <div className={style['schedule']}>
               <div className={style['list-head']}>
                 <Link
@@ -415,24 +485,29 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                 <div
                   className={`${style['every-day-chart']} ${style['scrollbar']}`}
                 >
-                  <div className={style['class-box-list']}>
-                    {/* 第一個map 一周七天 建立1個直排*7次 */}
-                    {Array(7)
-                      .fill(1)
-                      .map((v, i) => {
-                        return (
-                          <WeekCol
-                            key={i}
-                            scheduleData={scheduleData}
-                            i={i}
-                            setPopClassBook={setPopClassBook}
-                            setBookInfo={setBookInfo}
-                            setParticipantData={setParticipantData}
-                            participantData={participantData}
-                          />
-                        )
-                      })}
-                  </div>
+                  {/* 沒拿到任何課程資料 就顯示安排中 */}
+                  {!scheduleData.gotData ? (
+                    <div className={style['no-class']}>課程安排中...</div>
+                  ) : (
+                    <div className={style['class-box-list']}>
+                      {/* 第一個map 一周七天 建立1個直排*7次 */}
+                      {Array(7)
+                        .fill(1)
+                        .map((v, i) => {
+                          return (
+                            <WeekCol
+                              key={i}
+                              scheduleData={scheduleData}
+                              i={i}
+                              setPopClassBook={setPopClassBook}
+                              setBookInfo={setBookInfo}
+                              setParticipantData={setParticipantData}
+                              participantData={participantData}
+                            />
+                          )
+                        })}
+                    </div>
+                  )}
                 </div>
               </ScrollSyncPane>
             </div>

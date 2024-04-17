@@ -7,8 +7,8 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const class_type = req.query.class_type ? req.query.class_type : "靜態課程";
 
-  console.log("class_type:", class_type);
-  console.log(req.query);
+  // console.log("class_type:", class_type);
+  // console.log(req.query);
 
   const sql = `SELECT * FROM class WHERE \`class_type\` = '${class_type}'`;
 
@@ -33,25 +33,26 @@ router.get("/", async (req, res) => {
 });
 
 // 抓區域內的城市
-router.get("/city",async(req,res)=>{
-  const gym_area = req.query.city
-  const sql = `SELECT gym_name FROM \`gym\` WHERE gym_area = '${gym_area}'`
+router.get("/city", async (req, res) => {
+  const gym_area = req.query.city;
+  const sql = `SELECT gym_name FROM \`gym\` WHERE gym_area = '${gym_area}'`;
 
   let rows = [];
-  let fields; 
+  let fields;
   //用await要捕捉錯誤 要像這樣，用.then 就用.catch
   try {
     [rows, fields] = await db.query(sql);
-    if (rows.length === 0) { // 找不到城市就跳轉回課程專區
-      res.redirect('/class')
-      return
+    if (rows.length === 0) {
+      // 找不到城市就跳轉回課程專區
+      res.redirect("/class");
+      return;
     }
   } catch (ex) {
     console.log(ex);
   }
   console.log("rows", rows);
   res.json(rows);
-})
+});
 
 // 抓所有的開課資料，並且只呈現要的欄位
 router.get("/schedule", async (req, res) => {
@@ -59,7 +60,6 @@ router.get("/schedule", async (req, res) => {
   dayjs.locale("zh-cn", {
     weekStart: 1, // 1代表星期一，0代表星期天
   });
-
 
   // 至少有給場地才要抓資料
 
@@ -79,7 +79,7 @@ router.get("/schedule", async (req, res) => {
     const date = req.query.date || dayjs().format("YYYY-MM-DD");
     //場館名稱
     const gymName = req.query.gym_name;
-    console.log("gymname",gymName,"date",date);
+    // console.log("gymname",gymName,"date",date);
 
     // const test = dayjs(date).day();
     // const test2 = dayjs("2024-04-08").format("dddd");
@@ -90,6 +90,27 @@ router.get("/schedule", async (req, res) => {
 
     // console.log(gymName);
 
+    // 預設 不篩選 課程類別、課程名稱、老師名稱
+    let classTypeSql = 1;
+    let classNameSql = 1;
+    let teacherNameSql = 1;
+
+    // 若有給課程類別
+    if (req.query.class_type_schedule) {
+      classTypeSql = `class_type = "${req.query.class_type_schedule}" `;
+    }
+    // 若有給課程名稱
+    if (req.query.class_name) {
+      classNameSql = `class_name = "${req.query.class_name}" `;
+    }
+    // 若有給老師名稱
+    if (req.query.teacher_name) {
+      teacherNameSql = `teacher_name = "${req.query.teacher_name}" `;
+    }
+    // classTypeSql = `class_type = "飛輪課程" `
+    console.log("type_schedule", req.query.class_type_schedule);
+    console.log("classNameSql", classNameSql);
+
     const sql = `SELECT class_schedule_id, start_time, end_time,launch, bookable, max_participant, teacher_name, gym_name, gym_address, max_contain, class_name, class_img, class_fee, class_type
   FROM \`class_schedule\`
   JOIN \`teacher\` ON class_schedule.teacher_id = teacher.teacher_id
@@ -98,9 +119,13 @@ router.get("/schedule", async (req, res) => {
   WHERE start_time > '${mondayOfTheWeek}'
   AND start_time < '${sundayOfTheWeek}'
   AND gym_name = '${gymName}'
+  AND ${classTypeSql}
+  AND ${classNameSql}
+  AND ${teacherNameSql}
   ORDER BY start_time
   `;
-
+    
+    console.log(sql);
     let rows = [];
     let fields;
 
@@ -217,10 +242,10 @@ router.post("/add-fav", async (req, res) => {
   const sql = `INSERT INTO \`fav\`(\`member_id\`, \`class_schedule_id\`) 
   VALUES (${member_id},${class_schedule_id})`;
 
-let result
+  let result;
   try {
     [result] = await db.query(sql2, [req.body]);
-    output.addFav = !!result.affectedRows
+    output.addFav = !!result.affectedRows;
   } catch (ex) {
     console.log(ex);
   }
@@ -250,9 +275,8 @@ router.delete("/remove-fav", async (req, res) => {
   output.member_id = +member_id;
   output.class_schedule_id = +class_schedule_id;
 
-
   const sql = `DELETE FROM fav WHERE member_id=? AND class_schedule_id=? `; // 用問號 會自動跳脫，值 按照順序丟到下方陣列 包成陣列是為了應付所有的SQL語法
-  const [result] = await db.query(sql, [member_id,class_schedule_id]);
+  const [result] = await db.query(sql, [member_id, class_schedule_id]);
 
   res.json(result);
   /*
