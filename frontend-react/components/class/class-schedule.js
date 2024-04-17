@@ -156,7 +156,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
   */
 
   console.log('後端抓到的資料:', scheduleData)
-
+console.log('gymList',gymList);
   return (
     <ScrollSync>
       <section
@@ -197,6 +197,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                   class="form-select form-select-lg mb-3"
                   aria-label=".form-select-lg example"
                   defaultValue="0"
+                  disabled={!gymList ? true : false}
                   onChange={(e) => {
                     if (e.target.value !== '0') setGymName(e.target.value)
                   }}
@@ -204,7 +205,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                   <option value="0" disabled>
                     請選擇場館
                   </option>
-                  {!gymList ? (
+                  {!city ? (
                     <></>
                   ) : (
                     gymList.map((v, i) => {
@@ -242,7 +243,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
           </div>
         </div>
         {!show ? (
-          <div>請先選擇地點</div>
+          <></>
         ) : (
           <>
             <div className={style['second-filter']}>
