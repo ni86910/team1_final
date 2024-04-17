@@ -28,9 +28,30 @@ router.get("/", async (req, res) => {
   } catch (ex) {
     console.log(ex);
   }
-  console.log("rows", rows);
+  // console.log("rows", rows);
   res.json(rows);
 });
+
+// 抓區域內的城市
+router.get("/city",async(req,res)=>{
+  const gym_area = req.query.city
+  const sql = `SELECT gym_name FROM \`gym\` WHERE gym_area = '${gym_area}'`
+
+  let rows = [];
+  let fields; 
+  //用await要捕捉錯誤 要像這樣，用.then 就用.catch
+  try {
+    [rows, fields] = await db.query(sql);
+    if (rows.length === 0) { // 找不到城市就跳轉回課程專區
+      res.redirect('/class')
+      return
+    }
+  } catch (ex) {
+    console.log(ex);
+  }
+  console.log("rows", rows);
+  res.json(rows);
+})
 
 // 抓所有的開課資料，並且只呈現要的欄位
 router.get("/schedule", async (req, res) => {
@@ -39,7 +60,7 @@ router.get("/schedule", async (req, res) => {
     weekStart: 1, // 1代表星期一，0代表星期天
   });
 
-  console.log("query中的場地名稱", req.query.gym_name);
+
   // 至少有給場地才要抓資料
 
   // fullData才是最後要輸出的資料，除了rows之外，還包含以下設定的
@@ -58,6 +79,7 @@ router.get("/schedule", async (req, res) => {
     const date = req.query.date || dayjs().format("YYYY-MM-DD");
     //場館名稱
     const gymName = req.query.gym_name;
+    console.log("gymname",gymName,"date",date);
 
     // const test = dayjs(date).day();
     // const test2 = dayjs("2024-04-08").format("dddd");
@@ -125,6 +147,7 @@ router.get("/schedule", async (req, res) => {
       fullData.gotData = true;
     }
   }
+  console.log(fullData);
   res.json(fullData);
 });
 
