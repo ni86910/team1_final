@@ -119,6 +119,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     }
   }, [scheduleData, router])
 
+  // 抓 該城市中的所有場館
   useEffect(() => {
     const url = `${API_SERVER}/class/city?city=${city}`
     fetch(url)
