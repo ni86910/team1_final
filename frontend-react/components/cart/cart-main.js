@@ -52,7 +52,7 @@ export default function CartMain() {
               <div className={`row mb-5 ${style['continue-shopping']}`}>
                 <div className={`col-lg-6 col-md-6 col-sm-6`}>
                   <div className={style['continue-btn']}>
-                    <Link href="/product/product-list">
+                    <Link href="/product">
                       <IoReturnDownBackOutline size={20} /> 繼續購物{' '}
                     </Link>
                   </div>
@@ -130,9 +130,9 @@ export default function CartMain() {
                       </span>
                     </li>
                   </ul>
-                  <a href="#" className={style['primary-btn']}>
+                  <Link href="/cart/checkout" className={style['primary-btn']}>
                     <MdShoppingCartCheckout size={20} /> 下一步 - 結帳
-                  </a>
+                  </Link>
                 </div>
               </div>
               {/* 小計明細 end */}
