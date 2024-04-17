@@ -15,68 +15,24 @@ import { MdClose } from 'react-icons/md'
 import { PiArrowLineDownFill, PiArrowLineUpFill } from 'react-icons/pi'
 
 export default function ProductCategory() {
-  const [categoryChecked, setCategoryChecked] = useState({})
   const router = useRouter()
+  const [minPrice, setMinPrice] = useState('')
+  const [maxPrice, setMaxPrice] = useState('')
 
-  const category = [
-    { id: 4, name: '有氧/重量訓練', count: 16 },
-    { id: 5, name: '瑜珈', count: 15 },
-    { id: 6, name: '拳擊', count: 7 },
-    { id: 7, name: '舞蹈', count: 1 },
-    { id: 8, name: '運動恢復放鬆', count: 7 },
-    { id: 9, name: '能量補給', count: 7 },
-    { id: 10, name: '乳清蛋白', count: 8 },
-    { id: 11, name: '能量飲', count: 5 },
-    { id: 12, name: '運動服飾', count: 17 },
-    { id: 13, name: '運動包袋', count: 3 },
-    { id: 14, name: '運動水壺', count: 3 },
-    { id: 15, name: '配件專區', count: 11 },
-    { id: 16, name: '智能電子用品', count: 4 },
-  ]
-
-  const handleCategoryChange = (categoryId, event) => {
-    event.preventDefault() // 阻止預設的表單提交行為
-
-    const params = new URLSearchParams(router.query)
-    const currentCategories = params.getAll('category') // 取得目前的分類參數值，若不存在則為空陣列
-    const updatedCategories = [...currentCategories, categoryId] // 將新的分類加入到陣列中
-    params.delete('category') // 刪除目前的分類參數
-    updatedCategories.forEach((category) => params.append('category', category)) // 將更新後的分類參數重新加入到 URLSearchParams 中
-
-    // 更新 URLSearchParams
-    router.push(`?${params.toString()}`)
-
-    // router.push({
-    //   query: { ...router.query, category: categoryId },
-    // })
-
-    // 更新 categoryChecked 狀態
-    // const updatedChecked = {
-    //   ...categoryChecked,
-    //   [categoryId]: !categoryChecked[categoryId],
-    // }
-    // setCategoryChecked(updatedChecked)
-
-    // const selectedCategories = Object.keys(updatedChecked).filter(
-    //   (key) => updatedChecked[key]
-    // )
-
-    // const categoryQuery =
-    //   selectedCategories.length > 0
-    //     ? `category=${selectedCategories.join(',')}`
-    //     : ''
-
-    // const url = `${API_SERVER}/product${
-    //   categoryQuery ? `?${categoryQuery}` : ''
-    // }`
-
-    // router.push(url, undefined, { shallow: true, append: true })
+  const handlePriceFilter = () => {
+    // 將最低價格和最高價格傳遞到後端進行篩選
+    const queryParams = {}
+    if (minPrice) {
+      queryParams.minPrice = minPrice
+    }
+    if (maxPrice) {
+      queryParams.maxPrice = maxPrice
+    }
+    router.push({
+      pathname: '/product',
+      query: queryParams,
+    })
   }
-
-  // const ResetPriceRange = () => {
-  //   const [minValue, setMinValue] = useState('')
-  //   const [maxValue, setMaxValue] = useState('')
-  // }
 
   return (
     <>
@@ -184,7 +140,7 @@ export default function ProductCategory() {
               </Link>
             </ul>
           </li>
-
+          {/* 搜尋價格區間 start */}
           <li className={style['accordion-item']}>
             <input id="s4" className={style['hide']} type="checkbox" />
             <label htmlFor="s4" className={style['accordion-label']}>
@@ -204,8 +160,10 @@ export default function ProductCategory() {
                   <input
                     type="number"
                     min={0}
+                    max={2999}
                     className={style['sc-input']}
-                    defaultValue=""
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
                   />
                 </div>
                 <div className={style['sc-range']}> 至 </div>
@@ -216,8 +174,10 @@ export default function ProductCategory() {
                   <input
                     type="number"
                     min={0}
+                    max={2999}
                     className={style['sc-input']}
-                    defaultValue=""
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
                   />
                 </div>
               </div>
@@ -225,6 +185,7 @@ export default function ProductCategory() {
                 <button
                   type="button"
                   className={`col-4 col ${style['sc-btn-price']}`}
+                  onClick={handlePriceFilter}
                 >
                   篩選
                 </button>
@@ -232,8 +193,8 @@ export default function ProductCategory() {
                   type="button"
                   className={`col-4 ${style['sc-btn-reset']}`}
                   onClick={() => {
-                    // setMinValue('')
-                    // setMaxValue('')
+                    setMinPrice('')
+                    setMaxPrice('')
                   }}
                 >
                   重置
@@ -241,6 +202,7 @@ export default function ProductCategory() {
               </div>
             </ul>
           </li>
+          {/* 搜尋價格區間 end */}
         </ul>
       </div>
       {/* 產品分類選單 end */}
