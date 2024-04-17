@@ -5,10 +5,19 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   let keyword = req.query.keyword || "";
+  let category = req.query.category || "";
   let where = " WHERE 1 ";
+console.log(category);
   if (keyword) {
     // 避免 SQL injection
     where += ` AND (product_name LIKE ${db.escape(`%${keyword}%`)}) `;
+  }
+
+  if (category) {
+    // 將 category 作為條件添加到 SQL 查詢中
+    let categories = Array.isArray(category) ? category : [category] // 確保 category 是陣列
+    const categoryConditions = categories.map(cat => `category_id = ${db.escape(cat)}`).join(" OR ")
+    where += ` AND (${categoryConditions}) `
   }
 
   let redirect = ""; // 作為轉換依據的變數
@@ -56,10 +65,12 @@ router.get("/", async (req, res) => {
     rows,
     page,
     keyword,
+    category,
     qs: req.query,
   });
 });
 
+// 商品詳細頁面的路徑
 router.get("/:p_id", async (req, res) => {
 
   const p_id = req.params.p_id

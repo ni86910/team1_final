@@ -88,6 +88,14 @@
       transform: scale(1,1);
     }
   }
+  .cate-name {
+    color: #000000;
+    margin: 5px auto;
+    &:hover {
+      color: $primary-color;
+
+    }
+  }
 
   .reset-filter-btn {
     color: #111111;
