@@ -41,7 +41,7 @@ export default function LoginPage() {
         minSymbols: 0,
       })
     ) {
-      newErrors.m_pwd = '密碼至少5個字元，而且至少需包含一個英文小寫字元'
+      newErrors.m_pwd = '密碼至少5個字元，要包含一個英文小寫字元'
     }
 
     setErrors(newErrors)
