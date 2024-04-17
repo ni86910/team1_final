@@ -1,10 +1,23 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { Button, Modal, Form } from 'react-bootstrap'
+
 import style from '@/styles/cart-checkout-main.module.scss'
 import { FaRegHeart, FaPlus, FaRegCreditCard } from 'react-icons/fa6'
 import { IoIosArrowForward, IoIosArrowDown } from 'react-icons/io'
 
 export default function CheckoutMain() {
+    // 變更資料彈窗
+  const [showModal, setShowModal] = useState(false)
+
+  const handleCloseModal = () => setShowModal(false)
+  const handleShowModal = () => {
+    setShowModal(true)
+    // 在這裡改變連結的樣式
+    const memberTermsLink = document.querySelector(`.${style['member-terms']}`)
+    memberTermsLink.style.color = 'orange'
+  }
+
   return (
     <>
       <section className={`${style['checkout']} ${style['spad']}`}>
@@ -205,16 +218,16 @@ export default function CheckoutMain() {
               </div>
               <div className={style['BlockContainer']}>
                 <div className={`row ${style['TermsAndConditionsContainer']}`}>
-                  <label
+                 <label
                     htmlFor="membershipTerms"
                     className={`col-1 ${style['CheckBoxContainer']}`}
                   >
+                    I agree to the membership terms:
                     <input
                       id="membershipTerms"
                       name="membershipTerms"
                       type="checkbox"
                       className={style['InputCheckBox']}
-                      //defaultChecked={true} // 或者省略這個屬性，表示不預選中
                     />
                     <span className={style['CheckMark']} />
                   </label>
@@ -241,6 +254,24 @@ export default function CheckoutMain() {
           </div>
         </div>
       </section>
+
+      {/* Modal */}
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Fit-U 會員條款</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            onClick={handleCloseModal}
+            className={`btn ${style['register-btn']}`}
+          >
+            關閉
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     </>
   )
 }

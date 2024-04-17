@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import ProductCardList from './product-card-list'
 import ProductCategory from './product-category'
-import Link from 'next/link'
 import style from '@/styles/product-list.module.scss'
 
-/* 頁碼 icon */
-import {
-  MdClose,
-  MdKeyboardDoubleArrowLeft,
-  MdKeyboardDoubleArrowRight,
-  MdKeyboardArrowLeft,
-  MdKeyboardArrowRight,
-} from 'react-icons/md'
 
 export default function ProductList() {
+  const [orderBy, setOrderBy] = useState('default') // 增加一個狀態來追蹤排序方式
+
+  // 定義排序改變時的處理函式
+  const handleSortChange = (e) => {
+    setOrderBy(e.target.value)
+  }// 更新排序方式
+
   return (
     <>
       <section className={`${style.shop} ${style.spad}`}>
@@ -44,24 +42,20 @@ export default function ProductList() {
                       <div
                         className={`col-6 d-flex ${style['shop-product-option-right-sort']}`}
                       >
-                        <select>
-                          <option value="" active="">
-                            商品排序
-                          </option>
-                          <option value="">上架時間: 由新到舊</option>
-                          <option value="">上架時間: 由舊到新</option>
-                          <option value="">價格: 由高到低</option>
-                          <option value="">價格: 由低到高</option>
+                        <select value={orderBy} onChange={handleSortChange}>
+                          <option value="default">商品排序</option>
+                          <option value="newest">上架時間: 由新到舊</option>
+                          <option value="oldest">上架時間: 由舊到新</option>
+                          <option value="priceHigh">價格: 由高到低</option>
+                          <option value="priceLow">價格: 由低到高</option>
                         </select>
                       </div>
                       <div
                         className={`col-6 d-flex ${style['shop-product-option-right-qty']}`}
                       >
                         <select>
+                        <option value="">每頁顯示12個</option>
                           <option value="">每頁顯示48個</option>
-                          <option value="" active="">
-                            每頁顯示12個
-                          </option>
                         </select>
                       </div>
                     </div>
