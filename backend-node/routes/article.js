@@ -7,7 +7,7 @@ import authenticate from './../middlewares/authenticate.js'
 const router = express.Router();
 const { Favorite } = db
 
-router.get('/', async(req,res)=>{
+router.get('/', async(req,res) => {
     // 構建 SQL 查詢
     const sql = ` SELECT * FROM article `;
     
@@ -85,28 +85,28 @@ router.get("/:article_id", async (req, res) => {
       }
   })
 
-  // 獲得某會員id的有加入到我的最愛清單中的商品id們
+// 獲得某會員id的有加入到我的最愛清單中的商品id們
 // 此路由只有登入會員能使用
 router.get('/:article_id', authenticate, async (req, res) => {
-  const userId = res.locals.jwt.id
+  const member_id = res.locals.jwt.id
 
-const pids = await Favorite.findAll({
-    attributes: ['pid'],
+const article_id = await Favorite.findAll({
+    attributes: ['article_id'],
     where: {
-      uid: userId,
+      uid: member_id,
     },
     raw: true, //只需要資料
 })
 
-  // 將結果中的pid取出變為一個純資料的陣列
-  const favorites = pids.map((v) => v.pid)
+  // 將結果中的article_id取出變為一個純資料的陣列
+  const favorites = article_id.map((v) => v.pid)
 
   res.json({ status: 'success', data: { favorites } })
 })
 
 router.put('/:article_id', authenticate, async (req, res, next) => {
   const pid = getIdParam(req)
-  const uid = req.user.id
+  const uid = req.member_id
 
   const existFav = await Favorite.findOne({ where: { pid, uid } })
   if (existFav) {
