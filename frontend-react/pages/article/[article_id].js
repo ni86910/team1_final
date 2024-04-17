@@ -7,9 +7,8 @@ import ArticleFav from '@/components/article/bookmark/article-fav'
 import { useRouter } from 'next/router'
 import { useAuth } from '@/context/auth-context'
 import { API_SERVER } from '@/configs/index'
-import toast, { Toaster } from 'react-hot-toast'
 
-export default function ArticleDetail(popArticle, participantData) {
+export default function ArticleDetail(popArticle) {
   const router = useRouter()
   const { auth } = useAuth()
 
@@ -156,7 +155,6 @@ export default function ArticleDetail(popArticle, participantData) {
     } catch (e) {
       console.log(e)
     }
-    console.log('bookInfo', participantData)
   }, [popArticle, toggleBtn])
 
   return (
@@ -222,28 +220,28 @@ export default function ArticleDetail(popArticle, participantData) {
               </>
             ) : (
               /* 在這裡進行 artInfo.message 的 map 迭代 */
-              artInfo.message.map((v, i) => (
-                <div className="row" key={i}>
-                  <div className="mt-4 text-center">
-                    <table className={styles['my-table']}>
-                      <thead>
-                        <tr>
-                          <th scope="col">留言者ID</th>
-                          <th scope="col">留言者姓名</th>
-                          <th scope="col">Message</th>
-                        </tr>
-                      </thead>
-                      <tbody>
+              <div className="row">
+                <div className="mt-4 text-center">
+                  <table className={styles['my-table']}>
+                    <thead>
+                      <tr>
+                        <th scope="col">留言者ID</th>
+                        <th scope="col">留言者姓名</th>
+                        <th scope="col">Message</th>
+                      </tr>
+                    </thead>
+                    {artInfo.message.map((v, i) => (
+                      <tbody key={i}>
                         <tr>
                           <td>{v.message_id}</td>
                           <td>{v.message_name}</td>
                           <td>{v.message_content}</td>
                         </tr>
                       </tbody>
-                    </table>
-                  </div>
+                    ))}
+                  </table>
                 </div>
-              ))
+              </div>
             )}
           </>
 
