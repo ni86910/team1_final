@@ -117,7 +117,7 @@ export default function FavoritePage() {
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>課程圖片</th>
+                          <th>開課場館</th>
                           <th>課程名稱</th>
                           <th>
                             <FaHeart />

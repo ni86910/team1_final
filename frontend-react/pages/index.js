@@ -1,11 +1,23 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import styles from '@/styles/home.module.css'
+import style from '@/styles/home.module.scss'
+import { API_SERVER } from '@/configs'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { FaAnglesRight } from 'react-icons/fa6'
+import Marquee from 'react-fast-marquee'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const router = useRouter()
+  // 控制課程圖片
+  const [img, setImg] = useState('yoga01.jpg')
+  // 控制river 流動
+  const [flow, setFlow] = useState(true)
+
   return (
     <>
       <Head>
@@ -14,101 +26,495 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.js</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+      <>
+        <section className={style['banner-section']}>
+          <div className={style['img-box']}>
+            <Image src={'/img/home/unsplash_9dzWZQWZMdE2.jpg'} fill alt="" />
           </div>
-        </div>
 
-        <div className={styles.center}>
+          <div className={style['content']}>
+            <div className={style['slogan']}>健康生活一步到位</div>
+            <div className={style['button']}>立即體驗</div>
+          </div>
+        </section>
+        <section className={style['class-section']}>
+          <div className={style['class-container']}>
+            <div className={style['section-name']}>
+              <h1>課程介紹</h1>
+            </div>
+            <div className={style['content-box']}>
+              <div className={style['img-part']}>
+                <Image
+                  src={`${API_SERVER}/imgs/class/class-page/${img}`}
+                  alt=""
+                  fill
+                />
+                <div className={style['cover']}></div>
+              </div>
+              <div className={style['list-part']}>
+                <div className={style['classes']}>
+                  <h5>靜態課程</h5>
+                  <ul>
+                    <li
+                      onMouseEnter={() => {
+                        setImg('yoga10.jpg')
+                      }}
+                    >
+                      <h2>陰陽瑜珈</h2>
+                      <div className={style['content-container']}>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>課程時長</div>
+                          <div className={style['content-body']}>2小時</div>
+                        </div>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>運動強度</div>
+                          <div className={style['content-body']}>低</div>
+                        </div>
+                        <div
+                          className={style['button']}
+                          role="presentation"
+                          onClick={() => {
+                            router.push('/class/10')
+                          }}
+                        >
+                          了解更多
+                        </div>
+                      </div>
+                      <div className={style['rwd-image']}>
+                        <Image
+                          src={`${API_SERVER}/imgs/class/class-page/yoga10.jpg`}
+                          alt=""
+                          fill
+                        />
+                      </div>
+                    </li>
+                    <li
+                      onMouseEnter={() => {
+                        setImg('yoga14.jpg')
+                      }}
+                    >
+                      <h2>療癒瑜珈</h2>
+                      <div className={style['content-container']}>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>課程時長</div>
+                          <div className={style['content-body']}>2小時</div>
+                        </div>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>運動強度</div>
+                          <div className={style['content-body']}>低</div>
+                        </div>
+                        <div
+                          className={style['button']}
+                          role="presentation"
+                          onClick={() => {
+                            router.push('/class/14')
+                          }}
+                        >
+                          了解更多
+                        </div>
+                      </div>
+                      <div className={style['rwd-image']}>
+                        <Image
+                          src={`${API_SERVER}/imgs/class/class-page/yoga14.jpg`}
+                          alt=""
+                          fill
+                        />
+                      </div>
+                    </li>
+                    <li
+                      onMouseEnter={() => {
+                        setImg('yoga03.jpg')
+                      }}
+                    >
+                      <h2>串聯瑜珈</h2>
+                      <div className={style['content-container']}>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>課程時長</div>
+                          <div className={style['content-body']}>2小時</div>
+                        </div>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>運動強度</div>
+                          <div className={style['content-body']}>低</div>
+                        </div>
+                        <div
+                          className={style['button']}
+                          role="presentation"
+                          onClick={() => {
+                            router.push('/class/3')
+                          }}
+                        >
+                          了解更多
+                        </div>
+                      </div>
+                      <div className={style['rwd-image']}>
+                        <Image
+                          src={`${API_SERVER}/imgs/class/class-page/yoga03.jpg`}
+                          alt=""
+                          fill
+                        />
+                      </div>
+                    </li>
+                    <li
+                      onMouseEnter={() => {
+                        setImg('yoga09.jpg')
+                      }}
+                    >
+                      <h2>流動瑜珈</h2>
+                      <div className={style['content-container']}>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>課程時長</div>
+                          <div className={style['content-body']}>2小時</div>
+                        </div>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>運動強度</div>
+                          <div className={style['content-body']}>低</div>
+                        </div>
+                        <div
+                          className={style['button']}
+                          role="presentation"
+                          onClick={() => {
+                            router.push('/class/9')
+                          }}
+                        >
+                          了解更多
+                        </div>
+                      </div>
+                      <div className={style['rwd-image']}>
+                        <Image
+                          src={`${API_SERVER}/imgs/class/class-page/yoga09.jpg`}
+                          alt=""
+                          fill
+                        />
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div className={style['classes']}>
+                  <h5>心肺訓練課程</h5>
+                  <ul>
+                    <li
+                      onMouseEnter={() => {
+                        setImg('aerobic03.jpg')
+                      }}
+                    >
+                      <h2>基礎有氧</h2>
+                      <div className={style['content-container']}>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>課程時長</div>
+                          <div className={style['content-body']}>2小時</div>
+                        </div>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>運動強度</div>
+                          <div className={style['content-body']}>中</div>
+                        </div>
+                        <div
+                          className={style['button']}
+                          role="presentation"
+                          onClick={() => {
+                            router.push('/class/21')
+                          }}
+                        >
+                          了解更多
+                        </div>
+                      </div>
+                      <div className={style['rwd-image']}>
+                        <Image
+                          src={`${API_SERVER}/imgs/class/class-page/aerobic03.jpg`}
+                          alt=""
+                          fill
+                        />
+                      </div>
+                    </li>
+                    <li
+                      onMouseEnter={() => {
+                        setImg('aerobic04.jpg')
+                      }}
+                    >
+                      <h2>爵士有氧</h2>
+                      <div className={style['content-container']}>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>課程時長</div>
+                          <div className={style['content-body']}>2小時</div>
+                        </div>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>運動強度</div>
+                          <div className={style['content-body']}>中</div>
+                        </div>
+                        <div
+                          className={style['button']}
+                          role="presentation"
+                          onClick={() => {
+                            router.push('/class/22')
+                          }}
+                        >
+                          了解更多
+                        </div>
+                      </div>
+                      <div className={style['rwd-image']}>
+                        <Image
+                          src={`${API_SERVER}/imgs/class/class-page/aerobic04.jpg`}
+                          alt=""
+                          fill
+                        />
+                      </div>
+                    </li>
+                    <li
+                      onMouseEnter={() => {
+                        setImg('aerobic09.jpg')
+                      }}
+                    >
+                      <h2>基礎階梯</h2>
+                      <div className={style['content-container']}>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>課程時長</div>
+                          <div className={style['content-body']}>2小時</div>
+                        </div>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>運動強度</div>
+                          <div className={style['content-body']}>中</div>
+                        </div>
+                        <div
+                          className={style['button']}
+                          role="presentation"
+                          onClick={() => {
+                            router.push('/class/27')
+                          }}
+                        >
+                          了解更多
+                        </div>
+                      </div>
+                      <div className={style['rwd-image']}>
+                        <Image
+                          src={`${API_SERVER}/imgs/class/class-page/aerobic09.jpg`}
+                          alt=""
+                          fill
+                        />
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div className={style['classes']}>
+                  <h5>舞蹈課程</h5>
+                  <ul>
+                    <li
+                      onMouseEnter={() => {
+                        setImg('dance01.jpg')
+                      }}
+                    >
+                      <h2>ZUMBA</h2>
+                      <div className={style['content-container']}>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>課程時長</div>
+                          <div className={style['content-body']}>2小時</div>
+                        </div>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>運動強度</div>
+                          <div className={style['content-body']}>高</div>
+                        </div>
+                        <div
+                          className={style['button']}
+                          role="presentation"
+                          onClick={() => {
+                            router.push('/class/30')
+                          }}
+                        >
+                          了解更多
+                        </div>
+                      </div>
+                      <div className={style['rwd-image']}>
+                        <Image
+                          src={`${API_SERVER}/imgs/class/class-page/dance01.jpg`}
+                          alt=""
+                          fill
+                        />
+                      </div>
+                    </li>
+                    <li
+                      onMouseEnter={() => {
+                        setImg('dance03.jpg')
+                      }}
+                    >
+                      <h2>美式嘻哈</h2>
+                      <div className={style['content-container']}>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>課程時長</div>
+                          <div className={style['content-body']}>2小時</div>
+                        </div>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>運動強度</div>
+                          <div className={style['content-body']}>高</div>
+                        </div>
+                        <div
+                          className={style['button']}
+                          role="presentation"
+                          onClick={() => {
+                            router.push('/class/32')
+                          }}
+                        >
+                          了解更多
+                        </div>
+                      </div>
+                      <div className={style['rwd-image']}>
+                        <Image
+                          src={`${API_SERVER}/imgs/class/class-page/dance03.jpg`}
+                          alt=""
+                          fill
+                        />
+                      </div>
+                    </li>
+                    <li
+                      onMouseEnter={() => {
+                        setImg('dance05.jpg')
+                      }}
+                    >
+                      <h2>流行爵士</h2>
+                      <div className={style['content-container']}>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>課程時長</div>
+                          <div className={style['content-body']}>2小時</div>
+                        </div>
+                        <div className={style['content']}>
+                          <div className={style['content-head']}>運動強度</div>
+                          <div className={style['content-body']}>高</div>
+                        </div>
+                        <div
+                          className={style['button']}
+                          role="presentation"
+                          onClick={() => {
+                            router.push('/class/34')
+                          }}
+                        >
+                          了解更多
+                        </div>
+                      </div>
+                      <div className={style['rwd-image']}>
+                        <Image
+                          src={`${API_SERVER}/imgs/class/class-page/dance05.jpg`}
+                          alt=""
+                          fill
+                        />
+                      </div>
+                    </li>
+                    <li
+                      onClick={() => {
+                        router.push('/class')
+                      }}
+                      role="presentation"
+                      className={style['check-classes']}
+                    >
+                      <span>
+                        <FaAnglesRight />
+                      </span>
+                      <h3>查看所有課程</h3>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className={style['place-section']}>
+          <div className={style['place-container']}>
+            <h1>尋找附近的運動地點</h1>
+            <select name="gym" id="gym">
+              <option value="">A場館</option>
+              <option value="">B場館</option>
+              <option value="">C場館</option>
+            </select>
+            <div className={style['map-container']}>
+              {/* <iframe
+                title="1"
+                className={style['iframe']}
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29457.720277696328!2d120.28803630000002!3d22.645769849999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e046105cfdcb9%3A0x3caaaabcb778b120!2z6auY6ZuE5LiJ6bOz5a6u!5e0!3m2!1szh-TW!2stw!4v1712885737755!5m2!1szh-TW!2stw"
+                width={550}
+                height={550}
+                style={{
+                  border: '5px solid orangered',
+                  borderRadius: '0px 900px 900px 900px',
+                }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              /> */}
+            </div>
+          </div>
+        </section>
+        <section className={style['river-section']}>
           <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
+            className={style['bg-image']}
+            src={`${API_SERVER}/imgs/home/section-3.jpg`}
+            alt=""
+            fill
           />
-        </div>
+          <div className={style['river-container']}>
+            <div
+              onMouseEnter={() => {
+                setFlow(false)
+              }}
+              onMouseLeave={() => {
+                setFlow(true)
+              }}
+              className={style['image-a']}
+            >
+              <Image
+                src={`${API_SERVER}/imgs/class/class-page/dance05.jpg`}
+                fill
+                alt=""
+              />
+              <div>
+                <span>探索商城</span>
+              </div>
+            </div>
+            <div
+              onMouseEnter={() => {
+                setFlow(false)
+              }}
+              onMouseLeave={() => {
+                setFlow(true)
+              }}
+              className={style['image-b']}
+            >
+              <Image
+                src={`${API_SERVER}/imgs/class/class-page/dance04.jpg`}
+                fill
+                alt=""
+              />
+              <div>
+                <span>探索商城</span>
+              </div>
+            </div>
 
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+            <Marquee
+              className={style['river-a']}
+              speed={80}
+              play={flow}
+              direction={'left'}
+            >
+              <span className={style['orange']}>FIT-U 健康商城</span>
+              <span>FIT-U 健康商城</span>
+            </Marquee>
+            <Marquee
+              className={style['river-b']}
+              speed={80}
+              play={flow}
+              direction={'right'}
+            >
+              <span className={style['orange']}>壺鈴</span>
+              <span>瑜珈磚</span>
+              <span className={style['orange']}>啞鈴</span>
+              <span>彈力帶</span>
+              <span className={style['orange']}>乳清蛋白</span>
+              <span>瑜珈墊</span>
+            </Marquee>
+            <Link href={'#'} className={style['rwd-click']}>
+              探索商城
+              <span>
+                <FaAnglesRight />
+              </span>
+            </Link>
+          </div>
+        </section>
+      </>
     </>
   )
 }

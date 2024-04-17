@@ -5,9 +5,14 @@ import Link from 'next/link'
 import { API_SERVER } from '../common/config'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { FaPlus } from 'react-icons/fa6'
+import Form from 'react-bootstrap/Form'
 
 export default function ClassIntro({ setContainerHeight, tab }) {
   const router = useRouter()
+
+  // 決定 課程捷徑的狀態
+  const [shortcut, setShortcut] = useState('')
 
   // 用狀態接收fetch來的課程介紹資料
   const [introData, setIntroData] = useState()
@@ -52,6 +57,11 @@ export default function ClassIntro({ setContainerHeight, tab }) {
     }
   }, [router.isReady, router.query])
 
+  // shortcut改變時(select標籤) 跳到對應的頁面id位置
+  useEffect(() => {
+    shortcut ? router.push(`#${shortcut}`) : ''
+  }, [shortcut])
+
   return (
     <>
       <section
@@ -64,19 +74,84 @@ export default function ClassIntro({ setContainerHeight, tab }) {
       >
         <div className={style['category-nav']}>
           <div className={style['categories']}>
-            <Link href="?class_type=靜態課程" scroll={false}>
+            <Link
+              href="?class_type=靜態課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: '靜態課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               靜態課程
             </Link>
-            <Link href="?class_type=飛輪課程" scroll={false}>
+            <Link
+              href="?class_type=飛輪課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: '飛輪課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               飛輪課程
             </Link>
-            <Link href="?class_type=心肺訓練課程" scroll={false}>
+            <Link
+              href="?class_type=心肺訓練課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: '心肺訓練課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               心肺訓練課程
             </Link>
-            <Link href="?class_type=舞蹈課程" scroll={false}>
+            <Link
+              href="?class_type=舞蹈課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: '舞蹈課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               舞蹈課程
             </Link>
-            <Link href="?class_type=radical課程" scroll={false}>
+            <Link
+              href="?class_type=radical課程"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault()
+                router.push(
+                  {
+                    query: { ...router.query, class_type: 'radical課程' },
+                  },
+                  undefined,
+                  { scroll: false }
+                )
+              }}
+            >
               radical課程
             </Link>
           </div>
@@ -87,10 +162,35 @@ export default function ClassIntro({ setContainerHeight, tab }) {
             {introData ? introData[0].class_type : ''}
           </h2>
           <p className={style['category-desc']}>選擇課程以查看更多資訊</p>
-          <div className={style['select-bar']}>
+          <div className={style['select-container']}>
+            <select
+              class="form-select form-select-lg mb-3"
+              aria-label=".form-select-lg example"
+              style={{ maxWidth: '280px', minWidth: '180px' }}
+              onChange={(e) => {
+                setShortcut(e.target.value)
+              }}
+            >
+              <option selected disabled>
+                快速前往課程
+              </option>
+              {!introData ? (
+                <></>
+              ) : (
+                introData.map((v, i) => {
+                  return (
+                    <option key={i} value={`${v.class_id}`}>
+                      {v.class_name}
+                    </option>
+                  )
+                })
+              )}
+            </select>
+          </div>
+          {/* <div className={style['select-bar']}>
             <p>查看課程</p>
             <FaSortDown />
-          </div>
+          </div> */}
         </div>
         <div className={style['classes']}>
           {!introData ? (
@@ -98,7 +198,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
           ) : (
             introData.map((v, i) => {
               return (
-                <div key={i} className={style['class']}>
+                <div key={i} className={style['class']} id={`${v.class_id}`}>
                   <div className={style['img-box']}>
                     <Image
                       src={`http://localhost:3001/imgs/class/class-page/${v['class_img']}`}
@@ -119,7 +219,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
                         }}
                         role="presentation"
                       >
-                        +
+                        <FaPlus />
                       </div>
                       {/* <Link href={`/class/${v.class_id}`}>aaa</Link> */}
                     </div>

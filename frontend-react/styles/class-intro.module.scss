@@ -91,6 +91,14 @@ $white: #ffffff;
     font-size: 32px;
     font-weight: 700;
   }
+  .select-container {
+    max-width: 280px;
+    width: 280px;
+    min-width: 180px;
+    select {
+      width: 100%;
+    }
+  }
   .select-bar {
     width: 280px;
     height: 50px;
@@ -165,6 +173,10 @@ $white: #ffffff;
           text-align: center;
           border-radius: 50%;
           cursor: pointer;
+          
+          &:hover {
+            font-size: x-large;
+          }
         }
       }
     }
