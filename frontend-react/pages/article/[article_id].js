@@ -3,12 +3,15 @@ import style from '@/styles/jack-use/button.module.css'
 import styles from '@/styles/jack-use/table.module.css'
 import TOP from '@/components/TOPbutton/top'
 import Image from 'next/image'
-import BookMark from '@/components/article/bookmark/bookmark'
+import ArticleFav from '@/components/article/bookmark/article-fav'
 import { useRouter } from 'next/router'
+import { useAuth } from '@/context/auth-context'
 import { API_SERVER } from '@/configs/index'
+import toast, { Toaster } from 'react-hot-toast'
 
-export default function ArticleDetail() {
+export default function ArticleDetail(popArticle, participantData) {
   const router = useRouter()
+  const { auth } = useAuth()
 
   // 用來接收 fetch資料 的狀態
   const [artInfo, setArtInfo] = useState({
@@ -115,6 +118,47 @@ export default function ArticleDetail() {
     }
   }
 
+  // 檢查收藏按鈕是否被點擊，用來更新favInfo 的依據
+  const [toggleBtn, setToggleBtn] = useState(true)
+
+  // 儲存收藏資料
+  const [favInfo, setFavInfo] = useState({
+    member_id: 0,
+    article_id: 0,
+    alreadyFav: false,
+  })
+  // 抓收藏資料
+  useEffect(() => {
+    // 取得會員id
+    // const member_data = JSON.parse(localStorage.getItem('Fit_U-auth'))
+    const member_id = auth.member_id
+    const article_id = router.query.article_id
+
+    const url = `${API_SERVER}/article/get-fav?member_id=${member_id}&article_id=${article_id}`
+
+    try {
+      fetch(url, {
+        method: 'GET', // 可以是 GET、POST、PUT、DELETE 等
+        headers: {
+          'Content-Type': 'application/json', // 設定 Content-Type 為 JSON
+        },
+        // 把會員ID跟該開課ID放到body中 傳給後端
+        // body: JSON.stringify({
+        //   member_id: member_data.member_id,
+        //   class_schedule_id: bookInfo.class_schedule_id,
+        // }), // 將 JavaScript 物件轉換成 JSON 字串
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          console.log('收藏資訊', data)
+          setFavInfo(data)
+        })
+    } catch (e) {
+      console.log(e)
+    }
+    console.log('bookInfo', participantData)
+  }, [popArticle, toggleBtn])
+
   return (
     <>
       {/* Article Section Begin */}
@@ -128,7 +172,11 @@ export default function ArticleDetail() {
               {artInfo.post_date} | {artInfo.article_item}
             </p>
             <div className="col">
-              <BookMark />
+              <ArticleFav
+                favInfo={favInfo}
+                setToggleBtn={setToggleBtn}
+                toggleBtn={toggleBtn}
+              />
             </div>
           </div>
           <div className="row">
