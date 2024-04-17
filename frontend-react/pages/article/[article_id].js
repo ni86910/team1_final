@@ -141,11 +141,6 @@ export default function ArticleDetail(popArticle) {
         headers: {
           'Content-Type': 'application/json', // 設定 Content-Type 為 JSON
         },
-        // 把會員ID跟該開課ID放到body中 傳給後端
-        // body: JSON.stringify({
-        //   member_id: member_data.member_id,
-        //   class_schedule_id: bookInfo.class_schedule_id,
-        // }), // 將 JavaScript 物件轉換成 JSON 字串
       })
         .then((r) => r.json())
         .then((data) => {
