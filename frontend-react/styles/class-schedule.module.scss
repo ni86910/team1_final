@@ -297,6 +297,18 @@
       display: flex;
       justify-content: flex-start;
       overflow: hidden;
+      .no-class{
+        margin: auto;
+        width: 1435px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        font-size: 64px;
+        font-weight: 600;
+        border: 1px dashed #2e2e2e;
+        border-bottom: 5px solid #2e2e2e;
+      }
       .class-box-list {
         display: flex;
         padding: 0px;
@@ -309,7 +321,6 @@
 
         .week-day {
           padding: 0px;
-
           .class-box {
             padding: 20px;
             display: flex;
