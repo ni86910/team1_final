@@ -40,9 +40,14 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     message: '',
   })
 
-  // 取得要拖曳滾動的元素參照 會出錯QQ
-  const dragScrollRef = useRef()
-  // const { events } = useDraggable(dragScrollRef)
+  // 紀錄目前選擇的縣市
+  const [city, setCity] = useState('')
+
+  // 紀錄該縣市裡面有的場館
+  const [gymList, setGymList] = useState([])
+
+  // 記錄選中的場館
+  const [gymName, setGymName] = useState('')
 
   // 取得section參照
   const sectionRef2 = useRef(null)
@@ -114,6 +119,15 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     }
   }, [scheduleData, router])
 
+  useEffect(() => {
+    const url = `${API_SERVER}/class/city?city=${city}`
+    fetch(url)
+      .then((r) => r.json())
+      .then((data) => {
+        setGymList(data)
+      })
+  }, [city])
+
   /* AbortController範例 避免連續發fetch 回來時間不一定
   useEffect(() => {
     if (!router.isReady) return;
@@ -159,19 +173,69 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
           </div>
           <div className={style['filter']}>
             <div className={style['select-group']}>
-              <div className={style['filter-city']}>
+              <div className={style['filter-container']}>
+                <select
+                  class="form-select form-select-lg mb-3"
+                  aria-label=".form-select-lg example"
+                  defaultValue="0"
+                  onChange={(e) => {
+                    setCity(e.target.value)
+                  }}
+                >
+                  <option value="0" disabled>
+                    請選擇區域
+                  </option>
+                  <option value="臺北市">臺北市</option>
+                  <option value="新北市">新北市</option>
+                  <option value="臺中市">臺中市</option>
+                  <option value="臺南市">臺南市</option>
+                  <option value="高雄市">高雄市</option>
+                </select>
+              </div>
+              <div className={style['filter-container']}>
+                <select
+                  class="form-select form-select-lg mb-3"
+                  aria-label=".form-select-lg example"
+                  defaultValue="0"
+                  onChange={(e) => {
+                    if (e.target.value !== '0') setGymName(e.target.value)
+                  }}
+                >
+                  <option value="0" disabled>
+                    請選擇場館
+                  </option>
+                  {!gymList ? (
+                    <></>
+                  ) : (
+                    gymList.map((v, i) => {
+                      return (
+                        <option key={i} value={v.gym_name}>
+                          {v.gym_name}
+                        </option>
+                      )
+                    })
+                  )}
+                </select>
+              </div>
+              {/* <div className={style['filter-city']}>
                 <span>高雄市</span>
                 <FaCaretDown />
               </div>
               <div className={style['filter-store']}>
                 <span>高雄鳳山館</span>
                 <FaCaretDown />
-              </div>
+              </div> */}
             </div>
             <Link
-              href="?date=2024-04-30&gym_name=健身工廠 台北信義"
+              // href={`?gym_name=${gymName}`}
+              href={`?date=2024-05-07&gym_name=${gymName}`}
               className={style['search']}
               scroll={false}
+              // onClick={(e) => {
+              //   if (!gymName || gymName === '0') {
+              //     e.preventDefault()
+              //   }
+              // }}
             >
               <FaSearch />
             </Link>

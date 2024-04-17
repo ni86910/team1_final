@@ -77,6 +77,12 @@
         flex-wrap: wrap;
         justify-content: center;
         // width: 70%;
+        .filter-container{
+          max-width:400px ;
+          min-width: 200px;
+          height: 60px;
+          margin-right: 20px;
+        }
         .filter-city,
         .filter-store {
           width: 400px;
@@ -104,7 +110,7 @@
         line-height: 50px;
         color: black;
         transition: all 0.2s;
-
+        margin-bottom: 1rem;
         &:hover {
           background-color: white;
         }

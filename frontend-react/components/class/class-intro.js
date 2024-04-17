@@ -167,11 +167,12 @@ export default function ClassIntro({ setContainerHeight, tab }) {
               class="form-select form-select-lg mb-3"
               aria-label=".form-select-lg example"
               style={{ maxWidth: '280px', minWidth: '180px' }}
+              defaultValue={0}
               onChange={(e) => {
                 setShortcut(e.target.value)
               }}
             >
-              <option selected disabled>
+              <option value="0" disabled>
                 快速前往課程
               </option>
               {!introData ? (
