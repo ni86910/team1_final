@@ -78,7 +78,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     tab === 'right'
       ? setContainerHeight(sectionRef2.current.clientHeight + 50)
       : () => {}
-  }, [tab, show, router.query, scheduleData]) // show 要同時設定高度
+  }, [tab, show,  scheduleData]) // show 要同時設定高度
 
   // 取得課表資料
   const getScheduleData = async (
