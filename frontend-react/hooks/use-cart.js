@@ -9,47 +9,55 @@ export function CartProvider({ children }) {
   // 購物車的商品項目。會在加入時，擴充一個qty屬性代表數量
   const [items, setItems] = useState([])
 
+  const multiAdd = (items, product_id, input_qty = 1) => {
+    return items.map((v, i) => {
+      if (v.product_id === product_id) return { ...v, qty: v.qty + input_qty }
+      else return v
+    })
+  }
+
   // 純函式: 單純改變狀態陣列的函式 ---- START
   // 處理商品數量(qty)遞增的函式
-  const increment = (items, id) => {
+  const increment = (items, product_id) => {
     return items.map((v, i) => {
       // 如果商品物件資料中的id屬性符合傳入的id時，則將qty屬性+1
-      if (v.id === id) return { ...v, qty: v.qty + 1 }
+      if (v.product_id === product_id) return { ...v, qty: v.qty + 1 }
       // 否則直接回傳原本的物件值
       else return v
     })
   }
 
   // 處理商品數量(qty)遞減的函式
-  const decrement = (items, id) => {
+  const decrement = (items, product_id) => {
     return items.map((v, i) => {
       // 如果商品物件資料中的id屬性符合傳入的id時，則將qty屬性-1
-      if (v.id === id) return { ...v, qty: v.qty - 1 }
+      if (v.product_id === product_id) return { ...v, qty: v.qty - 1 }
       // 否則直接回傳原本的物件值
       else return v
     })
   }
 
   // 處理商品刪除的函式
-  const remove = (items, id) => {
+  const remove = (items, product_id) => {
     return items.filter((v, i) => {
-      return v.id !== id
+      return v.product_id !== product_id
     })
   }
 
   // 加入到購物車
-  const add = (items, item) => {
+  const add = (items, item, input_qty = 1) => {
     // 先判斷是否在購物車已經有這個商品
     const foundIndex = items.findIndex((v, i) => {
-      return v.id === item.id
+      return v.product_id === item.product_id
     })
 
     // 如果有存在==> 數量+1
     if (foundIndex > -1) {
-      return increment(items, item.id)
+      // return increment(items, item.product_id)
+      return multiAdd(items, item.product_id, input_qty)
     } else {
       // 如果沒有===> 新增到購物車(需要擴充商品數量屬性qty:1)
-      const newItem = { ...item, qty: 1 }
+      const newItem = { ...item, qty: input_qty }
       // 1 2
       return [...items, newItem]
     }
@@ -58,23 +66,23 @@ export function CartProvider({ children }) {
 
   // 以下為處理函式-----
   // 加入到購物車的處理函式
-  const addItem = (item) => {
-    setItems(add(items, item))
+  const addItem = (item, input_qty) => {
+    setItems(add(items, item, input_qty))
   }
 
   // 遞增數量的處理函式
-  const incrementItemById = (id) => {
-    setItems(increment(items, id))
+  const incrementItemById = (product_id) => {
+    setItems(increment(items, product_id))
   }
 
   // 遞減數量的處理函式
-  const decrementItemById = (id) => {
-    setItems(decrement(items, id))
+  const decrementItemById = (product_id) => {
+    setItems(decrement(items, product_id))
   }
 
   // 移除項目的處理函式
-  const removeItemById = (id) => {
-    setItems(remove(items, id))
+  const removeItemById = (product_id) => {
+    setItems(remove(items, product_id))
   }
 
   // 計算總數量
