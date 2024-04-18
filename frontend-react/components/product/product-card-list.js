@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { API_SERVER } from '../common/config'
 import style from '@/styles/product-list.module.scss'
 import { FaRegHeart, FaCartArrowDown } from 'react-icons/fa6'
+import { useCart } from '@/hooks/use-cart'
 
 export default function ProductCardList() {
   const router = useRouter()
@@ -11,6 +12,8 @@ export default function ProductCardList() {
   const [currentPage, setCurrentPage] = useState(1) // 追蹤當前頁碼
   const [totalPages, setTotalPages] = useState(0) // 新增 totalPage 狀態
   const perPage = 12 // 每頁顯示的資料筆數
+
+  const { addItem } = useCart()
 
   useEffect(() => {
     // 呈現資料的 function
@@ -70,14 +73,27 @@ export default function ProductCardList() {
               </Link>
               <ul className={style['fav-button']}>
                 <li>
-                  <Link href="#" style={{ color: '#ffffff', fontSize: '18px' }}>
+                  <Link
+                    href="#"
+                    style={{ color: '#ffffff', fontSize: '18px' }}
+                    onClick={(e) => {
+                      e.preventDefault()
+                    }}
+                  >
                     <FaRegHeart />
                   </Link>
                 </li>
               </ul>
               <ul className={style['add-cart-button']}>
                 <li>
-                  <Link href="#" style={{ color: '#ffffff', fontSize: '18px' }}>
+                  <Link
+                    href="#"
+                    style={{ color: '#ffffff', fontSize: '18px' }}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      addItem(v)
+                    }}
+                  >
                     <FaCartArrowDown />
                   </Link>
                 </li>
