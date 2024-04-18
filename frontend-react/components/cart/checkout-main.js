@@ -183,7 +183,7 @@ export default function CheckoutMain() {
                 {/* 付款方式 end */}
               </div>
             </div>
-
+            {/* 購物須知 */}
             <div className={style['checkout-BlockContainer']}>
               <div className={style['checkout-MaskContainer']}>
                 <div className={style['checkout-BlockTitle']}>
@@ -240,73 +240,76 @@ export default function CheckoutMain() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        {/* Right 訂單金額總計 */}
-        <div
-          className={`col-lg-4 col-sm-12 ${style['checkout-right-section']}`}
-        >
-          <div className={style['checkout-order']}>
-            <div className={style['checkout-BlockTitle']}>
-              <h5>付款明細</h5>
-              <hr />
-            </div>
-            <ul>
-              <li>
-                商品金額 <span> NT$ 1,091</span>
-              </li>
-              <li>
-                點數折抵 (使用91點) <span>NT$ 1,000</span>
-              </li>
-              <li>
-                運費 <span>NT$ 80</span>
-              </li>
-            </ul>
-            <ul>
-              <li>
-                總計 <span className={style['price-highlight']}>NT$ 1,080</span>
-              </li>
-            </ul>
-            <hr />
-            <div className={style['checkout-products-detail']}>
-              購買清單 (共<span>4</span>件) <IoIosArrowDown />
-            </div>
-          </div>
-          <div className={style['BlockContainer']}>
-            <div className={`row ${style['TermsAndConditionsContainer']}`}>
-              <label
-                htmlFor="membershipTerms"
-                className={`col-1 ${style['CheckBoxContainer']}`}
+            {/* Right 訂單金額總計 */}
+            <div
+              className={`col-lg-4 col-sm-12 ${style['checkout-right-section']}`}
+            >
+              <div className={style['checkout-order']}>
+                <div className={style['checkout-BlockTitle']}>
+                  <h5>付款明細</h5>
+                  <hr />
+                </div>
+                <ul>
+                  <li>
+                    商品金額 <span> NT$ 1,091</span>
+                  </li>
+                  <li>
+                    點數折抵 (使用91點) <span>NT$ 1,000</span>
+                  </li>
+                  <li>
+                    運費 <span>NT$ 80</span>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    總計{' '}
+                    <span className={style['price-highlight']}>NT$ 1,080</span>
+                  </li>
+                </ul>
+                <hr />
+                <div className={style['checkout-products-detail']}>
+                  購買清單 (共<span>4</span>件) <IoIosArrowDown />
+                </div>
+              </div>
+              {/* 同意會員條款 checkbox */}
+              <div className={style['BlockContainer']}>
+                <div className={`row ${style['TermsAndConditionsContainer']}`}>
+                  <label
+                    htmlFor="membershipTerms"
+                    className={`col-1 ${style['CheckBoxContainer']}`}
+                  >
+                    {''}
+                    <input
+                      id="membershipTerms"
+                      name="membershipTerms"
+                      type="checkbox"
+                      className={style['InputCheckBox']}
+                    />
+                    <span className={style['CheckMark']} />
+                  </label>
+                  <label htmlFor="membershipTerms" className={`col-11`}>
+                    我已經閱讀並同意以上購買須知、
+                    <a href="#" className={style['TermsAndConditionsLink']}>
+                      <span>會員權益聲明</span>
+                    </a>{' '}
+                    與{' '}
+                    <a href="#" className={style['TermsAndConditionsLink']}>
+                      <span>隱私權及網站使用條款</span>
+                    </a>
+                  </label>
+                </div>
+              </div>
+              <div
+                className={`row justify-content-center ${style['confirm-order-btn']}`}
               >
-                {''}
-                <input
-                  id="membershipTerms"
-                  name="membershipTerms"
-                  type="checkbox"
-                  className={style['InputCheckBox']}
-                />
-                <span className={style['CheckMark']} />
-              </label>
-              <label htmlFor="membershipTerms" className={`col-11`}>
-                我已經閱讀並同意以上購買須知、
-                <a href="#" className={style['TermsAndConditionsLink']}>
-                  <span>會員權益聲明</span>
-                </a>{' '}
-                與{' '}
-                <a href="#" className={style['TermsAndConditionsLink']}>
-                  <span>隱私權及網站使用條款</span>
-                </a>
-              </label>
+                <Link href="/cart/order-confirmation">
+                  <FaRegCreditCard size={20} /> 送出訂單
+                </Link>
+              </div>
             </div>
           </div>
-          <div
-            className={`row justify-content-center ${style['confirm-order-btn']}`}
-          >
-            <Link href="/cart/order-confirmation">
-              <FaRegCreditCard size={20} /> 送出訂單
-            </Link>
-          </div>
         </div>
+
         {/* Modal */}
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
