@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { API_SERVER } from '../common/config'
 import Link from 'next/link'
 import style from '@/styles/product-list.module.scss'
 
 /* 商品分類 icon */
 import { FaDumbbell } from 'react-icons/fa6'
-import {
-  TbZoomMoney,
-  TbShirtSport,
-  TbCup,
-  TbDeviceWatchBolt,
-  TbShoppingBag,
-} from 'react-icons/tb'
+import { TbZoomMoney, TbShirtSport, TbCup, TbShoppingBag } from 'react-icons/tb'
 
 /* 叉叉 icon */
 import { MdClose } from 'react-icons/md'
@@ -19,6 +15,25 @@ import { MdClose } from 'react-icons/md'
 import { PiArrowLineDownFill, PiArrowLineUpFill } from 'react-icons/pi'
 
 export default function ProductCategory() {
+  const router = useRouter()
+  const [minPrice, setMinPrice] = useState('')
+  const [maxPrice, setMaxPrice] = useState('')
+
+  const handlePriceFilter = () => {
+    // 將最低價格和最高價格傳遞到後端進行篩選
+    const queryParams = {}
+    if (minPrice) {
+      queryParams.minPrice = minPrice
+    }
+    if (maxPrice) {
+      queryParams.maxPrice = maxPrice
+    }
+    router.push({
+      pathname: '/product',
+      query: queryParams,
+    })
+  }
+
   return (
     <>
       {/* 產品分類選單 start */}
@@ -35,104 +50,97 @@ export default function ProductCategory() {
                   <MdClose /> 清除分類條件
                 </Link>
                 <hr />
-                <Link
-                  href="/product-list"
-                  className={style['all-product-link']}
-                >
+                <Link href="/product" className={style['all-product-link']}>
                   All - 全部商品{' '}
                 </Link>
-                <span>(105)</span>
+                <span>(104)</span>
               </li>
-              <li className={style['main-cate']}>
+              <li className={style['main-cate']} key={1}>
                 <Link href="">
                   <FaDumbbell /> 室內健身
                 </Link>
               </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 有氧/重量訓練
-                  <span>(20)</span>
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 瑜珈 <span>(20)</span>
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 拳擊 <span>(20)</span>
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 舞蹈 <span>(20)</span>
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 運動恢復放鬆
-                  <span>(20)</span>
-                </label>
-              </li>
+              <Link href={`/product/?category=${4}`}>
+                <li className={style['cate-name']}>
+                  有氧/重量訓練
+                  <span>(16)</span>
+                </li>
+              </Link>
+              <Link href={`/product/?category=${5}`}>
+                <li className={style['cate-name']}>
+                  瑜珈 <span>(15)</span>
+                </li>
+              </Link>
+              <Link href={`/product/?category=${6}`}>
+                <li className={style['cate-name']}>
+                  拳擊 <span>(7)</span>
+                </li>
+              </Link>
+              <Link href={`/product/?category=${7}`}>
+                <li className={style['cate-name']}>
+                  舞蹈 <span>(1)</span>
+                </li>
+              </Link>
+              <Link href={`/product/?category=${8}`}>
+                <li className={style['cate-name']}>
+                  運動恢復放鬆
+                  <span>(7)</span>
+                </li>
+              </Link>
               <li className={style['main-cate']}>
                 <Link href="">
                   <TbCup /> 營養補給品
                 </Link>
               </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 能量補給 <span>(20)</span>
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 乳清蛋白 <span>(20)</span>
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 能量飲 <span>(20)</span>
-                </label>
-              </li>
+              <Link href={`/product/?category=${9}`}>
+                <li className={style['cate-name']}>
+                  能量補給 <span>(7)</span>
+                </li>
+              </Link>
+              <Link href={`/product/?category=${10}`}>
+                <li className={style['cate-name']}>
+                  乳清蛋白 <span>(8)</span>
+                </li>
+              </Link>
+              <Link href={`/product/?category=${11}`}>
+                <li className={style['cate-name']}>
+                  能量飲 <span>(5)</span>
+                </li>
+              </Link>
               <li className={style['main-cate']}>
                 <Link href="">
                   <TbShirtSport /> 服飾及配件
                 </Link>
               </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 運動服飾 <span>(20)</span>
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 運動包袋 <span>(20)</span>
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 運動水壺 <span>(20)</span>
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 配件專區 <span>(20)</span>
-                </label>
-              </li>
-              <li className={style['main-cate']}>
-                <Link href="">
-                  <TbDeviceWatchBolt /> 智能運動系列
-                </Link>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" /> 智能電子用品 <span>(20)</span>
-                </label>
-              </li>
+              <Link href={`/product/?category=${12}`}>
+                <li className={style['cate-name']}>
+                  運動服飾 <span>(17)</span>
+                </li>
+              </Link>
+              <Link href={`/product/?category=${13}`}>
+                <li className={style['cate-name']}>
+                  運動包袋 <span>(3)</span>
+                </li>
+              </Link>
+              <Link href={`/product/?category=${14}`}>
+                <li className={style['cate-name']}>
+                  運動水壺 <span>(3)</span>
+                </li>
+              </Link>
+
+              <Link href={`/product/?category=${15}`}>
+                <li className={style['cate-name']}>
+                  配件專區 <span>(11)</span>
+                </li>
+              </Link>
+              <Link href={`/product/?category=${16}`}>
+                <li className={style['cate-name']}>
+                  智能電子用品 <span>(4)</span>
+                </li>
+              </Link>
             </ul>
           </li>
-
+          {/* 搜尋價格區間 start */}
           <li className={style['accordion-item']}>
             <input id="s4" className={style['hide']} type="checkbox" />
             <label htmlFor="s4" className={style['accordion-label']}>
@@ -140,9 +148,9 @@ export default function ProductCategory() {
             </label>
             <ul className={style['accordion-child']}>
               <div className={style['sc-original']}>
-                (原始區間：<span>NT$150</span>
+                (原始區間：<span>NT$30</span>
                 <span> - </span>
-                <span>NT$2,290</span>)
+                <span>NT$2,999</span>)
               </div>
               <div className={style['sc-range']}>
                 <div className={style['sc-bdy']}>
@@ -152,8 +160,10 @@ export default function ProductCategory() {
                   <input
                     type="number"
                     min={0}
+                    max={2999}
                     className={style['sc-input']}
-                    defaultValue=""
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
                   />
                 </div>
                 <div className={style['sc-range']}> 至 </div>
@@ -164,8 +174,10 @@ export default function ProductCategory() {
                   <input
                     type="number"
                     min={0}
+                    max={2999}
                     className={style['sc-input']}
-                    defaultValue=""
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
                   />
                 </div>
               </div>
@@ -173,18 +185,24 @@ export default function ProductCategory() {
                 <button
                   type="button"
                   className={`col-4 col ${style['sc-btn-price']}`}
+                  onClick={handlePriceFilter}
                 >
                   篩選
                 </button>
                 <button
                   type="button"
                   className={`col-4 ${style['sc-btn-reset']}`}
+                  onClick={() => {
+                    setMinPrice('')
+                    setMaxPrice('')
+                  }}
                 >
                   重置
                 </button>
               </div>
             </ul>
           </li>
+          {/* 搜尋價格區間 end */}
         </ul>
       </div>
       {/* 產品分類選單 end */}

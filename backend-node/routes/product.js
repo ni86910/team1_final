@@ -5,11 +5,52 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   let keyword = req.query.keyword || "";
+  let category = req.query.category || "";
+  let minPrice = req.query.minPrice || ""; // 新增最低價格參數
+  let maxPrice = req.query.maxPrice || ""; // 新增最高價格參數
+  let orderBy = req.query.orderBy || "product_id ASC"; // 預設排序方式為 product_id ASC
   let where = " WHERE 1 ";
+console.log(category);
   if (keyword) {
     // 避免 SQL injection
     where += ` AND (product_name LIKE ${db.escape(`%${keyword}%`)}) `;
   }
+
+  if (category) {
+    // 將 category 作為條件添加到 SQL 查詢中
+    let categories = Array.isArray(category) ? category : [category] // 確保 category 是陣列
+    const categoryConditions = categories.map(cat => `category_id = ${db.escape(cat)}`).join(" OR ")
+    where += ` AND (${categoryConditions}) `
+  }
+
+  if (minPrice) {
+    where += ` AND (price >= ${db.escape(minPrice)}) `;
+  }
+
+  if (maxPrice) {
+    where += ` AND (price <= ${db.escape(maxPrice)}) `;
+  }
+
+  // 根據前端傳遞的排序方式動態生成 ORDER BY 子句
+  let orderByClause = "";
+  switch (orderBy) {
+    case "newest":
+      orderByClause = "created_at DESC";
+      break;
+    case "oldest":
+      orderByClause = "created_at ASC";
+      break;
+    case "priceHigh":
+      orderByClause = "price DESC";
+      break;
+    case "priceLow":
+      orderByClause = "price ASC";
+      break;
+    default:
+      orderByClause = "product_id ASC";
+      break;
+  }
+
 
   let redirect = ""; // 作為轉換依據的變數
   const perPage = 12; // 每頁最多幾筆
@@ -37,7 +78,8 @@ router.get("/", async (req, res) => {
   }
 
   const limitStart = (page - 1) * perPage;
-  const selectSql = `SELECT * FROM product ${where} ORDER BY product_id ASC LIMIT ${limitStart}, ${perPage}`;
+  const selectSql = `SELECT * FROM product ${where} ORDER BY ${orderByClause} LIMIT ${limitStart}, ${perPage}`;
+
 
   let rows = [];
   
@@ -56,10 +98,13 @@ router.get("/", async (req, res) => {
     rows,
     page,
     keyword,
+    category,
+    orderBy, // 將排序方式返回給前端
     qs: req.query,
   });
 });
 
+// 商品詳細頁面的路徑
 router.get("/:p_id", async (req, res) => {
 
   const p_id = req.params.p_id
