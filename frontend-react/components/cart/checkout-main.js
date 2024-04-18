@@ -183,63 +183,6 @@ export default function CheckoutMain() {
                 {/* 付款方式 end */}
               </div>
             </div>
-            {/* 購物須知 */}
-            <div className={style['checkout-BlockContainer']}>
-              <div className={style['checkout-MaskContainer']}>
-                <div className={style['checkout-BlockTitle']}>
-                  <h5>購物須知</h5>
-                </div>
-                <div className={style['purchase-notes']}>
-                  <p style={{ marginBottom: 0 }}>
-                    <span style={{ backgroundColor: '#FF965A' }}>
-                      訂單成立後，將於三日內(不含六日/國定假日)
-                    </span>
-                  </p>
-                  <p style={{ marginBottom: 0 }}>
-                    <span style={{ backgroundColor: '#FF965A' }}>
-                      安排出貨，出貨狀況可於查看訂單中確認。
-                      <br />
-                    </span>
-                    <span style={{ backgroundColor: '#FF965A' }}>
-                      假期期間訂單量眾多，將於上班日起陸續安排出貨。
-                      <br />
-                    </span>
-                    <span style={{ backgroundColor: '#FF965A' }}>
-                      若您願意等候，歡迎下單選購。
-                      <br />
-                      <br />
-                    </span>
-                  </p>
-                  <span style={{ color: '#0000ff' }}>
-                    * * * 下列購物須知，請您詳閱 * * *
-                  </span>
-                  <p style={{ marginBottom: 0 }}></p>
-                  <p>
-                    1. 訂單一經成立後將於 上班日起
-                    陸續安排出貨，恕無法指定出貨日與配送時間，亦或延後、保留。
-                  </p>
-                  <p>配送時間說明：</p>
-                  <p>【宅配】約２～３天(不含六日及國定假日)</p>
-                  <p>【超商取貨】約２～５個工作天會送達您指定的超商門市</p>
-                  <p>
-                    2. 基於確保消費者購物資料與交易安全等因素，
-                    <span style={{ color: '#ff0000' }}>
-                      訂單成立後將無法變更訂單商品內容，取消訂單也無法恢復
-                    </span>
-                    ，若需更改訂單內容與付款方式，還請您取消訂單後重新下單即可，可至【會員專區→查看訂單→申請取消訂單】。
-                  </p>
-                  <p>
-                    3.
-                    已成立訂單【尚未安排出貨】為前提，如欲申請取消訂單約5~10分鐘後，商品庫存會自動回補庫存，效期內可用之點數也會一併自動歸還至您的帳戶。
-                  </p>
-                  <p>
-                    4. 如遇缺貨或商品無法出貨時，客服人員將會以電話與您聯絡。
-                  </p>
-                  <p>感謝您撥空詳閱本站購物須知</p>
-                  <p />
-                </div>
-              </div>
-            </div>
             {/* Right 訂單金額總計 */}
             <div
               className={`col-lg-4 col-sm-12 ${style['checkout-right-section']}`}
@@ -307,6 +250,63 @@ export default function CheckoutMain() {
                 </Link>
               </div>
             </div>
+            {/* 購物須知 */}
+            <div className={style['checkout-BlockContainer']}>
+              <div className={style['checkout-MaskContainer']}>
+                <div className={style['checkout-BlockTitle']}>
+                  <h5>購物須知</h5>
+                </div>
+                <div className={style['purchase-notes']}>
+                  <p style={{ marginBottom: 0 }}>
+                    <span style={{ backgroundColor: '#FF965A' }}>
+                      訂單成立後，將於三日內(不含六日/國定假日)
+                    </span>
+                  </p>
+                  <p style={{ marginBottom: 0 }}>
+                    <span style={{ backgroundColor: '#FF965A' }}>
+                      安排出貨，出貨狀況可於查看訂單中確認。
+                      <br />
+                    </span>
+                    <span style={{ backgroundColor: '#FF965A' }}>
+                      假期期間訂單量眾多，將於上班日起陸續安排出貨。
+                      <br />
+                    </span>
+                    <span style={{ backgroundColor: '#FF965A' }}>
+                      若您願意等候，歡迎下單選購。
+                      <br />
+                      <br />
+                    </span>
+                  </p>
+                  <span style={{ color: '#0000ff' }}>
+                    * * * 下列購物須知，請您詳閱 * * *
+                  </span>
+                  <p style={{ marginBottom: 0 }}></p>
+                  <p>
+                    1. 訂單一經成立後將於 上班日起
+                    陸續安排出貨，恕無法指定出貨日與配送時間，亦或延後、保留。
+                  </p>
+                  <p>配送時間說明：</p>
+                  <p>【宅配】約２～３天(不含六日及國定假日)</p>
+                  <p>【超商取貨】約２～５個工作天會送達您指定的超商門市</p>
+                  <p>
+                    2. 基於確保消費者購物資料與交易安全等因素，
+                    <span style={{ color: '#ff0000' }}>
+                      訂單成立後將無法變更訂單商品內容，取消訂單也無法恢復
+                    </span>
+                    ，若需更改訂單內容與付款方式，還請您取消訂單後重新下單即可，可至【會員專區→查看訂單→申請取消訂單】。
+                  </p>
+                  <p>
+                    3.
+                    已成立訂單【尚未安排出貨】為前提，如欲申請取消訂單約5~10分鐘後，商品庫存會自動回補庫存，效期內可用之點數也會一併自動歸還至您的帳戶。
+                  </p>
+                  <p>
+                    4. 如遇缺貨或商品無法出貨時，客服人員將會以電話與您聯絡。
+                  </p>
+                  <p>感謝您撥空詳閱本站購物須知</p>
+                  <p />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -315,7 +315,42 @@ export default function CheckoutMain() {
           <Modal.Header closeButton>
             <Modal.Title>請選擇收貨方式</Modal.Title>
           </Modal.Header>
-          <Modal.Body>12345</Modal.Body>
+          <Modal.Body>
+            <div className={`container`}>
+              <div className={`row`}>
+                <label>
+                  <input
+                    type="radio"
+                    className={`my-3 me-2`}
+                    id="cash"
+                    name="payment"
+                    defaultValue={1}
+                  />
+                  7-ELEVEN 取貨
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    className={`my-3 me-2`}
+                    id="cash"
+                    name="payment"
+                    defaultValue={2}
+                  />
+                  全家取貨
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    className={`my-3 me-2`}
+                    id="cash"
+                    name="payment"
+                    defaultValue={3}
+                  />
+                  宅配
+                </label>
+              </div>
+            </div>
+          </Modal.Body>
           <Modal.Footer>
             <Button
               onClick={handleCloseModal}
