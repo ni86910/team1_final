@@ -17,6 +17,7 @@ export default function ClassBook({
   setPopClassBook,
   bookInfo,
   participantData,
+  scheduleData,
 }) {
   const router = useRouter()
   //取得已登入會員 的資訊 沒登入的話auth.member_id會是0
@@ -169,6 +170,8 @@ export default function ClassBook({
                 </span>
               </>
             )}
+            <br />
+            <span>課程費用: {bookInfo.class_fee}</span>
           </div>
           <Link
             className={style['button']}
