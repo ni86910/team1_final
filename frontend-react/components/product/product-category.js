@@ -60,7 +60,13 @@ export default function ProductCategory() {
                   <FaDumbbell /> 室內健身
                 </Link>
               </li>
-              <Link href={`/product/?category=${4}`}>
+              {/* <Link href={`/product/?category=${4}`}> */}
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '4' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
@@ -72,7 +78,12 @@ export default function ProductCategory() {
                   <span>(16)</span>
                 </li>
               </Link>
-              <Link href={`/product/?category=${5}`}>
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '5' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
@@ -83,7 +94,12 @@ export default function ProductCategory() {
                   瑜珈 <span>(15)</span>
                 </li>
               </Link>
-              <Link href={`/product/?category=${6}`}>
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '6' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
@@ -94,7 +110,12 @@ export default function ProductCategory() {
                   拳擊 <span>(7)</span>
                 </li>
               </Link>
-              <Link href={`/product/?category=${7}`}>
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '7' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
@@ -105,7 +126,12 @@ export default function ProductCategory() {
                   舞蹈 <span>(1)</span>
                 </li>
               </Link>
-              <Link href={`/product/?category=${8}`}>
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '8' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
@@ -122,7 +148,12 @@ export default function ProductCategory() {
                   <TbCup /> 營養補給品
                 </Link>
               </li>
-              <Link href={`/product/?category=${9}`}>
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '9' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
@@ -130,10 +161,15 @@ export default function ProductCategory() {
                     fontWeight: `${query.category === '9' ? '800' : ''}`,
                   }}
                 >
-                  能量補給 <span>(7)</span>
+                  乳清蛋白 <span>(8)</span>
                 </li>
               </Link>
-              <Link href={`/product/?category=${10}`}>
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '10' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
@@ -141,10 +177,15 @@ export default function ProductCategory() {
                     fontWeight: `${query.category === '10' ? '800' : ''}`,
                   }}
                 >
-                  乳清蛋白 <span>(8)</span>
+                  能量補給 <span>(7)</span>
                 </li>
               </Link>
-              <Link href={`/product/?category=${11}`}>
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '11' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
@@ -160,7 +201,12 @@ export default function ProductCategory() {
                   <TbShirtSport /> 服飾及配件
                 </Link>
               </li>
-              <Link href={`/product/?category=${12}`}>
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '12' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
@@ -171,7 +217,12 @@ export default function ProductCategory() {
                   運動服飾 <span>(17)</span>
                 </li>
               </Link>
-              <Link href={`/product/?category=${13}`}>
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '13' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
@@ -182,7 +233,12 @@ export default function ProductCategory() {
                   運動包袋 <span>(3)</span>
                 </li>
               </Link>
-              <Link href={`/product/?category=${14}`}>
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '14' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
@@ -194,7 +250,12 @@ export default function ProductCategory() {
                 </li>
               </Link>
 
-              <Link href={`/product/?category=${15}`}>
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '15' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
@@ -205,7 +266,12 @@ export default function ProductCategory() {
                   配件專區 <span>(11)</span>
                 </li>
               </Link>
-              <Link href={`/product/?category=${16}`}>
+              <Link
+                href={{
+                  pathname: '/product',
+                  query: { category: '16' },
+                }}
+              >
                 <li
                   className={style['cate-name']}
                   style={{
