@@ -3,7 +3,7 @@ import style from '@/styles/cart-main.module.scss'
 import Link from 'next/link'
 import { RxPlus, RxMinus, RxCross2 } from 'react-icons/rx'
 
-export function ProductRow({ imgSrc, productName, color, price }) {
+export function ProductRow({ v, imgSrc, productName, color, price }) {
   const [count, setCount] = useState(1) // 使用useState來追蹤每個<tr>的count狀態
 
   const handleDecrease = () => {
