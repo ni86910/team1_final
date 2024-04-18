@@ -67,7 +67,7 @@ export default function WeekCol({
                 <div className={style['class-box-bottom']}>
                   <span>001號教室</span>
                   <br />
-                  <span>{v2.t_name}</span>
+                  <span>{v2.teacher_name}</span>
                 </div>
               </div>
             )

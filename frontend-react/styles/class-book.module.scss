@@ -89,8 +89,10 @@
       width: fit-content;
       font-weight: 600;
       position: relative;
-      top:20px
-
+      top:20px;
+      @include pad {
+        font-size: 48px;
+      }
     }
     .class-name {
       text-align: left;
@@ -184,6 +186,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 40px;
+    flex-wrap: wrap;
+    @include pad {
+      height: 130px;
+      align-items: center;
+      justify-content: center;
+    }
     .participant-count{
       
     }
@@ -191,6 +199,7 @@
       cursor: pointer;
       height: 40px;
       width: 150px;
+      min-width: 150px;
       border-radius: 100px;
       // margin-right: 40px;
       text-align: center;

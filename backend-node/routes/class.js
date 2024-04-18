@@ -7,8 +7,8 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const class_type = req.query.class_type ? req.query.class_type : "靜態課程";
 
-  console.log("class_type:", class_type);
-  console.log(req.query);
+  // console.log("class_type:", class_type);
+  // console.log(req.query);
 
   const sql = `SELECT * FROM class WHERE \`class_type\` = '${class_type}'`;
 
@@ -28,6 +28,28 @@ router.get("/", async (req, res) => {
   } catch (ex) {
     console.log(ex);
   }
+  // console.log("rows", rows);
+  res.json(rows);
+});
+
+// 抓區域內的城市
+router.get("/city", async (req, res) => {
+  const gym_area = req.query.city;
+  const sql = `SELECT gym_name FROM \`gym\` WHERE gym_area = '${gym_area}'`;
+
+  let rows = [];
+  let fields;
+  //用await要捕捉錯誤 要像這樣，用.then 就用.catch
+  try {
+    [rows, fields] = await db.query(sql);
+    if (rows.length === 0) {
+      // 找不到城市就跳轉回課程專區
+      res.redirect("/class");
+      return;
+    }
+  } catch (ex) {
+    console.log(ex);
+  }
   console.log("rows", rows);
   res.json(rows);
 });
@@ -39,7 +61,6 @@ router.get("/schedule", async (req, res) => {
     weekStart: 1, // 1代表星期一，0代表星期天
   });
 
-  console.log("query中的場地名稱", req.query.gym_name);
   // 至少有給場地才要抓資料
 
   // fullData才是最後要輸出的資料，除了rows之外，還包含以下設定的
@@ -58,6 +79,7 @@ router.get("/schedule", async (req, res) => {
     const date = req.query.date || dayjs().format("YYYY-MM-DD");
     //場館名稱
     const gymName = req.query.gym_name;
+    // console.log("gymname",gymName,"date",date);
 
     // const test = dayjs(date).day();
     // const test2 = dayjs("2024-04-08").format("dddd");
@@ -67,6 +89,27 @@ router.get("/schedule", async (req, res) => {
     const sundayOfTheWeek = dayjs(date).endOf("week").format("YYYY-MM-DD"); //那週的最後一天日期
 
     // console.log(gymName);
+
+    // 預設 不篩選 課程類別、課程名稱、老師名稱
+    let classTypeSql = 1;
+    let classNameSql = 1;
+    let teacherNameSql = 1;
+
+    // 若有給課程類別
+    if (req.query.class_type_schedule) {
+      classTypeSql = `class_type = "${req.query.class_type_schedule}" `;
+    }
+    // 若有給課程名稱
+    if (req.query.class_name) {
+      classNameSql = `class_name = "${req.query.class_name}" `;
+    }
+    // 若有給老師名稱
+    if (req.query.teacher_name) {
+      teacherNameSql = `teacher_name = "${req.query.teacher_name}" `;
+    }
+    // classTypeSql = `class_type = "飛輪課程" `
+    console.log("type_schedule", req.query.class_type_schedule);
+    console.log("classNameSql", classNameSql);
 
     const sql = `SELECT class_schedule_id, start_time, end_time,launch, bookable, max_participant, teacher_name, gym_name, gym_address, max_contain, class_name, class_img, class_fee, class_type
   FROM \`class_schedule\`
@@ -79,6 +122,7 @@ router.get("/schedule", async (req, res) => {
   ORDER BY start_time
   `;
 
+    console.log(sql);
     let rows = [];
     let fields;
 
@@ -125,10 +169,89 @@ router.get("/schedule", async (req, res) => {
       fullData.gotData = true;
     }
   }
+  console.log(fullData);
   res.json(fullData);
 });
 
-// 獲得開課收藏資訊
+/*
+// 獲得會員的 所有收藏資訊 暫時沒用到
+router.get("/all_fav", async (req, res) => {
+  const output = {
+    member_id: 0,
+    class_schedule_ids: [],
+    product_ids: [],
+    article_ids: [],
+  };
+
+  console.log("query", req.query);
+  const member_id = req.query.member_id;
+
+  //把會員id跟開課id丟進回船傳
+  output.member_id = +member_id;
+
+  const sql = `SELECT * FROM \`fav\` 
+  WHERE \`member_id\`=${member_id} ;`;
+
+  let rows = [];
+  let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
+  //用await要捕捉錯誤 要像這樣，用.then 就用.catch
+  try {
+    [rows, fields] = await db.query(sql);
+  } catch (ex) {
+    console.log(ex);
+  }
+
+  //把收藏的課程、商品、文章編號 加到陣列中
+  rows.forEach((v, i) => {
+    if (v.class_schedule_id) {
+      output.class_schedule_ids = [
+        ...output.class_schedule_ids,
+        v.class_schedule_id,
+      ];
+    }
+    if (v.product_id) {
+      output.product_ids = [...output.product_ids, v.product_id];
+    }
+    if (v.article_id) {
+      output.article_ids = [...output.article_ids, v.article_id];
+    }
+  });
+
+  console.log("rows", rows);
+  // res.json(rows);
+  res.json(output);
+}); */
+
+// 獲得某A會員的 所有課程收藏(用在收藏列表)
+router.get("/member_all_fav", async (req, res) => {
+  // console.log("query", req.query);
+  const member_id = req.query.member_id || 0;
+
+  const sql = `SELECT fav_id, member_id, class_name, start_time, gym_name, fav_time FROM fav 
+  JOIN class_schedule ON class_schedule.class_schedule_id = fav.class_schedule_id
+  JOIN class ON class_schedule.class_id = class.class_id
+  JOIN gym ON class_schedule.gym_id = gym.gym_id
+  WHERE member_id = ${member_id}`;
+
+  let rows = [];
+  let fields;
+
+  try {
+    [rows, fields] = await db.query(sql);
+  } catch (ex) {
+    console.log(ex);
+  }
+
+  // 開始時間 原本抓出來會是UTC時間，要轉成當地時間，再塞回去
+  rows.map((v, i) => {
+    v.start_time = dayjs(v.start_time).format("YYYY-MM-DD HH:mm");
+    v.fav_time = dayjs(v.fav_time).format("YYYY-MM-DD HH:mm");
+    return v;
+  });
+  res.json(rows);
+});
+
+// 獲得某堂開課 的收藏資訊(用來確認 某A會員 是否有收藏過 某B課程) 用在課程預約頁面
 router.get("/class_fav", async (req, res) => {
   const output = {
     member_id: 0,
@@ -194,10 +317,10 @@ router.post("/add-fav", async (req, res) => {
   const sql = `INSERT INTO \`fav\`(\`member_id\`, \`class_schedule_id\`) 
   VALUES (${member_id},${class_schedule_id})`;
 
-let result
+  let result;
   try {
     [result] = await db.query(sql2, [req.body]);
-    output.addFav = !!result.affectedRows
+    output.addFav = !!result.affectedRows;
   } catch (ex) {
     console.log(ex);
   }
@@ -205,7 +328,7 @@ let result
   res.json(output);
 });
 
-// 刪除的路由
+// 刪除課程收藏的路由
 router.delete("/remove-fav", async (req, res) => {
   const output = {
     member_id: 0,
@@ -227,9 +350,8 @@ router.delete("/remove-fav", async (req, res) => {
   output.member_id = +member_id;
   output.class_schedule_id = +class_schedule_id;
 
-
   const sql = `DELETE FROM fav WHERE member_id=? AND class_schedule_id=? `; // 用問號 會自動跳脫，值 按照順序丟到下方陣列 包成陣列是為了應付所有的SQL語法
-  const [result] = await db.query(sql, [member_id,class_schedule_id]);
+  const [result] = await db.query(sql, [member_id, class_schedule_id]);
 
   res.json(result);
   /*
