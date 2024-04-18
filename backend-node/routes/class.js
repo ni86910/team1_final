@@ -119,9 +119,6 @@ router.get("/schedule", async (req, res) => {
   WHERE start_time > '${mondayOfTheWeek}'
   AND start_time < '${sundayOfTheWeek}'
   AND gym_name = '${gymName}'
-  AND ${classTypeSql}
-  AND ${classNameSql}
-  AND ${teacherNameSql}
   ORDER BY start_time
   `;
     
