@@ -173,45 +173,7 @@ router.get("/schedule", async (req, res) => {
   res.json(fullData);
 });
 
-// 獲得開課收藏資訊
-router.get("/class_fav", async (req, res) => {
-  const output = {
-    member_id: 0,
-    class_schedule_id: 0,
-    alreadyFav: false,
-  };
-
-  console.log("query", req.query);
-  const member_id = req.query.member_id;
-  const class_schedule_id = req.query.class_schedule_id;
-
-  //把會員id跟開課id丟進回船傳
-  output.member_id = +member_id;
-  output.class_schedule_id = +class_schedule_id;
-
-  const sql = `SELECT * FROM \`fav\` 
-  WHERE \`member_id\`=${member_id} 
-  AND \`class_schedule_id\` = ${class_schedule_id};`;
-
-  let rows = [];
-  let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
-  //用await要捕捉錯誤 要像這樣，用.then 就用.catch
-  try {
-    [rows, fields] = await db.query(sql);
-  } catch (ex) {
-    console.log(ex);
-  }
-
-  // 有資料 aka 有收藏
-  if (rows[0]) {
-    output.alreadyFav = true;
-  } else {
-    output.alreadyFav = false;
-  }
-  console.log("rows", rows);
-  res.json(output);
-});
-
+/*
 // 獲得會員的 所有收藏資訊 暫時沒用到
 router.get("/all_fav", async (req, res) => {
   const output = {
@@ -258,9 +220,9 @@ router.get("/all_fav", async (req, res) => {
   console.log("rows", rows);
   // res.json(rows);
   res.json(output);
-});
+}); */
 
-// 獲得會員的所有課程收藏
+// 獲得某A會員的 所有課程收藏(用在收藏列表)
 router.get("/member_all_fav", async (req, res) => {
   // console.log("query", req.query);
   const member_id = req.query.member_id || 0;
@@ -287,6 +249,45 @@ router.get("/member_all_fav", async (req, res) => {
     return v;
   });
   res.json(rows);
+});
+
+// 獲得某堂開課 的收藏資訊(用來確認 某A會員 是否有收藏過 某B課程) 用在課程預約頁面
+router.get("/class_fav", async (req, res) => {
+  const output = {
+    member_id: 0,
+    class_schedule_id: 0,
+    alreadyFav: false,
+  };
+
+  console.log("query", req.query);
+  const member_id = req.query.member_id;
+  const class_schedule_id = req.query.class_schedule_id;
+
+  //把會員id跟開課id丟進回船傳
+  output.member_id = +member_id;
+  output.class_schedule_id = +class_schedule_id;
+
+  const sql = `SELECT * FROM \`fav\` 
+  WHERE \`member_id\`=${member_id} 
+  AND \`class_schedule_id\` = ${class_schedule_id};`;
+
+  let rows = [];
+  let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
+  //用await要捕捉錯誤 要像這樣，用.then 就用.catch
+  try {
+    [rows, fields] = await db.query(sql);
+  } catch (ex) {
+    console.log(ex);
+  }
+
+  // 有資料 aka 有收藏
+  if (rows[0]) {
+    output.alreadyFav = true;
+  } else {
+    output.alreadyFav = false;
+  }
+  console.log("rows", rows);
+  res.json(output);
 });
 
 // 新增課程收藏 資料放在body中
