@@ -212,7 +212,7 @@ router.get("/class_fav", async (req, res) => {
   res.json(output);
 });
 
-// 獲得會員的 所有收藏資訊
+// 獲得會員的 所有收藏資訊 暫時沒用到
 router.get("/all_fav", async (req, res) => {
   const output = {
     member_id: 0,
@@ -261,20 +261,15 @@ router.get("/all_fav", async (req, res) => {
 });
 
 // 獲得會員的所有課程收藏
-router.get("/all_member_fav", async (req, res) => {
-
+router.get("/member_all_fav", async (req, res) => {
   // console.log("query", req.query);
-  const member_id = req.query.member_id;
+  const member_id = req.query.member_id || 0;
 
-  //把會員id跟開課id丟進回船傳
-  output.member_id = +member_id;
-
-  const sql = `SELECT fav_id, member_id, class_name, start_time, gym_name FROM fav 
+  const sql = `SELECT fav_id, member_id, class_name, start_time, gym_name, fav_time FROM fav 
   JOIN class_schedule ON class_schedule.class_schedule_id = fav.class_schedule_id
   JOIN class ON class_schedule.class_id = class.class_id
   JOIN gym ON class_schedule.gym_id = gym.gym_id
   WHERE member_id = ${member_id}`;
-  
 
   let rows = [];
   let fields;
@@ -285,9 +280,12 @@ router.get("/all_member_fav", async (req, res) => {
     console.log(ex);
   }
 
-
-
-
+  // 開始時間 原本抓出來會是UTC時間，要轉成當地時間，再塞回去
+  rows.map((v, i) => {
+    v.start_time = dayjs(v.start_time).format("YYYY-MM-DD HH:mm");
+    v.fav_time = dayjs(v.fav_time).format("YYYY-MM-DD HH:mm");
+    return v;
+  });
   res.json(rows);
 });
 
