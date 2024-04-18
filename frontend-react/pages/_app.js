@@ -7,6 +7,7 @@ import DefaultLayout from '@/components/layout/default-layout'
 import '@/styles/jack-use/carousel.css'
 import '@/styles/jack-use/accordion.css'
 import { AuthContextProvider } from '@/context/auth-context'
+import { CartProvider } from '@/hooks/use-cart'
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -20,8 +21,10 @@ export default function MyApp({ Component, pageProps }) {
     Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>)
 
   return (
-    <AuthContextProvider>
-      {getLayout(<Component {...pageProps} />)}
-    </AuthContextProvider>
+    <CartProvider>
+      <AuthContextProvider>
+        {getLayout(<Component {...pageProps} />)}
+      </AuthContextProvider>
+    </CartProvider>
   )
 }
