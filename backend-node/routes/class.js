@@ -242,20 +242,53 @@ router.get("/all_fav", async (req, res) => {
   //把收藏的課程、商品、文章編號 加到陣列中
   rows.forEach((v, i) => {
     if (v.class_schedule_id) {
-      output.class_schedule_ids=[...output.class_schedule_ids,v.class_schedule_id];
+      output.class_schedule_ids = [
+        ...output.class_schedule_ids,
+        v.class_schedule_id,
+      ];
     }
     if (v.product_id) {
-      output.product_ids=[...output.product_ids,v.product_id];
+      output.product_ids = [...output.product_ids, v.product_id];
     }
     if (v.article_id) {
-      output.article_ids=[...output.article_ids,v.article_id];
+      output.article_ids = [...output.article_ids, v.article_id];
     }
-
   });
 
   console.log("rows", rows);
   // res.json(rows);
   res.json(output);
+});
+
+// 獲得會員的所有課程收藏
+router.get("/all_member_fav", async (req, res) => {
+
+  // console.log("query", req.query);
+  const member_id = req.query.member_id;
+
+  //把會員id跟開課id丟進回船傳
+  output.member_id = +member_id;
+
+  const sql = `SELECT fav_id, member_id, class_name, start_time, gym_name FROM fav 
+  JOIN class_schedule ON class_schedule.class_schedule_id = fav.class_schedule_id
+  JOIN class ON class_schedule.class_id = class.class_id
+  JOIN gym ON class_schedule.gym_id = gym.gym_id
+  WHERE member_id = ${member_id}`;
+  
+
+  let rows = [];
+  let fields;
+
+  try {
+    [rows, fields] = await db.query(sql);
+  } catch (ex) {
+    console.log(ex);
+  }
+
+
+
+
+  res.json(rows);
 });
 
 // 新增課程收藏 資料放在body中
@@ -296,7 +329,7 @@ router.post("/add-fav", async (req, res) => {
   res.json(output);
 });
 
-// 刪除的路由
+// 刪除課程收藏的路由
 router.delete("/remove-fav", async (req, res) => {
   const output = {
     member_id: 0,
