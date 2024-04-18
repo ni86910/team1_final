@@ -10,7 +10,9 @@ router.get("/", async (req, res) => {
   // console.log("class_type:", class_type);
   // console.log(req.query);
 
-  const sql = `SELECT * FROM class WHERE \`class_type\` = '${class_type}'`;
+  const sql = `SELECT * FROM class WHERE \`class_type\` = ${db.escape(
+    class_type
+  )}`;
 
   // 下面不一定長這樣
   // promise處理完後，拿到的是陣列 第一個元素會依 SQL 語法不同而異
@@ -35,7 +37,9 @@ router.get("/", async (req, res) => {
 // 抓區域內的城市
 router.get("/city", async (req, res) => {
   const gym_area = req.query.city;
-  const sql = `SELECT gym_name FROM \`gym\` WHERE gym_area = '${gym_area}'`;
+  const sql = `SELECT gym_name FROM \`gym\` WHERE gym_area = ${db.escape(
+    gym_area
+  )}`;
 
   let rows = [];
   let fields;
@@ -116,9 +120,9 @@ router.get("/schedule", async (req, res) => {
   JOIN \`teacher\` ON class_schedule.teacher_id = teacher.teacher_id
   JOIN \`gym\` ON class_schedule.gym_id = gym.gym_id
   JOIN \`class\` ON  class_schedule.class_id = class.class_id
-  WHERE start_time > '${mondayOfTheWeek}'
-  AND start_time < '${sundayOfTheWeek}'
-  AND gym_name = '${gymName}'
+  WHERE start_time > ${db.escape(mondayOfTheWeek)}
+  AND start_time < ${db.escape(sundayOfTheWeek)}
+  AND gym_name = ${db.escape(gymName)}
   ORDER BY start_time
   `;
 
@@ -226,12 +230,13 @@ router.get("/all_fav", async (req, res) => {
 router.get("/member_all_fav", async (req, res) => {
   // console.log("query", req.query);
   const member_id = req.query.member_id || 0;
+  console.log("member_id", req.query.member_id);
 
   const sql = `SELECT fav_id, member_id, class_name, start_time, gym_name, fav_time FROM fav 
   JOIN class_schedule ON class_schedule.class_schedule_id = fav.class_schedule_id
   JOIN class ON class_schedule.class_id = class.class_id
   JOIN gym ON class_schedule.gym_id = gym.gym_id
-  WHERE member_id = ${member_id}`;
+  WHERE member_id = ${db.escape(member_id)}`;
 
   let rows = [];
   let fields;
@@ -268,8 +273,8 @@ router.get("/class_fav", async (req, res) => {
   output.class_schedule_id = +class_schedule_id;
 
   const sql = `SELECT * FROM \`fav\` 
-  WHERE \`member_id\`=${member_id} 
-  AND \`class_schedule_id\` = ${class_schedule_id};`;
+  WHERE \`member_id\`=${db.escape(member_id)} 
+  AND \`class_schedule_id\` = ${db.escape(class_schedule_id)};`;
 
   let rows = [];
   let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
@@ -315,7 +320,7 @@ router.post("/add-fav", async (req, res) => {
   const sql2 = "INSERT INTO `fav` SET ?";
 
   const sql = `INSERT INTO \`fav\`(\`member_id\`, \`class_schedule_id\`) 
-  VALUES (${member_id},${class_schedule_id})`;
+  VALUES (${db.escape(member_id)},${db.escape(class_schedule_id)})`;
 
   let result;
   try {
