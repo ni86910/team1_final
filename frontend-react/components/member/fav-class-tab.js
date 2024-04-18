@@ -31,37 +31,39 @@ export default function FavClassTab() {
 
   return (
     <>
-      <Table striped bordered hover className={`mt-4 ${style['a-tab']}`}>
-        <thead>
-          <tr>
-            <th>課程名稱</th>
-            <th>開課場館</th>
-            <th>開課時間</th>
-            <th>收藏時間</th>
+      <div style={{ maxHeight: '500px', overflow: 'auto' }}>
+        <Table striped bordered hover className={`mt-4 ${style['a-tab']}`}>
+          <thead style={{ position: 'sticky', top: 0 }}>
+            <tr>
+              <th>課程名稱</th>
+              <th>開課場館</th>
+              <th>開課時間</th>
+              <th>收藏時間</th>
 
-            <th>
-              <FaHeart />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {!allClassFav ? (
-            <></>
-          ) : (
-            allClassFav.map((v, i) => (
-              <tr key={v.fav_id}>
-                <td>{v.class_name}</td>
-                <td>{v.gym_name}</td>
-                <td>{v.start_time}</td>
-                <td>{v.fav_time}</td>
-                <td>
-                  <FaHeart />
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
+              <th>
+                <FaHeart />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {!allClassFav ? (
+              <></>
+            ) : (
+              allClassFav.map((v, i) => (
+                <tr key={v.fav_id}>
+                  <td>{v.class_name}</td>
+                  <td>{v.gym_name}</td>
+                  <td>{v.start_time}</td>
+                  <td>{v.fav_time}</td>
+                  <td>
+                    <FaHeart />
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+      </div>
     </>
   )
 }
