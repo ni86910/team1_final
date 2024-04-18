@@ -26,7 +26,7 @@ export default function FavClassTab() {
     } catch (e) {
       console.log(e)
     }
-  }, [])
+  }, [auth])
   console.log(auth)
 
   return (
