@@ -30,7 +30,7 @@ export default function ProductCategory() {
     }
     router.push({
       pathname: '/product',
-      query: queryParams,
+      query: { ...router.query, maxPrice: maxPrice, minPrice: minPrice },
     })
   }
 
