@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { API_SERVER } from '../common/config'
 import Link from 'next/link'
 import style from '@/styles/product-list.module.scss'
 
@@ -8,14 +7,12 @@ import style from '@/styles/product-list.module.scss'
 import { FaDumbbell } from 'react-icons/fa6'
 import { TbZoomMoney, TbShirtSport, TbCup, TbShoppingBag } from 'react-icons/tb'
 
-/* 叉叉 icon */
-import { MdClose } from 'react-icons/md'
-
 /* 搜尋價格區間icon */
 import { PiArrowLineDownFill, PiArrowLineUpFill } from 'react-icons/pi'
 
 export default function ProductCategory() {
   const router = useRouter()
+  const { pathname, query } = router
   const [minPrice, setMinPrice] = useState('')
   const [maxPrice, setMaxPrice] = useState('')
 
@@ -30,7 +27,7 @@ export default function ProductCategory() {
     }
     router.push({
       pathname: '/product',
-      query: { ...router.query, maxPrice: maxPrice, minPrice: minPrice },
+      query: { ...router.query, ...queryParams },
     })
   }
 
@@ -46,11 +43,14 @@ export default function ProductCategory() {
             </label>
             <ul className={style['accordion-child']}>
               <li>
-                <Link href="#" className={style['reset-filter-btn']}>
-                  <MdClose /> 清除分類條件
-                </Link>
                 <hr />
-                <Link href="/product" className={style['all-product-link']}>
+                <Link
+                  href="/product"
+                  className={style['all-product-link']}
+                  style={{
+                    color: `${pathname === '/product' ? '#EB6234' : '#111111'}`,
+                  }}
+                >
                   All - 全部商品{' '}
                 </Link>
                 <span>(104)</span>
@@ -61,28 +61,58 @@ export default function ProductCategory() {
                 </Link>
               </li>
               <Link href={`/product/?category=${4}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '4' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '4' ? '800' : ''}`,
+                  }}
+                >
                   有氧/重量訓練
                   <span>(16)</span>
                 </li>
               </Link>
               <Link href={`/product/?category=${5}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '5' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '5' ? '800' : ''}`,
+                  }}
+                >
                   瑜珈 <span>(15)</span>
                 </li>
               </Link>
               <Link href={`/product/?category=${6}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '6' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '6' ? '800' : ''}`,
+                  }}
+                >
                   拳擊 <span>(7)</span>
                 </li>
               </Link>
               <Link href={`/product/?category=${7}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '7' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '7' ? '800' : ''}`,
+                  }}
+                >
                   舞蹈 <span>(1)</span>
                 </li>
               </Link>
               <Link href={`/product/?category=${8}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '8' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '8' ? '800' : ''}`,
+                  }}
+                >
                   運動恢復放鬆
                   <span>(7)</span>
                 </li>
@@ -93,17 +123,35 @@ export default function ProductCategory() {
                 </Link>
               </li>
               <Link href={`/product/?category=${9}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '9' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '9' ? '800' : ''}`,
+                  }}
+                >
                   能量補給 <span>(7)</span>
                 </li>
               </Link>
               <Link href={`/product/?category=${10}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '10' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '10' ? '800' : ''}`,
+                  }}
+                >
                   乳清蛋白 <span>(8)</span>
                 </li>
               </Link>
               <Link href={`/product/?category=${11}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '11' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '11' ? '800' : ''}`,
+                  }}
+                >
                   能量飲 <span>(5)</span>
                 </li>
               </Link>
@@ -113,28 +161,58 @@ export default function ProductCategory() {
                 </Link>
               </li>
               <Link href={`/product/?category=${12}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '12' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '12' ? '800' : ''}`,
+                  }}
+                >
                   運動服飾 <span>(17)</span>
                 </li>
               </Link>
               <Link href={`/product/?category=${13}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '13' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '13' ? '800' : ''}`,
+                  }}
+                >
                   運動包袋 <span>(3)</span>
                 </li>
               </Link>
               <Link href={`/product/?category=${14}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '14' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '14' ? '800' : ''}`,
+                  }}
+                >
                   運動水壺 <span>(3)</span>
                 </li>
               </Link>
 
               <Link href={`/product/?category=${15}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '15' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '15' ? '800' : ''}`,
+                  }}
+                >
                   配件專區 <span>(11)</span>
                 </li>
               </Link>
               <Link href={`/product/?category=${16}`}>
-                <li className={style['cate-name']}>
+                <li
+                  className={style['cate-name']}
+                  style={{
+                    color: `${query.category === '16' ? '#EB6234' : ''}`,
+                    fontWeight: `${query.category === '16' ? '800' : ''}`,
+                  }}
+                >
                   智能電子用品 <span>(4)</span>
                 </li>
               </Link>
