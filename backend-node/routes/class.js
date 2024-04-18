@@ -121,7 +121,7 @@ router.get("/schedule", async (req, res) => {
   AND gym_name = '${gymName}'
   ORDER BY start_time
   `;
-    
+
     console.log(sql);
     let rows = [];
     let fields;
@@ -209,6 +209,52 @@ router.get("/class_fav", async (req, res) => {
     output.alreadyFav = false;
   }
   console.log("rows", rows);
+  res.json(output);
+});
+
+// 獲得會員的 所有收藏資訊
+router.get("/all_fav", async (req, res) => {
+  const output = {
+    member_id: 0,
+    class_schedule_ids: [],
+    product_ids: [],
+    article_ids: [],
+  };
+
+  console.log("query", req.query);
+  const member_id = req.query.member_id;
+
+  //把會員id跟開課id丟進回船傳
+  output.member_id = +member_id;
+
+  const sql = `SELECT * FROM \`fav\` 
+  WHERE \`member_id\`=${member_id} ;`;
+
+  let rows = [];
+  let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
+  //用await要捕捉錯誤 要像這樣，用.then 就用.catch
+  try {
+    [rows, fields] = await db.query(sql);
+  } catch (ex) {
+    console.log(ex);
+  }
+
+  //把收藏的課程、商品、文章編號 加到陣列中
+  rows.forEach((v, i) => {
+    if (v.class_schedule_id) {
+      output.class_schedule_ids=[...output.class_schedule_ids,v.class_schedule_id];
+    }
+    if (v.product_id) {
+      output.product_ids=[...output.product_ids,v.product_id];
+    }
+    if (v.article_id) {
+      output.article_ids=[...output.article_ids,v.article_id];
+    }
+
+  });
+
+  console.log("rows", rows);
+  // res.json(rows);
   res.json(output);
 });
 
