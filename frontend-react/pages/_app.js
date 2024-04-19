@@ -7,6 +7,7 @@ import DefaultLayout from '@/components/layout/default-layout'
 import '@/styles/jack-use/carousel.css'
 import '@/styles/jack-use/accordion.css'
 import { AuthContextProvider } from '@/context/auth-context'
+import { ClassFavContextProvider } from '@/context/class-fav-context'
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -21,7 +22,9 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <AuthContextProvider>
-      {getLayout(<Component {...pageProps} />)}
+      <ClassFavContextProvider>
+        {getLayout(<Component {...pageProps} />)}
+      </ClassFavContextProvider>
     </AuthContextProvider>
   )
 }
