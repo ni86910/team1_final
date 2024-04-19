@@ -177,56 +177,74 @@ router.get("/schedule", async (req, res) => {
   res.json(fullData);
 });
 
-/*
-// 獲得會員的 所有收藏資訊 暫時沒用到
+
+// 獲得// 獲得某A會員的 所有課程收藏
 router.get("/all_fav", async (req, res) => {
-  const output = {
-    member_id: 0,
-    class_schedule_ids: [],
-    product_ids: [],
-    article_ids: [],
-  };
+
 
   console.log("query", req.query);
   const member_id = req.query.member_id;
 
-  //把會員id跟開課id丟進回船傳
-  output.member_id = +member_id;
 
-  const sql = `SELECT * FROM \`fav\` 
-  WHERE \`member_id\`=${member_id} ;`;
+  // const sql = `SELECT * FROM \`fav\` 
+  // WHERE \`member_id\`=${member_id} ;`;
+  // const sql2 = `
+  // SELECT * FROM fav 
+  // LEFT JOIN class_schedule on fav.class_schedule_id = class_schedule.class_schedule_id
+  // LEFT JOIN class on class_schedule.class_id = class.class_id
+  // LEFT JOIN article on fav.article_id = article.article_id
+  // LEFT JOIN product on fav.product_id = product.product_id
+  // WHERE 1
+  // AND member_id = ${member_id}`
+
+  const sql3 = `
+  SELECT * FROM fav 
+  LEFT JOIN class_schedule on fav.class_schedule_id = class_schedule.class_schedule_id
+  LEFT JOIN class on class_schedule.class_id = class.class_id
+  LEFT JOIN gym ON class_schedule.gym_id = gym.gym_id
+  WHERE 1
+  AND member_id = ${member_id}
+  `
+
 
   let rows = [];
   let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
   //用await要捕捉錯誤 要像這樣，用.then 就用.catch
   try {
-    [rows, fields] = await db.query(sql);
+    [rows, fields] = await db.query(sql3);
   } catch (ex) {
     console.log(ex);
   }
-
-  //把收藏的課程、商品、文章編號 加到陣列中
-  rows.forEach((v, i) => {
-    if (v.class_schedule_id) {
-      output.class_schedule_ids = [
-        ...output.class_schedule_ids,
-        v.class_schedule_id,
-      ];
-    }
-    if (v.product_id) {
-      output.product_ids = [...output.product_ids, v.product_id];
-    }
-    if (v.article_id) {
-      output.article_ids = [...output.article_ids, v.article_id];
-    }
+  // 開始時間 原本抓出來會是UTC時間，要轉成當地時間，再塞回去
+  rows.map((v, i) => {
+    v.start_time = dayjs(v.start_time).format("YYYY-MM-DD HH:mm");
+    v.end_time = dayjs(v.end_time).format("YYYY-MM-DD HH:mm");
+    v.fav_time = dayjs(v.fav_time).format("YYYY-MM-DD HH:mm");
+    return v;
   });
 
-  console.log("rows", rows);
-  // res.json(rows);
-  res.json(output);
-}); */
+  //把收藏的課程、商品、文章編號 加到陣列中
+  // rows.forEach((v, i) => {
+  //   if (v.class_schedule_id) {
+  //     output.class_schedule_ids = [
+  //       ...output.class_schedule_ids,
+  //       v.class_schedule_id,
+  //     ];
+  //   }
+  //   if (v.product_id) {
+  //     output.product_ids = [...output.product_ids, v.product_id];
+  //   }
+  //   if (v.article_id) {
+  //     output.article_ids = [...output.article_ids, v.article_id];
+  //   }
+  // });
+
+  res.json(rows);
+  // res.json(output);
+}); 
 
 // 獲得某A會員的 所有課程收藏(用在收藏列表)
+/*
 router.get("/member_all_fav", async (req, res) => {
   // console.log("query", req.query);
   const member_id = req.query.member_id || 0;
@@ -254,7 +272,7 @@ router.get("/member_all_fav", async (req, res) => {
     return v;
   });
   res.json(rows);
-});
+}); */
 
 // 獲得某堂開課 的收藏資訊(用來確認 某A會員 是否有收藏過 某B課程) 用在課程預約頁面
 router.get("/class_fav", async (req, res) => {
