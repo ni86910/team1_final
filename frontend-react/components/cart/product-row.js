@@ -96,7 +96,7 @@ export function ProductRow({ v, imgSrc, productName, color, price }) {
               // +
               // notifySA(v.name)
               // 改為以下對話盒，使用者確定後才會執行刪除
-              notifyAndRemove(v.name, v.id)
+              notifyAndRemove(v.product_name, v.product_id)
             }}
           >
             <RxCross2 size={15} /> 移除
