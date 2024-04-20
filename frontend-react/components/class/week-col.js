@@ -18,7 +18,7 @@ export default function WeekCol({
 
   // 抓參與人數
   const getMaxParticipant = async (scheduleId) => {
-    const url = `${API_SERVER}/class/book/${scheduleId}`
+    const url = `${API_SERVER}/class/book-info/${scheduleId}`
     try {
       const r = await fetch(url)
       const data = await r.json()
