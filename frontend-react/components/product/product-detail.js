@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { useCart } from '@/hooks/use-cart'
+
 import Link from 'next/link'
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react'
 import style from '@/styles/product-detail.module.scss'
 import { FaRegHeart, FaPlus, FaCartArrowDown } from 'react-icons/fa6'
 import { RxPlus, RxMinus, RxCross2 } from 'react-icons/rx'
 import { IMG_PATH } from '@/configs'
 import { API_SERVER } from '../common/config'
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -19,6 +22,8 @@ import 'swiper/css/thumbs'
 import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules'
 
 export default function ProductDetail() {
+  const { addItem } = useCart()
+
   const router = useRouter()
   const [products, setProducts] = useState([])
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
@@ -288,6 +293,10 @@ export default function ProductDetail() {
                       <Link
                         href="#"
                         className={`col-6 ${style['add-to-cart-btn']}`}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          addItem(v, count)
+                        }}
                       >
                         加入購物車
                       </Link>
