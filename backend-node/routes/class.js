@@ -454,6 +454,8 @@ router.get("/book-info/:class_schedule_id", async (req, res) => {
   res.json(output);
 });
 
+
+
 // 執行預約課程
 router.get("/book", async (req, res) => {
   const member_id = req.query.member_id;
@@ -486,7 +488,7 @@ VALUES ( ?, ? )
 });
 
 // 取消預約課程
-router.get("/remove-book", async (req, res) => {
+router.delete("/remove-book", async (req, res) => {
   const member_id = req.query.member_id;
   const class_schedule_id = req.query.class_schedule_id;
 
