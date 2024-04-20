@@ -23,8 +23,8 @@ function ClassFav({ favInfo, setToggleBtn, toggleBtn }) {
       text: '無法收藏課程',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#EB6234',
+      cancelButtonColor: 'black',
       confirmButtonText: '前往登入',
       cancelButtonText: '繼續瀏覽',
     }).then((result) => {

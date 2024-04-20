@@ -11,6 +11,15 @@ import NickSelect from '@/components/common/nick-select'
 export default function ClassPage() {
   const router = useRouter()
 
+  // 紀錄目前選擇的縣市
+  const [city, setCity] = useState('')
+
+  // 紀錄該縣市裡面有的場館
+  const [gymList, setGymList] = useState([])
+
+  // 記錄選中的場館
+  const [gymName, setGymName] = useState('')
+
   const [position, setPosition] = useState(
     'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29457.720277696328!2d120.28803630000002!3d22.645769849999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e05acb0d030a1%3A0xeaf475aece122885!2z56Kz5L2Q6bq76YeM6auY6ZuE576O6KGT6aSo5bqX!5e0!3m2!1szh-TW!2stw!4v1712886618960!5m2!1szh-TW!2stw'
   )
@@ -54,6 +63,16 @@ export default function ClassPage() {
   }, [router.isReady, router])
   console.log(classInfo)
 
+  // 抓 該城市中的所有場館
+  useEffect(() => {
+    const url = `${API_SERVER}/class/city?city=${city}`
+    fetch(url)
+      .then((r) => r.json())
+      .then((data) => {
+        setGymList(data)
+      })
+  }, [city])
+
   return (
     <>
       {!classInfo ? (
@@ -94,17 +113,65 @@ export default function ClassPage() {
                 <h2>課表查詢</h2>
               </div>
               <div className={style['select-group']}>
-                <div className={style['select-city']}>
+                <div className={style['filter-container']}>
+                  <select
+                    class="form-select form-select-lg mb-3"
+                    aria-label=".form-select-lg example"
+                    defaultValue="0"
+                    onChange={(e) => {
+                      setCity(e.target.value)
+                    }}
+                  >
+                    <option value="0" disabled>
+                      請選擇區域
+                    </option>
+                    <option value="臺北市">臺北市</option>
+                    <option value="新北市">新北市</option>
+                    <option value="臺中市">臺中市</option>
+                    <option value="臺南市">臺南市</option>
+                    <option value="高雄市">高雄市</option>
+                  </select>
+                </div>
+                <div className={style['filter-container']}>
+                  <select
+                    class="form-select form-select-lg mb-3"
+                    aria-label=".form-select-lg example"
+                    defaultValue="0"
+                    disabled={!gymList ? true : false}
+                    onChange={(e) => {
+                      if (e.target.value !== '0') setGymName(e.target.value)
+                    }}
+                  >
+                    <option value="0" disabled>
+                      請選擇場館
+                    </option>
+                    {!city ? (
+                      <></>
+                    ) : (
+                      gymList.map((v, i) => {
+                        return (
+                          <option key={i} value={v.gym_name}>
+                            {v.gym_name}
+                          </option>
+                        )
+                      })
+                    )}
+                  </select>
+                </div>
+                {/* <div className={style['select-city']}>
                   <span>高雄市</span>
                   <FaCaretDown />
                 </div>
                 <div className={style['select-store']}>
                   <span>大大健身房</span>
                   <FaCaretDown />
-                </div>
+                </div> */}
               </div>
               <div className={style['search-btn']}>
-                <a href="#" className={style['search']}>
+                <a
+                  href={`/class?date=2024-05-07&gym_name=${gymName}`}
+                  className={style['search']}
+                >
                   <FaMagnifyingGlass />
                 </a>
               </div>

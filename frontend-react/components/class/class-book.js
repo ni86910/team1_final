@@ -17,6 +17,7 @@ export default function ClassBook({
   setPopClassBook,
   bookInfo,
   participantData,
+  scheduleData,
 }) {
   const router = useRouter()
   //取得已登入會員 的資訊 沒登入的話auth.member_id會是0
@@ -38,6 +39,24 @@ export default function ClassBook({
     class_schedule_id: 0,
     alreadyFav: false,
   })
+
+  const checkBook = () => {
+    Swal.fire({
+      title: '是否要預約課程?',
+      text: '點擊確定後，將前往付款',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#EB6234',
+      cancelButtonColor: 'black',
+      confirmButtonText: '確定',
+      cancelButtonText: '再考慮一下',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        ;('')
+      }
+    })
+  }
+
   // 抓收藏資料
   useEffect(() => {
     // 取得會員id
@@ -169,6 +188,8 @@ export default function ClassBook({
                 </span>
               </>
             )}
+            <br />
+            <span>課程費用: {bookInfo.class_fee}</span>
           </div>
           <Link
             className={style['button']}
@@ -191,7 +212,7 @@ export default function ClassBook({
                       router.push('/member/login')
                     }
                   })
-                : console.log('收藏課程')
+                : checkBook()
             }}
           >
             立即預約

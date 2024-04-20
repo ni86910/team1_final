@@ -62,6 +62,8 @@ export default function ClassIntro({ setContainerHeight, tab }) {
     shortcut ? router.push(`#${shortcut}`) : ''
   }, [shortcut])
 
+  console.log('introData',introData);
+
   return (
     <>
       <section
@@ -164,14 +166,16 @@ export default function ClassIntro({ setContainerHeight, tab }) {
           <p className={style['category-desc']}>選擇課程以查看更多資訊</p>
           <div className={style['select-container']}>
             <select
+              // data-bs-theme="dark"
               class="form-select form-select-lg mb-3"
               aria-label=".form-select-lg example"
               style={{ maxWidth: '280px', minWidth: '180px' }}
+              defaultValue={0}
               onChange={(e) => {
                 setShortcut(e.target.value)
               }}
             >
-              <option selected disabled>
+              <option value="0" disabled>
                 快速前往課程
               </option>
               {!introData ? (
