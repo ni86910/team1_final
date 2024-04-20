@@ -10,7 +10,7 @@ import { TbZoomMoney, TbShirtSport, TbCup, TbShoppingBag } from 'react-icons/tb'
 /* 搜尋價格區間icon */
 import { PiArrowLineDownFill, PiArrowLineUpFill } from 'react-icons/pi'
 
-export default function ProductCategory() {
+export default function ProductCategory({category, page}) {
   const router = useRouter()
   const { pathname, query } = router
   const [minPrice, setMinPrice] = useState('')
@@ -64,7 +64,7 @@ export default function ProductCategory() {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '4' },
+                  query: { ...router.query, category: '4' },
                 }}
               >
                 <li
@@ -81,7 +81,7 @@ export default function ProductCategory() {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '5' },
+                  query: { ...router.query, category: '5' },
                 }}
               >
                 <li
@@ -113,7 +113,7 @@ export default function ProductCategory() {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '7' },
+                  query: { ...router.query, category: '7' },
                 }}
               >
                 <li

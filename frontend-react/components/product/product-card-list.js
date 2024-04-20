@@ -6,7 +6,14 @@ import style from '@/styles/product-list.module.scss'
 import { FaRegHeart, FaCartArrowDown } from 'react-icons/fa6'
 import { useCart } from '@/hooks/use-cart'
 
-export default function ProductCardList({ perPage, orderBy }) {
+export default function ProductCardList({
+  perPage,
+  orderBy,
+  category,
+  page,
+  setPage,
+  searchKeyword,
+}) {
   const router = useRouter()
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1) // 追蹤當前頁碼
@@ -20,7 +27,7 @@ export default function ProductCardList({ perPage, orderBy }) {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          `${API_SERVER}/product?orderBy=${orderBy}&perPage=${perPage}`,
+          `${API_SERVER}/product?orderBy=${orderBy}&perPage=${perPage}&page=${page}&category=${category}&keyword=${searchKeyword}`,
           { credentials: 'include' }
         )
         if (response.ok) {
@@ -121,12 +128,20 @@ export default function ProductCardList({ perPage, orderBy }) {
                 .map((v, i) => {
                   const p = i + 1
                   const active = p === currentPage ? 'active' : ''
-                  const usp = new URLSearchParams({ ...qs, page: p })
+                  {/* const usp = new URLSearchParams({ ...qs, page: p }) */}
                   // 條件式寫這裡 p > totalPage or p < 1 回傳 null
                   if (p > totalPages || p < 1) return null
                   return (
                     <li className={`page-item ${active}`} key={p}>
-                      <Link className="page-link" href={`?${usp}`}>
+                      <Link
+                        className="page-link"
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          setPage(p)
+                          router.push({ ...router.query, page: page })
+                        }}
+                      >
                         {p}
                       </Link>
                     </li>
