@@ -1,16 +1,36 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import ProductCardList from './product-card-list'
 import ProductCategory from './product-category'
 import style from '@/styles/product-list.module.scss'
 
-
 export default function ProductList() {
+  const router = useRouter()
   const [orderBy, setOrderBy] = useState('default') // 增加一個狀態來追蹤排序方式
+  const [perPage, setPerPage] = useState(12) // 增加一個狀態來追蹤每頁顯示商品數量
 
   // 定義排序改變時的處理函式
   const handleSortChange = (e) => {
-    setOrderBy(e.target.value)
-  }// 更新排序方式
+    // 如果新的排序值不是預設值，則傳遞該值，否則不傳遞
+    const newOrderBy = e.target.value !== 'default' ? e.target.value : null
+    setOrderBy(newOrderBy)
+
+    router.push({
+      pathname: '/product',
+      query: { ...router.query, orderBy: orderBy, perPage: perPage },
+    })
+  }
+
+  // 定義每頁顯示商品數量改變時的處理函式
+  const handlePerPageChange = (e) => {
+    const newPerPage = e.target.value
+    setPerPage(newPerPage)
+
+    router.push({
+      pathname: '/product',
+      query: { ...router.query, orderBy: orderBy, perPage: newPerPage },
+    })
+  }
 
   return (
     <>
@@ -53,15 +73,15 @@ export default function ProductList() {
                       <div
                         className={`col-6 d-flex ${style['shop-product-option-right-qty']}`}
                       >
-                        <select>
-                        <option value="">每頁顯示12個</option>
-                          <option value="">每頁顯示48個</option>
+                        <select value={perPage} onChange={handlePerPageChange}>
+                          <option value="12">每頁顯示12個(預設)</option>
+                          <option value="48">每頁顯示48個</option>
                         </select>
                       </div>
                     </div>
                   </div>
                   {/* 商品排序 End */}
-                  <ProductCardList />
+                  <ProductCardList orderBy={orderBy} perPage={perPage} />
                 </div>
               </div>
             </div>

@@ -6,12 +6,12 @@ import style from '@/styles/product-list.module.scss'
 import { FaRegHeart, FaCartArrowDown } from 'react-icons/fa6'
 import { useCart } from '@/hooks/use-cart'
 
-export default function ProductCardList() {
+export default function ProductCardList({ perPage, orderBy }) {
   const router = useRouter()
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1) // 追蹤當前頁碼
   const [totalPages, setTotalPages] = useState(0) // 新增 totalPage 狀態
-  const perPage = 12 // 每頁顯示的資料筆數
+  // const perPage = 12 // 每頁顯示的資料筆數
 
   const { addItem } = useCart()
 
@@ -20,7 +20,7 @@ export default function ProductCardList() {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          `${API_SERVER}/product${location.search}`,
+          `${API_SERVER}/product?orderBy=${orderBy}&perPage=${perPage}`,
           { credentials: 'include' }
         )
         if (response.ok) {
@@ -85,18 +85,18 @@ export default function ProductCardList() {
                 </li>
               </ul>
               <ul className={style['add-cart-button']}>
-                <li>
-                  <Link
-                    href="#"
-                    style={{ color: '#ffffff', fontSize: '18px' }}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      addItem(v)
-                    }}
-                  >
+                <Link
+                  href="#"
+                  style={{ color: '#ffffff', fontSize: '18px' }}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    addItem(v)
+                  }}
+                >
+                  <li>
                     <FaCartArrowDown />
-                  </Link>
-                </li>
+                  </li>
+                </Link>
               </ul>
               <div className={`mt-3 ${style['product-item-text']}`}>
                 <Link

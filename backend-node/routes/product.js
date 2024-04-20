@@ -53,7 +53,7 @@ console.log(category);
 
 
   let redirect = ""; // 作為轉換依據的變數
-  const perPage = 12; // 每頁最多幾筆
+  const perPage = req.query.perPage || 12; // 從 query 中取得每頁顯示商品數量
   let page = +req.query.page || 1;
   if (page < 1) {
     redirect = "?page=1";
