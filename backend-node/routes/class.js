@@ -387,7 +387,7 @@ router.delete("/remove-fav", async (req, res) => {
 });
 
 // 獲得預約人數資訊
-router.get("/book/:class_schedule_id", async (req, res) => {
+router.get("/book-info/:class_schedule_id", async (req, res) => {
   const output = {
     class_schedule_id: 0,
     max_participant: 0,
@@ -452,6 +452,60 @@ router.get("/book/:class_schedule_id", async (req, res) => {
   output.max_participant = rows2[0]["max_participant"];
 
   res.json(output);
+});
+
+// 執行預約課程
+router.get("/book", async (req, res) => {
+  const member_id = req.query.member_id;
+  const class_schedule_id = req.query.class_schedule_id;
+  let output = {
+    member_id: member_id,
+    class_schedule_id: class_schedule_id,
+    message: "缺少會員id或開課id",
+  };
+
+  const sql = `
+INSERT INTO class_book(class_schedule_id, member_id) 
+VALUES ( ?, ? )
+`;
+  let result;
+  // 有值才做
+  if (member_id && class_schedule_id) {
+    try {
+      result = await db.query(sql, [class_schedule_id, member_id]);
+    } catch (e) {
+      console.log(e);
+    }
+
+    if (result.affectedRows) {
+      output.message = "成功預約";
+      return res.json(result);
+    }
+  }
+  res.json(result);
+});
+
+// 取消預約課程
+router.get("/remove-book", async (req, res) => {
+  const member_id = req.query.member_id;
+  const class_schedule_id = req.query.class_schedule_id;
+
+  const sql = `
+  DELETE FROM class_book 
+  WHERE member_id = ?
+  AND class_schedule_id = ?
+`;
+  // 有值才做
+  if (member_id && class_schedule_id) {
+    let result;
+    try {
+      result = await db.query(sql, [member_id, class_schedule_id]);
+    } catch (e) {
+      console.log(e);
+    }
+    return res.json(result);
+  }
+  res.json({ error: "缺少會員id或開課id" });
 });
 
 // 動態路由 接收課程名稱
