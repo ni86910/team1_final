@@ -40,10 +40,20 @@ export default function ClassBook({
     alreadyFav: false,
   })
 
+  // 預約課程
+  const bookClass = () => {
+    const url = `${API_SERVER}/class/book?member_id=${auth.member_id}&class_schedule_id=${bookInfo.class_schedule_id}`
+    fetch(url)
+      .then((r) => r.json())
+      .then((data) => {
+        console.log(data)
+        checkPay()
+      })
+  }
+
   const checkBook = () => {
     Swal.fire({
       title: '是否要預約課程?',
-      text: '點擊確定後，將前往付款',
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#EB6234',
@@ -52,7 +62,24 @@ export default function ClassBook({
       cancelButtonText: '再考慮一下',
     }).then((result) => {
       if (result.isConfirmed) {
-        ;('')
+        bookClass()
+      }
+    })
+  }
+
+  const checkPay = () => {
+    Swal.fire({
+      title: '是否前往會員中心進行付款',
+      // text: '預約後，將前往會員中心進行付款',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#EB6234',
+      cancelButtonColor: 'black',
+      confirmButtonText: '確定',
+      cancelButtonText: '繼續逛逛',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        router.push('/member/course-records')
       }
     })
   }
@@ -64,31 +91,35 @@ export default function ClassBook({
     const member_id = auth.member_id
 
     const class_schedule_id = bookInfo.class_schedule_id
-    const url = `${API_SERVER}/class/class_fav?member_id=${member_id}&class_schedule_id=${class_schedule_id}`
 
-    try {
-      fetch(url, {
-        method: 'GET', // 可以是 GET、POST、PUT、DELETE 等
-        headers: {
-          'Content-Type': 'application/json', // 設定 Content-Type 為 JSON
-        },
-        // 把會員ID跟該開課ID放到body中 傳給後端
-        // body: JSON.stringify({
-        //   member_id: member_data.member_id,
-        //   class_schedule_id: bookInfo.class_schedule_id,
-        // }), // 將 JavaScript 物件轉換成 JSON 字串
-      })
-        .then((r) => r.json())
-        .then((data) => {
-          console.log('收藏資訊', data)
-          setFavInfo(data)
+    if (member_id && class_schedule_id) {
+      const url = `${API_SERVER}/class/class_fav?member_id=${member_id}&class_schedule_id=${class_schedule_id}`
+
+      try {
+        fetch(url, {
+          method: 'GET', // 可以是 GET、POST、PUT、DELETE 等
+          headers: {
+            'Content-Type': 'application/json', // 設定 Content-Type 為 JSON
+          },
+          // 把會員ID跟該開課ID放到body中 傳給後端
+          // body: JSON.stringify({
+          //   member_id: member_data.member_id,
+          //   class_schedule_id: bookInfo.class_schedule_id,
+          // }), // 將 JavaScript 物件轉換成 JSON 字串
         })
-    } catch (e) {
-      console.log(e)
+          .then((r) => r.json())
+          .then((data) => {
+            console.log('收藏資訊', data)
+            setFavInfo(data)
+          })
+      } catch (e) {
+        console.log(e)
+      }
+      console.log('bookInfo', participantData)
     }
-    console.log('bookInfo', participantData)
   }, [popClassBook, toggleBtn]) // 1.有課程方塊被按到 或2.收藏按鈕被按到 時更新
 
+  console.log('bookInfo', bookInfo)
   return (
     <>
       <Toaster position="top-center" />

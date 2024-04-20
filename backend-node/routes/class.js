@@ -454,7 +454,34 @@ router.get("/book-info/:class_schedule_id", async (req, res) => {
   res.json(output);
 });
 
+// 取得會員 的所有預約課程
+router.get("/all-book", async (req, res) => {
+  const member_id = req.query.member_id;
+  const sql = `  SELECT * FROM class_book 
+  LEFT JOIN class_schedule on class_book.class_schedule_id = class_schedule.class_schedule_id
+  LEFT JOIN class on class_schedule.class_id = class.class_id
+  LEFT JOIN gym ON class_schedule.gym_id = gym.gym_id
+  WHERE 1
+  AND member_id = ${member_id}`;
 
+  let rows = [];
+  let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
+  //用await要捕捉錯誤 要像這樣，用.then 就用.catch
+  try {
+    [rows, fields] = await db.query(sql);
+  } catch (ex) {
+    console.log(ex);
+  }
+  // 開始時間 原本抓出來會是UTC時間，要轉成當地時間，再塞回去
+  rows.map((v, i) => {
+    v.book_date = dayjs(v.book_date).format("YYYY-MM-DD HH:mm");
+    v.start_time = dayjs(v.start_time).format("YYYY-MM-DD HH:mm");
+    v.end_time = dayjs(v.end_time).format("YYYY-MM-DD HH:mm");
+    v.fav_time = dayjs(v.fav_time).format("YYYY-MM-DD HH:mm");
+    return v;
+  });
+  res.json(rows);
+});
 
 // 執行預約課程
 router.get("/book", async (req, res) => {
