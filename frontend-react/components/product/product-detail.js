@@ -211,9 +211,7 @@ export default function ProductDetail() {
                   >
                     <div className={`row ${style['product-detail-text']}`}>
                       <h2>{v.product_name}</h2>
-                      <h4>
-                        NT$ {v.price} <span>NT$ 1,370</span>
-                      </h4>
+                      <h4>NT$ {v.price}</h4>
                     </div>
                     <div className={`row ${style['product-detail-option']}`}>
                       <div
@@ -227,9 +225,7 @@ export default function ProductDetail() {
                         </p>
                         <div className={`${style['choose-spec']}`}>
                           <ul className={`d-flex`}>
-                            <li className={`col-4`}>1</li>
-                            <li className={`col-4`}>2</li>
-                            <li className={`col-4`}>3</li>
+                            <li className={`col-4`}>F</li>
                           </ul>
                         </div>
                       </div>
@@ -334,7 +330,7 @@ export default function ProductDetail() {
             <div className={`col-lg-3 col-md-6 col-sm-6 col-sm-6`}>
               <div className={style['product-item']}>
                 <Link
-                  href="/product-detail"
+                  href={`/product/${products.product_id}`}
                   className={`${style['product-item-pic']} ${style['set-bg']}`}
                 >
                   <img
@@ -376,7 +372,7 @@ export default function ProductDetail() {
             <div className={`col-lg-3 col-md-6 col-sm-6 col-sm-6`}>
               <div className={style['product-item']}>
                 <Link
-                  href="//product-detail"
+                  href={`/product/${products.product_id}`}
                   className={`${style['product-item-pic']} ${style['set-bg']}`}
                 >
                   <img src={`${IMG_PATH}/product_drink_02_00_01.jpg`} alt="" />
@@ -403,7 +399,7 @@ export default function ProductDetail() {
                 </ul>
                 <div className={`mt-3 ${style['product-item-text']}`}>
                   <Link
-                    href="/product/product-detail"
+                    href={`/product/${products.product_id}`}
                     className={`${style['product-item-title']}`}
                   >
                     <p>平衡瑜珈墊11111</p>
@@ -415,7 +411,7 @@ export default function ProductDetail() {
             <div className={`col-lg-3 col-md-6 col-sm-6 col-sm-6`}>
               <div className={style['product-item']}>
                 <Link
-                  href="//product-detail"
+                  href={`/product/${products.product_id}`}
                   className={`${style['product-item-pic']} ${style['set-bg']}`}
                 >
                   <img src={`${IMG_PATH}/product_gym_09_01_00.webp`} alt="" />

@@ -18,6 +18,7 @@ import {
 /* React-icon */
 import { FaHeart } from 'react-icons/fa'
 import ArtFavorite from './mem-articlefav'
+import FavClassTab from './fav-class-tab'
 
 export default function FavoritePage() {
   const { logout } = useAuth()
@@ -108,35 +109,7 @@ export default function FavoritePage() {
                   justify
                 >
                   <Tab eventKey="class-schedule" title="課程收藏">
-                    <Table
-                      striped
-                      bordered
-                      hover
-                      className={`mt-4 ${style['a-tab']}`}
-                    >
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>開課場館</th>
-                          <th>課程名稱</th>
-                          <th>
-                            <FaHeart />
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {classScheduleFavorites.map((fav, index) => (
-                          <tr key={fav.class_id}>
-                            <td>{index + 1}</td>
-                            <td>{fav.class_img}</td>
-                            <td>{fav.class_name}</td>
-                            <td>
-                              <FaHeart />
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
+                    <FavClassTab />
                   </Tab>
                   <Tab eventKey="product" title="商品收藏">
                     <Table striped hover bordered className="mt-4">

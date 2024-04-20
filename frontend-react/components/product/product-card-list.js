@@ -56,6 +56,16 @@ export default function ProductCardList() {
                     v.image.includes(',') ? v.image.split(',')[0] : v.image
                   }`}
                   alt={v.product_name}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.src = `/img/products/${
+                      v.image.includes(',') ? v.image.split(',')[1] : v.image
+                    }`
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.src = `/img/products/${
+                      v.image.includes(',') ? v.image.split(',')[0] : v.image
+                    }`
+                  }}
                 />
               </Link>
               <ul className={style['fav-button']}>
