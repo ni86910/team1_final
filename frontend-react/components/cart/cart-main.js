@@ -134,9 +134,6 @@ export default function CartMain() {
                       商品金額 <span>NT$ 1500</span>
                     </li>
                     <li>
-                      折價券 <span>- NT$ 100</span>
-                    </li>
-                    <li>
                       點數折抵(使用 10 點) <span>- NT$ 10</span>
                     </li>
                     <li>
