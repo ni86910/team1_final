@@ -4,22 +4,19 @@ import ProductCardList from './product-card-list'
 import ProductCategory from './product-category'
 import style from '@/styles/product-list.module.scss'
 
-export default function ProductList({searchKeyword}) {
+export default function ProductList({ searchKeyword }) {
   const router = useRouter()
   const [orderBy, setOrderBy] = useState('default') // 增加一個狀態來追蹤排序方式
   const [perPage, setPerPage] = useState(12) // 增加一個狀態來追蹤每頁顯示商品數量
-  const [category, setCategory] = useState('')
-  const [page, setPage] = useState('')
+  const [page, setPage] = useState(1)
 
   // 定義排序改變時的處理函式
   const handleSortChange = (e) => {
     // 如果新的排序值不是預設值，則傳遞該值，否則不傳遞
     const newOrderBy = e.target.value !== 'default' ? e.target.value : null
-    setOrderBy(newOrderBy)
-
     router.push({
       pathname: '/product',
-      query: { ...router.query, orderBy: orderBy, perPage: perPage },
+      query: { ...router.query, orderBy: newOrderBy },
     })
   }
 
@@ -30,7 +27,7 @@ export default function ProductList({searchKeyword}) {
 
     router.push({
       pathname: '/product',
-      query: { ...router.query, orderBy: orderBy, perPage: newPerPage },
+      query: { ...router.query, perPage: newPerPage },
     })
   }
 

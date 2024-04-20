@@ -10,7 +10,7 @@ import { TbZoomMoney, TbShirtSport, TbCup, TbShoppingBag } from 'react-icons/tb'
 /* 搜尋價格區間icon */
 import { PiArrowLineDownFill, PiArrowLineUpFill } from 'react-icons/pi'
 
-export default function ProductCategory({category, page}) {
+export default function ProductCategory() {
   const router = useRouter()
   const { pathname, query } = router
   const [minPrice, setMinPrice] = useState('')
@@ -97,7 +97,7 @@ export default function ProductCategory({category, page}) {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '6' },
+                  query: { ...router.query, category: '6' },
                 }}
               >
                 <li
@@ -129,7 +129,7 @@ export default function ProductCategory({category, page}) {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '8' },
+                  query: { ...router.query, category: '8' },
                 }}
               >
                 <li
@@ -151,7 +151,7 @@ export default function ProductCategory({category, page}) {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '9' },
+                  query: { ...router.query, category: '9' },
                 }}
               >
                 <li
@@ -167,7 +167,7 @@ export default function ProductCategory({category, page}) {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '10' },
+                  query: { ...router.query, category: '10' },
                 }}
               >
                 <li
@@ -183,7 +183,7 @@ export default function ProductCategory({category, page}) {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '11' },
+                  query: { ...router.query, category: '11' },
                 }}
               >
                 <li
@@ -204,7 +204,7 @@ export default function ProductCategory({category, page}) {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '12' },
+                  query: { ...router.query, category: '12' },
                 }}
               >
                 <li
@@ -220,7 +220,7 @@ export default function ProductCategory({category, page}) {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '13' },
+                  query: { ...router.query, category: '13' },
                 }}
               >
                 <li
@@ -236,7 +236,7 @@ export default function ProductCategory({category, page}) {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '14' },
+                  query: { ...router.query, category: '14' },
                 }}
               >
                 <li
@@ -253,7 +253,7 @@ export default function ProductCategory({category, page}) {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '15' },
+                  query: { ...router.query, category: '15' },
                 }}
               >
                 <li
@@ -269,7 +269,7 @@ export default function ProductCategory({category, page}) {
               <Link
                 href={{
                   pathname: '/product',
-                  query: { category: '16' },
+                  query: { ...router.query, category: '16' },
                 }}
               >
                 <li

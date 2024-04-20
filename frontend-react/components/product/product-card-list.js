@@ -21,13 +21,15 @@ export default function ProductCardList({
   // const perPage = 12 // 每頁顯示的資料筆數
 
   const { addItem } = useCart()
-
+// `${API_SERVER}/product?orderBy=${ob}&perPage=${perPage}&page=${page}&category=${category}&keyword=${searchKeyword}`
   useEffect(() => {
+    const ob = router.query.orderBy
+    // const pp = router.query
     // 呈現資料的 function
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          `${API_SERVER}/product?orderBy=${orderBy}&perPage=${perPage}&page=${page}&category=${category}&keyword=${searchKeyword}`,
+          `${API_SERVER}/product${location.search}`,
           { credentials: 'include' }
         )
         if (response.ok) {
@@ -128,7 +130,9 @@ export default function ProductCardList({
                 .map((v, i) => {
                   const p = i + 1
                   const active = p === currentPage ? 'active' : ''
-                  {/* const usp = new URLSearchParams({ ...qs, page: p }) */}
+                  {
+                    /* const usp = new URLSearchParams({ ...qs, page: p }) */
+                  }
                   // 條件式寫這裡 p > totalPage or p < 1 回傳 null
                   if (p > totalPages || p < 1) return null
                   return (
@@ -139,7 +143,9 @@ export default function ProductCardList({
                         onClick={(e) => {
                           e.preventDefault()
                           setPage(p)
-                          router.push({ ...router.query, page: page })
+                          router.push({
+                            query: { ...router.query, page: p },
+                          })
                         }}
                       >
                         {p}

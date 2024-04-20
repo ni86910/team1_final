@@ -10,6 +10,11 @@ export default function ProductSearch({ setSearchKeyword, searchKeyword }) {
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1) // 追蹤當前頁碼
 
+  // 解決前端路由(網址列)會慢一拍 的問題
+  // searchKeyword 來控制搜尋欄的值，將搜尋欄從原本的行為，
+  // 變成-> 輸入東西，觸發該input的onChange，在onChange事件中，會把輸入的值丟給searchKeyword，並讓input的值由searchKeyword決定
+
+
   // useEffect(() => {
   //   // 呈現資料的 function
   //   const fetchProducts = async () => {
@@ -55,8 +60,12 @@ export default function ProductSearch({ setSearchKeyword, searchKeyword }) {
             <input
               type="text"
               name=""
+              value={searchKeyword}
               placeholder="輸入關鍵字 + Enter..."
               className={style['search-field']}
+              onChange={(e) => {
+                setSearchKeyword(e.target.value)
+              }}
             />
             <button type="submit" className={style['search-icon']}>
               <IoIosSearch />
