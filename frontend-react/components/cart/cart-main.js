@@ -19,8 +19,8 @@ import { IoReturnDownBackOutline } from 'react-icons/io5'
 import { MdShoppingCartCheckout } from 'react-icons/md'
 
 export default function CartMain() {
-  const { items, incrementItemById, decrementItemById, removeItemById } =
-    useCart()
+  // use-cart hook
+  const { items } = useCart()
 
   // 控制點數折抵 toggle button
   const [isToggled, setIsToggled] = useState(false)

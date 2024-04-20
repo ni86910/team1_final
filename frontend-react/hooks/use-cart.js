@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
+import { useAuth } from '@/context/auth-context'
 
 // 1. 建立context
 const CartContext = createContext(null)
@@ -8,6 +9,7 @@ const CartContext = createContext(null)
 export function CartProvider({ children }) {
   // 購物車的商品項目。會在加入時，擴充一個qty屬性代表數量
   const [items, setItems] = useState([])
+  const { auth } = useAuth()
 
   const multiAdd = (items, product_id, input_qty = 1) => {
     return items.map((v, i) => {
@@ -66,6 +68,8 @@ export function CartProvider({ children }) {
 
   // 以下為處理函式-----
   // 加入到購物車的處理函式
+  const cartStorageKey = `Team1_cart_member_${auth.member_id}`
+
   const addItem = (item, input_qty) => {
     setItems(add(items, item, input_qty))
   }
@@ -108,6 +112,23 @@ export function CartProvider({ children }) {
   // https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
   const totalItems = items.reduce((acc, v) => acc + v.qty, 0)
   const totalPrice = items.reduce((acc, v) => acc + v.qty * v.price, 0)
+
+  useEffect(() => {
+    // localStorage 有東西，且items沒東西，就設定給items
+    const str = localStorage.getItem(cartStorageKey)
+    if (str && items.length === 0) {
+      try {
+        const localState = JSON.parse(str)
+        setItems(localState)
+      } catch (ex) {
+        console.log(ex)
+      }
+    }
+    // 如果items不是空的，則把items設定給localStorage
+    if (items.length > 0) {
+      localStorage.setItem(cartStorageKey, JSON.stringify(items))
+    }
+  }, [items])
 
   return (
     <CartContext.Provider

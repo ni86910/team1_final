@@ -21,10 +21,8 @@ export default function MyApp({ Component, pageProps }) {
     Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>)
 
   return (
-    <CartProvider>
-      <AuthContextProvider>
-        {getLayout(<Component {...pageProps} />)}
-      </AuthContextProvider>
-    </CartProvider>
+    <AuthContextProvider>
+      <CartProvider>{getLayout(<Component {...pageProps} />)}</CartProvider>
+    </AuthContextProvider>
   )
 }
