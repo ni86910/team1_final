@@ -23,6 +23,7 @@ import profileRouter from './routes/profile.js'
 import loginRouter from './routes/login.js'
 import logoutRouter from './routes/logout.js'
 import registerRouter from "./routes/register.js";
+import linePayRouter from "./routes/line-pay.js"
 
 
 
@@ -110,6 +111,8 @@ app.use('/', loginRouter)
 app.use('/', logoutRouter)
 
 app.use('/member', registerRouter)
+
+app.use('/line-pay',linePayRouter)
 
 /*
 
