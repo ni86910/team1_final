@@ -23,7 +23,7 @@ export default function WeekCol({
       const r = await fetch(url)
       const data = await r.json()
       setParticipantData(data)
-      console.log(participantData)
+      console.log('participantData', participantData)
     } catch (e) {
       console.log(e)
     }

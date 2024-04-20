@@ -177,19 +177,15 @@ router.get("/schedule", async (req, res) => {
   res.json(fullData);
 });
 
-
 // 獲得// 獲得某A會員的 所有課程收藏
 router.get("/all_fav", async (req, res) => {
-
-
   console.log("query", req.query);
   const member_id = req.query.member_id;
 
-
-  // const sql = `SELECT * FROM \`fav\` 
+  // const sql = `SELECT * FROM \`fav\`
   // WHERE \`member_id\`=${member_id} ;`;
   // const sql2 = `
-  // SELECT * FROM fav 
+  // SELECT * FROM fav
   // LEFT JOIN class_schedule on fav.class_schedule_id = class_schedule.class_schedule_id
   // LEFT JOIN class on class_schedule.class_id = class.class_id
   // LEFT JOIN article on fav.article_id = article.article_id
@@ -204,8 +200,7 @@ router.get("/all_fav", async (req, res) => {
   LEFT JOIN gym ON class_schedule.gym_id = gym.gym_id
   WHERE 1
   AND member_id = ${member_id}
-  `
-
+  `;
 
   let rows = [];
   let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
@@ -241,7 +236,7 @@ router.get("/all_fav", async (req, res) => {
 
   res.json(rows);
   // res.json(output);
-}); 
+});
 
 // 獲得某A會員的 所有課程收藏(用在收藏列表)
 /*
@@ -397,7 +392,7 @@ router.get("/book/:class_schedule_id", async (req, res) => {
     class_schedule_id: 0,
     max_participant: 0,
     current_participant: 0,
-    message: "",
+    message: "沒有人預約此課程",
   };
   // 轉數字
   const class_schedule_id = +req.params.class_schedule_id;
@@ -411,6 +406,12 @@ router.get("/book/:class_schedule_id", async (req, res) => {
   const sql = `SELECT COUNT(*) FROM \`class_book\` WHERE \`class_schedule_id\`= ${db.escape(
     class_schedule_id
   )}`;
+
+  const sqll = `SELECT class_schedule.class_schedule_id, start_time, end_time, launch, bookable, max_participant, teacher_id, gym_id, class_id, book_id FROM class_schedule  
+  LEFT JOIN class_book 
+  ON class_schedule.class_schedule_id = class_book.class_schedule_id
+  WHERE class_schedule.class_schedule_id = ${db.escape(class_schedule_id)}`;
+
   let rows = [];
   let fields;
 
@@ -423,15 +424,16 @@ router.get("/book/:class_schedule_id", async (req, res) => {
   // 開課編號
   output.class_schedule_id = class_schedule_id;
 
-  // 數出來是0筆
-  if (rows[0]["COUNT(*)"] == 0) {
-    output.message = "沒有人預約此課程";
-    return res.json(output);
-  }
+  // // 數出來是0筆
+  // if (rows[0]["COUNT(*)"] !== 0) {
+  //   output.message = "沒有人預約此課程";
+  // }
 
   //有人預約
-  output.message = "此課程預約人數>0";
-  output.current_participant = rows[0]["COUNT(*)"];
+  if (rows[0]["COUNT(*)"] !== 0) {
+    output.message = "此課程預約人數>0";
+    output.current_participant = rows[0]["COUNT(*)"];
+  }
 
   // 抓最大開課人數
   const sql2 = `SELECT * FROM \`class_schedule\` WHERE \`class_schedule_id\`= ${db.escape(
