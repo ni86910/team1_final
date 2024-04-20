@@ -1,43 +1,5 @@
 /* 手風琴容器的樣式 */
-.accordion-container {
-  margin: 0px; /* 上下間距 */
-  overflow: hidden; /* 隱藏超出部分 */
-}
 
-/* 手風琴標題的樣式 */
-.accordion-header {
-  padding: 12px; /* 填充 */
-  background-color: white;
-  display: flex; /* Flexbox 布局 */
-  justify-content: space-between; /* 子元素兩端對齊 */
-  align-items: center; /* 垂直居中 */
-  border-bottom: 1px solid white;/* 底部邊框 */
-  font-weight: bold; /* 粗體 */
-  color: black;
-}
-.accordion-header.active {
-  display: flex; /* Flexbox 布局 */
-  justify-content: space-between; /* 子元素兩端對齊 */
-  align-items: center; /* 垂直居中 */
-  background-color: #EB6234; /* 更改背景顏色 */
-  color: white; /* 更改字體顏色 */
-}
-
-/* 手風琴按鈕的樣式 */
-.accordion-btn { 
-    background-color: none; /* 無背景 */
-    border: none; /* 無邊框 */
-    font-size: 1.2rem; /* 字體大小 */
-    padding: 0; /* 無填充 */
-    cursor: pointer; /* 鼠標變為手型 */
-    outline: none;  /*無焦點樣式 */
-    color: black;
-}
-
-
-/* 手風琴答案的樣式 */
-.answers {
-  padding: 12px; /* 填充 */
-  /* background-color: #E6E6E6;  */
-  margin: 0; /* 無間距 */
+.custom-tab-title {
+  color: black; /* 更改標題文本的顏色 */
 }

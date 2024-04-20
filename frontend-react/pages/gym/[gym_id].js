@@ -188,7 +188,7 @@ export default function GymDetail() {
                   以下為最新公告，包含課程異動調整、營業時間異動與輔具公告等等
                 </p>
               </div>
-              <div className="row">
+              <div className="row" style={{ marginBottom: 20 }}>
                 {accordion.map((curElem) => {
                   const { id } = curElem
                   return <Myaccordion key={id} {...curElem} />

@@ -132,7 +132,7 @@ export default function ArticleDetail() {
     // const member_data = JSON.parse(localStorage.getItem('Fit_U-auth'))
     const member_id = auth.member_id
     const article_id = router.query.article_id
-
+    console.log('router.query', router.query)
     const url = `${API_SERVER}/article/get-fav?member_id=${member_id}&article_id=${article_id}`
 
     try {
@@ -150,7 +150,7 @@ export default function ArticleDetail() {
     } catch (e) {
       console.log(e)
     }
-  }, [toggleBtn])
+  }, [toggleBtn, router.isReady])
 
   return (
     <>

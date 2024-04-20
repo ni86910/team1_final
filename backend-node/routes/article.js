@@ -24,11 +24,7 @@ router.get("/", async (req, res) => {
   console.log("rows", rows);
   res.json(rows);
 });
-// localhost:3001/article/66
-// localhost:3001/article/get-fav
 
-// 收藏"/get-fav"
-// localhost:3001/article/get-fav?member_id=${XX}&article_id=${YY}
 router.get("/get-fav", async (req, res) => {
   const output = {
     member_id: 0,
@@ -104,7 +100,7 @@ router.post("/add-fav", async (req, res) => {
   res.json(output);
 });
 
-// 刪除的路由
+// 刪除收藏的路由
 router.delete("/del-fav", async (req, res) => {
   const output = {
     member_id: 0,

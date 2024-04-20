@@ -89,13 +89,14 @@ function ArticleFav({ favInfo, setToggleBtn, toggleBtn }) {
       notMember()
       return
     }
-    // 已經收藏過了 則用post發fetch
+
     if (favInfo.alreadyFav) {
-      console.log('取消收藏')
+      console.log('已取消收藏')
+      alert('已取消收藏')
       removeFav()
     } else {
-      // 還沒收藏過，則 用DELETE 發fetch
-      console.log('收藏')
+      console.log('已加入收藏')
+      alert('已加入收藏')
       addFav()
     }
   }

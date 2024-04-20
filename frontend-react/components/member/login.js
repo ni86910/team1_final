@@ -2,9 +2,8 @@ import { useState } from 'react'
 import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
 import style from '@/styles/login.module.scss'
-import Image from 'next/image'
 import Link from 'next/link'
-
+import GoogleLogin from './google-login'
 import { FaStarOfLife } from 'react-icons/fa6'
 
 export default function LoginPage() {
@@ -111,20 +110,7 @@ export default function LoginPage() {
                             <span className="glyphicon glyphicon-off" />
                             登入
                           </button>
-                          <button
-                            type="submit"
-                            className={`btn ${style['google-btn']}`}
-                          >
-                            <span className="glyphicon glyphicon-remove" />
-                            <Image
-                              className={style['google-img']}
-                              src="/img/member/google.png"
-                              width={20}
-                              height={20}
-                              alt="google"
-                            />
-                            使用Google快速登入
-                          </button>
+                          <GoogleLogin />
                           <br />
                           <br />
                           <div className={style['straight-line']} />

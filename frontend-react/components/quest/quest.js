@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import style from '@/styles/jack-use/accordion.module.css'
 import Myaccordion from '../accordion/Myaccordion'
 import { questions } from '@/pages/api/accordion-data-quest'
 import { questions1 } from '@/pages/api/accordion-data-coach'
@@ -25,23 +26,38 @@ export default function Quest() {
         </Row>
 
         <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" justify>
-          <Tab eventKey="home" title="場館相關">
-            {data.map((curElem) => {
-              const { id } = curElem
-              return <Myaccordion key={id} {...curElem} />
-            })}
+          <Tab
+            eventKey="home"
+            title={<span className={style['custom-tab-title']}>場館相關</span>}
+          >
+            <div className="mt-4">
+              {data.map((curElem) => {
+                const { id } = curElem
+                return <Myaccordion key={id} {...curElem} />
+              })}
+            </div>
           </Tab>
-          <Tab eventKey="coach" title="教練相關">
-            {data1.map((curElem) => {
-              const { id } = curElem
-              return <Myaccordion key={id} {...curElem} />
-            })}
+          <Tab
+            eventKey="coach"
+            title={<span className={style['custom-tab-title']}>教練相關</span>}
+          >
+            <div className="mt-4">
+              {data1.map((curElem) => {
+                const { id } = curElem
+                return <Myaccordion key={id} {...curElem} />
+              })}
+            </div>
           </Tab>
-          <Tab eventKey="allquest" title="其他問題">
-            {data2.map((curElem) => {
-              const { id } = curElem
-              return <Myaccordion key={id} {...curElem} />
-            })}
+          <Tab
+            eventKey="allquest"
+            title={<span className={style['custom-tab-title']}>其他問題</span>}
+          >
+            <div className="mt-4">
+              {data2.map((curElem) => {
+                const { id } = curElem
+                return <Myaccordion key={id} {...curElem} />
+              })}
+            </div>
           </Tab>
         </Tabs>
       </Container>
