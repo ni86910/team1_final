@@ -63,7 +63,6 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
   //當tab跟 show改變時，設定container高度 為當前section(右側section)的高度
   useEffect(() => {
     console.log('right-height:', sectionRef2.current.clientHeight)
-
     tab === 'right'
       ? setContainerHeight(sectionRef2.current.clientHeight + 50)
       : () => {}
@@ -108,7 +107,6 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
         console.log('router.query物件:', router.query)
       })
     }
-
     return () => {
       controller.abort() // 取消未完成的 ajax
     }
@@ -241,11 +239,6 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                   { scroll: false }
                 )
               }}
-              // onClick={(e) => {
-              //   if (!gymName || gymName === '0') {
-              //     e.preventDefault()
-              //   }
-              // }}
             >
               <FaSearch />
             </Link>
@@ -255,72 +248,6 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
           <></>
         ) : (
           <>
-            {/* 
-            <div className={style['second-filter']}>
-              <div className={style['select-group']}>
-                <div className={style['class-category']}>
-                  <select
-                    class="form-select form-select-lg mb-3"
-                    aria-label=".form-select-lg example"
-                    defaultValue="0"
-                    onChange={(e) => {
-                      // setClasstype_schedule(e.target.value)
-                      router.push(
-                        {
-                          query: {
-                            ...router.query,
-                            class_type_schedule: e.target.value,
-                          },
-                        },
-                        undefined,
-                        { scroll: false }
-                      )
-                    }}
-                  >
-                    <option value="0" disabled>
-                      選擇類別
-                    </option>
-                    <option value="靜態課程">靜態課程</option>
-                    <option value="飛輪課程">飛輪課程</option>
-                    <option value="心肺訓練課程">心肺訓練課程</option>
-                    <option value="舞蹈課程">舞蹈課程</option>
-                    <option value="radical課程">radical課程</option>
-                  </select>
-                </div>
-                <div className={style['class-name']}>
-                  <select
-                    class="form-select form-select-lg mb-3"
-                    aria-label=".form-select-lg example"
-                    defaultValue="0"
-                    onChange={(e) => {
-                      // setClasstype_schedule(e.target.value)
-                      // setClassName(e.target.value)
-                      router.push(
-                        {
-                          query: {
-                            ...router.query,
-                            class_name: e.target.value,
-                          },
-                        },
-                        undefined,
-                        { scroll: false }
-                      )
-                    }}
-                  >
-                    <option value="0" disabled>
-                      選擇課程
-                    </option>
-                    <option value="哈達瑜珈">哈達瑜珈</option>
-                    <option value="順位瑜珈">順位瑜珈</option>
-                  </select>
-                </div>
-                <div className={style['class-teacher']}>
-                  <span>所有老師</span>
-                  <FaCaretDown />
-                </div>
-              </div>
-            </div>
- */}
             <div className={style['schedule']}>
               <div className={style['list-head']}>
                 <Link
