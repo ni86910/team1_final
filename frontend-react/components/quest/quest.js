@@ -5,6 +5,7 @@ import { questions } from '@/pages/api/accordion-data-quest'
 import { questions1 } from '@/pages/api/accordion-data-coach'
 import { questions2 } from '@/pages/api/accordion-data-allquest'
 import TOP from '@/components/TOPbutton/top'
+import { RiQuestionnaireLine } from 'react-icons/ri'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Tab from 'react-bootstrap/Tab'
@@ -19,10 +20,15 @@ export default function Quest() {
     <>
       <Container style={{ marginBottom: 20 }}>
         <Row>
-          <h3 className="mt-4 text-center">常見問題</h3>
-          <h5 className="mt-4 text-center" style={{ marginBottom: 15 }}>
-            請透過下方分類快速找尋您的疑問，若仍無法獲得解答，您可以透過聯繫我們單元，直接與我們聯繫！
-          </h5>
+          <div className="section-title">
+            <h3 className="mt-4 text-center">
+              <RiQuestionnaireLine />
+              常見問題
+            </h3>
+            <span className="mt-4" style={{ color: '#EB6234' }}>
+              請透過下方分類快速找尋您的疑問，若仍無法獲得解答，您可以透過聯繫我們單元，直接與我們聯繫！
+            </span>
+          </div>
         </Row>
 
         <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" justify>
