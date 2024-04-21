@@ -2,7 +2,7 @@ import express from "express";
 import db from "./../utils/mysql2-connect.js";
 import jsonwebtoken from "jsonwebtoken";
 const router = express.Router();
-const { user } = db.models;
+// const { user } = db.models;
 
 // 定義安全的私鑰字串
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;

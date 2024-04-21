@@ -5,6 +5,7 @@ import TOP from '@/components/TOPbutton/top'
 import { API_SERVER } from '@/configs/index'
 import style from '@/styles/jack-use/button.module.css'
 import Swiper from '@/components/team/swiper/swiper'
+import { RiTeamFill } from 'react-icons/ri'
 
 export default function Team() {
   const router = useRouter()
@@ -61,11 +62,9 @@ export default function Team() {
       {/* About Section Begin */}
 
       <div className="container">
-        <div className="row" style={{ marginTop: 20 }}>
-          <div className="col-lg-12">
-            <div className="about__pic">
-              <Swiper />
-            </div>
+        <div className="row">
+          <div className="mt-4 text-center" style={{ marginTop: 20 }}>
+            <Swiper />
           </div>
         </div>
       </div>
@@ -77,8 +76,13 @@ export default function Team() {
         <div className="row">
           <div className="col-lg-12">
             <div className="section-title">
-              <span style={{ color: '#EB6234' }}>教練團隊</span>
-              <h2>Meet Our 教練團隊</h2>
+              <h3 className="mt-4 text-center">
+                <RiTeamFill />
+                教練團隊
+              </h3>
+              <span className="mt-4" style={{ color: '#EB6234' }}>
+                教練團隊
+              </span>
             </div>
             <form
               action="get"

@@ -3,7 +3,7 @@ import db from "./../utils/mysql2-connect.js";
 import dayjs from "dayjs";
 const router = express.Router();
 
-// 獲得// 獲得某A會員的 所有課程收藏
+// 獲得// 獲得某A會員的 所有文章收藏
 router.get("/all-fav", async (req, res) => {
   console.log("query", req.query);
   const member_id = req.query.member_id;

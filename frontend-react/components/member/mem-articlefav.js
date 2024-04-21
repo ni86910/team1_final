@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '@/context/auth-context' //登出
 import { useRouter } from 'next/router'
 import { API_SERVER } from '@/configs/index'
+import Link from 'next/link'
+import Swal from 'sweetalert2'
 /* React-Bootstrap */
 import { Table } from 'react-bootstrap'
 
@@ -63,7 +65,7 @@ export default function ArtFavorite() {
       if (response.ok) {
         // 成功刪除後更新狀態以重新加載收藏資料
         setToggleBtn(!toggleBtn)
-        alert('已成功取消收藏')
+        Swal.fire('已成功取消收藏!')
       } else {
         console.error('取消收藏失敗')
       }
@@ -101,12 +103,23 @@ export default function ArtFavorite() {
           <tbody>
             {articleData.map((v, i) => (
               <tr key={i}>
-                <td>{v.title}</td>
+                <td>
+                  <Link
+                    style={{ color: 'black' }}
+                    href={`/article/${v.article_id}`}
+                  >
+                    {v.title}
+                  </Link>
+                </td>
                 <td>{v.fav_time}</td>
                 <td>
-                  <button onClick={() => handleRemoveFavorite(v.fav_id)}>
+                  <div
+                    role="presentation"
+                    onClick={() => handleRemoveFavorite(v.fav_id)}
+                    style={{ textAlign: 'center' }}
+                  >
                     <FaHeart />
-                  </button>
+                  </div>
                 </td>
               </tr>
             ))}
