@@ -81,7 +81,7 @@ export default function Team() {
                 教練團隊
               </h3>
               <span className="mt-4" style={{ color: '#EB6234' }}>
-                教練團隊
+                教練團隊能讓您事半功倍，用最少的時間達成您心目中的體態，讓每次的努力不會白費。
               </span>
             </div>
             <form
