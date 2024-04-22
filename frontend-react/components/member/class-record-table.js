@@ -12,24 +12,25 @@ import { useRouter } from 'next/router'
 export default function ClassRecordTable() {
   const router = useRouter()
   const { auth } = useAuth()
-  const [allBook, setAllBook] = useState([])
+  // const [allBook, setAllBook] = useState([])
+  const { allBook, checkRemoveBook } = useClassFav()
 
-  // 抓會員所有預約資料
-  useEffect(() => {
-    if (auth.member_id) {
-      const url = `${API_SERVER}/class/all-book?member_id=${auth.member_id}`
-      try {
-        fetch(url)
-          .then((r) => r.json())
-          .then((data) => {
-            setAllBook(data)
-            console.log(data)
-          })
-      } catch (e) {
-        console.log(e)
-      }
-    }
-  }, [router.isReady, auth])
+  // // 抓會員所有預約資料
+  // useEffect(() => {
+  //   if (auth.member_id) {
+  //     const url = `${API_SERVER}/class/all-book?member_id=${auth.member_id}`
+  //     try {
+  //       fetch(url)
+  //         .then((r) => r.json())
+  //         .then((data) => {
+  //           setAllBook(data)
+  //           console.log(data)
+  //         })
+  //     } catch (e) {
+  //       console.log(e)
+  //     }
+  //   }
+  // }, [router.isReady, auth])
 
   return (
     <>
@@ -54,8 +55,30 @@ export default function ClassRecordTable() {
                     <td>{v.class_name}</td>
                     <td>{v.gym_name}</td>
                     <td>{v.start_time}</td>
-                    <td>未付款</td>
-                    <td>取消預約</td>
+                    <td>
+                      {v.paid ? (
+                        '已付款'
+                      ) : (
+                        <>
+                          <Link href="">前往付款</Link>
+                        </>
+                      )}
+                    </td>
+                    <td>
+                      <Link
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          checkRemoveBook(
+                            auth.member_id,
+                            v.class_schedule_id,
+                            '/member/course-records'
+                          )
+                        }}
+                      >
+                        取消
+                      </Link>
+                    </td>
                   </tr>
                 )
               })

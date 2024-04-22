@@ -15,10 +15,13 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import WeekCol from './week-col'
 import ClassBook from './class-book'
+import { useClassFav } from '@/context/class-fav-context'
 
 export default function ClassSchedule({ setContainerHeight, tab }) {
   dayjs.extend(weekday)
   const router = useRouter()
+
+  const { toggleBtn, setToggleBtn } = useClassFav()
   // state 接收課表資料
   const [scheduleData, setScheduleData] = useState({
     mondayOfTheWeek: '',

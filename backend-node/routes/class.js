@@ -516,9 +516,9 @@ VALUES ( ?, ? )
 
 // 取消預約課程
 router.delete("/remove-book", async (req, res) => {
-  const member_id = req.query.member_id;
-  const class_schedule_id = req.query.class_schedule_id;
-
+  const member_id = req.body.member_id;
+  const class_schedule_id = req.body.class_schedule_id;
+console.log(member_id,class_schedule_id);
   const sql = `
   DELETE FROM class_book 
   WHERE member_id = ?

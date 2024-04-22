@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import style from '@/styles/class-week-col.module.scss'
 import { useRouter } from 'next/router'
 import { API_SERVER } from '@/configs'
+import { useClassFav } from '@/context/class-fav-context'
 
 export default function WeekCol({
   scheduleData,
@@ -15,6 +16,8 @@ export default function WeekCol({
   const router = useRouter()
   // 取得單周colum的參照
   const weekRef = useRef()
+
+  const { toggleBtn, setToggleBtn } = useClassFav()
 
   // 抓參與人數
   const getMaxParticipant = async (scheduleId) => {
@@ -57,6 +60,7 @@ export default function WeekCol({
                   setPopClassBook(true)
                   setBookInfo(v2)
                   getMaxParticipant(v2.class_schedule_id)
+                  setToggleBtn(!toggleBtn)
                 }}
               >
                 <div className={style['class-box-top']}>
