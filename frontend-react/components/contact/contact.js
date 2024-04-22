@@ -131,7 +131,8 @@ export default function Contact() {
                     <div className="col-lg-12" style={{ marginBottom: 20 }}>
                       <select
                         name="consult_type"
-                        className={style['select']}
+                        className="form-select form-select-lg mb-3"
+                        style={{ width: 230 }}
                         onChange={handleChange}
                       >
                         <option value="" selected="selected">

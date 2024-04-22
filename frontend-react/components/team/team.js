@@ -12,6 +12,8 @@ export default function Team() {
   // 用狀態接收fetch來的介紹資料
   const [teamData, setTeamData] = useState([])
   const [selectedTeam, setSelectedTeam] = useState('全部總類')
+  const [selectedName, setSelectedName] = useState('') // 新增的选择姓名的状态
+  const [coachNames, setCoachNames] = useState([]) // 保存教练姓名列表
 
   useEffect(() => {
     fetch(`${API_SERVER}/team`, { credentials: 'include' })
@@ -19,9 +21,16 @@ export default function Team() {
       .then((data) => {
         console.log(data)
         setTeamData(data)
+
+        // 获取教练姓名列表
+        const names = data.map((item) => item.teacher_name)
+        setCoachNames(names)
       })
     if (router.query.team) {
       setSelectedTeam(router.query.team)
+    }
+    if (router.query.name) {
+      setSelectedName(router.query.name)
     }
   }, [router.isReady])
 
@@ -33,7 +42,22 @@ export default function Team() {
     router.push(
       {
         pathname: '/team',
-        query: { team: selectedValue },
+        query: { team: selectedValue, name: selectedName },
+      },
+      undefined,
+      { scroll: false }
+    )
+  }
+
+  const handleNameChange = (e) => {
+    const selectedValue = e.target.value
+    setSelectedName(selectedValue) // 更新选择的教练姓名
+
+    // 更新 URL 参数
+    router.push(
+      {
+        pathname: '/team',
+        query: { team: selectedTeam, name: selectedValue },
       },
       undefined,
       { scroll: false }
@@ -41,7 +65,10 @@ export default function Team() {
   }
 
   const filteredTeamData = teamData.filter((item) => {
-    return selectedTeam === '全部總類' || item.teacher_type === selectedTeam // 根据选择的区域进行过滤
+    return (
+      (selectedTeam === '全部總類' || item.teacher_type === selectedTeam) &&
+      (selectedName === '' || item.teacher_name === selectedName)
+    ) // 根据选择的区域和姓名进行过滤
   })
 
   //文章分段
@@ -93,7 +120,7 @@ export default function Team() {
                 <select
                   name="area"
                   id="area"
-                  className={style['select']}
+                  className="form-select form-select-lg mb-3"
                   data-type="select"
                   data-width="medium"
                   value={selectedTeam}
@@ -102,8 +129,41 @@ export default function Team() {
                   <option value="全部總類" selected="selected">
                     全部總類
                   </option>
-                  <option value="教練">教練</option>
-                  <option value="營養師">營養師</option>
+                  <option value="教練">
+                    教練 (
+                    {
+                      teamData.filter((item) => item.teacher_type === '教練')
+                        .length
+                    }
+                    )
+                  </option>
+                  <option value="營養師">
+                    營養師 (
+                    {
+                      teamData.filter((item) => item.teacher_type === '營養師')
+                        .length
+                    }
+                    )
+                  </option>
+                </select>
+              </div>
+              {/* 新增姓名选择器 */}
+              <div className="col-auto">
+                <select
+                  name="name"
+                  id="name"
+                  className="form-select form-select-lg mb-3"
+                  data-type="select"
+                  data-width="medium"
+                  value={selectedName}
+                  onChange={handleNameChange}
+                >
+                  <option value="">全部姓名</option>
+                  {coachNames.map((name, index) => (
+                    <option key={index} value={name}>
+                      {name}
+                    </option>
+                  ))}
                 </select>
               </div>
             </form>
