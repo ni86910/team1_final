@@ -2,12 +2,12 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 const firebaseConfig = {
-  apiKey: 'AIzaSyBYIxO5OzO1TEv_TUlsR1YLHn3tiFY3cXs',
-  authDomain: 'next-login-210c4.firebaseapp.com',
-  projectId: 'next-login-210c4',
-  storageBucket: 'next-login-210c4.appspot.com',
-  messagingSenderId: '1062883198806',
-  appId: '1:1062883198806:web:9dda772d5b20082744b8f7',
+  apiKey: 'AIzaSyD8YPb1-pSx_WcSTcHcmUQwoPiFKavr08Q',
+  authDomain: 'login-645ab.firebaseapp.com',
+  projectId: 'login-645ab',
+  storageBucket: 'login-645ab.appspot.com',
+  messagingSenderId: '733250262079',
+  appId: '1:733250262079:web:98a300f76d5ee6abc3948a',
 }
 
 // Initialize Firebase

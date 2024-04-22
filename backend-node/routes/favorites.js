@@ -7,7 +7,6 @@ const router = express.Router();
 router.get("/all-fav", async (req, res) => {
   console.log("query", req.query);
   const member_id = req.query.member_id;
-  // const article_id = req.params.article_id;
 
   const sql = `SELECT * 
   FROM article AS a 
@@ -37,6 +36,7 @@ router.get("/all-fav", async (req, res) => {
 
 // 刪除收藏的路由
 router.delete("/del-fav", async (req, res) => {
+  //概念上只會刪除收藏id
   const output = {
     fav_id: 0,
   };
@@ -44,12 +44,6 @@ router.delete("/del-fav", async (req, res) => {
   console.log("body", req.body);
   const fav_id = +req.body.fav_id;
 
-  // if (!member_id || !article_id) {
-  //   output.message = "會員ID或文章ID undefined 或者 不是數字";
-  //   res.json(output);
-  // }
-
-  //把會員id跟文章id丟進回船傳
   output.fav_id = +fav_id;
 
   const sql = `DELETE FROM fav WHERE fav_id=? `; // 用問號 會自動跳脫，值 按照順序丟到下方陣列 包成陣列是為了應付所有的SQL語法

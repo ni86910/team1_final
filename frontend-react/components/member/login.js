@@ -110,7 +110,7 @@ export default function LoginPage() {
                             <span className="glyphicon glyphicon-off" />
                             登入
                           </button>
-                          <GoogleLogin />
+
                           <br />
                           <br />
                           <div className={style['straight-line']} />
@@ -131,6 +131,8 @@ export default function LoginPage() {
                             </Link>
                           </div>
                         </form>
+                        <br />
+                        <GoogleLogin />
                       </div>
                     </div>
                   </div>
