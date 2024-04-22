@@ -53,15 +53,22 @@ export default function Article() {
     const selectedValue = e.target.value
     setSelectedCategory(selectedValue) // 更新选择的文章分类
 
+    // 获取该分类下的文章标题列表
+    const titles = artData
+      .filter((item) => item.article_item === selectedValue)
+      .map((item) => item.title)
+
     // 更新 URL 参数
     router.push(
       {
         pathname: '/article',
-        query: { article: selectedValue, title: selectedTitle },
+        query: { article: selectedValue, title: '' },
       },
       undefined,
       { scroll: false }
     )
+
+    setArticleTitles(titles)
   }
 
   const handleTitleChange = (e) => {

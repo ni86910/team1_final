@@ -9,11 +9,11 @@ import { RiTeamFill } from 'react-icons/ri'
 
 export default function Team() {
   const router = useRouter()
-  // 用狀態接收fetch來的介紹資料
   const [teamData, setTeamData] = useState([])
   const [selectedTeam, setSelectedTeam] = useState('全部總類')
-  const [selectedName, setSelectedName] = useState('') // 新增的选择姓名的状态
-  const [coachNames, setCoachNames] = useState([]) // 保存教练姓名列表
+  const [selectedName, setSelectedName] = useState('')
+  const [coachNames, setCoachNames] = useState([])
+  const [nutritionistNames, setNutritionistNames] = useState([])
 
   useEffect(() => {
     fetch(`${API_SERVER}/team`, { credentials: 'include' })
@@ -21,10 +21,14 @@ export default function Team() {
       .then((data) => {
         console.log(data)
         setTeamData(data)
-
-        // 获取教练姓名列表
-        const names = data.map((item) => item.teacher_name)
-        setCoachNames(names)
+        const coachNames = data
+          .filter((item) => item.teacher_type === '教練')
+          .map((item) => item.teacher_name)
+        const nutritionistNames = data
+          .filter((item) => item.teacher_type === '營養師')
+          .map((item) => item.teacher_name)
+        setCoachNames(coachNames)
+        setNutritionistNames(nutritionistNames)
       })
     if (router.query.team) {
       setSelectedTeam(router.query.team)
@@ -36,9 +40,8 @@ export default function Team() {
 
   const handleTeamChange = (e) => {
     const selectedValue = e.target.value
-    setSelectedTeam(selectedValue) // 更新选择的区域
+    setSelectedTeam(selectedValue)
 
-    // 更新 URL 参数
     router.push(
       {
         pathname: '/team',
@@ -51,9 +54,8 @@ export default function Team() {
 
   const handleNameChange = (e) => {
     const selectedValue = e.target.value
-    setSelectedName(selectedValue) // 更新选择的教练姓名
+    setSelectedName(selectedValue)
 
-    // 更新 URL 参数
     router.push(
       {
         pathname: '/team',
@@ -68,10 +70,9 @@ export default function Team() {
     return (
       (selectedTeam === '全部總類' || item.teacher_type === selectedTeam) &&
       (selectedName === '' || item.teacher_name === selectedName)
-    ) // 根据选择的区域和姓名进行过滤
+    )
   })
 
-  //文章分段
   const text2jsx = (text) => {
     return text.split('\n\n').map((v1, i1) => (
       <div className="team-section" key={i1}>
@@ -86,8 +87,6 @@ export default function Team() {
 
   return (
     <>
-      {/* About Section Begin */}
-
       <div className="container">
         <div className="row">
           <div className="mt-4 text-center" style={{ marginTop: 20 }}>
@@ -95,9 +94,6 @@ export default function Team() {
           </div>
         </div>
       </div>
-
-      {/* About Section End */}
-      {/* Team Section Begin */}
 
       <div className="container">
         <div className="row">
@@ -126,28 +122,13 @@ export default function Team() {
                   value={selectedTeam}
                   onChange={handleTeamChange}
                 >
-                  <option value="全部總類" selected="selected">
-                    全部總類
-                  </option>
-                  <option value="教練">
-                    教練 (
-                    {
-                      teamData.filter((item) => item.teacher_type === '教練')
-                        .length
-                    }
-                    )
-                  </option>
+                  <option value="全部總類">全部總類</option>
+                  <option value="教練">教練 ({coachNames.length})</option>
                   <option value="營養師">
-                    營養師 (
-                    {
-                      teamData.filter((item) => item.teacher_type === '營養師')
-                        .length
-                    }
-                    )
+                    營養師 ({nutritionistNames.length})
                   </option>
                 </select>
               </div>
-              {/* 新增姓名选择器 */}
               <div className="col-auto">
                 <select
                   name="name"
@@ -159,11 +140,19 @@ export default function Team() {
                   onChange={handleNameChange}
                 >
                   <option value="">全部姓名</option>
-                  {coachNames.map((name, index) => (
-                    <option key={index} value={name}>
-                      {name}
-                    </option>
-                  ))}
+                  {selectedTeam === '教練'
+                    ? coachNames.map((name, index) => (
+                        <option key={index} value={name}>
+                          {name}
+                        </option>
+                      ))
+                    : selectedTeam === '營養師'
+                    ? nutritionistNames.map((name, index) => (
+                        <option key={index} value={name}>
+                          {name}
+                        </option>
+                      ))
+                    : null}
                 </select>
               </div>
             </form>
@@ -173,20 +162,18 @@ export default function Team() {
         <div className="row">
           {filteredTeamData.map((v, i) => {
             return (
-              <>
-                <div className="col-lg-3 col-md-6 col-sm-6" key={i}>
-                  <div className="team__item">
-                    <Image
-                      src={`/img/team/${v.teacher_image}`}
-                      alt=""
-                      width={500}
-                      height={350}
-                      data-bs-toggle="modal"
-                      data-bs-target={`#modalJohnSmith${i}`}
-                    />
-                    <h4>{v.teacher_name}</h4>
-                    <span>{v.teacher_type}</span>
-                  </div>
+              <div className="col-lg-3 col-md-6 col-sm-6" key={i}>
+                <div className="team__item">
+                  <Image
+                    src={`/img/team/${v.teacher_image}`}
+                    alt=""
+                    width={500}
+                    height={350}
+                    data-bs-toggle="modal"
+                    data-bs-target={`#modalJohnSmith${i}`}
+                  />
+                  <h4>{v.teacher_name}</h4>
+                  <span>{v.teacher_type}</span>
                 </div>
 
                 <div
@@ -210,7 +197,6 @@ export default function Team() {
                         />
                       </div>
                       <div className="modal-body">
-                        {/* Add modal body content here */}
                         <Image
                           src={`/img/team/${v.teacher_image}`}
                           alt=""
@@ -224,14 +210,11 @@ export default function Team() {
                     </div>
                   </div>
                 </div>
-              </>
+              </div>
             )
           })}
         </div>
       </div>
-
-      {/* Team Section End */}
-      {/* Client Section Begin */}
 
       <div className="container">
         <div className="row">
@@ -326,7 +309,6 @@ export default function Team() {
         </div>
       </div>
 
-      {/* Client Section End */}
       <TOP />
     </>
   )
