@@ -42,8 +42,6 @@ export default function LoginPage() {
     }
   }, [])
 
-
-
   // 驗證表單字段
   const validateFields = () => {
     const newErrors = {}
@@ -58,11 +56,11 @@ export default function LoginPage() {
       newErrors.m_pwd = '密碼為必填欄位'
     } else if (
       !validator.isStrongPassword(data.m_pwd, {
-        minLength: 5,         // 最小字元數
-        minLowercase: 1,      // 最少要幾個小寫英文字元
-        minUppercase: 0,      // 最少要幾個大寫英文字元
-        minNumbers: 0,        // 最少要幾個數字
-        minSymbols: 0,        // 最少要幾個符號
+        minLength: 5, // 最小字元數
+        minLowercase: 1, // 最少要幾個小寫英文字元
+        minUppercase: 0, // 最少要幾個大寫英文字元
+        minNumbers: 0, // 最少要幾個數字
+        minSymbols: 0, // 最少要幾個符號
       })
     ) {
       newErrors.m_pwd = '密碼至少5個字元，要包含一個英文小寫字元'
@@ -77,23 +75,23 @@ export default function LoginPage() {
     e.preventDefault()
 
     if (!validateFields()) {
-      return;
+      return
     }
 
-    const { m_account, m_pwd } = data;
+    const { m_account, m_pwd } = data
 
     try {
-      const result = await login(m_account, m_pwd);
+      const result = await login(m_account, m_pwd)
       if (result) {
         console.log(result)
-        if(rememberMe){
-          localStorage.setItem('rememberAccount', m_account);
-          localStorage.setItem('rememberPwd', m_pwd);
-          localStorage.setItem('rememberState', true);
-        }else{
-          localStorage.removeItem('rememberAccount');
-          localStorage.removeItem('rememberPwd');
-          localStorage.removeItem('rememberState');
+        if (rememberMe) {
+          localStorage.setItem('rememberAccount', m_account)
+          localStorage.setItem('rememberPwd', m_pwd)
+          localStorage.setItem('rememberState', true)
+        } else {
+          localStorage.removeItem('rememberAccount')
+          localStorage.removeItem('rememberPwd')
+          localStorage.removeItem('rememberState')
         }
 
         Swal.fire({
@@ -102,8 +100,8 @@ export default function LoginPage() {
           title: '登入成功',
           showConfirmButton: false,
           timer: 2000,
-        });
-        router.push('/member/profile');
+        })
+        router.push('/member/profile')
       } else {
         Swal.fire({
           position: 'top',
@@ -111,12 +109,12 @@ export default function LoginPage() {
           title: '登入失敗',
           showConfirmButton: false,
           timer: 2000,
-        });
+        })
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Login error:', error)
     }
-  };
+  }
 
   // 處理輸入框變化
   const handleChange = (e) => {
@@ -131,10 +129,9 @@ export default function LoginPage() {
   }
 
   //處理Remember Me 變化
-  const handleRememberMeChange = () =>{
+  const handleRememberMeChange = () => {
     setrememberMe(!rememberMe)
   }
-
 
   return (
     <section className={style['login-section']}>
@@ -142,7 +139,8 @@ export default function LoginPage() {
         .error {
           color: red;
           font-size: 13px;
-        }`}</style>
+        }
+      `}</style>
       <div className="col-6">
         <div className={style['login-headline']}>
           <h2>會員專區</h2>
@@ -194,33 +192,37 @@ export default function LoginPage() {
                             <FaStarOfLife className={style['icon-padding']} />
                             會員密碼
                           </label>
-                          <div className="col-md-6" style={{ position: 'relative' }}>
-                          <input
-                            className="form-control"
-                            style={{ borderRadius: '10px' }}
-                            id="m_pwd"
-                            name="m_pwd"
-                            type={showPassword ? 'text' : 'password'}
-                            value={data.m_pwd}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            placeholder="請輸入密碼"
-                          />
-                          <button
-                          type="button"
-                          className={style['show-password']}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            setShowPassword(!showPassword)}}
+                          <div
+                            className="col-md-6"
+                            style={{ position: 'relative' }}
                           >
-                            {!showPassword ? <FaEyeSlash /> : <FaEye />}
-                          </button>
-                        </div>
+                            <input
+                              className="form-control"
+                              style={{ borderRadius: '10px' }}
+                              id="m_pwd"
+                              name="m_pwd"
+                              type={showPassword ? 'text' : 'password'}
+                              value={data.m_pwd}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              placeholder="請輸入密碼"
+                            />
+                            <button
+                              type="button"
+                              className={style['show-password']}
+                              onClick={(e) => {
+                                e.preventDefault()
+                                setShowPassword(!showPassword)
+                              }}
+                            >
+                              {!showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
+                          </div>
                           <div className="error">{errors.m_pwd}</div>
                         </div>
                         <div className={`checkbox ${style['check-remember']}`}>
                           <label>
-                            <input  
+                            <input
                               type="checkbox"
                               checked={rememberMe}
                               onChange={handleRememberMeChange}
@@ -255,16 +257,19 @@ export default function LoginPage() {
                         <div className={style['straight-line']} />
                         <br />
                         <div className="sign">
-                          <p>
+                          <div>
                             還沒加入菲特友嗎?{' '}
-                            <Link href="register" className={style['a-link']}>
+                            <Link
+                              href="register"
+                              className={style['register-link']}
+                            >
                               {' '}
                               趕快來註冊!
                             </Link>
-                          </p>
+                          </div>
                           <Link
                             href="forget-password"
-                            className={style['a-link']}
+                            className={style['forget-password-link']}
                           >
                             忘記密碼?
                           </Link>

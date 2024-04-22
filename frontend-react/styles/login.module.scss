@@ -49,7 +49,40 @@ text-align: center;
   width: 20px;
   margin-right: 5px;
 }
-.a-link{
+.register-link{
+  &:after{
+    top: 0%;
+    left: 0;
+    width: 0%;
+    height:100%;
+    background: -webkit-linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+    z-index: -1; //把他壓下去
+    }
+ 
+  &:hover{ 
+    color: black;
+    transition-delay: 0.1s; //讓他晚一點點出來，不然會有瞬間是黑的
+
+      &:after {
+      top: 0;
+      width: 100%    
+    }
+  }
+  // font-family: 微軟正黑體;
+  // font-weight: bold;
+  // color:black;
+  // padding-top: 15px;
+  // padding-left: 15px;
+  // text-decoration: underline;
+  
+  
+  // &:hover{
+  //   color:$primary-color;
+  //   padding-top: 15px;
+  // }
+}
+
+.forget-password-link{
   font-family: 微軟正黑體;
   font-weight: bold;
   color:black;
