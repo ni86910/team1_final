@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import style from '@/styles/register.module.scss'
-import Image from 'next/image'
+import toast, { Toaster } from 'react-hot-toast'
+import Swal from 'sweetalert2'
+import validator from 'validator'
 import Link from 'next/link'
 /* Bootstrap */
 import { Button, Modal, Form } from 'react-bootstrap'
@@ -9,13 +11,6 @@ import { FaStarOfLife } from 'react-icons/fa6'
 import { REGISTER_POST } from '@/components/common/config'
 import { useRouter } from 'next/router'
 
-/* 錯誤訊息樣式 */
-const redBorder = {
-  border: '1px solid red',
-}
-const redText = {
-  color: 'red',
-}
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -23,113 +18,138 @@ export default function RegisterPage() {
   const [showModal, setShowModal] = useState(false)
   const [agreedToTerms, setAgreedToTerms] = useState(false)
 
-  const [formData, setFormData] = useState({
+  // 驗證
+  const [data, setData] = useState({
     m_name: '',
     m_account: '',
     m_pwd: '',
-    gender: '',
-    birthday: '',
     mobile: '',
     address: '',
   })
-  // 欄位預設的錯誤訊息
-  const [errorMsg, setErrorMsg] = useState({
+  const [errors, setErrors] = useState({
     m_name: '',
     m_account: '',
+    m_pwd: '',
     mobile: '',
+    address: '',
   })
+
   // 整個表單有沒有通過檢查
   const [isPass, setIsPass] = useState(false)
-
-  // 驗證: 姓名
-  const validateName = (m_name) => {
-    // 名子不得小於2個字
-    return m_name.toString().length >= 2
-  }
-  // 驗證: 帳號
-  const validateEmail = (m_account) => {
-    return /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      m_account
-    ) // 粗略的判斷方式
-  }
-
-  // 驗證: 手機
-  const validateMobile = (mobile) => {
-    return /^09\d{2}-?\d{3}-?\d{3}$/.test(mobile)
-  }
-
-  const fieldChanged = (e) => {
-    const newFormData = { ...formData, [e.target.name]: e.target.value }
-    setFormData(newFormData)
-  }
-
-  const nameBlur = () => {
-    if (!validateName(formData.m_name)) {
-      setErrorMsg({ ...errorMsg, m_name: '請輸入正確的姓名' })
-      return false
-    } else {
-      setErrorMsg({ ...errorMsg, m_name: '' })
-      return true
+  // 驗證表單字段
+  const validateFields = () => {
+    const newErrors = {}
+    if (validator.isEmpty(data.m_name, { ignore_whitespace: true })) {
+      newErrors.m_name = '名稱為必填欄位'
+    } else if (!validator.isLength(data.m_name, { min: 2 })) {
+      newErrors.m_name = '名稱不得小於2字元'
     }
-  }
-  const emailBlur = () => {
-    if (!validateEmail(formData.m_account)) {
-      setErrorMsg({ ...errorMsg, m_account: '請輸入正確的 Email' })
-      return false
-    } else {
-      setErrorMsg({ ...errorMsg, m_account: '' })
-      return true
-    }
-  }
 
-  const mobileBlur = () => {
-    if (!validateMobile(formData.mobile)) {
-      setErrorMsg({ ...errorMsg, mobile: '請輸入正確的手機號碼' })
-      return false
-    } else {
-      setErrorMsg({ ...errorMsg, mobile: '' })
-      return true
+    if (validator.isEmpty(data.m_account, { ignore_whitespace: true })) {
+      newErrors.m_account = '帳號為必填欄位'
+    } else if (!validator.isEmail(data.m_account)) {
+      newErrors.m_account = '電子郵件格式不正確'
     }
+
+    if (validator.isEmpty(data.m_pwd, { ignore_whitespace: true })) {
+      newErrors.m_pwd = '密碼為必填欄位'
+    } else if (
+      !validator.isStrongPassword(data.m_pwd, {
+        minLength: 5, // 最小字元數
+        minLowercase: 1, // 最少要幾個小寫英文字元
+        minUppercase: 0, // 最少要幾個大寫英文字元
+        minNumbers: 0, // 最少要幾個數字
+        minSymbols: 0, // 最少要幾個符號
+      })
+    ) {
+      newErrors.m_pwd = '密碼至少5個字元，要包含一個英文小寫字元'
+    }
+
+    if (validator.isEmpty(data.mobile, { ignore_whitespace: true })) {
+      newErrors.mobile = '手機為必填欄位'
+    } else if (!validator.isMobilePhone(data.mobile, 'zh-TW')) {
+      newErrors.mobile = '手機號碼格式不正確'
+    }
+
+    if (validator.isEmpty(data.address, { ignore_whitespace: true })) {
+      newErrors.address = '地址為必填欄位'
+    }
+
+    setErrors(newErrors)
+    return Object.values(newErrors).every((error) => error === '')
   }
 
   const onSubmit = async (e) => {
     e.preventDefault() // 表單不要以傳統方式送出
 
-    // 驗證所有欄位
-    const tmpIsPass = nameBlur() && emailBlur() && mobileBlur()
-    setIsPass(tmpIsPass)
-
-    if (tmpIsPass) {
-      //console.log("表單送出");
-      // 表單驗證通過，進行資料提交
+    if (!validateFields()) {
+      return
+    }
+    const { m_account, m_pwd } = data
+    if (isPass) {
       const r = await fetch(REGISTER_POST, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       })
 
       const result = await r.json()
 
       console.log(result)
       if (result.success) {
-        alert('資料新增成功')
+        Swal.fire({
+          position: 'top',
+          icon: 'success',
+          title: '註冊成功',
+          showConfirmButton: false,
+          timer: 2000,
+        })
         router.push('/member/login')
       } else {
-        alert('資料沒有新增')
+        Swal.fire({
+          position: 'top',
+          icon: 'error',
+          title: '註冊失敗',
+          showConfirmButton: false,
+          timer: 2000,
+        })
       }
     } else {
-      alert('必填欄位請填入符合格式的值')
+      toast.error('必填欄位請填入符合格式的值', {
+        duration: 2000,
+        style: {
+          backgroundColor: 'black',
+          color: 'white',
+        },
+      })
     }
     if (!agreedToTerms) {
-      alert('請勾選會員條款')
+      toast.error('請勾選會員條款', {
+        duration: 2000,
+        style: {
+          backgroundColor: 'black',
+          color: 'white',
+        },
+      })
       return // 停止表單提交
     }
   }
 
-  // 會員條款的彈窗
+  // 處理輸入框變化
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    })
+  }
+  // 處理輸入框失去焦點
+  const handleBlur = (e) => {
+    validateFields()
+  }
 
+  // 會員條款的彈窗
   const handleCloseModal = () => setShowModal(false)
   const handleShowModal = () => {
     setShowModal(true)
@@ -141,6 +161,12 @@ export default function RegisterPage() {
   return (
     <>
       <section className={style['regist-section']}>
+        <style jsx>{`
+          .error {
+            color: red;
+            font-size: 13px;
+          }
+        `}</style>
         <div className="col-6">
           <div className={style['regist-headline']}>
             <h2>會員專區</h2>
@@ -156,24 +182,6 @@ export default function RegisterPage() {
                     </div>
                     <div className="card-body">
                       <form name="form1" onSubmit={onSubmit}>
-                        <button
-                          type="submit"
-                          className={`btn ${style['google-btn']}`}
-                        >
-                          <span className="glyphicon glyphicon-remove" />
-                          <Image
-                            className={style['google-img']}
-                            src="/img/member/google.png"
-                            width={20}
-                            height={20}
-                            alt="google"
-                          />
-                          使用Google快速註冊
-                        </button>
-                        <br />
-                        <br />
-                        <div className={style['straight-line']} />
-                        <br />
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="m_name"
@@ -189,14 +197,11 @@ export default function RegisterPage() {
                               className="form-control"
                               name="m_name"
                               placeholder="請輸入名稱"
-                              value={formData.m_name}
-                              onChange={fieldChanged}
-                              onBlur={nameBlur}
-                              style={errorMsg.m_name ? redBorder : {}}
+                              value={data.m_name}
+                              onBlur={handleBlur}
+                              onChange={handleChange}
                             />
-                            <div className="form-text" style={redText}>
-                              {errorMsg.m_name}
-                            </div>
+                            <div className="error">{errors.m_name}</div>
                           </div>
                         </div>
                         <div className={`form-group row ${style['form-box']}`}>
@@ -214,14 +219,11 @@ export default function RegisterPage() {
                               className="form-control"
                               name="m_account"
                               placeholder="請輸入信箱"
-                              value={formData.m_account}
-                              onChange={fieldChanged}
-                              onBlur={emailBlur}
-                              style={errorMsg.m_account ? redBorder : {}}
+                              value={data.m_account}
+                              onBlur={handleBlur}
+                              onChange={handleChange}
                             />
-                            <div className="form-text" style={redText}>
-                              {errorMsg.m_acount}
-                            </div>
+                            <div className="error">{errors.m_account}</div>
                           </div>
                         </div>
                         <div className={`form-group row ${style['form-box']}`}>
@@ -238,10 +240,12 @@ export default function RegisterPage() {
                               id="m_pwd"
                               className="form-control"
                               name="m_pwd"
-                              placeholder="請輸入4-6位數密碼"
-                              onChange={fieldChanged}
-                              style={errorMsg.m_pwd ? redBorder : {}}
+                              placeholder="請輸密碼"
+                              value={data.m_pwd}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
                             />
+                            <div className="error">{errors.m_pwd}</div>
                           </div>
                         </div>
                         <div className={`form-group row ${style['form-box']}`}>
@@ -256,9 +260,8 @@ export default function RegisterPage() {
                             <Form.Select
                               name="gender"
                               aria-label="Default select example"
-                              style={errorMsg.gender ? redBorder : {}}
-                              value={formData.gender}
-                              onChange={fieldChanged}
+                              value={data.gender}
+                              onChange={handleChange}
                             >
                               <option select="">請選擇</option>
                               <option value="男">男生</option>
@@ -280,9 +283,8 @@ export default function RegisterPage() {
                               id="birthday"
                               className="form-control"
                               name="birthday"
-                              value={formData.birthday}
-                              onChange={fieldChanged}
-                              style={errorMsg.birthday ? redBorder : {}}
+                              value={data.birthday}
+                              onChange={handleChange}
                             />
                           </div>
                         </div>
@@ -301,14 +303,11 @@ export default function RegisterPage() {
                               className="form-control"
                               name="mobile"
                               placeholder="請輸入手機號碼"
-                              value={formData.mobile}
-                              onChange={fieldChanged}
-                              onBlur={mobileBlur}
-                              style={errorMsg.mobile ? redBorder : {}}
+                              value={data.mobile}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
                             />
-                            <div className="form-text" style={redText}>
-                              {errorMsg.mobile}
-                            </div>
+                            <div className="error">{errors.mobile}</div>
                           </div>
                         </div>
                         <div className={`form-group row ${style['form-box']}`}>
@@ -327,10 +326,11 @@ export default function RegisterPage() {
                               name="address"
                               col={20}
                               rows={2}
-                              value={formData.address}
-                              onChange={fieldChanged}
-                              style={errorMsg.address ? redBorder : {}}
+                              value={data.address}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
                             />
+                            <div className="error">{errors.address}</div>
                           </div>
                         </div>
                         <div className="checkbox">
@@ -362,6 +362,7 @@ export default function RegisterPage() {
           </div>
         </div>
       </section>
+      <Toaster />
 
       {/* Modal */}
       <Modal show={showModal} onHide={handleCloseModal}>
