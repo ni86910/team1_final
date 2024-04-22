@@ -3,6 +3,8 @@ import { API_SERVER } from '../common/config'
 import { uploadImage } from '@/utils/uploadImage'
 import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
+import toast, { Toaster } from 'react-hot-toast'
+import validator from 'validator'
 import Swal from 'sweetalert2'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -16,13 +18,6 @@ import { Button, Nav, Navbar, Form, Container, Row, Col } from 'react-bootstrap'
 import { MdChangeCircle } from 'react-icons/md'
 import { FaStarOfLife } from 'react-icons/fa6'
 
-const redBorder = {
-  border: '1px solid red',
-}
-const redText = {
-  color: 'red',
-}
-
 export default function ProfilePage({ member_id }) {
   const router = useRouter()
 
@@ -31,6 +26,8 @@ export default function ProfilePage({ member_id }) {
   const [profile, setProfile] = useState({})
   const [newProfileImage, setNewProfileImage] = useState(null)
   const [isEditing, setIsEditing] = useState(false) // 新增編輯狀態
+  const [formChanged, setFormChanged] = useState(false);
+  
 
   // 會員登入後,取得資訊
   useEffect(() => {
@@ -50,23 +47,17 @@ export default function ProfilePage({ member_id }) {
     }
   }, [auth.member_id])
 
-  /*
-  const sendData = async (event) => {
-    event.preventDefault()
-    try {
-      const response = await fetch(`${API_SERVER}/profile`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(profile),
-      })
-    } catch (error) {
-      console.error('發生錯誤:', error)
-    }
-  }
-*/
+  // 驗證
+  const [data, setData] = useState({
+    m_name: '',
+    mobile: '',
+    address: '',
+  })
+  const [errors, setErrors] = useState({
+    m_name: '',
+    mobile: '',
+    address: '',
+  })
 
   const handleInputChange = (event) => {
     if (isEditing) {
@@ -104,6 +95,7 @@ export default function ProfilePage({ member_id }) {
     }
   }
 
+  /*
   // 編輯資料
   const [formData, setFormData] = useState({
     member_id: 0, // 資料的 primary key
@@ -161,18 +153,57 @@ export default function ProfilePage({ member_id }) {
     setErrorMsg(tmpErrorMsg)
     return tmpIsPass
   }
+*/
+  // 整個表單有沒有通過檢查
+  const [isPass, setIsPass] = useState(false)
+  // 驗證表單字段
+  const validateFields = () => {
+    const newErrors = {}
+    if (!validator.isLength(data.m_name, { min: 2 })) {
+      newErrors.m_name = '名稱不得小於2字元'
+    }
 
+    if (!validator.isMobilePhone(data.mobile, 'zh-TW')) {
+      newErrors.mobile = '手機號碼格式不正確'
+    }
+
+    if (!validator.isEmpty(data.address, { ignore_whitespace: true })) {
+      newErrors.address = '地址為必填欄位'
+    }
+
+    setErrors(newErrors)
+    return Object.values(newErrors).every((error) => error === '')
+  }
   const onSubmit = async (e) => {
     e.preventDefault() // 表單不要以傳統方式送出
     if (!validateFields()) {
-      alert('必填欄位請填入符合格式的值')
-      return // 沒通過檢查的話, 就返回
+      return
     }
+    // if (isPass) {
+    //   toast.error('必填欄位請填入符合格式的值', {
+    //     duration: 2000,
+    //     style: {
+    //       backgroundColor: 'black',
+    //       color: 'white',
+    //     },
+    //   })
+    //   return // 沒通過檢查的話, 就返回
+    // }
 
     const dataModified = { ...profile }
     // 沒有要更動的欄位去掉
     delete dataModified.member_id
     delete dataModified.created_at
+
+    const handleChange = (e) => {
+  setData({
+    ...data,
+    [e.target.name]: e.target.value,
+  });
+  if (isEditing) {
+    setFormChanged(true);
+  }
+};
 
     const r = await fetch(`${API_SERVER}/profile/${profile.member_id}`, {
       method: 'PUT',
@@ -207,6 +238,26 @@ export default function ProfilePage({ member_id }) {
     }
   }
 
+  // 處理輸入框變化
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    })
+    if (isEditing) {
+      // 只有在編輯狀態下才允許修改
+      const { name, value } = event.target
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        [name]: value,
+      }))
+    }
+  }
+  // 處理輸入框失去焦點
+  const handleBlur = (e) => {
+    validateFields()
+  }
+
   useEffect(() => {
     if (!member_id) return // 如果沒有 sid 的值, 就不用發 AJAX
     fetch(`${API_SERVER}/profile/${member_id}`)
@@ -214,7 +265,7 @@ export default function ProfilePage({ member_id }) {
       .then((result) => {
         console.log(result)
         if (result.success) {
-          setFormData({ ...result.data })
+          setData({ ...result.data })
         } else {
           router.push('/member/profile')
         }
@@ -271,6 +322,12 @@ export default function ProfilePage({ member_id }) {
 
         {/* Profile Start */}
         <Container className={style['profile-section']}>
+          <style jsx>{`
+            .error {
+              color: red;
+              font-size: 13px;
+            }
+          `}</style>
           <Container>
             <Row>
               <Col className={style['title']}>會員基本資料</Col>
@@ -354,9 +411,11 @@ export default function ProfilePage({ member_id }) {
                         name="m_name"
                         id="m_name"
                         value={profile.m_name || ''}
-                        onChange={handleInputChange}
+                        onChange={handleChange}
                         readOnly={!isEditing} // 根據編輯狀態設定欄位是否可編輯
+                        onBlur={handleBlur}
                       />
+                      <div className="error">{errors.m_name}</div>
                     </Form.Group>
                   </div>
                 </Col>
@@ -373,7 +432,7 @@ export default function ProfilePage({ member_id }) {
                         name="m_account"
                         id="m_account"
                         value={profile.m_account || ''}
-                        onChange={handleInputChange}
+                        onChange={handleChange}
                         disabled
                       />
                     </Form.Group>
@@ -394,7 +453,7 @@ export default function ProfilePage({ member_id }) {
                         name="birthday"
                         id="birthday"
                         value={profile.birthday || ''}
-                        onChange={handleInputChange}
+                        onChange={handleChange}
                         disabled
                       />
                     </Form.Group>
@@ -413,7 +472,7 @@ export default function ProfilePage({ member_id }) {
                       <Form.Select
                         aria-label="Default select example"
                         value={profile.gender || ''}
-                        onChange={(event) => handleInputChange(event)} // 修改這裡，將事件傳遞給 handleInputChange 函數
+                        onChange={(event) => handleChange(event)} // 修改這裡，將事件傳遞給 handleInputChange 函數
                         name="gender"
                         id="gender"
                         disabled
@@ -443,9 +502,11 @@ export default function ProfilePage({ member_id }) {
                         name="mobile"
                         id="mobile"
                         value={profile.mobile || ''}
-                        onChange={handleInputChange}
+                        onChange={handleChange}
                         readOnly={!isEditing}
+                        onBlur={handleBlur}
                       />
+                      <div className="error">{errors.mobile}</div>
                     </Form.Group>
                   </div>
                 </Col>
@@ -465,9 +526,11 @@ export default function ProfilePage({ member_id }) {
                       name="address"
                       id="address"
                       value={profile.address || ''}
-                      onChange={handleInputChange}
+                      onChange={handleChange}
                       readOnly={!isEditing}
+                      onBlur={handleBlur}
                     />
+                    <div className="error">{errors.address}</div>
                   </Form.Group>
                 </Col>
               </Row>
@@ -494,6 +557,7 @@ export default function ProfilePage({ member_id }) {
           </Form>
         </Container>
       </section>
+      <Toaster />
     </>
   )
 }
