@@ -109,7 +109,17 @@ export default function GymPlace() {
                         <FaLocationDot />
                         {v.gym_address}
                       </p>
-                      <Link href={'#'} className={style['site-btn']}>
+                      <Link
+                        href={{
+                          pathname: '/class',
+                          query: {
+                            tab: 'right',
+                            date: '2024-05-07',
+                            gym_name: v.gym_name,
+                          },
+                        }}
+                        className={style['site-btn']}
+                      >
                         課表查詢
                       </Link>
                       <br />
