@@ -36,10 +36,10 @@
 
 .select {
   padding: 8px 20px; /* 上下間距和左右間距 */
-  border-radius: 50px; /* 圓角 */
-  background-color: black; /* 背景顏色 */
+  border-radius: 5px; /* 圓角 */
+  background-color: white; /* 背景顏色 */
   text-align: center;
-  color: white; /* 文字顏色 */
+  color: black; /* 文字顏色 */
   cursor: pointer; /* 滑鼠指針形狀 */
   appearance: none; /* 移除原生樣式 */
   -webkit-appearance: none; /* 移除 Safari 原生樣式 */

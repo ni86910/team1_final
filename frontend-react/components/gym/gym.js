@@ -9,9 +9,11 @@ import Swiper from '@/components/gym/swiper/swiper'
 
 export default function GymPlace() {
   const router = useRouter()
-  // 用狀態接收fetch來的介紹資料
+
+  // 用狀態接收 fetch來的介紹資料
   const [gymData, setGymData] = useState([])
   const [selectedArea, setSelectedArea] = useState('全部區域')
+  const [selectedGym, setSelectedGym] = useState('全部場館')
 
   useEffect(() => {
     fetch(`${API_SERVER}/gym`, { credentials: 'include' })
@@ -28,6 +30,7 @@ export default function GymPlace() {
   const handleAreaChange = (e) => {
     const selectedValue = e.target.value
     setSelectedArea(selectedValue) // 更新选择的区域
+    setSelectedGym('全部場館') // 重置場館選項
 
     // 更新 URL 参数
     router.push(
@@ -40,9 +43,25 @@ export default function GymPlace() {
     )
   }
 
-  const filteredGymData = gymData.filter((item) => {
-    return selectedArea === '全部區域' || item.gym_area === selectedArea // 根据选择的区域进行过滤
-  })
+  const handleGymChange = (e) => {
+    const selectedValue = e.target.value
+    setSelectedGym(selectedValue) // 更新选择的場館
+  }
+
+  // 獲取所有縣市的列表
+  const cityList = [...new Set(gymData.map((item) => item.gym_area))]
+
+  // 獲取每個縣市的場館數量
+  const cityGymCounts = cityList.reduce((acc, city) => {
+    const count = gymData.filter((item) => item.gym_area === city).length
+    acc[city] = count
+    return acc
+  }, {})
+
+  // 獲取選定縣市的場館列表
+  const selectedCityGyms = gymData.filter(
+    (item) => selectedArea === '全部區域' || item.gym_area === selectedArea
+  )
 
   return (
     <>
@@ -61,81 +80,106 @@ export default function GymPlace() {
             </span>
           </div>
         </div>
-        <form
-          action="get"
-          className="row justify-content-center"
-          style={{ marginBottom: 20 }}
-        >
-          <div className="col-auto">
-            <select
-              name="area"
-              id="area"
-              className={style['select']}
-              data-type="select"
-              data-width="medium"
-              value={selectedArea}
-              onChange={handleAreaChange}
-            >
-              <option value="全部區域" selected="selected">
-                全部區域
+
+        <div className="d-flex justify-content-center">
+          <select
+            name="area"
+            id="area"
+            style={{ marginRight: 15, width: 200 }}
+            className="form-select form-select-lg mb-3"
+            data-width="medium"
+            value={selectedArea}
+            onChange={handleAreaChange}
+          >
+            <option value="全部區域">全部區域</option>
+            {cityList.map((city) => (
+              <option key={city} value={city}>
+                {`${city} (${cityGymCounts[city]} 場館)`}
               </option>
-              <option value="臺北市">臺北市</option>
-              <option value="新北市">新北市</option>
-              <option value="臺中市">臺中市</option>
-              <option value="臺南市">臺南市</option>
-              <option value="高雄市">高雄市</option>
-            </select>
-          </div>
-        </form>
+            ))}
+          </select>
+
+          <select
+            name="gym"
+            id="gym"
+            className="form-select form-select-lg mb-3"
+            style={{ width: 420 }}
+            data-width="medium"
+            aria-label=".form-select-lg example"
+            value={selectedGym}
+            onChange={(e) => {
+              const selectedValue = e.target.value
+              setSelectedGym(selectedValue) // 更新所選場館
+
+              // 更新URL參數
+              router.push(
+                {
+                  pathname: '/gym',
+                  query: { gym: selectedValue },
+                },
+                undefined,
+                { scroll: false }
+              )
+            }}
+          >
+            <option value="全部場館">全部場館</option>
+            {selectedCityGyms.map((gym) => (
+              <option key={gym.gym_id} value={gym.gym_name}>
+                {gym.gym_name}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div className="row" style={{ marginBottom: 20 }}>
-          {filteredGymData.map((v, i) => {
-            return (
-              <>
-                <div key={i} className="col-4" style={{ marginTop: 20 }}>
-                  <div className="card" style={{ height: 330 }}>
-                    <div className="card-body">
-                      <p className="card-text">{v.gym_area}</p>
-                      <h5 className="card-title">{v.gym_name}</h5>
-                      <p className="card-text">
-                        <FaPhone />
-                        {v.gym_phone}
-                      </p>
-                      <p className="card-text">
-                        <FaClock />
-                        {v.gym_opentime}
-                      </p>
-                      <p className="card-text">
-                        <FaLocationDot />
-                        {v.gym_address}
-                      </p>
-                      <Link
-                        href={{
-                          pathname: '/class',
-                          query: {
-                            tab: 'right',
-                            date: '2024-05-07',
-                            gym_name: v.gym_name,
-                          },
-                        }}
-                        className={style['site-btn']}
-                      >
-                        課表查詢
-                      </Link>
-                      <br />
-                      <br />
-                      <Link
-                        href={`/gym/${v.gym_id}`}
-                        className={style['site-btn']}
-                      >
-                        查看更多資訊
-                      </Link>
-                    </div>
+          {selectedCityGyms
+            .filter(
+              (gym) =>
+                selectedGym === '全部場館' || gym.gym_name === selectedGym
+            )
+            .map((v, i) => (
+              <div key={i} className="col-4" style={{ marginTop: 20 }}>
+                <div className="card" style={{ height: 330 }}>
+                  <div className="card-body">
+                    <p className="card-text">{v.gym_area}</p>
+                    <h5 className="card-title">{v.gym_name}</h5>
+                    <p className="card-text">
+                      <FaPhone />
+                      {v.gym_phone}
+                    </p>
+                    <p className="card-text">
+                      <FaClock />
+                      {v.gym_opentime}
+                    </p>
+                    <p className="card-text">
+                      <FaLocationDot />
+                      {v.gym_address}
+                    </p>
+                    <Link
+                      href={{
+                        pathname: '/class',
+                        query: {
+                          tab: 'right',
+                          date: '2024-05-07',
+                          gym_name: v.gym_name,
+                        },
+                      }}
+                      className={style['site-btn']}
+                    >
+                      課表查詢
+                    </Link>
+                    <br />
+                    <br />
+                    <Link
+                      href={`/gym/${v.gym_id}`}
+                      className={style['site-btn']}
+                    >
+                      查看更多資訊
+                    </Link>
                   </div>
                 </div>
-              </>
-            )
-          })}
+              </div>
+            ))}
         </div>
       </div>
       <TOP />

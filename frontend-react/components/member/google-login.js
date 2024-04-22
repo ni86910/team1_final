@@ -13,7 +13,7 @@ export default function GoogleLogin() {
   // 目前使用 google 做第三方登入
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider()
-    // provider.setCustomParameters({})
+
     try {
       const response = await signInWithPopup(auth, provider)
       const token = response.user.accessToken
