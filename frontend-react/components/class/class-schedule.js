@@ -15,7 +15,6 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import WeekCol from './week-col'
 import ClassBook from './class-book'
-import { useDraggable } from 'react-use-draggable-scroll'
 
 export default function ClassSchedule({ setContainerHeight, tab }) {
   dayjs.extend(weekday)
@@ -49,16 +48,6 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
   // 記錄選中的場館
   const [gymName, setGymName] = useState('')
 
-  //第二層選單
-  // 紀錄 課程類別 class_type_schedule
-  const [classtype_schedule, setClasstype_schedule] = useState('')
-
-  // 紀錄 課程名稱 class_name
-  const [className, setClassName] = useState('')
-
-  // 紀錄 老師名稱 teacher_name
-  const [teacherName, setTeacherName] = useState('')
-
   // 取得section參照
   const sectionRef2 = useRef(null)
 
@@ -78,7 +67,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     tab === 'right'
       ? setContainerHeight(sectionRef2.current.clientHeight + 50)
       : () => {}
-  }, [tab, show,  scheduleData]) // show 要同時設定高度
+  }, [tab, show, scheduleData]) // show 要同時設定高度
 
   // 取得課表資料
   const getScheduleData = async (
@@ -130,14 +119,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
     if (scheduleData && scheduleData.gotData) {
       setShow(true)
     }
-  }, [
-    scheduleData,
-    router.isReady,
-    router,
-    classtype_schedule,
-    className,
-    teacherName,
-  ])
+  }, [scheduleData, router.isReady, router])
 
   // 抓 該城市中的所有場館
   useEffect(() => {

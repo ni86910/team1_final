@@ -50,7 +50,6 @@ export default function ClassIntro({ setContainerHeight, tab }) {
       })
         .then((r) => r.json())
         .then((data) => {
-          console.log(data)
           setIntroData(data)
           // router.push(`?class_type=${class_type}`)
         })
