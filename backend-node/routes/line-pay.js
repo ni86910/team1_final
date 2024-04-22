@@ -17,9 +17,10 @@ const linePayClient = createLinePayClient({
 });
 
 // 在資料庫建立order資料(需要會員登入才能使用)
-router.post("create-order", async (req, res) => {
-  const userId = req.user.userId;
-
+router.post("/create-order", async (req, res) => {
+  // const userId = req.user.userId;
+  const userId = req.body.userId;
+  console.log("userId", userId);
   //產生 orderId與packageId
   const orderId = uuidv4();
   const packageId = uuidv4();
