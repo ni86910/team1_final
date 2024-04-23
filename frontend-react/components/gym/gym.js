@@ -43,10 +43,10 @@ export default function GymPlace() {
     )
   }
 
-  const handleGymChange = (e) => {
-    const selectedValue = e.target.value
-    setSelectedGym(selectedValue) // 更新选择的場館
-  }
+  // const handleGymChange = (e) => {
+  //   const selectedValue = e.target.value
+  //   setSelectedGym(selectedValue) // 更新选择的場館
+  // }
 
   // 獲取所有縣市的列表
   const cityList = [...new Set(gymData.map((item) => item.gym_area))]

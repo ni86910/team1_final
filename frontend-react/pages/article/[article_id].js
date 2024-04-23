@@ -7,6 +7,7 @@ import ArticleFav from '@/components/article/bookmark/article-fav'
 import { useRouter } from 'next/router'
 import { useAuth } from '@/context/auth-context'
 import { API_SERVER } from '@/configs/index'
+import Swal from 'sweetalert2'
 
 export default function ArticleDetail() {
   const router = useRouter()
@@ -90,7 +91,8 @@ export default function ArticleDetail() {
       !artformData.message_email ||
       !artformData.message_content
     ) {
-      alert('請完整填寫所有必填字段。')
+      // alert('請完整填寫所有必填字段。')
+      Swal.fire('請完整填寫所有必填字段!')
       return
     }
 
@@ -104,15 +106,18 @@ export default function ArticleDetail() {
       })
 
       if (response.ok) {
-        alert('表單提交成功！')
+        // alert('表單提交成功！')
+        Swal.fire('表單提交成功！')
         e.target.reset()
       } else {
-        alert('表單提交失敗，請稍後再試。')
+        // alert('表單提交失敗，請稍後再試。')
+        Swal.fire('表單提交失敗，請稍後再試！')
         console.error('Failed to submit form')
       }
       console.log(artformData)
     } catch (error) {
-      alert('提交過程中出現錯誤，請稍後再試。')
+      // alert('提交過程中出現錯誤，請稍後再試。')
+      Swal.fire('提交過程中出現錯誤，請稍後再試。')
       console.error('Error submitting form:', error)
     }
   }
@@ -266,7 +271,7 @@ export default function ArticleDetail() {
                     </div>
                     <div className="col">
                       <input
-                        type="text"
+                        type="email"
                         name="message_email"
                         className="form-control"
                         placeholder="Email"
