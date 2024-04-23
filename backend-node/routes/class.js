@@ -461,6 +461,7 @@ router.get("/all-book", async (req, res) => {
   LEFT JOIN class_schedule on class_book.class_schedule_id = class_schedule.class_schedule_id
   LEFT JOIN class on class_schedule.class_id = class.class_id
   LEFT JOIN gym ON class_schedule.gym_id = gym.gym_id
+  LEFT JOIN line_purchase_order ON class_book.line_uuid = line_purchase_order.id
   WHERE 1
   AND member_id = ${member_id}`;
 
