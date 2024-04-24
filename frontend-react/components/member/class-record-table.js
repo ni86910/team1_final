@@ -64,10 +64,8 @@ export default function ClassRecordTable() {
     console.log('result', result) //訂單物件格式(line-pay專用)
 
     if (result.status === 'success') {
-      // toast.success('已成功建立訂單')
       setOrder(result.data.order)
       console.log('order', order)
-      toast.success('已成功建立訂單')
       // goToLinePayAlert()
     }
   }
@@ -75,7 +73,8 @@ export default function ClassRecordTable() {
   const goToLinePayAlert = () => {
     Swal.fire({
       title: '將前往Line Pay完成付款流程',
-      icon: 'question',
+      allowOutsideClick: false,
+      icon: 'info',
       confirmButtonColor: '#EB6234',
       confirmButtonText: '確認',
     }).then((result) => {
@@ -99,19 +98,15 @@ export default function ClassRecordTable() {
       `${API_SERVER}/line-pay/confirm?transactionId=${transactionId}&book_id=${tradingBookId}`
     )
     const res = await r.json()
-
     console.log('res.data', res)
-
     if (res.status === 'success') {
       toast.success('付款成功')
     } else {
       toast.error('付款失敗')
     }
-
     if (res.data) {
       setResult(res.data)
     }
-
     // 處理完畢，關閉載入狀態
     setIsLoading(false)
   }

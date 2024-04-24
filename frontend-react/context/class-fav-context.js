@@ -55,7 +55,7 @@ export function ClassFavContextProvider({ children }) {
           .then((r) => r.json())
           .then((data) => {
             setAllBook(data)
-            console.log(data)
+            console.log('allBook', data)
           })
       } catch (e) {
         console.log(e)

@@ -50,6 +50,10 @@ export default function ClassBook({
     alreadyFav: false,
   })
 
+  const [singleClassBook, setSingleClassBook] = useState({})
+
+  console.log('scheduleData', scheduleData)
+
   // const [bookState, setBookState] = useState('立即預約')
 
   // 預約課程
@@ -128,20 +132,32 @@ export default function ClassBook({
       } catch (e) {
         console.log(e)
       }
-      console.log('bookInfo', participantData)
     }
   }, [popClassBook, toggleBtn]) // 1.有課程方塊被按到 或2.收藏按鈕被按到 時更新
 
   console.log('bookInfo', bookInfo)
 
   // 抓會員是否有預約該課程
+
   useEffect(() => {
-    allBook.some((v) => {
-      v.class_schedule_id === bookInfo.class_schedule_id
-        ? setBookState('取消預約')
-        : setBookState('立即預約')
-    })
-  }, [allBook])
+    const url = `${API_SERVER}/class/single_class_book?member_id=${auth.member_id}&class_schedule_id=${bookInfo.class_schedule_id}`
+    fetch(url)
+      .then((r) => r.json())
+      .then((output) => {
+        console.log('一對一output', output)
+        setSingleClassBook(output)
+      })
+  }, [bookInfo, toggleBtn])
+
+  // useEffect(() => {
+  //   if (allBook) {
+  //     allBook.some((v) => {
+  //       v.class_schedule_id === bookInfo.class_schedule_id
+  //         ? setBookState('取消預約')
+  //         : setBookState('立即預約')
+  //     })
+  //   }
+  // }, [allBook, toggleBtn, router])
   return (
     <>
       <Toaster position="top-center" />
@@ -265,14 +281,14 @@ export default function ClassBook({
                     router.push('/member/login')
                   }
                 })
-              } else if (bookState === '立即預約') {
+              } else if (singleClassBook.button_display === '立即預約') {
                 checkBook()
-              } else if (bookState === '取消預約') {
+              } else if (singleClassBook.button_display === '取消預約') {
                 checkRemoveBook(auth.member_id, bookInfo.class_schedule_id)
               }
             }}
           >
-            {bookState}
+            {singleClassBook.button_display}
           </Link>
         </div>
       </div>

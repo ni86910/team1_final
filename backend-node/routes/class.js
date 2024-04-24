@@ -95,21 +95,21 @@ router.get("/schedule", async (req, res) => {
     // console.log(gymName);
 
     // 預設 不篩選 課程類別、課程名稱、老師名稱
-    let classTypeSql = 1;
-    let classNameSql = 1;
-    let teacherNameSql = 1;
+    let classTypeSql = "AND 1";
+    let classNameSql = "AND 1";
+    let teacherNameSql = "AND 1";
 
     // 若有給課程類別
     if (req.query.class_type_schedule) {
-      classTypeSql = `class_type = "${req.query.class_type_schedule}" `;
+      classTypeSql = `AND class_type = "${req.query.class_type_schedule}" `;
     }
     // 若有給課程名稱
     if (req.query.class_name) {
-      classNameSql = `class_name = "${req.query.class_name}" `;
+      classNameSql = `AND class_name = "${req.query.class_name}" `;
     }
     // 若有給老師名稱
     if (req.query.teacher_name) {
-      teacherNameSql = `teacher_name = "${req.query.teacher_name}" `;
+      teacherNameSql = `AND teacher_name = "${req.query.teacher_name}" `;
     }
     // classTypeSql = `class_type = "飛輪課程" `
     console.log("type_schedule", req.query.class_type_schedule);
@@ -123,6 +123,8 @@ router.get("/schedule", async (req, res) => {
   WHERE start_time > ${db.escape(mondayOfTheWeek)}
   AND start_time < ${db.escape(sundayOfTheWeek)}
   AND gym_name = ${db.escape(gymName)}
+  ${classTypeSql}
+  ${classNameSql}
   ORDER BY start_time
   `;
 
@@ -463,7 +465,9 @@ router.get("/all-book", async (req, res) => {
   LEFT JOIN gym ON class_schedule.gym_id = gym.gym_id
   LEFT JOIN line_purchase_order ON class_book.line_uuid = line_purchase_order.id
   WHERE 1
-  AND member_id = ${member_id}`;
+  AND member_id = ${member_id}
+  ORDER BY book_date DESC
+  `;
 
   let rows = [];
   let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
@@ -482,6 +486,47 @@ router.get("/all-book", async (req, res) => {
     return v;
   });
   res.json(rows);
+});
+
+// 獲得某堂開課 的預約資訊(用來確認 某A會員 是否有預約過 某B課程) 用在課程預約頁面
+router.get("/single_class_book", async (req, res) => {
+  const output = {
+    member_id: 0,
+    class_schedule_id: 0,
+    alreadyBook: false,
+    button_display: "立即預約",
+  };
+
+  const member_id = req.query.member_id;
+  const class_schedule_id = req.query.class_schedule_id;
+
+  //把會員id跟開課id丟進回船傳
+  output.member_id = +member_id;
+  output.class_schedule_id = +class_schedule_id;
+
+  const sql = `SELECT * FROM \`class_book\` 
+  WHERE \`member_id\`=${db.escape(member_id)} 
+  AND \`class_schedule_id\` = ${db.escape(class_schedule_id)};`;
+
+  let rows = [];
+  let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
+  //用await要捕捉錯誤 要像這樣，用.then 就用.catch
+  try {
+    [rows, fields] = await db.query(sql);
+  } catch (ex) {
+    console.log(ex);
+  }
+
+  // 有資料 aka 有收藏
+  if (rows[0]) {
+    output.alreadyBook = true;
+    output.button_display = "取消預約";
+  } else {
+    output.alreadyBook = false;
+    output.button_display = "立即預約";
+  }
+  console.log("rows", rows);
+  res.json(output);
 });
 
 // 執行預約課程
@@ -519,7 +564,7 @@ VALUES ( ?, ? )
 router.delete("/remove-book", async (req, res) => {
   const member_id = req.body.member_id;
   const class_schedule_id = req.body.class_schedule_id;
-console.log(member_id,class_schedule_id);
+  console.log(member_id, class_schedule_id);
   const sql = `
   DELETE FROM class_book 
   WHERE member_id = ?

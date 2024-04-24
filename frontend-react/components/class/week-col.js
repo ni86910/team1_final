@@ -12,6 +12,7 @@ export default function WeekCol({
   setBookInfo,
   setParticipantData,
   participantData,
+  bookInfo,
 }) {
   const router = useRouter()
   // 取得單周colum的參照
@@ -31,6 +32,13 @@ export default function WeekCol({
       console.log(e)
     }
   }
+
+  // bookInfo.class_schedule_id 即是當前顯示的開課id 要即時更新預約人數
+  useEffect(() => {
+    if (bookInfo.class_schedule_id) {
+      getMaxParticipant(bookInfo.class_schedule_id)
+    }
+  }, [bookInfo, toggleBtn])
 
   return (
     <>
@@ -59,7 +67,8 @@ export default function WeekCol({
                 onClick={() => {
                   setPopClassBook(true)
                   setBookInfo(v2)
-                  getMaxParticipant(v2.class_schedule_id)
+                  // setPoppingScheduleId(v2.class_schedule_id)
+                  // getMaxParticipant(v2.class_schedule_id)
                   setToggleBtn(!toggleBtn)
                 }}
               >
