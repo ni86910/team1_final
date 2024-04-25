@@ -34,11 +34,6 @@ export default function CheckoutMain() {
   // send order
   const handleSubmitOrder = (event) => {
     event.preventDefault() // 防止表單提交預設行為
-    if (!membershipTermsChecked) {
-      window.alert('請先勾選已閱讀購物須知')
-    } else {
-      console.log('send order')
-    }
   }
 
   // 當 checkbox 被點擊時更新狀態
