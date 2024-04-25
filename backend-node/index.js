@@ -25,6 +25,7 @@ import logoutRouter from "./routes/logout.js";
 import registerRouter from "./routes/register.js";
 import favoritesRouter from "./routes/favorites.js";
 import googleloginRouter from "./routes/google-login.js";
+
 // import linePayRouter from "./routes/line-pay.js";
 
 // 建立一個session可以儲存的地方
@@ -115,6 +116,7 @@ app.use("/contact", contactRouter);
 app.use("/favorites", favoritesRouter);
 
 app.use("/google-login", googleloginRouter);
+
 // app.use("/line-pay", linePayRouter);
 
 /*
