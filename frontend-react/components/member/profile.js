@@ -26,8 +26,7 @@ export default function ProfilePage({ member_id }) {
   const [profile, setProfile] = useState({})
   const [newProfileImage, setNewProfileImage] = useState(null)
   const [isEditing, setIsEditing] = useState(false) // 新增編輯狀態
-  const [formChanged, setFormChanged] = useState(false);
-  
+  const [formChanged, setFormChanged] = useState(false)
 
   // 會員登入後,取得資訊
   useEffect(() => {
@@ -164,7 +163,7 @@ export default function ProfilePage({ member_id }) {
     }
 
     if (!validator.isMobilePhone(data.mobile, 'zh-TW')) {
-      newErrors.mobile = '手機號碼格式不正確'
+      newErrors.mobile = '手機號碼為必填欄位'
     }
 
     if (!validator.isEmpty(data.address, { ignore_whitespace: true })) {
@@ -196,14 +195,14 @@ export default function ProfilePage({ member_id }) {
     delete dataModified.created_at
 
     const handleChange = (e) => {
-  setData({
-    ...data,
-    [e.target.name]: e.target.value,
-  });
-  if (isEditing) {
-    setFormChanged(true);
-  }
-};
+      setData({
+        ...data,
+        [e.target.name]: e.target.value,
+      })
+      if (isEditing) {
+        setFormChanged(true)
+      }
+    }
 
     const r = await fetch(`${API_SERVER}/profile/${profile.member_id}`, {
       method: 'PUT',

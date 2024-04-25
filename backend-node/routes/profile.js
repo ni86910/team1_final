@@ -1,13 +1,30 @@
 import express from "express";
 import db from "./../utils/mysql2-connect.js";
 import dayjs from "dayjs";
+import path from 'path'
+import multer from 'multer'
 
 const router = express.Router();
 
+// multer的設定值 - START
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    // 存放目錄
+    callback(null, 'public/avatar/')
+  },
+  filename: function (req, file, callback) {
+    // 經授權後，req.user帶有會員的id
+    const newFilename = req.member.member_id
+    // 新檔名由表單傳來的req.body.newFilename決定
+    callback(null, newFilename + path.extname(file.originalname))
+  },
+})
+const upload = multer({ storage: storage })
+// multer的設定值 - END
+
+//取資料
 router.get("/", async (req, res) => {
   console.log('jwt=',res.locals.jwt)
-
-  
     const sql = `SELECT * FROM \`member\` WHERE m_account ='${res.locals.jwt.m_account}'`; 
 
     try {
@@ -44,6 +61,67 @@ router.get("/profile/:member_id", async (req, res) => {
   res.render("member/profile", r);
 });
 
+// POST - 可同時上傳與更新會員檔案用，使用multer(設定值在此檔案最上面)
+router.post(
+  '/profile/upload-avatar',
+  upload.single('avatar'), // 上傳來的檔案(這是單個檔案，表單欄位名稱為avatar)
+  async function (req, res) {
+    // req.file 即上傳來的檔案(avatar這個檔案)
+    // req.body 其它的文字欄位資料…
+    // console.log(req.file, req.body)
+
+    if (req.file) {
+      const id = req.member.member_id
+      const data = { avatar: req.file.filename }
+
+      // 對資料庫執行update
+      /*const [affectedRows] = await User.update(data, {
+        where: {
+          id,
+        },
+      })*/
+      const sqlAvatar = "UPDATE `member` SET avatar = ? WHERE member_id = ?";
+      try {
+        // 執行 SQL 時最好做錯誤處理
+        const [resultAvatar] = await db.query(sqlAvatar, [fileName, id]);
+        // 檢查是否成功更新資料
+        if (resultAvatar.affectedRows > 0) {
+          console.log("檔案名稱已成功儲存到資料表member的avatar欄位中");
+        } else {
+          console.log("無法更新資料表member的avatar欄位");
+        }
+      } catch(ex){
+        console.error("更新資料表member的avatar欄位時出錯:", ex);
+      }
+
+      // 沒有更新到任何資料 -> 失敗或沒有資料被更新
+      if (!resultAvatar.affectedRows) {
+        return res.json({
+          status: 'error',
+          message: '更新失敗或沒有資料被更新',
+        })
+      }
+
+      // 沒有更新到任何資料 -> 失敗或沒有資料被更新
+      if (!affectedRows) {
+        return res.json({
+          status: 'error',
+          message: '更新失敗或沒有資料被更新',
+        })
+      }
+
+      return res.json({
+        status: 'success',
+        data: { avatar: req.file.filename },
+      })
+    } else {
+      return res.json({ status: 'fail', data: null })
+    }
+  }
+)
+
+
+// 編輯更新
 router.put("/:member_id", async (req, res) => {
   const output = {
     success: false,
@@ -60,22 +138,11 @@ router.put("/:member_id", async (req, res) => {
   req.body.birthday = birthday.isValid() ? birthday.format("YYYY-MM-DD") : null;
 
   // TODO: 資料格式檢查
-
   const sql = "UPDATE `member` SET ? WHERE member_id=?";
   try {
     // 執行 SQL 時最好做錯誤處理
     const [result] = await db.query(sql, [req.body, member_id]);
-    /*
-    {
-      "fieldCount": 0,
-      "affectedRows": 1,
-      "insertId": 0,
-      "info": "Rows matched: 1  Changed: 1  Warnings: 0",
-      "serverStatus": 2,
-      "warningStatus": 0,
-      "changedRows": 1
-    }
-    */
+
     output.success = !!(result.affectedRows && result.changedRows);
   } catch(ex){
     output.error = ex.toString();
@@ -92,19 +159,3 @@ router.get("/zod", (req, res) => {
 });
 
   export default router;
-
-  /* 
-  const [rows, fields] = await db.query(sql);：此行代碼使用資料庫查詢函數（假設是db.query）來執行SQL查詢，並將結果儲存在rows和fields中。rows是包含檢索到的資料行的陣列，fields是資料表的字段信息。
-
-  if (rows.length > 0) {：這個條件語句檢查是否有檢索到任何資料。如果rows陣列的長度大於0，表示有檢索到資料，進入條件中的程式碼塊。
-
-  const formattedDate = new Date(rows[0].birthdate).toISOString().split('T')[0];：此行程式碼對檢索到的日期進行格式轉換。它的執行步驟如下：
-
-  rows[0].birthdate：假設資料庫中的日期存儲在birthdate字段中。
-  new Date(rows[0].birthdate)：將資料庫檢索到的日期值轉換為JavaScript的Date物件。
-  .toISOString()：將JavaScript的Date物件轉換為ISO 8601格式的字串，包括日期和時間。
-  .split('T')[0]：將ISO 8601格式的字串以字元'T'分割，並選取第一部分，即日期部分，以達到只保留日期的目的。
-  const formattedDate：將格式化後的日期存儲在formattedDate變數中。
-  rows[0].birthdate = formattedDate;：將格式化後的日期賦值給rows陣列中的第一個資料行的birthdate字段。這樣就完成了日期格式的轉換。 */
-  
-

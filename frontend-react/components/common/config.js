@@ -11,8 +11,6 @@ export const AB_ITEM_DELETE = `${API_SERVER}/member` // DELETE
 // 取得通訊錄單筆資料 主鍵為 sid,  `${AB_ITEM}/${sid}`
 export const AB_ITEM = `${API_SERVER}/member` // GET
 
-// 修改通訊錄單筆資料 主鍵為 sid,  `${AB_ITEM_UPDATE_PUT}/${sid}`
-export const AB_ITEM_UPDATE_PUT = `${API_SERVER}/member/edit` // PUT
 
 // *** JWT ***
 export const JWT_LOGIN_POST = `${API_SERVER}/login-jwt` // 登入, POST

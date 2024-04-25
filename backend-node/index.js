@@ -105,11 +105,14 @@ app.use('/product', productRouter)
 
 app.use('/profile', profileRouter)
 
+app.use('/upload', profileRouter)
+
 app.use('/', loginRouter)
 
 app.use('/', logoutRouter)
 
 app.use('/member', registerRouter)
+
 
 
 
