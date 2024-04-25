@@ -8,30 +8,27 @@ import { auth } from '@/hooks/firebase-config'
 import { API_SERVER } from '@/configs/index'
 
 export default function GoogleLogin() {
-  const [googleData, setGoogleData] = useState([])
   const router = useRouter()
+  const [googlefile, setGooglefile] = useState({})
   // 目前使用 google 做第三方登入
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider()
-    // provider.setCustomParameters({})
+
     try {
       const response = await signInWithPopup(auth, provider)
       const token = response.user.accessToken
       localStorage.setItem('access_token', token)
-      const url = `${API_SERVER}/google-login`
       // 登入成功就轉址
       if (token) {
-        // 送出登入一筆會員資料(展示用)
-        fetch(url, {
+        fetch(`${API_SERVER}/google-login`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: new Headers({
+            Authorization: `${auth.token}`,
+          }),
         })
-          .then((r) => r.json())
+          .then((response) => response.json())
           .then((data) => {
-            console.log('google登入資訊', data)
-            setGoogleData(data)
+            setGooglefile(data)
           })
         router.push('/member/profile')
       }
@@ -45,6 +42,7 @@ export default function GoogleLogin() {
       type="submit"
       className={`btn ${style['google-btn']}`}
       onClick={signInWithGoogle}
+      value={googlefile}
     >
       <span className="glyphicon glyphicon-remove" />
       <Image
