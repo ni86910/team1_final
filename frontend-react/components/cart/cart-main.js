@@ -20,7 +20,7 @@ import { MdShoppingCartCheckout } from 'react-icons/md'
 
 export default function CartMain() {
   // use-cart hook
-  const { items } = useCart()
+  const { items, calcTotalItems, calcTotalPrice } = useCart()
 
   // 控制點數折抵 toggle button
   const [isToggled, setIsToggled] = useState(false)
@@ -131,7 +131,8 @@ export default function CartMain() {
                   </div>
                   <ul>
                     <li>
-                      商品金額 <span>NT$ 1500</span>
+                      商品金額{' '}
+                      <span>NT$ {calcTotalPrice().toLocaleString()}</span>
                     </li>
                     <li>
                       點數折抵(使用 10 點) <span>- NT$ 10</span>
@@ -139,7 +140,7 @@ export default function CartMain() {
                     <li>
                       小計{' '}
                       <span className={style['cart-total-subtotal']}>
-                        NT$ 1390
+                        NT$ {calcTotalPrice().toLocaleString()}
                       </span>
                     </li>
                   </ul>
