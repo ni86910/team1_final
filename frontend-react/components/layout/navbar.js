@@ -199,6 +199,7 @@ export default function Navbar() {
                               onClick={() => {
                                 logout()
                                 alert('你已成功登出')
+                                router.push('/member/login')
                               }}
                             >
                               登出
