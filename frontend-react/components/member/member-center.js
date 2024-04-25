@@ -17,8 +17,7 @@ import { FaHourglassStart, FaCoins } from 'react-icons/fa'
 import { BsBookmarkHeartFill } from 'react-icons/bs'
 import { AiFillSchedule } from 'react-icons/ai'
 import { FaSackDollar, FaAddressCard } from 'react-icons/fa6'
-import { MdChangeCircle } from 'react-icons/md'
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 
 export default function MemberCenterPage() {
   const router = useRouter()
@@ -28,7 +27,7 @@ export default function MemberCenterPage() {
     '/img/member/default-self.jpg'
   )
 
-  // 上傳圖像
+  /* 上傳圖像
   const handleFileUpload = async (event) => {
     const file = event.target.files[0]
     const imageUrl = await uploadImage(file)
@@ -36,7 +35,7 @@ export default function MemberCenterPage() {
       setProfileImage(imageUrl)
     }
   }
-
+*/
   return (
     <>
       <section className={SideBar['member-center-container']}>
@@ -142,20 +141,20 @@ export default function MemberCenterPage() {
             <Col className={style['list-text']}>
               <a className={style['a-color']} href="profile.html">
                 <FaAddressCard className={style['user-icons']} />
+                基本資料
               </a>
-              基本資料
             </Col>
             <Col className={style['list-text']}>
               <a className={style['a-color']} href="favorite.html">
-                <BsBookmarkHeartFill className={style['icons']} />
+                <BsBookmarkHeartFill className={style['icons']} />我的收藏
               </a>
-              我的收藏
+              
             </Col>
             <Col className={style['list-text']}>
               <a className={style['a-color']} href="course-records.html">
-                <AiFillSchedule className={style['class-icons']} />
+                <AiFillSchedule className={style['class-icons']} />課程評價
               </a>
-              課程評價
+              
             </Col>
           </Row>
           <Row className={style['list']}>
@@ -167,15 +166,8 @@ export default function MemberCenterPage() {
               </div>
             </Col>
             <Col className={style['list-text']}>
-              -20
-              <div>
-                已使用
-                <FaCoins className={style['icons']} />
-              </div>
-            </Col>
-            <Col className={style['list-text']}>
               <a className={style['btn']} href="points.html">
-                查看點數
+                使用紀錄
               </a>
             </Col>
           </Row>
