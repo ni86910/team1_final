@@ -1,0 +1,36 @@
+/* 設置表格的寬度和間距 */
+.my-table {
+    width: 100%; /* 表格寬度 */
+    border-collapse: collapse; /* 去除表格內部的間隙 */
+    margin-bottom: 20px;
+}
+
+/* 設置表頭樣式 */
+.my-table thead {
+    background-color: #EB6234; /* 背景色 */
+    color: #fff; /* 文字顏色 */
+    text-align: left;
+}
+
+.my-table thead th {
+    padding: 12px; /* 表頭的填充 */
+    text-align: left; 
+}
+
+/* 設置表身樣式 */
+.my-table tbody td {
+    padding: 12px; /* 表身的填充 */
+    border-bottom: 1px solid #E6E6E6; /* 底部邊框 */
+    text-align: left;
+}
+
+/* 佔位符行的樣式 */
+.my-table tbody td[colspan] {
+    text-align: left; /* 文字居中 */
+    color: #000; /* 文字顏色 */
+}
+
+/* 提高可讀性 */
+.my-table tbody tr:hover {
+    background-color: #E6E6E6; /* 鼠標懸停時的背景色 */
+}

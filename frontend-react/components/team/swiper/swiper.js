@@ -30,13 +30,13 @@ export default function App() {
         className="mySwiper"
       >
         <SwiperSlide>
-          <Image src="/img/team/about-us.jpg" alt="" width={500} height={500} />
+          <Image src="/img/team/about-us.jpg" alt="" width={800} height={500} />
         </SwiperSlide>
         <SwiperSlide>
           <Image
             src="/img/team/danielle-cerullo.jpg"
             alt=""
-            width={500}
+            width={800}
             height={500}
           />
         </SwiperSlide>
@@ -44,7 +44,7 @@ export default function App() {
           <Image
             src="/img/team/anastase-maragos.jpg"
             alt=""
-            width={500}
+            width={800}
             height={500}
           />
         </SwiperSlide>
@@ -52,7 +52,7 @@ export default function App() {
           <Image
             src="/img/team/victor-freitas.jpg"
             alt=""
-            width={500}
+            width={800}
             height={500}
           />
         </SwiperSlide>

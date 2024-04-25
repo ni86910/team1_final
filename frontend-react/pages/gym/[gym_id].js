@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Myaccordion from '@/components/accordion/Myaccordion'
+import TOP from '@/components/TOPbutton/top'
 import { questions } from '@/pages/api/accordion-data'
 import Image from 'next/image'
 import {
@@ -62,14 +63,18 @@ export default function GymDetail() {
     }
   }, [router.isReady])
 
-  // useEffect(() => {
-  //   fetch(`${API_SERVER}/gym/:gym_id`, { credentials: 'include' })
-  //     .then((r) => r.json())
-  //     .then((data) => {
-  //       console.log(data)
-  //       setGymData(data)
-  //     })
-  // }, [])
+  //文章分段
+  const text2jsx = (text) => {
+    return text.split('\n\n').map((v, i) => (
+      <div className="gym-section" key={i}>
+        {v.split('\n').map((v2, i2) => (
+          <div className="gym-p" key={`${i}-${i2}`}>
+            {v2}
+          </div>
+        ))}
+      </div>
+    ))
+  }
 
   return (
     <>
@@ -79,9 +84,11 @@ export default function GymDetail() {
         <section style={{ backgroundImage: 'url("/img/gym/place-mask.png")' }}>
           <div className="container">
             <div className="row">
-              <div className="col">
+              <div className="col" style={{ marginBottom: 20 }}>
                 <h4 className="mt-4 text-center">廠館環境</h4>
-                <p className="mt-4 text-center">{gymInfo.gym_description}</p>
+                <div className="mt-4 text-center">
+                  {text2jsx(gymInfo.gym_description)}
+                </div>
               </div>
 
               <div className="row">
@@ -149,8 +156,8 @@ export default function GymDetail() {
                         <MdElectricBike />
                         飛輪教室
                         <br />
-                        <FaBasketball />
-                        籃球場
+                        <IoWoman />
+                        女性專區
                       </div>
                       <div className="col">
                         <FaBath />
@@ -158,12 +165,6 @@ export default function GymDetail() {
                         <br />
                         <FaHotTub />
                         烤箱
-                        <br />
-                        <FaPersonSwimming />
-                        游泳池
-                        <br />
-                        <IoWoman />
-                        女性專區
                       </div>
                     </div>
                   </div>
@@ -187,7 +188,7 @@ export default function GymDetail() {
                   以下為最新公告，包含課程異動調整、營業時間異動與輔具公告等等
                 </p>
               </div>
-              <div className="row">
+              <div className="row" style={{ marginBottom: 20 }}>
                 {accordion.map((curElem) => {
                   const { id } = curElem
                   return <Myaccordion key={id} {...curElem} />
@@ -197,6 +198,7 @@ export default function GymDetail() {
           </div>
         </section>
       )}
+      <TOP />
     </>
   )
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {nodemailer} from 'nodemailer'
 import { Col, Button } from 'react-bootstrap'
 import { FaStarOfLife } from 'react-icons/fa6'
 import style from '@/styles/forget-password.module.scss'
@@ -7,6 +8,7 @@ import { MdChangeCircle } from 'react-icons/md'
 
 export default function ForgetPasswordPage() {
   const [randomCode, setRandomCode] = useState('')
+
 
   // 生成隨機的四位數字驗證碼
   const generateRandomCode = () => {
@@ -42,12 +44,12 @@ export default function ForgetPasswordPage() {
                           >
                             <label
                               htmlFor="m_account"
-                              className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
+                              className={`col-md-4 col-form-label  ${style['label-text']}`}
                             >
                               <FaStarOfLife className={style['icon-padding']} />
                               會員帳號
                             </label>
-                            <div className="col-md-4 col-form-label text-md-right">
+                            <div className="col-md-4 col-form-label ">
                               <input
                                 style={{ borderRadius: '10px' }}
                                 type="email"
@@ -64,19 +66,21 @@ export default function ForgetPasswordPage() {
                             className={`form-group row ${style['forget-box']}`}
                           >
                             <label
-                              htmlFor="verify-code"
-                              className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
+                              htmlFor="m_account"
+                              className={`col-md-4 col-form-label  ${style['label-verify-text']}`}
                             >
                               <FaStarOfLife className={style['icon-padding']} />
-                              驗證碼
+                              信箱驗證碼
                             </label>
-                            <div
-                              className={`col-md-4 col-form-label text-md-right ${style['label-text']}`}
-                            >
+                            <div className="col-md-4 col-form-label ">
                               <input
-                                className={style['verify-box']}
+                                style={{ borderRadius: '10px' }}
                                 type="text"
-                                placeholder=" 請輸入驗證碼"
+                                id="verify"
+                                className="form-control"
+                                name="verify"
+                                placeholder="請輸入驗證碼"
+                                required
                               />
                             </div>
                           </div>

@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import style from '@/styles/jack-use/button.module.css'
+import TOP from '@/components/TOPbutton/top'
 import { API_SERVER } from '@/configs/index'
+import Swal from 'sweetalert2'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -9,6 +11,15 @@ export default function Contact() {
     consult_email: '',
     request: '',
   })
+  // 用於保存登錄狀態
+  // const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  // 模擬檢查用戶是否已經登錄
+  // useEffect(() => {
+  //   // 您可以在這裡進行實際的驗證邏輯
+  //   const token = localStorage.getItem('authToken') // 例如從本地存儲中獲取身份驗證令牌
+  //   setIsLoggedIn(!!token)
+  // }, [])
 
   const handleChange = (e) => {
     setFormData({
@@ -20,14 +31,15 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // 数據驗證：確保所有必填內容不為空白
+    // 數據驗證：確保所有必填內容不為空白
     if (
       !formData.consult_type ||
       !formData.consult_name ||
       !formData.consult_email ||
       !formData.request
     ) {
-      alert('请完整填寫所有必填字段。')
+      // alert('請完整填寫所有必填字段。')
+      Swal.fire('請完整填寫所有必填字段!')
       return
     }
 
@@ -39,32 +51,24 @@ export default function Contact() {
         },
         body: JSON.stringify(formData),
       })
+
       if (response.ok) {
-        // 表单提交成功
-        alert('表單提交成功！')
-
-        // 重置表单数据
-
+        Swal.fire({
+          title: '表單提交成功！',
+          icon: 'success',
+        })
+        // alert('表單提交成功！')
         e.target.reset()
-        // setFormData({
-        //   consult_type: '',
-        //   consult_name: '',
-        //   consult_email: '',
-        //   request: '',
-        // })
-
-        const data = await response.json()
-        console.log(data) // Handle response from server
-
-        // 在这里可以添加提交成功后的其他操作
       } else {
-        // 表單提交失败
-        alert('表單提交失敗，请稍候再試。')
+        // alert('表單提交失敗，請稍後再試。')
+        Swal.fire({
+          icon: 'error',
+          text: '表單提交失敗，請稍後再試!',
+        })
         console.error('Failed to submit form')
       }
     } catch (error) {
-      // 请求出现错误
-      alert('提交過程中出現錯誤，请稍候再試。')
+      alert('提交過程中出現錯誤，請稍後再試。')
       console.error('Error submitting form:', error)
     }
   }
@@ -127,7 +131,8 @@ export default function Contact() {
                     <div className="col-lg-12" style={{ marginBottom: 20 }}>
                       <select
                         name="consult_type"
-                        className=""
+                        className="form-select form-select-lg mb-3"
+                        style={{ width: 230 }}
                         onChange={handleChange}
                       >
                         <option value="" selected="selected">
@@ -150,6 +155,7 @@ export default function Contact() {
                     <div className="col-lg-6">
                       <input
                         type="text"
+                        className="form-control"
                         name="consult_name"
                         placeholder="Name"
                         onChange={handleChange}
@@ -158,6 +164,7 @@ export default function Contact() {
                     <div className="col-lg-6">
                       <input
                         type="email"
+                        className="form-control"
                         name="consult_email"
                         placeholder="Email"
                         onChange={handleChange}
@@ -166,6 +173,7 @@ export default function Contact() {
                     <div className="col-lg-12">
                       <textarea
                         name="request"
+                        className="form-control"
                         placeholder="Message"
                         value={formData.message}
                         onChange={handleChange}
@@ -184,6 +192,7 @@ export default function Contact() {
           </div>
         </div>
       </section>
+      <TOP />
     </>
   )
 }

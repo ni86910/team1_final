@@ -1,6 +1,5 @@
 import React from 'react'
 import { useAuth } from '@/context/auth-context' //登出
-import Image from 'next/image'
 import Link from 'next/link'
 /* My module.scss */
 import style from '@/styles/favorite.module.scss'
@@ -18,6 +17,7 @@ import {
 } from 'react-bootstrap'
 /* React-icon */
 import { FaHeart } from 'react-icons/fa'
+import ArtFavorite from './mem-articlefav'
 import FavClassTab from './fav-class-tab'
 
 export default function FavoritePage() {
@@ -36,11 +36,11 @@ export default function FavoritePage() {
     // 其他商品收藏項目...
   ]
 
-  const articleFavorites = [
-    { article_id: 1, article_title: '文章1', post_date: '2024-01-01' },
-    { article_id: 2, article_title: '文章2', post_date: '2024-02-02' },
-    // 其他文章收藏項目...
-  ]
+  // const articleFavorites = [
+  //   { article_id: 1, article_title: '文章1', post_date: '2024-01-01' },
+  //   { article_id: 2, article_title: '文章2', post_date: '2024-02-02' },
+  //   // 其他文章收藏項目...
+  // ]
 
   return (
     <>
@@ -138,30 +138,7 @@ export default function FavoritePage() {
                     </Table>
                   </Tab>
                   <Tab eventKey="article" title="文章收藏">
-                    <Table striped hover bordered className="mt-4">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>文章標題</th>
-                          <th>發文時間</th>
-                          <th>
-                            <FaHeart />
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {articleFavorites.map((fav, index) => (
-                          <tr key={fav.article_id}>
-                            <td>{index + 1}</td>
-                            <td>{fav.article_title}</td>
-                            <td>{fav.post_date}</td>
-                            <td>
-                              <FaHeart />
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
+                    <ArtFavorite />
                   </Tab>
                 </Tabs>
               </Col>

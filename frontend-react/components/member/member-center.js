@@ -101,19 +101,6 @@ export default function MemberCenterPage() {
                 alt="selfie"
                 className={style['profile-img']}
               />
-              <button
-                className={style['upload-text']}
-                onClick={() => document.getElementById('file0').click()}
-              >
-                <MdChangeCircle /> 更換頭像
-                <input
-                  type="file"
-                  id="file0"
-                  multiple="multiple"
-                  style={{ display: 'none' }}
-                  onChange={handleFileUpload}
-                />
-              </button>
             </Col>
             <Col className={style['member-describe']}>
               潮州土狗
