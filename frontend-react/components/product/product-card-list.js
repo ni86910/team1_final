@@ -4,15 +4,27 @@ import { useRouter } from 'next/router'
 import { API_SERVER } from '../common/config'
 import style from '@/styles/product-list.module.scss'
 import { FaRegHeart, FaCartArrowDown } from 'react-icons/fa6'
+import { useCart } from '@/hooks/use-cart'
 
-export default function ProductCardList() {
+export default function ProductCardList({
+  perPage,
+  orderBy,
+  category,
+  page,
+  setPage,
+  searchKeyword,
+}) {
   const router = useRouter()
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1) // 追蹤當前頁碼
   const [totalPages, setTotalPages] = useState(0) // 新增 totalPage 狀態
-  const perPage = 12 // 每頁顯示的資料筆數
+  // const perPage = 12 // 每頁顯示的資料筆數
 
+  const { addItem } = useCart()
+// `${API_SERVER}/product?orderBy=${ob}&perPage=${perPage}&page=${page}&category=${category}&keyword=${searchKeyword}`
   useEffect(() => {
+    const ob = router.query.orderBy
+    // const pp = router.query
     // 呈現資料的 function
     const fetchProducts = async () => {
       try {
@@ -70,17 +82,30 @@ export default function ProductCardList() {
               </Link>
               <ul className={style['fav-button']}>
                 <li>
-                  <Link href="#" style={{ color: '#ffffff', fontSize: '18px' }}>
+                  <Link
+                    href="#"
+                    style={{ color: '#ffffff', fontSize: '18px' }}
+                    onClick={(e) => {
+                      e.preventDefault()
+                    }}
+                  >
                     <FaRegHeart />
                   </Link>
                 </li>
               </ul>
               <ul className={style['add-cart-button']}>
-                <li>
-                  <Link href="#" style={{ color: '#ffffff', fontSize: '18px' }}>
+                <Link
+                  href="#"
+                  style={{ color: '#ffffff', fontSize: '18px' }}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    addItem(v)
+                  }}
+                >
+                  <li>
                     <FaCartArrowDown />
-                  </Link>
-                </li>
+                  </li>
+                </Link>
               </ul>
               <div className={`mt-3 ${style['product-item-text']}`}>
                 <Link
@@ -105,12 +130,24 @@ export default function ProductCardList() {
                 .map((v, i) => {
                   const p = i + 1
                   const active = p === currentPage ? 'active' : ''
-                  const usp = new URLSearchParams({ ...qs, page: p })
+                  {
+                    /* const usp = new URLSearchParams({ ...qs, page: p }) */
+                  }
                   // 條件式寫這裡 p > totalPage or p < 1 回傳 null
                   if (p > totalPages || p < 1) return null
                   return (
                     <li className={`page-item ${active}`} key={p}>
-                      <Link className="page-link" href={`?${usp}`}>
+                      <Link
+                        className="page-link"
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          setPage(p)
+                          router.push({
+                            query: { ...router.query, page: p },
+                          })
+                        }}
+                      >
                         {p}
                       </Link>
                     </li>

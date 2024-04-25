@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import style from '@/styles/jack-use/button.module.css'
+import TOP from '@/components/TOPbutton/top'
 import Swiper from '@/components/article/swiper/swiper'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ARTICLE_ITEM } from '@/configs/index'
+import { RiArticleFill } from 'react-icons/ri'
 
 export default function Article() {
   const [artData, setArtData] = useState([])
@@ -53,12 +55,15 @@ export default function Article() {
           <div className="mt-4 text-center" style={{ marginTop: 20 }}>
             <Swiper />
           </div>
-
-          <h4 className="mt-4 text-center">文章內容</h4>
-
-          <p className="mt-4 text-center">
-            我們提供最新、最實用的健身相關知識。
-          </p>
+          <div className="section-title">
+            <h3 className="mt-4 text-center">
+              <RiArticleFill />
+              文章內容
+            </h3>
+            <span className="mt-4" style={{ color: '#EB6234' }}>
+              我們提供最新、最實用的健身相關知識。
+            </span>
+          </div>
         </div>
         <form
           action="get"
@@ -113,6 +118,7 @@ export default function Article() {
           })}
         </div>
       </div>
+      <TOP />
     </>
   )
 }

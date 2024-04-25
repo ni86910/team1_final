@@ -10,7 +10,9 @@ router.get("/", async (req, res) => {
   // console.log("class_type:", class_type);
   // console.log(req.query);
 
-  const sql = `SELECT * FROM class WHERE \`class_type\` = '${class_type}'`;
+  const sql = `SELECT * FROM class WHERE \`class_type\` = ${db.escape(
+    class_type
+  )}`;
 
   // 下面不一定長這樣
   // promise處理完後，拿到的是陣列 第一個元素會依 SQL 語法不同而異
@@ -35,7 +37,9 @@ router.get("/", async (req, res) => {
 // 抓區域內的城市
 router.get("/city", async (req, res) => {
   const gym_area = req.query.city;
-  const sql = `SELECT gym_name FROM \`gym\` WHERE gym_area = '${gym_area}'`;
+  const sql = `SELECT gym_name FROM \`gym\` WHERE gym_area = ${db.escape(
+    gym_area
+  )}`;
 
   let rows = [];
   let fields;
@@ -116,9 +120,9 @@ router.get("/schedule", async (req, res) => {
   JOIN \`teacher\` ON class_schedule.teacher_id = teacher.teacher_id
   JOIN \`gym\` ON class_schedule.gym_id = gym.gym_id
   JOIN \`class\` ON  class_schedule.class_id = class.class_id
-  WHERE start_time > '${mondayOfTheWeek}'
-  AND start_time < '${sundayOfTheWeek}'
-  AND gym_name = '${gymName}'
+  WHERE start_time > ${db.escape(mondayOfTheWeek)}
+  AND start_time < ${db.escape(sundayOfTheWeek)}
+  AND gym_name = ${db.escape(gymName)}
   ORDER BY start_time
   `;
 
@@ -173,65 +177,79 @@ router.get("/schedule", async (req, res) => {
   res.json(fullData);
 });
 
-/*
-// 獲得會員的 所有收藏資訊 暫時沒用到
+// 獲得// 獲得某A會員的 所有課程收藏
 router.get("/all_fav", async (req, res) => {
-  const output = {
-    member_id: 0,
-    class_schedule_ids: [],
-    product_ids: [],
-    article_ids: [],
-  };
-
   console.log("query", req.query);
   const member_id = req.query.member_id;
 
-  //把會員id跟開課id丟進回船傳
-  output.member_id = +member_id;
+  // const sql = `SELECT * FROM \`fav\`
+  // WHERE \`member_id\`=${member_id} ;`;
+  // const sql2 = `
+  // SELECT * FROM fav
+  // LEFT JOIN class_schedule on fav.class_schedule_id = class_schedule.class_schedule_id
+  // LEFT JOIN class on class_schedule.class_id = class.class_id
+  // LEFT JOIN article on fav.article_id = article.article_id
+  // LEFT JOIN product on fav.product_id = product.product_id
+  // WHERE 1
+  // AND member_id = ${member_id}`
 
-  const sql = `SELECT * FROM \`fav\` 
-  WHERE \`member_id\`=${member_id} ;`;
+  const sql3 = `
+  SELECT * FROM fav 
+  LEFT JOIN class_schedule on fav.class_schedule_id = class_schedule.class_schedule_id
+  LEFT JOIN class on class_schedule.class_id = class.class_id
+  LEFT JOIN gym ON class_schedule.gym_id = gym.gym_id
+  WHERE 1
+  AND member_id = ${member_id}
+  `;
 
   let rows = [];
   let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
   //用await要捕捉錯誤 要像這樣，用.then 就用.catch
   try {
-    [rows, fields] = await db.query(sql);
+    [rows, fields] = await db.query(sql3);
   } catch (ex) {
     console.log(ex);
   }
-
-  //把收藏的課程、商品、文章編號 加到陣列中
-  rows.forEach((v, i) => {
-    if (v.class_schedule_id) {
-      output.class_schedule_ids = [
-        ...output.class_schedule_ids,
-        v.class_schedule_id,
-      ];
-    }
-    if (v.product_id) {
-      output.product_ids = [...output.product_ids, v.product_id];
-    }
-    if (v.article_id) {
-      output.article_ids = [...output.article_ids, v.article_id];
-    }
+  // 開始時間 原本抓出來會是UTC時間，要轉成當地時間，再塞回去
+  rows.map((v, i) => {
+    v.start_time = dayjs(v.start_time).format("YYYY-MM-DD HH:mm");
+    v.end_time = dayjs(v.end_time).format("YYYY-MM-DD HH:mm");
+    v.fav_time = dayjs(v.fav_time).format("YYYY-MM-DD HH:mm");
+    return v;
   });
 
-  console.log("rows", rows);
-  // res.json(rows);
-  res.json(output);
-}); */
+  //把收藏的課程、商品、文章編號 加到陣列中
+  // rows.forEach((v, i) => {
+  //   if (v.class_schedule_id) {
+  //     output.class_schedule_ids = [
+  //       ...output.class_schedule_ids,
+  //       v.class_schedule_id,
+  //     ];
+  //   }
+  //   if (v.product_id) {
+  //     output.product_ids = [...output.product_ids, v.product_id];
+  //   }
+  //   if (v.article_id) {
+  //     output.article_ids = [...output.article_ids, v.article_id];
+  //   }
+  // });
+
+  res.json(rows);
+  // res.json(output);
+});
 
 // 獲得某A會員的 所有課程收藏(用在收藏列表)
+/*
 router.get("/member_all_fav", async (req, res) => {
   // console.log("query", req.query);
   const member_id = req.query.member_id || 0;
+  console.log("member_id", req.query.member_id);
 
   const sql = `SELECT fav_id, member_id, class_name, start_time, gym_name, fav_time FROM fav 
   JOIN class_schedule ON class_schedule.class_schedule_id = fav.class_schedule_id
   JOIN class ON class_schedule.class_id = class.class_id
   JOIN gym ON class_schedule.gym_id = gym.gym_id
-  WHERE member_id = ${member_id}`;
+  WHERE member_id = ${db.escape(member_id)}`;
 
   let rows = [];
   let fields;
@@ -249,7 +267,7 @@ router.get("/member_all_fav", async (req, res) => {
     return v;
   });
   res.json(rows);
-});
+}); */
 
 // 獲得某堂開課 的收藏資訊(用來確認 某A會員 是否有收藏過 某B課程) 用在課程預約頁面
 router.get("/class_fav", async (req, res) => {
@@ -268,8 +286,8 @@ router.get("/class_fav", async (req, res) => {
   output.class_schedule_id = +class_schedule_id;
 
   const sql = `SELECT * FROM \`fav\` 
-  WHERE \`member_id\`=${member_id} 
-  AND \`class_schedule_id\` = ${class_schedule_id};`;
+  WHERE \`member_id\`=${db.escape(member_id)} 
+  AND \`class_schedule_id\` = ${db.escape(class_schedule_id)};`;
 
   let rows = [];
   let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
@@ -315,7 +333,7 @@ router.post("/add-fav", async (req, res) => {
   const sql2 = "INSERT INTO `fav` SET ?";
 
   const sql = `INSERT INTO \`fav\`(\`member_id\`, \`class_schedule_id\`) 
-  VALUES (${member_id},${class_schedule_id})`;
+  VALUES (${db.escape(member_id)},${db.escape(class_schedule_id)})`;
 
   let result;
   try {
@@ -369,12 +387,12 @@ router.delete("/remove-fav", async (req, res) => {
 });
 
 // 獲得預約人數資訊
-router.get("/book/:class_schedule_id", async (req, res) => {
+router.get("/book-info/:class_schedule_id", async (req, res) => {
   const output = {
     class_schedule_id: 0,
     max_participant: 0,
     current_participant: 0,
-    message: "",
+    message: "沒有人預約此課程",
   };
   // 轉數字
   const class_schedule_id = +req.params.class_schedule_id;
@@ -388,6 +406,12 @@ router.get("/book/:class_schedule_id", async (req, res) => {
   const sql = `SELECT COUNT(*) FROM \`class_book\` WHERE \`class_schedule_id\`= ${db.escape(
     class_schedule_id
   )}`;
+
+  const sqll = `SELECT class_schedule.class_schedule_id, start_time, end_time, launch, bookable, max_participant, teacher_id, gym_id, class_id, book_id FROM class_schedule  
+  LEFT JOIN class_book 
+  ON class_schedule.class_schedule_id = class_book.class_schedule_id
+  WHERE class_schedule.class_schedule_id = ${db.escape(class_schedule_id)}`;
+
   let rows = [];
   let fields;
 
@@ -400,15 +424,16 @@ router.get("/book/:class_schedule_id", async (req, res) => {
   // 開課編號
   output.class_schedule_id = class_schedule_id;
 
-  // 數出來是0筆
-  if (rows[0]["COUNT(*)"] == 0) {
-    output.message = "沒有人預約此課程";
-    return res.json(output);
-  }
+  // // 數出來是0筆
+  // if (rows[0]["COUNT(*)"] !== 0) {
+  //   output.message = "沒有人預約此課程";
+  // }
 
   //有人預約
-  output.message = "此課程預約人數>0";
-  output.current_participant = rows[0]["COUNT(*)"];
+  if (rows[0]["COUNT(*)"] !== 0) {
+    output.message = "此課程預約人數>0";
+    output.current_participant = rows[0]["COUNT(*)"];
+  }
 
   // 抓最大開課人數
   const sql2 = `SELECT * FROM \`class_schedule\` WHERE \`class_schedule_id\`= ${db.escape(
@@ -427,6 +452,89 @@ router.get("/book/:class_schedule_id", async (req, res) => {
   output.max_participant = rows2[0]["max_participant"];
 
   res.json(output);
+});
+
+// 取得會員 的所有預約課程
+router.get("/all-book", async (req, res) => {
+  const member_id = req.query.member_id;
+  const sql = `  SELECT * FROM class_book 
+  LEFT JOIN class_schedule on class_book.class_schedule_id = class_schedule.class_schedule_id
+  LEFT JOIN class on class_schedule.class_id = class.class_id
+  LEFT JOIN gym ON class_schedule.gym_id = gym.gym_id
+  WHERE 1
+  AND member_id = ${member_id}`;
+
+  let rows = [];
+  let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
+  //用await要捕捉錯誤 要像這樣，用.then 就用.catch
+  try {
+    [rows, fields] = await db.query(sql);
+  } catch (ex) {
+    console.log(ex);
+  }
+  // 開始時間 原本抓出來會是UTC時間，要轉成當地時間，再塞回去
+  rows.map((v, i) => {
+    v.book_date = dayjs(v.book_date).format("YYYY-MM-DD HH:mm");
+    v.start_time = dayjs(v.start_time).format("YYYY-MM-DD HH:mm");
+    v.end_time = dayjs(v.end_time).format("YYYY-MM-DD HH:mm");
+    v.fav_time = dayjs(v.fav_time).format("YYYY-MM-DD HH:mm");
+    return v;
+  });
+  res.json(rows);
+});
+
+// 執行預約課程
+router.get("/book", async (req, res) => {
+  const member_id = req.query.member_id;
+  const class_schedule_id = req.query.class_schedule_id;
+  let output = {
+    member_id: member_id,
+    class_schedule_id: class_schedule_id,
+    message: "缺少會員id或開課id",
+  };
+
+  const sql = `
+INSERT INTO class_book(class_schedule_id, member_id) 
+VALUES ( ?, ? )
+`;
+  let result;
+  // 有值才做
+  if (member_id && class_schedule_id) {
+    try {
+      result = await db.query(sql, [class_schedule_id, member_id]);
+    } catch (e) {
+      console.log(e);
+    }
+
+    if (result.affectedRows) {
+      output.message = "成功預約";
+      return res.json(result);
+    }
+  }
+  res.json(result);
+});
+
+// 取消預約課程
+router.delete("/remove-book", async (req, res) => {
+  const member_id = req.query.member_id;
+  const class_schedule_id = req.query.class_schedule_id;
+
+  const sql = `
+  DELETE FROM class_book 
+  WHERE member_id = ?
+  AND class_schedule_id = ?
+`;
+  // 有值才做
+  if (member_id && class_schedule_id) {
+    let result;
+    try {
+      result = await db.query(sql, [member_id, class_schedule_id]);
+    } catch (e) {
+      console.log(e);
+    }
+    return res.json(result);
+  }
+  res.json({ error: "缺少會員id或開課id" });
 });
 
 // 動態路由 接收課程名稱

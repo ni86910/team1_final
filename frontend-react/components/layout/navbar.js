@@ -14,8 +14,10 @@ import { MdOutlineSort } from 'react-icons/md'
 import { TiArrowSortedDown } from 'react-icons/ti'
 import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
+import { useCart } from '@/hooks/use-cart'
 
 export default function Navbar() {
+  const { totalItems } = useCart()
   const router = useRouter()
   const [offcanvas, setOffcanvas] = useState('')
   const { auth, logout } = useAuth()
@@ -105,9 +107,9 @@ export default function Navbar() {
               height={19}
               alt=""
             />
-            <span>1</span>
+            <span>{totalItems}</span>
           </Link>
-          <div className="quantity">共 1 件商品</div>
+          <div className="quantity">共 {totalItems} 件商品</div>
         </div>
         <div id="mobile-menu-wrap" />
         <div className="offcanvas-text">
@@ -197,6 +199,7 @@ export default function Navbar() {
                               onClick={() => {
                                 logout()
                                 alert('你已成功登出')
+                                router.push('/member/login')
                               }}
                             >
                               登出
@@ -279,7 +282,7 @@ export default function Navbar() {
                   <FaUser />
                 </Link>
                 <Link href="/cart">
-                  <FaBasketShopping /> <span>1</span>
+                  <FaBasketShopping /> <span>{totalItems}</span>
                 </Link>
               </div>
             </div>

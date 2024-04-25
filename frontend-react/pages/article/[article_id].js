@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react'
 import style from '@/styles/jack-use/button.module.css'
+import styles from '@/styles/jack-use/table.module.css'
+import TOP from '@/components/TOPbutton/top'
 import Image from 'next/image'
-import BookMark from '@/components/article/bookmark/bookmark'
+import ArticleFav from '@/components/article/bookmark/article-fav'
 import { useRouter } from 'next/router'
+import { useAuth } from '@/context/auth-context'
 import { API_SERVER } from '@/configs/index'
 
 export default function ArticleDetail() {
   const router = useRouter()
+  const { auth } = useAuth()
 
   // 用來接收 fetch資料 的狀態
   const [artInfo, setArtInfo] = useState({
@@ -19,6 +23,14 @@ export default function ArticleDetail() {
     teacher_id: '',
     teacher_name: '',
     article_image: '',
+    message: [],
+  })
+
+  const [artformData, setArtformdata] = useState({
+    article_id: 0,
+    message_name: '',
+    message_email: '',
+    message_content: '',
   })
 
   //文章分段
@@ -61,6 +73,85 @@ export default function ArticleDetail() {
     }
   }, [router.isReady])
 
+  const handleChange = (e) => {
+    setArtformdata({
+      ...artformData,
+      [e.target.name]: e.target.value,
+      article_id: artInfo.article_id,
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    // 數據驗證：確保所有必填內容不為空白
+    if (
+      !artformData.message_name ||
+      !artformData.message_email ||
+      !artformData.message_content
+    ) {
+      alert('請完整填寫所有必填字段。')
+      return
+    }
+
+    try {
+      const response = await fetch(`${API_SERVER}/article/:article_id`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(artformData),
+      })
+
+      if (response.ok) {
+        alert('表單提交成功！')
+        e.target.reset()
+      } else {
+        alert('表單提交失敗，請稍後再試。')
+        console.error('Failed to submit form')
+      }
+      console.log(artformData)
+    } catch (error) {
+      alert('提交過程中出現錯誤，請稍後再試。')
+      console.error('Error submitting form:', error)
+    }
+  }
+
+  // 檢查收藏按鈕是否被點擊，用來更新favInfo 的依據
+  const [toggleBtn, setToggleBtn] = useState(true)
+
+  // 儲存收藏資料
+  const [favInfo, setFavInfo] = useState({
+    member_id: 0,
+    article_id: 0,
+    alreadyFav: false,
+  })
+  // 抓收藏資料
+  useEffect(() => {
+    // 取得會員id
+    // const member_data = JSON.parse(localStorage.getItem('Fit_U-auth'))
+    const member_id = auth.member_id
+    const article_id = router.query.article_id
+    console.log('router.query', router.query)
+    const url = `${API_SERVER}/article/get-fav?member_id=${member_id}&article_id=${article_id}`
+
+    try {
+      fetch(url, {
+        method: 'GET', // 可以是 GET、POST、PUT、DELETE 等
+        headers: {
+          'Content-Type': 'application/json', // 設定 Content-Type 為 JSON
+        },
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          console.log('收藏資訊', data)
+          setFavInfo(data)
+        })
+    } catch (e) {
+      console.log(e)
+    }
+  }, [toggleBtn, router.isReady])
+
   return (
     <>
       {/* Article Section Begin */}
@@ -74,7 +165,11 @@ export default function ArticleDetail() {
               {artInfo.post_date} | {artInfo.article_item}
             </p>
             <div className="col">
-              <BookMark />
+              <ArticleFav
+                favInfo={favInfo}
+                setToggleBtn={setToggleBtn}
+                toggleBtn={toggleBtn}
+              />
             </div>
           </div>
           <div className="row">
@@ -93,6 +188,58 @@ export default function ArticleDetail() {
             <p className="mt-4">作者: {artInfo.teacher_name}</p>
           </div>
 
+          <h4 className="mt-4">留言板</h4>
+          <>
+            {/* 檢查 artInfo.message 是否為空，如果為空，顯示空表格或提示消息 */}
+            {artInfo.message.length === 0 ? (
+              <>
+                <div className="row">
+                  <div className="mt-4 text-center">
+                    <table className={styles['my-table']}>
+                      <thead>
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">留言者姓名</th>
+                          <th scope="col">Message</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* 在這裡顯示提示消息，例如 "目前沒有留言。" */}
+                        <tr>
+                          <td colSpan="3">目前沒有留言。</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="row">
+                <div className="mt-4 text-center">
+                  <table className={styles['my-table']}>
+                    <thead>
+                      <tr>
+                        <th scope="col">留言者ID</th>
+                        <th scope="col">留言者姓名</th>
+                        <th scope="col">Message</th>
+                      </tr>
+                    </thead>
+                    {/* 在這裡進行 artInfo.message 的 map 迭代 */}
+                    {artInfo.message.map((v, i) => (
+                      <tbody key={i}>
+                        <tr>
+                          <td>{v.message_id}</td>
+                          <td>{v.message_name}</td>
+                          <td>{v.message_content}</td>
+                        </tr>
+                      </tbody>
+                    ))}
+                  </table>
+                </div>
+              </div>
+            )}
+          </>
+
           <div
             className="row"
             style={{ backgroundColor: '#E6E6E6', marginBottom: 20 }}
@@ -106,26 +253,32 @@ export default function ArticleDetail() {
             <div className="col-lg-6 col-md-6 mx-auto">
               {/* 使用 mx-auto 使其水平置中 */}
               <div className="contact__form">
-                <form action="post">
+                <form action="post" onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="col">
                       <input
                         type="text"
+                        name="message_name"
                         className="form-control"
                         placeholder="Name"
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="col">
                       <input
                         type="text"
+                        name="message_email"
                         className="form-control"
                         placeholder="Email"
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="col-12">
                       <textarea
+                        name="message_content"
                         className="form-control"
                         placeholder="Message"
+                        onChange={handleChange}
                         rows={4}
                       />
                       <div className="text-center" style={{ marginBottom: 10 }}>
@@ -145,6 +298,7 @@ export default function ArticleDetail() {
         </div>
       )}
       {/* Article Section End */}
+      <TOP />
     </>
   )
 }

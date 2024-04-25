@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import style from '@/styles/jack-use/button.module.css'
+import TOP from '@/components/TOPbutton/top'
 import { FaPhone, FaClock, FaLocationDot } from 'react-icons/fa6'
 import Link from 'next/link'
 import { API_SERVER } from '@/configs/index'
@@ -50,14 +51,15 @@ export default function GymPlace() {
           <div className="mt-4 text-center" style={{ marginTop: 20 }}>
             <Swiper />
           </div>
-
-          <h4 className="mt-4 text-center">
-            <FaLocationDot />
-            尋找場地
-          </h4>
-          <p className="mt-4 text-center">
-            營業據點遍佈全台各地，提供給您最完整的服務。請依據您的需求，選取地區與廠館，即能尋找離您最近的據點！
-          </p>
+          <div className="section-title">
+            <h3 className="mt-4 text-center">
+              <FaLocationDot />
+              尋找場地
+            </h3>
+            <span className="mt-4" style={{ color: '#EB6234' }}>
+              營業據點遍佈全台各地，提供給您最完整的服務。請依據您的需求，選取地區與廠館，即能尋找離您最近的據點！
+            </span>
+          </div>
         </div>
         <form
           action="get"
@@ -126,6 +128,7 @@ export default function GymPlace() {
           })}
         </div>
       </div>
+      <TOP />
     </>
   )
 }

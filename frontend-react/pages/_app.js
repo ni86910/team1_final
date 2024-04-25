@@ -3,10 +3,9 @@ import '@/styles/global.scss'
 import '@/styles/style.css'
 import '@/styles/my-style.css'
 import DefaultLayout from '@/components/layout/default-layout'
-// import '@/styles/jack-use/place-search.css'
-import '@/styles/jack-use/carousel.css'
-import '@/styles/jack-use/accordion.css'
 import { AuthContextProvider } from '@/context/auth-context'
+import { CartProvider } from '@/hooks/use-cart'
+import { ClassFavContextProvider } from '@/context/class-fav-context'
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -21,7 +20,9 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <AuthContextProvider>
-      {getLayout(<Component {...pageProps} />)}
+      <ClassFavContextProvider>
+        <CartProvider>{getLayout(<Component {...pageProps} />)}</CartProvider>
+      </ClassFavContextProvider>
     </AuthContextProvider>
   )
 }

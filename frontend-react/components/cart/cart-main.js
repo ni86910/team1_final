@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import style from '@/styles/cart-main.module.scss'
 import Link from 'next/link'
+import { useCart } from '@/hooks/use-cart'
+import { IMG_PATH } from '@/configs'
+import { ProductRow } from './product-row'
+
+// sweet alert
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
+
+import { Button, Modal, Form } from 'react-bootstrap'
+
+// icon
 import { FaRegHeart } from 'react-icons/fa6'
 import { RxPlus, RxMinus, RxCross2 } from 'react-icons/rx'
 import { IoReturnDownBackOutline } from 'react-icons/io5'
 import { MdShoppingCartCheckout } from 'react-icons/md'
-import { IMG_PATH } from '@/configs'
-import { ProductRow } from './product-row'
 
 export default function CartMain() {
+  // use-cart hook
+  const { items } = useCart()
 
   // 控制點數折抵 toggle button
   const [isToggled, setIsToggled] = useState(false)
@@ -34,18 +46,22 @@ export default function CartMain() {
                     </tr>
                   </thead>
                   <tbody>
-                    <ProductRow
-                      imgSrc="img/products/product_drink_01_00_00.jpg"
-                      productName="【現貨速出】 RIOT 機能吸凍 (柳橙) 能量飲"
-                      color="Orange"
-                      price={90}
-                    />
-                    <ProductRow
-                      imgSrc="img/products/product_gym_14_00_02.webp"
-                      productName="5kg 訓練彈力帶"
-                      color="藍"
-                      price={99}
-                    />
+                    {items.map((v, i) => {
+                      return (
+                        <ProductRow
+                          v={v}
+                          key={v.product_id}
+                          imgSrc={`/img/products/${
+                            v.image.includes(',')
+                              ? v.image.split(',')[0]
+                              : v.image
+                          }`}
+                          productName={v.product_name}
+                          spec={`F`} //規格id=帶出product_name尚未處理
+                          price={v.price}
+                        />
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -116,9 +132,6 @@ export default function CartMain() {
                   <ul>
                     <li>
                       商品金額 <span>NT$ 1500</span>
-                    </li>
-                    <li>
-                      折價券 <span>- NT$ 100</span>
                     </li>
                     <li>
                       點數折抵(使用 10 點) <span>- NT$ 10</span>

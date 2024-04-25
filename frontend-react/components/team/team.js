@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import TOP from '@/components/TOPbutton/top'
 import { API_SERVER } from '@/configs/index'
 import style from '@/styles/jack-use/button.module.css'
 import Swiper from '@/components/team/swiper/swiper'
+import { RiTeamFill } from 'react-icons/ri'
 
 export default function Team() {
   const router = useRouter()
@@ -18,7 +20,10 @@ export default function Team() {
         console.log(data)
         setTeamData(data)
       })
-  }, [])
+    if (router.query.team) {
+      setSelectedTeam(router.query.team)
+    }
+  }, [router.isReady])
 
   const handleTeamChange = (e) => {
     const selectedValue = e.target.value
@@ -39,16 +44,27 @@ export default function Team() {
     return selectedTeam === '全部總類' || item.teacher_type === selectedTeam // 根据选择的区域进行过滤
   })
 
+  //文章分段
+  const text2jsx = (text) => {
+    return text.split('\n\n').map((v1, i1) => (
+      <div className="team-section" key={i1}>
+        {v1.split('\n').map((v2, i2) => (
+          <div className="team-p" key={`${i1}-${i2}`}>
+            {v2}
+          </div>
+        ))}
+      </div>
+    ))
+  }
+
   return (
     <>
       {/* About Section Begin */}
 
       <div className="container">
-        <div className="row" style={{ marginTop: 20 }}>
-          <div className="col-lg-12">
-            <div className="about__pic">
-              <Swiper />
-            </div>
+        <div className="row">
+          <div className="mt-4 text-center" style={{ marginTop: 20 }}>
+            <Swiper />
           </div>
         </div>
       </div>
@@ -60,8 +76,13 @@ export default function Team() {
         <div className="row">
           <div className="col-lg-12">
             <div className="section-title">
-              <span style={{ color: '#EB6234' }}>教練團隊</span>
-              <h2>Meet Our 教練團隊</h2>
+              <h3 className="mt-4 text-center">
+                <RiTeamFill />
+                教練團隊
+              </h3>
+              <span className="mt-4" style={{ color: '#EB6234' }}>
+                教練團隊能讓您事半功倍，用最少的時間達成您心目中的體態，讓每次的努力不會白費。
+              </span>
             </div>
             <form
               action="get"
@@ -96,7 +117,7 @@ export default function Team() {
                 <div className="col-lg-3 col-md-6 col-sm-6" key={i}>
                   <div className="team__item">
                     <Image
-                      src="/img/team/team-2.jpg"
+                      src={`/img/team/${v.teacher_image}`}
                       alt=""
                       width={500}
                       height={350}
@@ -131,12 +152,14 @@ export default function Team() {
                       <div className="modal-body">
                         {/* Add modal body content here */}
                         <Image
-                          src="/img/team/team-2.jpg"
+                          src={`/img/team/${v.teacher_image}`}
                           alt=""
                           width={250}
                           height={300}
                         />
-                        <p>{v.teacher_type}</p>
+                        <div>{v.teacher_type}</div>
+                        <br />
+                        <div>{text2jsx(v.teacher_describe)}</div>
                       </div>
                     </div>
                   </div>
@@ -244,6 +267,7 @@ export default function Team() {
       </div>
 
       {/* Client Section End */}
+      <TOP />
     </>
   )
 }

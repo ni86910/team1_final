@@ -13,20 +13,19 @@ import bcrypt from "bcryptjs";
 // import wsServer from "./routes/ws-chat.js";
 // import wsServer from "./routes/ws-draw.js";
 import jwt from "jsonwebtoken";
-import gymRouter from './routes/gym.js'
-import articleRouter from './routes/article.js'
-import teamRouter from './routes/team.js'
-import contactRouter from './routes/contact.js'
-import classRouter from './routes/class.js'
-import productRouter from './routes/product.js'
-import profileRouter from './routes/profile.js'
-import loginRouter from './routes/login.js'
-import logoutRouter from './routes/logout.js'
+import gymRouter from "./routes/gym.js";
+import articleRouter from "./routes/article.js";
+import teamRouter from "./routes/team.js";
+import contactRouter from "./routes/contact.js";
+import classRouter from "./routes/class.js";
+import productRouter from "./routes/product.js";
+import profileRouter from "./routes/profile.js";
+import loginRouter from "./routes/login.js";
+import logoutRouter from "./routes/logout.js";
 import registerRouter from "./routes/register.js";
-
-
-
-
+import favoritesRouter from "./routes/favorites.js";
+import googleloginRouter from "./routes/google-login.js";
+import linePayRouter from "./routes/line-pay.js";
 
 // 建立一個session可以儲存的地方
 const MysqlStore = mysql_session(session);
@@ -34,7 +33,6 @@ const sessionStore = new MysqlStore({}, db);
 
 // 建立web server物件
 const app = express();
-
 
 // *** Top level middlewares
 // true: 使用 qs 套件做為解析器的核心
@@ -53,7 +51,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-
 // session
 app.use(
   session({
@@ -71,7 +68,6 @@ app.use(
 
 // 自訂頂層的中介軟體
 app.use((req, res, next) => {
-
   const authorization = req.get("Authorization"); // 取得某個 header
   if (authorization && authorization.indexOf("Bearer ") === 0) {
     const token = authorization.slice(7); // 去掉 "Bearer "
@@ -80,7 +76,9 @@ app.use((req, res, next) => {
     try {
       const payload = jwt.verify(token, process.env.JWT_SECRET);
       res.locals.jwt = payload; // 透過 res 往下傳
-    } catch (ex) {console.log(ex)}
+    } catch (ex) {
+      console.log(ex);
+    }
   }
   /*
   // 測試時使用
@@ -92,31 +90,41 @@ app.use((req, res, next) => {
   next(); // 流程往下進行
 });
 
-
 // 路由 (routes) 設定
 
-app.use('/gym',gymRouter)
+app.use("/gym", gymRouter);
 
-app.use('/article',articleRouter)
+app.use("/article", articleRouter);
 
-app.use('/class',classRouter)
+app.use("/class", classRouter);
 
 app.use('/product', productRouter)
 
-app.use('/profile', profileRouter)
+app.use("/profile", profileRouter);
 
 app.use('/upload', profileRouter)
 
-app.use('/', loginRouter)
+app.use("/", loginRouter);
 
+app.use("/", logoutRouter);
+
+app.use("/member", registerRouter);
+
+app.use("/team", teamRouter);
+
+app.use("/contact", contactRouter);
+
+app.use("/favorites", favoritesRouter);
+
+app.use("/google-login", googleloginRouter);
+app.use("/line-pay", linePayRouter);
+
+/*
+
+app.use('/', jwtRouter)
+app.use('/', jwtdataRouter)
 app.use('/', logoutRouter)
-
-app.use('/member', registerRouter)
-
-
-
-
-
+*/
 
 // 登入後回傳 JWT
 app.post("/login-jwt", async (req, res) => {
@@ -131,7 +139,7 @@ app.post("/login-jwt", async (req, res) => {
 
   if (!rows.length) {
     // 帳號是錯誤的
-    output.message = '帳號錯誤'
+    output.message = "帳號錯誤";
     return res.json(output);
   }
 
@@ -160,16 +168,6 @@ app.post("/login-jwt", async (req, res) => {
 app.get("/jwt-data", (req, res) => {
   res.json(res.locals.jwt);
 });
-
-
-
-
-
-
-
-app.use('/team',teamRouter)
-
-app.use('/contact',contactRouter)
 
 // *** 路由放在此段之前 ***
 // 設定靜態內容的資料夾
