@@ -48,7 +48,7 @@ export function ProductRow({ v, imgSrc, productName, color, price }) {
         <div className={style['product-cart-item-text']}>
           <h6>{productName}</h6>
           <span>{color}</span>
-          <h5>{price}</h5>
+          <h5>{price.toLocaleString()}</h5>
         </div>
       </td>
       <td className={style['quantity-item']}>
@@ -87,10 +87,13 @@ export function ProductRow({ v, imgSrc, productName, color, price }) {
           </button>
         </div>
       </td>
-      <td className={style['cart-full-price']}>{`NT$ ${price * v.qty}`}</td>
+      <td className={style['cart-full-price']}>{`NT$ ${(
+        price * v.qty
+      ).toLocaleString()}`}</td>
       <td className={style['cart-close']}>
         <div className={style['cross-icon']}>
           <button
+            className={style['close-btn']}
             onClick={() => {
               // removeItemById(v.id)
               // +
@@ -99,7 +102,7 @@ export function ProductRow({ v, imgSrc, productName, color, price }) {
               notifyAndRemove(v.product_name, v.product_id)
             }}
           >
-            <RxCross2 size={15} /> 移除
+            <RxCross2 size={20} />
           </button>
         </div>
       </td>
