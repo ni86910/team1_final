@@ -12,7 +12,7 @@ router.get("/register", async (req, res) => {
 });
 // 處理新增資料的表單
 router.post("/register", async (req, res) => {
-  const output = {
+  const output = { 
     success: false,
     postData: req.body,
     error: "",

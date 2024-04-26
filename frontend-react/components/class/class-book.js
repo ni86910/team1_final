@@ -11,6 +11,7 @@ import Router, { useRouter } from 'next/router'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import toast, { Toaster } from 'react-hot-toast'
+import { useClassFav } from '@/context/class-fav-context'
 
 export default function ClassBook({
   popClassBook,
@@ -23,6 +24,15 @@ export default function ClassBook({
   //取得已登入會員 的資訊 沒登入的話auth.member_id會是0
   const { auth } = useAuth()
 
+  const {
+    allBook,
+    toggleBtn,
+    setToggleBtn,
+    checkRemoveBook,
+    setBookState,
+    bookState,
+  } = useClassFav()
+
   // 處理預約資料
   bookInfo.year = dayjs(bookInfo.start_time).format('YYYY年M月D號') //年
   bookInfo.day = dayjs(bookInfo.start_time).format('D') //日
@@ -31,7 +41,7 @@ export default function ClassBook({
   bookInfo.monthWord = dayjs(bookInfo.start_time).format('MMM') // 月份英文
 
   // 檢查收藏按鈕是否被點擊，用來更新favInfo 的依據
-  const [toggleBtn, setToggleBtn] = useState(true)
+  // const [toggleBtn, setToggleBtn] = useState(true)
 
   // 儲存收藏資料
   const [favInfo, setFavInfo] = useState({
@@ -40,6 +50,12 @@ export default function ClassBook({
     alreadyFav: false,
   })
 
+  const [singleClassBook, setSingleClassBook] = useState({})
+
+  console.log('scheduleData', scheduleData)
+
+  // const [bookState, setBookState] = useState('立即預約')
+
   // 預約課程
   const bookClass = () => {
     const url = `${API_SERVER}/class/book?member_id=${auth.member_id}&class_schedule_id=${bookInfo.class_schedule_id}`
@@ -47,6 +63,7 @@ export default function ClassBook({
       .then((r) => r.json())
       .then((data) => {
         console.log(data)
+        setToggleBtn(!toggleBtn)
         checkPay()
       })
   }
@@ -115,11 +132,32 @@ export default function ClassBook({
       } catch (e) {
         console.log(e)
       }
-      console.log('bookInfo', participantData)
     }
   }, [popClassBook, toggleBtn]) // 1.有課程方塊被按到 或2.收藏按鈕被按到 時更新
 
   console.log('bookInfo', bookInfo)
+
+  // 抓會員是否有預約該課程
+
+  useEffect(() => {
+    const url = `${API_SERVER}/class/single_class_book?member_id=${auth.member_id}&class_schedule_id=${bookInfo.class_schedule_id}`
+    fetch(url)
+      .then((r) => r.json())
+      .then((output) => {
+        console.log('一對一output', output)
+        setSingleClassBook(output)
+      })
+  }, [bookInfo, toggleBtn])
+
+  // useEffect(() => {
+  //   if (allBook) {
+  //     allBook.some((v) => {
+  //       v.class_schedule_id === bookInfo.class_schedule_id
+  //         ? setBookState('取消預約')
+  //         : setBookState('立即預約')
+  //     })
+  //   }
+  // }, [allBook, toggleBtn, router])
   return (
     <>
       <Toaster position="top-center" />
@@ -228,25 +266,29 @@ export default function ClassBook({
             href={'#'}
             onClick={(e) => {
               e.preventDefault()
-              !auth.member_id
-                ? Swal.fire({
-                    title: '您尚未登入',
-                    text: '無法預約課程',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#EB6234',
-                    cancelButtonColor: 'black',
-                    confirmButtonText: '前往登入',
-                    cancelButtonText: '繼續瀏覽',
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      router.push('/member/login')
-                    }
-                  })
-                : checkBook()
+              if (!auth.member_id) {
+                Swal.fire({
+                  title: '您尚未登入',
+                  text: '無法預約課程',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#EB6234',
+                  cancelButtonColor: 'black',
+                  confirmButtonText: '前往登入',
+                  cancelButtonText: '繼續瀏覽',
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    router.push('/member/login')
+                  }
+                })
+              } else if (singleClassBook.button_display === '立即預約') {
+                checkBook()
+              } else if (singleClassBook.button_display === '取消預約') {
+                checkRemoveBook(auth.member_id, bookInfo.class_schedule_id)
+              }
             }}
           >
-            立即預約
+            {singleClassBook.button_display}
           </Link>
         </div>
       </div>

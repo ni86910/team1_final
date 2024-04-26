@@ -29,7 +29,11 @@ export default function Home() {
       <>
         <section className={style['banner-section']}>
           <div className={style['img-box']}>
-            <Image src={'/img/home/unsplash_9dzWZQWZMdE2.jpg'} fill alt="" />
+            <Image
+              src={`${API_SERVER}/imgs/home/unsplash_9dzWZQWZMdE2.jpg`}
+              fill
+              alt=""
+            />
           </div>
 
           <div className={style['content']}>
