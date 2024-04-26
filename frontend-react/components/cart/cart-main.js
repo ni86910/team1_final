@@ -7,6 +7,7 @@ import { ProductRow } from './product-row'
 // hooks
 import { useCart } from '@/hooks/use-cart'
 import { useAuth } from '@/context/auth-context'
+import { usePoints } from '@/context/points-context'
 
 // sweet alert
 import Swal from 'sweetalert2'
@@ -21,43 +22,22 @@ export default function CartMain() {
   const { auth } = useAuth()
   const router = useRouter()
   // use-cart hook
-  const { items, calcTotalItems, calcTotalPrice } = useCart()
+  const { items, calcTotalItems, calcTotalPrice, myPoints, setMyPoints } =
+    useCart()
 
   // 控制點數折抵 toggle button
   const [isToggled, setIsToggled] = useState(false)
   const handleToggleSwitchChange = () => {
     setIsToggled(!isToggled)
+    if (isToggled) {
+      setMyPoints(0)
+    } else {
+      setMyPoints(totalPoints)
+    }
   }
 
   // 使用會員積分
-  const [totalPoints, setTotalPoints] = useState(0)
-
-  // 從後端獲取會員積分總和
-  useEffect(() => {
-    // 呈現資料的 function
-    if (auth.member_id) {
-      const fetchPoints = async () => {
-        try {
-          const response = await fetch(
-            `${API_SERVER}/checkout/member_id=${auth.member_id}`,
-            { credentials: 'include' }
-          )
-          if (response.ok) {
-            const data = await response.json()
-            setTotalPoints(data.points) // 將欄位名稱從 points_id 改為 points
-          } else {
-            throw new Error('獲取點數資料時出錯')
-          }
-        } catch (error) {
-          console.error(error)
-        }
-      }
-
-      if (router.isReady) {
-        fetchPoints()
-      }
-    }
-  }, [auth])
+  const { totalPoints } = usePoints()
 
   return (
     <>
@@ -147,9 +127,27 @@ export default function CartMain() {
                       <div className={`col-6 ${style['cart-point-input']}`}>
                         <label htmlFor="input_id">- NT$</label>
                         {isToggled ? (
-                          <input type="text" placeholder=" " />
+                          <input
+                            type="number"
+                            placeholder=" "
+                            value={myPoints}
+                            onChange={(e) => {
+                              setMyPoints(e.target.value)
+                            }}
+                            max={totalPoints}
+                            onBlur={() => {
+                              if (myPoints > totalPoints) {
+                                setMyPoints(totalPoints)
+                              }
+                            }}
+                          />
                         ) : (
-                          <input type="text" placeholder=" " disabled />
+                          <input
+                            type="text"
+                            placeholder=" "
+                            value={0}
+                            disabled
+                          />
                         )}
                       </div>
                     </div>
@@ -169,13 +167,12 @@ export default function CartMain() {
                       <span>NT$ {calcTotalPrice().toLocaleString()}</span>
                     </li>
                     <li>
-                      點數折抵(使用 {totalPoints} 點){' '}
-                      <span>- NT$ {totalPoints}</span>
+                      點數折抵(使用 {myPoints} 點) <span>- NT$ {myPoints}</span>
                     </li>
                     <li>
                       小計{' '}
                       <span className={style['cart-total-subtotal']}>
-                        NT$ {calcTotalPrice().toLocaleString()}
+                        NT$ {(calcTotalPrice() - myPoints).toLocaleString()}
                       </span>
                     </li>
                   </ul>

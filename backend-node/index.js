@@ -28,7 +28,8 @@ import registerRouter from "./routes/register.js";
 import favoritesRouter from "./routes/favorites.js";
 import googleloginRouter from "./routes/google-login.js";
 import linePayRouter from "./routes/line-pay.js";
-import pointsRouter from "./routes/points.js"
+import pointsRouter from "./routes/points.js";
+import emailRouter from "./routes/email.js";
 
 // 建立一個session可以儲存的地方
 const MysqlStore = mysql_session(session);
@@ -126,7 +127,9 @@ app.use("/google-login", googleloginRouter);
 
 app.use("/line-pay", linePayRouter);
 
-app.use("/points", pointsRouter)
+app.use("/points", pointsRouter);
+
+app.use("/email", emailRouter);
 
 /*
 

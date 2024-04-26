@@ -2,6 +2,12 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { Button, Modal, Form } from 'react-bootstrap'
 import style from '@/styles/cart-checkout-main.module.scss'
+import { useRouter } from 'next/router'
+
+// hooks
+import { useCart } from '@/hooks/use-cart'
+import { useAuth } from '@/context/auth-context'
+import { usePoints } from '@/context/points-context'
 
 // 7-11 門市
 import { useShip711StoreOpener } from '@/hooks/use-ship-711-store'
@@ -10,7 +16,16 @@ import { useShip711StoreOpener } from '@/hooks/use-ship-711-store'
 import { FaRegHeart, FaPlus, FaRegCreditCard } from 'react-icons/fa6'
 import { IoIosArrowForward, IoIosArrowDown } from 'react-icons/io'
 
+// 圖片路徑
+import { IMG_PATH } from '@/configs'
+
 export default function CheckoutMain() {
+  const { auth } = useAuth()
+  const router = useRouter()
+  // use-cart hook
+  const { items, calcTotalItems, calcTotalPrice, myPoints, setMyPoints } =
+    useCart()
+
   // 閱讀購買須知後才可送出訂單
   const [membershipTermsChecked, setMembershipTermsChecked] = useState(false)
 
@@ -67,6 +82,13 @@ export default function CheckoutMain() {
                         {shippingMethod === 1 ? (
                           <>
                             <span className={style['pickUpWay']}>
+                              <img
+                                width="20px"
+                                height="20px"
+                                src={`${IMG_PATH}/delivery-7-eleven.png`}
+                                className={`me-3`}
+                                alt=""
+                              />
                               7-ELEVEN 取貨
                             </span>
                             <span className={style['price-highlight']}>
@@ -79,8 +101,14 @@ export default function CheckoutMain() {
                               <button
                                 style={{
                                   backgroundColor: '#E6E6E6',
-                                  border: '1px dashed #EB6234',
+                                  color: '#EB6234',
+                                  width: '90px',
+                                  height: '40px',
+                                  border: '1px solid #EB6234',
+                                  borderRadius: '5px',
                                   marginBottom: '15px',
+                                  letterSpacing: '2px',
+                                  fontWeight: '700',
                                 }}
                                 onClick={() => {
                                   openWindow()
@@ -106,7 +134,16 @@ export default function CheckoutMain() {
                           </>
                         ) : (
                           <>
-                            <span className={style['pickUpWay']}>宅配</span>
+                            <span className={style['pickUpWay']}>
+                              <img
+                                width="40px"
+                                height="40px"
+                                src={`${IMG_PATH}/delivery-truck.png`}
+                                className={`me-2`}
+                                alt=""
+                              />
+                              宅配
+                            </span>
                             <span className={style['price-highlight']}>
                               NT${' '}
                               <span className={style['deliveryFee']}>{80}</span>
@@ -200,10 +237,13 @@ export default function CheckoutMain() {
                 </div>
                 <ul>
                   <li>
-                    商品金額 NT$<span> </span>
+                    商品金額 NT$<span>{calcTotalPrice().toLocaleString()}</span>
                   </li>
                   <li>
-                    點數折抵後 (使用<span></span>點) NT$<span></span>
+                    點數折抵後 (使用{myPoints}點) NT$
+                    <span>
+                      {(calcTotalPrice() - myPoints).toLocaleString()}
+                    </span>
                   </li>
                   <li>
                     運費{' '}
@@ -211,14 +251,19 @@ export default function CheckoutMain() {
                       <span className={style['pickUpWay']}>
                         {shippingMethod === 1 ? '' : ''}
                       </span>
-                      {shippingMethod === 1 ? ' NT$ 60' : ' NT$ 80'}
+                      NT$ {shippingMethod === 1 ? '60' : '80'}
                     </span>
                   </li>
                 </ul>
                 <ul>
                   <li>
                     總計{' '}
-                    <span className={style['price-highlight']}>NT$ 1,080</span>
+                    <span className={style['price-highlight']}>
+                      NT${' '}
+                      {shippingMethod === 1
+                        ? (calcTotalPrice() - myPoints + 60).toLocaleString()
+                        : (calcTotalPrice() - myPoints + 80).toLocaleString()}
+                    </span>
                   </li>
                 </ul>
                 <hr />
