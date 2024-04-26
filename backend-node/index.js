@@ -19,6 +19,8 @@ import teamRouter from "./routes/team.js";
 import contactRouter from "./routes/contact.js";
 import classRouter from "./routes/class.js";
 import productRouter from "./routes/product.js";
+import checkoutRouter from "./routes/checkout.js";
+import shipmentRouter from "./routes/shipment.js";
 import profileRouter from "./routes/profile.js";
 import loginRouter from "./routes/login.js";
 import logoutRouter from "./routes/logout.js";
@@ -99,11 +101,15 @@ app.use("/article", articleRouter);
 
 app.use("/class", classRouter);
 
-app.use('/product', productRouter)
+app.use("/product", productRouter);
+
+app.use("/checkout", checkoutRouter);
+
+app.use("/shipment", shipmentRouter);
 
 app.use("/profile", profileRouter);
 
-app.use('/upload', profileRouter)
+app.use("/upload", profileRouter);
 
 app.use("/", loginRouter);
 
