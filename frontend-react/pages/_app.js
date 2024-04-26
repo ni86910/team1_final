@@ -6,6 +6,7 @@ import DefaultLayout from '@/components/layout/default-layout'
 import { AuthContextProvider } from '@/context/auth-context'
 import { CartProvider } from '@/hooks/use-cart'
 import { ClassFavContextProvider } from '@/context/class-fav-context'
+import { PointsContextProvider } from '@/context/points-context'
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -20,9 +21,11 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <AuthContextProvider>
-      <ClassFavContextProvider>
-        <CartProvider>{getLayout(<Component {...pageProps} />)}</CartProvider>
-      </ClassFavContextProvider>
+      <PointsContextProvider>
+        <ClassFavContextProvider>
+          <CartProvider>{getLayout(<Component {...pageProps} />)}</CartProvider>
+        </ClassFavContextProvider>
+      </PointsContextProvider>
     </AuthContextProvider>
   )
 }
