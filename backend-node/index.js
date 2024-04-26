@@ -99,11 +99,11 @@ app.use("/article", articleRouter);
 
 app.use("/class", classRouter);
 
-app.use('/product', productRouter)
+app.use("/product", productRouter);
 
 app.use("/profile", profileRouter);
 
-app.use('/upload', profileRouter)
+app.use("/upload", profileRouter);
 
 app.use("/", loginRouter);
 
