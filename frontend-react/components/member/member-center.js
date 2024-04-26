@@ -1,27 +1,28 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
+// Hooks
+import { useAuth } from '@/context/auth-context'
+import { usePoints } from '@/context/points-context'
+// Style
 import style from '@/styles/member-center.module.scss'
 import SideBar from '@/styles/m-sidebar.module.scss'
-import { useAuth } from '@/context/auth-context' // 登出
+// Next
 import Image from 'next/image'
 import Link from 'next/link'
 
-// 在 MemberCenterPage 組件中的 handleFileUpload 函數中調用 uploadImage 函數並更新用戶頭像信息
-import { uploadImage } from '@/utils/uploadImage'
-
 /* React-Bootstrap */
 import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap'
-
 /* React-icon */
 import { ImTruck } from 'react-icons/im'
-import { FaHourglassStart, FaCoins } from 'react-icons/fa'
+import { FaHourglassStart } from 'react-icons/fa'
 import { BsBookmarkHeartFill } from 'react-icons/bs'
 import { AiFillSchedule } from 'react-icons/ai'
 import { FaSackDollar, FaAddressCard } from 'react-icons/fa6'
-import { useRouter } from 'next/router'
 
 export default function MemberCenterPage() {
   const router = useRouter()
-  const { auth, logout } = useAuth() // 登出
+  const { auth, logout } = useAuth()
+  const { totalPoints } = usePoints()
 
   const [profileImage, setProfileImage] = useState(
     '/img/member/default-self.jpg'
@@ -146,20 +147,21 @@ export default function MemberCenterPage() {
             </Col>
             <Col className={style['list-text']}>
               <a className={style['a-color']} href="favorite.html">
-                <BsBookmarkHeartFill className={style['icons']} />我的收藏
+                <BsBookmarkHeartFill className={style['icons']} />
+                我的收藏
               </a>
-              
             </Col>
             <Col className={style['list-text']}>
               <a className={style['a-color']} href="course-records.html">
-                <AiFillSchedule className={style['class-icons']} />課程評價
+                <AiFillSchedule className={style['class-icons']} />
+                課程評價
               </a>
-              
             </Col>
           </Row>
           <Row className={style['list']}>
             <Col className={style['list-text']}>
-              50
+              {/* 會員點數context */}
+              {totalPoints}
               <div>
                 總點數
                 <FaSackDollar className={style['icons']} />
