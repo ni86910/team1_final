@@ -28,7 +28,7 @@ export default function ProfilePage({ member_id }) {
   const [isEditing, setIsEditing] = useState(false) // 新增編輯狀態
   const [formChanged, setFormChanged] = useState(false)
 
-  // 會員登入後,取得資訊
+  // 會員登入
   useEffect(() => {
     console.log(auth)
     if (auth.member_id) {
@@ -41,6 +41,7 @@ export default function ProfilePage({ member_id }) {
         .then((response) => response.json())
         .then((data) => {
           setProfile(data)
+          setNewProfileImage(`http://localhost:3001/avatar/${data.avatar}`)
         })
         .catch((error) => console.error('獲取資料時出錯:', error))
     }
@@ -79,7 +80,7 @@ export default function ProfilePage({ member_id }) {
         setNewProfileImage(reader.result)
 
         // 調用 uploadImage 函數處理圖像上傳邏輯
-        const imageUrl = await uploadImage(file)
+        const imageUrl = await uploadImage(file,profile)
         if (imageUrl) {
           setProfile((prevProfile) => ({
             ...prevProfile,
@@ -87,7 +88,6 @@ export default function ProfilePage({ member_id }) {
           }))
         }
       }
-
       if (file) {
         reader.readAsDataURL(file)
       }

@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, callback) {
     // 經授權後，req.user帶有會員的id
-    const newFilename = req.member.member_id
+    const newFilename = req.body.member_id
     // 新檔名由表單傳來的req.body.newFilename決定
     callback(null, newFilename + path.extname(file.originalname))
   },
@@ -61,9 +61,10 @@ router.get("/profile/:member_id", async (req, res) => {
   res.render("member/profile", r);
 });
 
+
 // POST - 可同時上傳與更新會員檔案用，使用multer(設定值在此檔案最上面)
 router.post(
-  '/profile/upload-avatar',
+  '/upload/avatar',
   upload.single('avatar'), // 上傳來的檔案(這是單個檔案，表單欄位名稱為avatar)
   async function (req, res) {
     // req.file 即上傳來的檔案(avatar這個檔案)
@@ -71,19 +72,12 @@ router.post(
     // console.log(req.file, req.body)
 
     if (req.file) {
-      const id = req.member.member_id
+      const id = req.body.member_id
       const data = { avatar: req.file.filename }
-
-      // 對資料庫執行update
-      /*const [affectedRows] = await User.update(data, {
-        where: {
-          id,
-        },
-      })*/
       const sqlAvatar = "UPDATE `member` SET avatar = ? WHERE member_id = ?";
       try {
         // 執行 SQL 時最好做錯誤處理
-        const [resultAvatar] = await db.query(sqlAvatar, [fileName, id]);
+        const [resultAvatar] = await db.query(sqlAvatar, [req.file.filename, id]);
         // 檢查是否成功更新資料
         if (resultAvatar.affectedRows > 0) {
           console.log("檔案名稱已成功儲存到資料表member的avatar欄位中");
@@ -92,22 +86,6 @@ router.post(
         }
       } catch(ex){
         console.error("更新資料表member的avatar欄位時出錯:", ex);
-      }
-
-      // 沒有更新到任何資料 -> 失敗或沒有資料被更新
-      if (!resultAvatar.affectedRows) {
-        return res.json({
-          status: 'error',
-          message: '更新失敗或沒有資料被更新',
-        })
-      }
-
-      // 沒有更新到任何資料 -> 失敗或沒有資料被更新
-      if (!affectedRows) {
-        return res.json({
-          status: 'error',
-          message: '更新失敗或沒有資料被更新',
-        })
       }
 
       return res.json({
