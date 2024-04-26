@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import style from '@/styles/cart-main.module.scss'
 import Link from 'next/link'
-import { useCart } from '@/hooks/use-cart'
-import { IMG_PATH } from '@/configs'
+import { useRouter } from 'next/router'
+import { API_SERVER } from '../common/config'
 import { ProductRow } from './product-row'
+// hooks
+import { useCart } from '@/hooks/use-cart'
+import { useAuth } from '@/context/auth-context'
 
 // sweet alert
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal)
 
-import { Button, Modal, Form } from 'react-bootstrap'
-
 // icon
-import { FaRegHeart } from 'react-icons/fa6'
-import { RxPlus, RxMinus, RxCross2 } from 'react-icons/rx'
 import { IoReturnDownBackOutline } from 'react-icons/io5'
 import { MdShoppingCartCheckout } from 'react-icons/md'
 
 export default function CartMain() {
+  const { auth } = useAuth()
+  const router = useRouter()
   // use-cart hook
   const { items, calcTotalItems, calcTotalPrice } = useCart()
 
@@ -27,6 +28,36 @@ export default function CartMain() {
   const handleToggleSwitchChange = () => {
     setIsToggled(!isToggled)
   }
+
+  // 使用會員積分
+  const [totalPoints, setTotalPoints] = useState(0)
+
+  // 從後端獲取會員積分總和
+  useEffect(() => {
+    // 呈現資料的 function
+    if (auth.member_id) {
+      const fetchPoints = async () => {
+        try {
+          const response = await fetch(
+            `${API_SERVER}/checkout/member_id=${auth.member_id}`,
+            { credentials: 'include' }
+          )
+          if (response.ok) {
+            const data = await response.json()
+            setTotalPoints(data.points) // 將欄位名稱從 points_id 改為 points
+          } else {
+            throw new Error('獲取點數資料時出錯')
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      }
+
+      if (router.isReady) {
+        fetchPoints()
+      }
+    }
+  }, [auth])
 
   return (
     <>
@@ -108,7 +139,10 @@ export default function CartMain() {
                     <div className={`row`}>
                       <div className={`col-6 ${style['cart-point-status']}`}>
                         可折抵
-                        <span className={style['cart-point-points']}>70</span>點
+                        <span className={style['cart-point-points']}>
+                          {totalPoints}
+                        </span>
+                        點
                       </div>
                       <div className={`col-6 ${style['cart-point-input']}`}>
                         <label htmlFor="input_id">- NT$</label>
@@ -135,7 +169,8 @@ export default function CartMain() {
                       <span>NT$ {calcTotalPrice().toLocaleString()}</span>
                     </li>
                     <li>
-                      點數折抵(使用 10 點) <span>- NT$ 10</span>
+                      點數折抵(使用 {totalPoints} 點){' '}
+                      <span>- NT$ {totalPoints}</span>
                     </li>
                     <li>
                       小計{' '}
