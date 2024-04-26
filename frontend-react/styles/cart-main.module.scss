@@ -128,7 +128,27 @@
 	/* 不再需要 .qt-plus 和 .qt-minus 分别设置 line-height 属性 */
 	/* .qt-plus 和 .qt-minus 保持默认垂直排列 */
 	/* 如果需要调整 .qt-plus 和 .qt-minus 的间距，可以添加 margin 或者调整 padding */
-		
+	
+}
+
+.close-btn {
+	background-color: #ffffff;
+	border: none;
+	color: #EB6234;
+	width: 25px;
+	height: 25px;
+	border-radius: 50px;
+	font-size: 12px;
+	font-weight: 700;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all .2s;
+
+	&:hover {
+		background: black;
+		color: #ffffff;
+	}
 }
 
 
@@ -137,13 +157,6 @@
 	font-size: 18px;
 	font-weight: 700;
 	width: 140px;
-}
-
-.cross-icon {
-
-    &:hover{
-    color: $primary-color;
-    }
 }
 
 

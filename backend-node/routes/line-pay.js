@@ -17,9 +17,13 @@ const linePayClient = createLinePayClient({
 });
 
 // 在資料庫建立order資料(需要會員登入才能使用)
-router.post("create-order", async (req, res) => {
-  const userId = req.user.userId;
+router.post("/create-order", async (req, res) => {
+  // const userId = req.user.userId;
+  const userId = req.body.userId;
+  console.log("userId", userId);
 
+  // 取得該筆預約的id
+  const book_id = req.body.book_id;
   //產生 orderId與packageId
   const orderId = uuidv4();
   const packageId = uuidv4();
@@ -49,7 +53,9 @@ router.post("create-order", async (req, res) => {
   };
 
   const sql = `INSERT INTO line_purchase_order (id, user_id, amount, status, order_info) VALUES (?, ?, ?, ?, ?);`; // 用問號 會自動跳脫，值 按照順序丟到下方陣列
+  const sql2 = `UPDATE class_book SET line_uuid = ? WHERE book_id = ?`;
 
+  // 建立line pay訂單
   try {
     const [result] = await db.query(sql, [
       orderId,
@@ -61,6 +67,17 @@ router.post("create-order", async (req, res) => {
   } catch (e) {
     console.log(e);
   }
+
+  // 更新class_book資料表 加上要連結到line pay資料表的外鍵
+  try {
+    const [result] = await db.query(sql2, [
+      orderId,
+      book_id,
+    ]);
+  } catch (e) {
+    console.log(e);
+  }
+
 
   res.json({ status: "success", data: { order } });
 });
@@ -189,7 +206,16 @@ router.get("/confirm", async (req, res) => {
       dbOrder.id,
     ]);
 
-    console.log(result);
+    // // 更新預約資料表的付款狀態
+    // const book_id = req.query.book_id;
+    // console.log("book_id", book_id);
+    // const sql3 = `
+    // UPDATE class_book SET paid = 1 WHERE book_id = ?
+    // `;
+    // const result3 = await db.query(sql3, [book_id]);
+    // console.log("更新預約資料表的結果", result3);
+
+    console.log("更新line資料表的結果", result);
     return res.json({ status: "success", data: linePayResponse.body });
   } catch (error) {
     return res.json({ status: "fail", data: error.data });

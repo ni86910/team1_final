@@ -82,7 +82,7 @@ export default function ArtFavorite() {
             <tr>
               <th>文章標題</th>
               <th>收藏時間</th>
-              <th>加入/移除收藏</th>
+              <th>移除收藏</th>
             </tr>
           </thead>
           <tbody>

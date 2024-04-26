@@ -141,6 +141,8 @@ export function CartProvider({ children }) {
         addItem,
         totalItems,
         totalPrice,
+        calcTotalItems,
+        calcTotalPrice,
       }}
     >
       {children}

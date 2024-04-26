@@ -66,6 +66,7 @@
         align-items: center;
         color: chocolate;
         font-size: larger;
+        margin-bottom: 16px;
         h2 {
           color: white;
           font-size: x-large;
@@ -76,8 +77,8 @@
       .select-group {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
-        max-width: 800px;
+        justify-content: flex-start;
+        max-width: 600px;
         width: 100%;
         margin-left: 20px;
         .filter-container{
@@ -86,6 +87,7 @@
           height: 60px;
           margin-right: 20px;
         }
+        
         .select-city,
         .select-store {
           height: 60px;
@@ -109,6 +111,7 @@
         justify-content: center;
         align-items: center;
         border-radius: 50px;
+        margin-bottom: 16px;
         .search {
         }
       }

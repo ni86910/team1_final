@@ -3,8 +3,10 @@ import style from '@/styles/not-login.module.scss'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import { useRouter } from 'next/router'
+import { useAuth } from '@/context/auth-context'
 
 export default function NotLogin() {
+  const { auth } = useAuth()
   const router = useRouter()
   useEffect(() => {
     let timerInterval
@@ -20,6 +22,9 @@ export default function NotLogin() {
         timerInterval = setInterval(() => {
           timer.textContent = Math.ceil(+`${Swal.getTimerLeft()}` / 1000)
         }, 100)
+        if (auth.member_id) {
+          Swal.stopTimer()
+        }
       },
       willClose: () => {
         clearInterval(timerInterval)

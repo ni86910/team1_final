@@ -12,10 +12,11 @@ router.post("/", async function (req, res, next) {
 
   // 檢查從react來的資料
   if (!req.body.providerId || !req.body.uid) {
+    console.log("缺少google登入資料");
     return res.json({ status: "error", message: "缺少google登入資料" });
   }
 
-  const { displayName, uid, photoURL } = req.db.body;
+  const { displayName, email, uid, photoURL } = req.body;
   const google_uid = uid;
 
   // 以下流程:
@@ -24,7 +25,21 @@ router.post("/", async function (req, res, next) {
   // 2-2. 不存在 -> 建立一個新會員資料(無帳號與密碼)，只有google來的資料 -> 執行登入工作
 
   // 1. 先查詢資料庫是否有同google_uid的資料
-  const total = await member.db.count({
+
+  const sql =
+    "INSERT INTO member (`member_id`,`m_name`,`google_uid`,`photo_url`) VALUES (?,?,?,?)";
+  const [result] = await db.query(sql, [
+    req.body.member_id,
+    req.body.m_name,
+    req.body.google_uid,
+    req.body.photo_url,
+  ]);
+
+  if (result.affectedRows) {
+    res.json(output);
+  }
+
+  const total = await member.count({
     where: {
       google_uid,
     },
@@ -40,7 +55,7 @@ router.post("/", async function (req, res, next) {
 
   if (total) {
     // 2-1. 有存在 -> 從資料庫查詢會員資料
-    const dbUser = await member.db.findOne({
+    const dbUser = await member.findOne({
       where: {
         google_uid,
       },
@@ -62,12 +77,12 @@ router.post("/", async function (req, res, next) {
     };
 
     // 新增會員資料
-    const newUser = await member.db.create(user);
+    const newUser = await member.create(user);
 
     // 回傳給前端的資料
     returnUser = {
       member_id: newUser.id,
-      username: "",
+      m_name: "",
       google_uid: newUser.google_uid,
     };
   }
