@@ -11,7 +11,6 @@ import { FaStarOfLife } from 'react-icons/fa6'
 import { REGISTER_POST } from '@/components/common/config'
 import { useRouter } from 'next/router'
 
-
 export default function RegisterPage() {
   const router = useRouter()
   // 會員條款
@@ -33,9 +32,6 @@ export default function RegisterPage() {
     mobile: '',
     address: '',
   })
-
-  // 整個表單有沒有通過檢查
-  const [isPass, setIsPass] = useState(false)
   // 驗證表單字段
   const validateFields = () => {
     const newErrors = {}
@@ -81,12 +77,9 @@ export default function RegisterPage() {
 
   const onSubmit = async (e) => {
     e.preventDefault() // 表單不要以傳統方式送出
+    const isValid = validateFields() // 檢查所有欄位是否填寫
 
-    if (!validateFields()) {
-      return
-    }
-    const { m_account, m_pwd } = data
-    if (isPass) {
+    if (isValid && agreedToTerms) {
       const r = await fetch(REGISTER_POST, {
         method: 'POST',
         headers: {
@@ -117,22 +110,24 @@ export default function RegisterPage() {
         })
       }
     } else {
-      toast.error('必填欄位請填入符合格式的值', {
-        duration: 2000,
-        style: {
-          backgroundColor: 'black',
-          color: 'white',
-        },
-      })
-    }
-    if (!agreedToTerms) {
-      toast.error('請勾選會員條款', {
-        duration: 2000,
-        style: {
-          backgroundColor: 'black',
-          color: 'white',
-        },
-      })
+      if (!isValid) {
+        toast.error('必填欄位請填入符合格式的值', {
+          duration: 2000,
+          style: {
+            backgroundColor: 'black',
+            color: 'white',
+          },
+        })
+      }
+      if (!agreedToTerms) {
+        toast.error('請勾選會員條款', {
+          duration: 2000,
+          style: {
+            backgroundColor: 'black',
+            color: 'white',
+          },
+        })
+      }
       return // 停止表單提交
     }
   }
@@ -145,7 +140,7 @@ export default function RegisterPage() {
     })
   }
   // 處理輸入框失去焦點
-  const handleBlur = (e) => {
+  const handleBlur = () => {
     validateFields()
   }
 
