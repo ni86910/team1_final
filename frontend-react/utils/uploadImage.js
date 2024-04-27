@@ -4,7 +4,7 @@ import { API_SERVER } from '@/components/common/config'
 export const uploadImage = async (file,profile) => {
   const formData = new FormData()
   formData.append('avatar', file)
-  formData.append('member_id',profile.member_id)
+  formData.append('member_id', profile.member_id)
 
   try {
     const response = await fetch(`${API_SERVER}/profile/upload/avatar`, {
