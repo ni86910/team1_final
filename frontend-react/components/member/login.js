@@ -140,7 +140,7 @@ export default function LoginPage() {
         <style jsx>{`
           .error {
             color: red;
-            font-size: 13px;
+            font-size: 12px;
           }
         `}</style>
         <div className="col-6">
