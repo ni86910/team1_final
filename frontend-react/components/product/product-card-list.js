@@ -21,7 +21,7 @@ export default function ProductCardList({
   // const perPage = 12 // 每頁顯示的資料筆數
 
   const { addItem } = useCart()
-// `${API_SERVER}/product?orderBy=${ob}&perPage=${perPage}&page=${page}&category=${category}&keyword=${searchKeyword}`
+  // `${API_SERVER}/product?orderBy=${ob}&perPage=${perPage}&page=${page}&category=${category}&keyword=${searchKeyword}`
   useEffect(() => {
     const ob = router.query.orderBy
     // const pp = router.query
@@ -114,7 +114,7 @@ export default function ProductCardList({
                 >
                   <p>{v.product_name}</p>
                 </Link>
-                <span>NT$ {v.price}</span>
+                <span>NT$ {v.price.toLocaleString()}</span>
               </div>
             </div>
           </div>

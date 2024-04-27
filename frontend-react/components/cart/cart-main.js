@@ -1,32 +1,43 @@
 import React, { useState, useEffect } from 'react'
 import style from '@/styles/cart-main.module.scss'
 import Link from 'next/link'
-import { useCart } from '@/hooks/use-cart'
-import { IMG_PATH } from '@/configs'
+import { useRouter } from 'next/router'
+import { API_SERVER } from '../common/config'
 import { ProductRow } from './product-row'
+// hooks
+import { useCart } from '@/hooks/use-cart'
+import { useAuth } from '@/context/auth-context'
+import { usePoints } from '@/context/points-context'
 
 // sweet alert
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal)
 
-import { Button, Modal, Form } from 'react-bootstrap'
-
 // icon
-import { FaRegHeart } from 'react-icons/fa6'
-import { RxPlus, RxMinus, RxCross2 } from 'react-icons/rx'
 import { IoReturnDownBackOutline } from 'react-icons/io5'
 import { MdShoppingCartCheckout } from 'react-icons/md'
 
 export default function CartMain() {
+  const { auth } = useAuth()
+  const router = useRouter()
   // use-cart hook
-  const { items } = useCart()
+  const { items, calcTotalItems, calcTotalPrice, myPoints, setMyPoints } =
+    useCart()
 
   // 控制點數折抵 toggle button
   const [isToggled, setIsToggled] = useState(false)
   const handleToggleSwitchChange = () => {
     setIsToggled(!isToggled)
+    if (isToggled) {
+      setMyPoints(0)
+    } else {
+      setMyPoints(totalPoints)
+    }
   }
+
+  // 使用會員積分
+  const { totalPoints } = usePoints()
 
   return (
     <>
@@ -108,14 +119,35 @@ export default function CartMain() {
                     <div className={`row`}>
                       <div className={`col-6 ${style['cart-point-status']}`}>
                         可折抵
-                        <span className={style['cart-point-points']}>70</span>點
+                        <span className={style['cart-point-points']}>
+                          {totalPoints}
+                        </span>
+                        點
                       </div>
                       <div className={`col-6 ${style['cart-point-input']}`}>
                         <label htmlFor="input_id">- NT$</label>
                         {isToggled ? (
-                          <input type="text" placeholder=" " />
+                          <input
+                            type="number"
+                            placeholder=" "
+                            value={myPoints}
+                            onChange={(e) => {
+                              setMyPoints(e.target.value)
+                            }}
+                            max={totalPoints}
+                            onBlur={() => {
+                              if (myPoints > totalPoints) {
+                                setMyPoints(totalPoints)
+                              }
+                            }}
+                          />
                         ) : (
-                          <input type="text" placeholder=" " disabled />
+                          <input
+                            type="text"
+                            placeholder=" "
+                            value={0}
+                            disabled
+                          />
                         )}
                       </div>
                     </div>
@@ -131,15 +163,16 @@ export default function CartMain() {
                   </div>
                   <ul>
                     <li>
-                      商品金額 <span>NT$ 1500</span>
+                      商品金額{' '}
+                      <span>NT$ {calcTotalPrice().toLocaleString()}</span>
                     </li>
                     <li>
-                      點數折抵(使用 10 點) <span>- NT$ 10</span>
+                      點數折抵(使用 {myPoints} 點) <span>- NT$ {myPoints}</span>
                     </li>
                     <li>
                       小計{' '}
                       <span className={style['cart-total-subtotal']}>
-                        NT$ 1390
+                        NT$ {(calcTotalPrice() - myPoints).toLocaleString()}
                       </span>
                     </li>
                   </ul>

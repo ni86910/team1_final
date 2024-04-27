@@ -77,8 +77,8 @@
         flex-wrap: wrap;
         justify-content: center;
         // width: 70%;
-        .filter-container{
-          max-width:400px ;
+        .filter-container {
+          max-width: 400px;
           min-width: 200px;
           height: 60px;
           margin-right: 20px;
@@ -126,15 +126,18 @@
     background-color: #f1f1f1;
     transition: height 0.5s;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .select-group {
       position: relative;
-      margin: auto;
+      // margin: auto;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       display: flex;
       height: 100%;
-      width: 80%;
+      // width: 80%;
       max-width: 900px;
       div {
         width: 100%;
@@ -143,6 +146,10 @@
         align-items: center;
         height: 100%;
         max-width: 300px;
+        margin-right: 20px;
+        select {
+          margin: 16px 0px;
+        }
         span {
           font-weight: 700;
           height: 25px;
@@ -165,6 +172,21 @@
         }
       }
     }
+    .clean {
+      height: 50px;
+      min-width: 50px;
+      text-align: center;
+      border-radius: 50%;
+      background-color: black;
+      line-height: 50px;
+      color: #ed7c15;
+      transition: all 0.2s;
+      // margin-bottom: 1rem;
+      rotate: 180deg;
+      &:hover {
+        background-color: white;
+      }
+    }
   }
 
   .schedule {
@@ -174,7 +196,7 @@
     width: 100%;
     transition: height 0.5s;
     // overflow: hidden;
-    
+
     .list-head {
       display: flex;
       align-items: center;
@@ -297,7 +319,7 @@
       display: flex;
       justify-content: flex-start;
       overflow: hidden;
-      .no-class{
+      .no-class {
         margin: auto;
         width: 1435px;
         display: flex;

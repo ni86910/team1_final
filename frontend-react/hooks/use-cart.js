@@ -113,6 +113,9 @@ export function CartProvider({ children }) {
   const totalItems = items.reduce((acc, v) => acc + v.qty, 0)
   const totalPrice = items.reduce((acc, v) => acc + v.qty * v.price, 0)
 
+  // 宣告 myPoints 並給予初始值
+  const [myPoints, setMyPoints] = useState(0)
+
   useEffect(() => {
     // localStorage 有東西，且items沒東西，就設定給items
     const str = localStorage.getItem(cartStorageKey)
@@ -141,6 +144,10 @@ export function CartProvider({ children }) {
         addItem,
         totalItems,
         totalPrice,
+        calcTotalItems,
+        calcTotalPrice,
+        myPoints,
+        setMyPoints,
       }}
     >
       {children}

@@ -166,7 +166,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
           <div className={style['select-container']}>
             <select
               // data-bs-theme="dark"
-              class="form-select form-select-lg mb-3"
+              className="form-select form-select-lg mb-3"
               aria-label=".form-select-lg example"
               style={{ maxWidth: '280px', minWidth: '180px' }}
               defaultValue={0}
