@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 
 const router = express.Router();
 
+//取得某類的 所有課程
 router.get("/", async (req, res) => {
   const class_type = req.query.class_type ? req.query.class_type : "靜態課程";
 
@@ -34,10 +35,10 @@ router.get("/", async (req, res) => {
   res.json(rows);
 });
 
-// 抓區域內的城市
+// 抓區域內的場館
 router.get("/city", async (req, res) => {
   const gym_area = req.query.city;
-  const sql = `SELECT gym_name FROM \`gym\` WHERE gym_area = ${db.escape(
+  const sql = `SELECT * FROM \`gym\` WHERE gym_area = ${db.escape(
     gym_area
   )}`;
 
@@ -46,11 +47,11 @@ router.get("/city", async (req, res) => {
   //用await要捕捉錯誤 要像這樣，用.then 就用.catch
   try {
     [rows, fields] = await db.query(sql);
-    if (rows.length === 0) {
-      // 找不到城市就跳轉回課程專區
-      res.redirect("/class");
-      return;
-    }
+    // if (rows.length === 0) {
+    //   // 找不到城市就跳轉回課程專區
+    //   res.redirect("/class");
+    //   return;
+    // }
   } catch (ex) {
     console.log(ex);
   }
