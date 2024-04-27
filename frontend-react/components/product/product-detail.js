@@ -372,9 +372,9 @@ export default function ProductDetail() {
                     href="/product/product-detail"
                     className={`${style['product-item-title']}`}
                   >
-                    <p>平衡瑜珈墊11111</p>
+                    <p>男款拳擊連帽背心</p>
                   </Link>
-                  <span>NT$ 1,200</span>
+                  <span>NT$ 399</span>
                 </div>
               </div>
             </div>
@@ -411,9 +411,9 @@ export default function ProductDetail() {
                     href={`/product/${products.product_id}`}
                     className={`${style['product-item-title']}`}
                   >
-                    <p>平衡瑜珈墊11111</p>
+                    <p>超能活力綜合果汁</p>
                   </Link>
-                  <span>NT$ 1,200</span>
+                  <span>NT$ 30</span>
                 </div>
               </div>
             </div>
@@ -450,9 +450,9 @@ export default function ProductDetail() {
                     href="/product/product-detail"
                     className={`${style['product-item-title']}`}
                   >
-                    <p>平衡瑜珈墊11111</p>
+                    <p>健身PVC啞鈴 兩入 (1kg)</p>
                   </Link>
-                  <span>NT$ 1,200</span>
+                  <span>NT$ 249</span>
                 </div>
               </div>
             </div>
@@ -489,9 +489,9 @@ export default function ProductDetail() {
                     href="/product/product-detail"
                     className={`${style['product-item-title']}`}
                   >
-                    <p>平衡瑜珈墊11111</p>
+                    <p>瑜珈枕 (冥想蒲團枕)</p>
                   </Link>
-                  <span>NT$ 1,200</span>
+                  <span>NT$ 649</span>
                 </div>
               </div>
             </div>

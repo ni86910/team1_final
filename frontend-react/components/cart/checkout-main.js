@@ -1,27 +1,69 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { Button, Modal, Form } from 'react-bootstrap'
-
 import style from '@/styles/cart-checkout-main.module.scss'
+import { useRouter } from 'next/router'
+
+// hooks
+import { useCart } from '@/hooks/use-cart'
+import { useAuth } from '@/context/auth-context'
+import { usePoints } from '@/context/points-context'
+
+// 7-11 門市
+import { useShip711StoreOpener } from '@/hooks/use-ship-711-store'
+
+// icon
 import { FaRegHeart, FaPlus, FaRegCreditCard } from 'react-icons/fa6'
 import { IoIosArrowForward, IoIosArrowDown } from 'react-icons/io'
 
+// 圖片路徑
+import { IMG_PATH } from '@/configs'
+
 export default function CheckoutMain() {
+  const { auth } = useAuth()
+  const router = useRouter()
+  // use-cart hook
+  const { items, calcTotalItems, calcTotalPrice, myPoints, setMyPoints } =
+    useCart()
+
+  // 閱讀購買須知後才可送出訂單
+  const [membershipTermsChecked, setMembershipTermsChecked] = useState(false)
+
   // 變更資料彈窗
   const [showModal, setShowModal] = useState(false)
-
   const handleCloseModal = () => setShowModal(false)
   const handleShowModal = () => {
     setShowModal(true)
     // 在這裡改變連結的樣式
     // const memberTermsLink = document.querySelector(`.${style['']}`)
   }
+  const [shippingMethod, setShippingMethod] = useState(1) // 預設運送方式為 7-ELEVEN 取貨
+
+  // useShip711StoreOpener的第一個傳入參數是"伺服器7-11運送商店用Callback路由網址"
+  // 指的是node(express)的對應api路由。詳情請見說明文件:
+  const { store711, openWindow, closeWindow } = useShip711StoreOpener(
+    'http://localhost:3001/shipment/711',
+    { autoCloseMins: 3 } // x分鐘沒完成選擇會自動關閉，預設5分鐘。
+  )
+
+  // send order
+  const handleSubmitOrder = (event) => {
+    event.preventDefault() // 防止表單提交預設行為
+  }
+
+  // 當 checkbox 被點擊時更新狀態
+  const handleMembershipTermsChange = (event) => {
+    setMembershipTermsChecked(event.target.checked)
+  }
 
   return (
     <>
       <section className={`${style['checkout']} ${style['spad']}`}>
         <div className={`container`}>
-          <div className={`row`}>
+          <Form
+            className={`row`}
+            onSubmit={(event) => handleSubmitOrder(event)}
+          >
             {/* Left 結帳詳細區塊 */}
             <div
               className={`col-lg-8 col-sm-12 ${style['checkout-left-section']}`}
@@ -37,20 +79,97 @@ export default function CheckoutMain() {
                     </div>
                     <div className={`row ${style['checkout-BlockRow']}`}>
                       <div className={`col-9 ${style['checkout-option']}`}>
-                        宅配
-                        <span className={style['price-highlight']}>NT$80</span>
+                        {shippingMethod === 1 ? (
+                          <>
+                            <span className={style['pickUpWay']}>
+                              <img
+                                width="20px"
+                                height="20px"
+                                src={`${IMG_PATH}/delivery-7-eleven.png`}
+                                className={`me-3`}
+                                alt=""
+                              />
+                              7-ELEVEN 取貨
+                            </span>
+                            <span className={style['price-highlight']}>
+                              NT${' '}
+                              <span className={style['sevenElevenFee']}>
+                                {60}
+                              </span>
+                            </span>
+                            <p style={{ marginTop: '15px' }}>
+                              <button
+                                style={{
+                                  backgroundColor: '#E6E6E6',
+                                  color: '#EB6234',
+                                  width: '90px',
+                                  height: '40px',
+                                  border: '1px solid #EB6234',
+                                  borderRadius: '5px',
+                                  marginBottom: '15px',
+                                  letterSpacing: '2px',
+                                  fontWeight: '700',
+                                }}
+                                onClick={() => {
+                                  openWindow()
+                                }}
+                              >
+                                選擇門市
+                              </button>
+                              <br />
+                              門市名稱:{' '}
+                              <input
+                                type="text"
+                                value={store711.storename}
+                                disabled
+                              />
+                              <br />
+                              門市地址:{' '}
+                              <input
+                                type="text"
+                                value={store711.storeaddress}
+                                disabled
+                              />
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <span className={style['pickUpWay']}>
+                              <img
+                                width="40px"
+                                height="40px"
+                                src={`${IMG_PATH}/delivery-truck.png`}
+                                className={`me-2`}
+                                alt=""
+                              />
+                              宅配
+                            </span>
+                            <span className={style['price-highlight']}>
+                              NT${' '}
+                              <span className={style['deliveryFee']}>{80}</span>
+                            </span>
+                            <p style={{ marginTop: '15px' }}>
+                              <div className={style['checkout-BlockRow']}>
+                                <div>803 高雄市苓雅區***路123號</div>
+                                <div>王*帥 (+886)0912****12</div>
+                              </div>
+                            </p>
+                          </>
+                        )}
                       </div>
-                      <a
-                        href="#"
+                      <button
                         className={`col-3 ${style['checkout-choose']}`}
+                        style={{
+                          color: '#F1600D',
+                          background: '#ffffff',
+                          border: 'none',
+                          width: '100px',
+                          height: '50px',
+                        }}
                         onClick={handleShowModal}
                       >
                         變更 <IoIosArrowForward />
-                      </a>
-                    </div>
-                    <div className={style['checkout-BlockRow']}>
-                      <div>803 高雄市苓雅區***路123號</div>
-                      <div>王*帥 (+886)0912****12</div>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -76,107 +195,31 @@ export default function CheckoutMain() {
                         付款方式 <span style={{ color: '#EB6234' }}>*</span>
                       </h5>
                     </div>
-                    <div className={style['checkout-BlockRow']}>
-                      <div className={style['checkout-payment']}>
+                    <div className={style['checkout-payment']}>
+                      <div className={`row ${style['line-pay-area']}`}>
                         <label>
                           <input
                             type="radio"
                             className={`my-3 me-2`}
-                            id="creditCard"
+                            id="linepay"
                             name="payment"
-                            defaultValue={1}
-                            defaultChecked="checked"
+                            Value={1}
                           />
-                          信用卡一次付清
+                          Line-pay
                         </label>
-                        <div className={style['PaymentCardActionContainer']}>
-                          <div className={style['CreditCardContainer']}>
-                            <div className={style['FieldsContainer']}>
-                              <div className={style['InputField']}>
-                                <div id="cardNumber">
-                                  <iframe
-                                    src="https://pay-panel.payments.91app.com/sdk/fields/1.2.15/index.html?%7B%22type%22%3A%22number%22%2C%22enableIcon%22%3Atrue%2C%22placeholder%22%3A%22%E4%BF%A1%E7%94%A8%E5%8D%A1%E8%99%9F%22%2C%22styles%22%3A%7B%22normal%22%3A%7B%22width%22%3A%22100%25%22%2C%22height%22%3A%2240px%22%2C%22color%22%3A%22%23000000%22%2C%22borderColor%22%3A%22%23d8d8d8%22%7D%2C%22focus%22%3A%7B%22color%22%3A%22%23000000%22%2C%22borderColor%22%3A%22%230279ff%22%7D%2C%22error%22%3A%7B%22color%22%3A%22%23000000%22%2C%22borderColor%22%3A%22%23ff5353%22%7D%2C%22success%22%3A%7B%22color%22%3A%22%23000000%22%2C%22borderColor%22%3A%22%23d8d8d8%22%7D%7D%7D"
-                                    name="number"
-                                    width="100%"
-                                    height="40px"
-                                    sandbox="allow-same-origin allow-scripts"
-                                    allowTransparency="true"
-                                    title="信用卡號輸入框"
-                                  ></iframe>
-                                </div>
-                                <span className={style['InputFieldError']}>
-                                  必填
-                                </span>
-                              </div>
-                              <div className={style['InputField']}>
-                                <div id="cardExpirationDate">
-                                  <iframe
-                                    src="https://pay-panel.payments.91app.com/sdk/fields/1.2.15/index.html?%7B%22type%22%3A%22expirationDate%22%2C%22enableIcon%22%3Atrue%2C%22placeholder%22%3A%22%E6%9C%88%E4%BB%BD%2F%E5%B9%B4%E4%BB%BD%22%2C%22styles%22%3A%7B%22normal%22%3A%7B%22width%22%3A%22100%25%22%2C%22height%22%3A%2240px%22%2C%22color%22%3A%22%23000000%22%2C%22borderColor%22%3A%22%23d8d8d8%22%7D%2C%22focus%22%3A%7B%22color%22%3A%22%23000000%22%2C%22borderColor%22%3A%22%230279ff%22%7D%2C%22error%22%3A%7B%22color%22%3A%22%23000000%22%2C%22borderColor%22%3A%22%23ff5353%22%7D%2C%22success%22%3A%7B%22color%22%3A%22%23000000%22%2C%22borderColor%22%3A%22%23d8d8d8%22%7D%7D%7D"
-                                    name="expirationDate"
-                                    width="100%"
-                                    height="40px"
-                                    sandbox="allow-same-origin allow-scripts"
-                                    allowTransparency="true"
-                                    title="有效日期輸入框"
-                                  ></iframe>
-                                </div>
-                                <span className={style['InputFieldError']}>
-                                  必填
-                                </span>
-                              </div>
-                              <div className={style['InputField']}>
-                                <div id="cardCCV">
-                                  <iframe
-                                    src="https://pay-panel.payments.91app.com/sdk/fields/1.2.15/index.html?%7B%22type%22%3A%22ccv%22%2C%22enableIcon%22%3Atrue%2C%22placeholder%22%3A%22%E6%9C%AB%E4%B8%89%E7%A2%BC%22%2C%22styles%22%3A%7B%22normal%22%3A%7B%22width%22%3A%22100%25%22%2C%22height%22%3A%2240px%22%2C%22color%22%3A%22%23000000%22%2C%22borderColor%22%3A%22%23d8d8d8%22%7D%2C%22focus%22%3A%7B%22color%22%3A%22%23000000%22%2C%22borderColor%22%3A%22%230279ff%22%7D%2C%22error%22%3A%7B%22color%22%3A%22%23000000%22%2C%22borderColor%22%3A%22%23ff5353%22%7D%2C%22success%22%3A%7B%22color%22%3A%22%23000000%22%2C%22borderColor%22%3A%22%23d8d8d8%22%7D%7D%7D"
-                                    name="ccv"
-                                    width="100%"
-                                    height="40px"
-                                    sandbox="allow-same-origin allow-scripts"
-                                    allowTransparency="true"
-                                    title="CSV輸入框"
-                                  ></iframe>
-                                </div>
-                                <span className={style['InputFieldError']}>
-                                  必填
-                                </span>
-                              </div>
-                            </div>
-                            <div className={style['RemeberCreditCard']}>
-                              <label
-                                htmlFor="rememberCreditCard"
-                                className={style['CheckBoxContainer']}
-                              >
-                                <input
-                                  id="rememberCreditCard"
-                                  name="rememberCreditCard"
-                                  type="checkbox"
-                                  className={style['InputCheckBox']}
-                                  defaultChecked=""
-                                />
-                                <span className={style['CheckMark']} />
-                                <span className={style['LabelText']}>
-                                  記住這張卡
-                                </span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className={style['CreditCardStatement']}>
-                          本公司將依您提供資料向銀行及持卡人照會並保留出貨權益，如冒用他人信用卡及個資，經查獲必移送法辦。
-                        </div>
                       </div>
-                    </div>
-                    <div className={style['checkout-payment']}>
-                      <label>
-                        <input
-                          type="radio"
-                          className={`my-3 me-2`}
-                          id="cash"
-                          name="payment"
-                          defaultValue={3}
-                        />
-                        貨到付款
-                      </label>
+                      <div className={`row ${style['cash-area']}`}>
+                        <label>
+                          <input
+                            type="radio"
+                            className={`my-3 me-2`}
+                            id="cash"
+                            name="payment"
+                            Value={2}
+                          />
+                          貨到付款
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -194,19 +237,33 @@ export default function CheckoutMain() {
                 </div>
                 <ul>
                   <li>
-                    商品金額 <span> NT$ 1,091</span>
+                    商品金額 NT$<span>{calcTotalPrice().toLocaleString()}</span>
                   </li>
                   <li>
-                    點數折抵 (使用91點) <span>NT$ 1,000</span>
+                    點數折抵後 (使用{myPoints}點) NT$
+                    <span>
+                      {(calcTotalPrice() - myPoints).toLocaleString()}
+                    </span>
                   </li>
                   <li>
-                    運費 <span>NT$ 80</span>
+                    運費{' '}
+                    <span className={style['deliveryFee']}>
+                      <span className={style['pickUpWay']}>
+                        {shippingMethod === 1 ? '' : ''}
+                      </span>
+                      NT$ {shippingMethod === 1 ? '60' : '80'}
+                    </span>
                   </li>
                 </ul>
                 <ul>
                   <li>
                     總計{' '}
-                    <span className={style['price-highlight']}>NT$ 1,080</span>
+                    <span className={style['price-highlight']}>
+                      NT${' '}
+                      {shippingMethod === 1
+                        ? (calcTotalPrice() - myPoints + 60).toLocaleString()
+                        : (calcTotalPrice() - myPoints + 80).toLocaleString()}
+                    </span>
                   </li>
                 </ul>
                 <hr />
@@ -227,27 +284,33 @@ export default function CheckoutMain() {
                       name="membershipTerms"
                       type="checkbox"
                       className={style['InputCheckBox']}
+                      checked={membershipTermsChecked}
+                      onChange={handleMembershipTermsChange}
                     />
                     <span className={style['CheckMark']} />
                   </label>
                   <label htmlFor="membershipTerms" className={`col-11`}>
-                    我已經閱讀並同意以上購買須知、
-                    <a href="#" className={style['TermsAndConditionsLink']}>
-                      <span>會員權益聲明</span>
-                    </a>{' '}
-                    與{' '}
-                    <a href="#" className={style['TermsAndConditionsLink']}>
-                      <span>隱私權及網站使用條款</span>
-                    </a>
+                    我已經閱讀並同意以下購買須知、會員權益聲明、隱私權及網站使用條款
                   </label>
                 </div>
               </div>
               <div
-                className={`row justify-content-center ${style['confirm-order-btn']}`}
+                className={`row justify-content-center ms-3 mb-3 ${style['confirm-order-btn']}`}
               >
-                <Link href="/cart/order-confirmation">
+                <Button
+                  type="submit" // 將 type 設為 button，避免表單自動提交
+                  className={style['confirm-order-btn']}
+                  disabled={!membershipTermsChecked}
+                  onClick={(event) => {
+                    if (!membershipTermsChecked) {
+                      window.alert('請先勾選已閱讀購物須知')
+                    } else {
+                      handleSubmitOrder(event)
+                    }
+                  }}
+                >
                   <FaRegCreditCard size={20} /> 送出訂單
-                </Link>
+                </Button>
               </div>
             </div>
             {/* 購物須知 */}
@@ -307,7 +370,7 @@ export default function CheckoutMain() {
                 </div>
               </div>
             </div>
-          </div>
+          </Form>
         </div>
 
         {/* Modal */}
@@ -322,31 +385,37 @@ export default function CheckoutMain() {
                   <input
                     type="radio"
                     className={`my-3 me-2`}
-                    id="cash"
-                    name="payment"
-                    defaultValue={1}
+                    id="sevenEleven"
+                    name="sevenEleven"
+                    value={1}
+                    checked={shippingMethod === 1}
+                    onChange={() => {
+                      setShippingMethod(1)
+                      handleCloseModal() // 關閉 Modal
+                    }}
                   />
-                  7-ELEVEN 取貨
+                  7-ELEVEN 取貨{' '}
+                  <span style={{ color: '#EB6234', fontWeight: '700' }}>
+                    NT$ 60
+                  </span>
                 </label>
                 <label>
                   <input
                     type="radio"
                     className={`my-3 me-2`}
                     id="cash"
-                    name="payment"
-                    defaultValue={2}
+                    name="cash"
+                    value={2}
+                    checked={shippingMethod === 2}
+                    onChange={() => {
+                      setShippingMethod(2)
+                      handleCloseModal() // 關閉 Modal
+                    }}
                   />
-                  全家取貨
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    className={`my-3 me-2`}
-                    id="cash"
-                    name="payment"
-                    defaultValue={3}
-                  />
-                  宅配
+                  宅配{' '}
+                  <span style={{ color: '#EB6234', fontWeight: '700' }}>
+                    NT$ 80
+                  </span>
                 </label>
               </div>
             </div>
@@ -356,7 +425,7 @@ export default function CheckoutMain() {
               onClick={handleCloseModal}
               className={`btn ${style['confirm-order-btn']}`}
             >
-              關閉
+              取消
             </Button>
           </Modal.Footer>
         </Modal>

@@ -11,8 +11,8 @@ export default function Team() {
   const [teamData, setTeamData] = useState([])
   const [selectedTeam, setSelectedTeam] = useState('全部總類')
   const [selectedName, setSelectedName] = useState('')
-  const [coachNames, setCoachNames] = useState([])
-  const [nutritionistNames, setNutritionistNames] = useState([])
+  const [coachNames, setCoachNames] = useState([]) // 教練
+  const [nutritionistNames, setNutritionistNames] = useState([]) // 營養師
 
   useEffect(() => {
     fetch(`${API_SERVER}/team`, { credentials: 'include' })
@@ -139,7 +139,16 @@ export default function Team() {
                   onChange={handleNameChange}
                 >
                   <option value="">全部姓名</option>
-                  {selectedTeam === '教練'
+                  {selectedTeam === '全部總類'
+                    ? // 渲染所有姓名选项
+                      [...new Set([...coachNames, ...nutritionistNames])].map(
+                        (name, index) => (
+                          <option key={index} value={name}>
+                            {name}
+                          </option>
+                        )
+                      )
+                    : selectedTeam === '教練'
                     ? coachNames.map((name, index) => (
                         <option key={index} value={name}>
                           {name}

@@ -19,6 +19,8 @@ import teamRouter from "./routes/team.js";
 import contactRouter from "./routes/contact.js";
 import classRouter from "./routes/class.js";
 import productRouter from "./routes/product.js";
+import checkoutRouter from "./routes/checkout.js";
+import shipmentRouter from "./routes/shipment.js";
 import profileRouter from "./routes/profile.js";
 import LogInRouter from "./routes/login.js";
 import LogOutRouter from "./routes/logout.js";
@@ -26,7 +28,8 @@ import registerRouter from "./routes/register.js";
 import favoritesRouter from "./routes/favorites.js";
 import googleloginRouter from "./routes/google-login.js";
 import linePayRouter from "./routes/line-pay.js";
-import pointsRouter from "./routes/points.js"
+import pointsRouter from "./routes/points.js";
+import emailRouter from "./routes/email.js";
 
 // 建立一個session可以儲存的地方
 const MysqlStore = mysql_session(session);
@@ -99,10 +102,15 @@ app.use("/article", articleRouter);
 
 app.use("/class", classRouter);
 
-app.use('/product', productRouter)
+app.use("/product", productRouter);
+
+app.use("/checkout", checkoutRouter);
+
+app.use("/shipment", shipmentRouter);
 
 app.use("/profile", profileRouter);
 
+app.use("/upload", profileRouter);
 app.use("/", LogInRouter);
 
 app.use("/", LogOutRouter);
@@ -119,7 +127,9 @@ app.use("/google-login", googleloginRouter);
 
 app.use("/line-pay", linePayRouter);
 
-app.use("/points", pointsRouter)
+app.use("/points", pointsRouter);
+
+app.use("/email", emailRouter);
 
 /*
 
