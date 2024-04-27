@@ -7,6 +7,7 @@ import Link from 'next/link'
 /* Bootstrap */
 import { Button, Modal, Form } from 'react-bootstrap'
 import { FaStarOfLife } from 'react-icons/fa6'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 import { REGISTER_POST } from '@/components/common/config'
 import { useRouter } from 'next/router'
@@ -16,13 +17,17 @@ export default function RegisterPage() {
   // 會員條款
   const [showModal, setShowModal] = useState(false)
   const [agreedToTerms, setAgreedToTerms] = useState(false)
+  // 呈現密碼用
+  const [showPassword, setShowPassword] = useState(false)
 
   // 驗證
   const [data, setData] = useState({
     m_name: '',
     m_account: '',
     m_pwd: '',
+    gender:'',
     mobile: '',
+    birthday:'',
     address: '',
   })
   const [errors, setErrors] = useState({
@@ -159,7 +164,7 @@ export default function RegisterPage() {
         <style jsx>{`
           .error {
             color: red;
-            font-size: 13px;
+            font-size: 11px;
           }
         `}</style>
         <div className="col-6">
@@ -229,17 +234,30 @@ export default function RegisterPage() {
                             <FaStarOfLife className={style['icon-padding']} />
                             會員密碼
                           </label>
-                          <div className="col-md-6">
+                          <div
+                            className="col-md-6"
+                            style={{ position: 'relative' }}
+                          >
                             <input
-                              type="password"
                               id="m_pwd"
                               className="form-control"
                               name="m_pwd"
+                              type={showPassword ? 'text' : 'password'}
                               placeholder="請輸密碼"
                               value={data.m_pwd}
                               onChange={handleChange}
                               onBlur={handleBlur}
                             />
+                            <button
+                              type="button"
+                              className={style['show-password']}
+                              onClick={(e) => {
+                                e.preventDefault()
+                                setShowPassword(!showPassword)
+                              }}
+                            >
+                              {!showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
                             <div className="error">{errors.m_pwd}</div>
                           </div>
                         </div>
