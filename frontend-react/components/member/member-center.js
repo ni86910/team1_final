@@ -133,26 +133,26 @@ export default function MemberCenterPage() {
               </div>
             </Col>
             <Col className={style['list-text']}>
-              <a className={style['btn']} href="order.html">
+              <a className={style['btn']} href="order">
                 查看訂單
               </a>
             </Col>
           </Row>
           <Row className={style['list']}>
             <Col className={style['list-text']}>
-              <a className={style['a-color']} href="profile.html">
+              <a className={style['a-color']} href="profile">
                 <FaAddressCard className={style['user-icons']} />
                 基本資料
               </a>
             </Col>
             <Col className={style['list-text']}>
-              <a className={style['a-color']} href="favorite.html">
+              <a className={style['a-color']} href="favorite">
                 <BsBookmarkHeartFill className={style['icons']} />
                 我的收藏
               </a>
             </Col>
             <Col className={style['list-text']}>
-              <a className={style['a-color']} href="course-records.html">
+              <a className={style['a-color']} href="course-records">
                 <AiFillSchedule className={style['class-icons']} />
                 課程評價
               </a>
@@ -168,7 +168,7 @@ export default function MemberCenterPage() {
               </div>
             </Col>
             <Col className={style['list-text']}>
-              <a className={style['btn']} href="points.html">
+              <a className={style['btn']} href="points">
                 使用紀錄
               </a>
             </Col>
