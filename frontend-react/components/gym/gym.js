@@ -103,7 +103,7 @@ export default function GymPlace() {
             name="gym"
             id="gym"
             className="form-select form-select-lg mb-3"
-            style={{ width: 420 }}
+            style={{ width: 300 }}
             data-width="medium"
             aria-label=".form-select-lg example"
             value={selectedGym}
