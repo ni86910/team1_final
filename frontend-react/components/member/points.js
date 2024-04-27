@@ -80,7 +80,7 @@ export default function PointsPage() {
           <Row className={style['point-first-row']}>
             <Col className={style['point-left']}>
               <div className={style['points-number']}>{totalPoints}</div>
-              <div>我的點數</div>
+              <div>可使用點數</div>
             </Col>
           </Row>
           {/* First Point Container End */}
