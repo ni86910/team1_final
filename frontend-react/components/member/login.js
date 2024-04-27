@@ -8,18 +8,20 @@ import Link from 'next/link'
 import GoogleLogin from './google-login'
 import { FaStarOfLife } from 'react-icons/fa6'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
-import Image from 'next/image'
 
 export default function LoginPage() {
   const router = useRouter()
   const { login } = useAuth()
 
   // 呈現密碼用
-  const [inputText, setInputText] = useState('')
+ 
   const [showPassword, setShowPassword] = useState(false)
 
+  // 新增Remember Me 狀態
+  const [rememberMe, setrememberMe] = useState(false)
+
   // 驗證
-  const [data, setData] = useState({
+  const [Logindata, setLoginData] = useState({
     m_account: '',
     m_pwd: '',
   })
@@ -28,16 +30,14 @@ export default function LoginPage() {
     m_pwd: '',
   })
 
-  // 新增Remember Me 狀態
-  const [rememberMe, setrememberMe] = useState(false)
-
+  //Remember Me
   useEffect(() => {
     const rememberAccount = localStorage.getItem('rememberAccount')
     const rememberPwd = localStorage.getItem('rememberPwd')
     const rememberState = localStorage.getItem('rememberState')
 
     if (rememberState === 'true' && rememberAccount && rememberPwd) {
-      setData({ m_account: rememberAccount, m_pwd: rememberPwd })
+      setLoginData({ m_account: rememberAccount, m_pwd: rememberPwd })
       setrememberMe(true)
     }
   }, [])
@@ -46,16 +46,16 @@ export default function LoginPage() {
   const validateFields = () => {
     const newErrors = {}
 
-    if (validator.isEmpty(data.m_account, { ignore_whitespace: true })) {
+    if (validator.isEmpty(Logindata.m_account, { ignore_whitespace: true })) {
       newErrors.m_account = '帳號為必填欄位'
-    } else if (!validator.isEmail(data.m_account)) {
-      newErrors.m_account = '電子郵件格式不正確'
+    } else if (!validator.isEmail(Logindata.m_account)) {
+      newErrors.m_account = '信箱格式不正確'
     }
 
-    if (validator.isEmpty(data.m_pwd, { ignore_whitespace: true })) {
+    if (validator.isEmpty(Logindata.m_pwd, { ignore_whitespace: true })) {
       newErrors.m_pwd = '密碼為必填欄位'
     } else if (
-      !validator.isStrongPassword(data.m_pwd, {
+      !validator.isStrongPassword(Logindata.m_pwd, {
         minLength: 5, // 最小字元數
         minLowercase: 1, // 最少要幾個小寫英文字元
         minUppercase: 0, // 最少要幾個大寫英文字元
@@ -63,7 +63,7 @@ export default function LoginPage() {
         minSymbols: 0, // 最少要幾個符號
       })
     ) {
-      newErrors.m_pwd = '密碼至少5個字元，要包含一個英文小寫字元'
+      newErrors.m_pwd = '密碼至少5個字元，英文+數字'
     }
 
     setErrors(newErrors)
@@ -78,7 +78,7 @@ export default function LoginPage() {
       return
     }
 
-    const { m_account, m_pwd } = data
+    const { m_account, m_pwd } = Logindata
 
     try {
       const result = await login(m_account, m_pwd)
@@ -117,14 +117,15 @@ export default function LoginPage() {
   }
 
   // 處理輸入框變化
-  const handleChange = (e) => {
-    setData({
-      ...data,
+  const handleChangeLogin = (e) => {
+    setLoginData({
+      ...Logindata,
       [e.target.name]: e.target.value,
     })
   }
+
   // 處理輸入框失去焦點
-  const handleBlur = (e) => {
+  const handleLoginBlur = (e) => {
     validateFields()
   }
 
@@ -175,9 +176,9 @@ export default function LoginPage() {
                                 type="email"
                                 id="m_account"
                                 name="m_account"
-                                value={data.m_account}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
+                                value={Logindata.m_account}
+                                onChange={handleChangeLogin}
+                                onBlur={handleLoginBlur}
                                 placeholder="請輸入信箱"
                               />
                             </div>
@@ -204,9 +205,9 @@ export default function LoginPage() {
                                 id="m_pwd"
                                 name="m_pwd"
                                 type={showPassword ? 'text' : 'password'}
-                                value={data.m_pwd}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
+                                value={Logindata.m_pwd}
+                                onChange={handleChangeLogin}
+                                onBlur={handleLoginBlur}
                                 placeholder="請輸入密碼"
                               />
                               <button
@@ -220,12 +221,17 @@ export default function LoginPage() {
                                 {!showPassword ? <FaEyeSlash /> : <FaEye />}
                               </button>
                             </div>
+                            <div className="error">{errors.m_pwd}</div>
                           </div>
                           <div
                             className={`checkbox ${style['check-remember']}`}
                           >
                             <label>
-                              <input type="checkbox" />
+                              <input
+                                type="checkbox"
+                                checked={rememberMe}
+                                onChange={handleRememberMeChange}
+                              />
                               &nbsp;Remember me
                             </label>
                           </div>
@@ -237,20 +243,6 @@ export default function LoginPage() {
                             <span className="glyphicon glyphicon-off" />
                             登入
                           </button>
-                          {/* <button
-                            type="submit"
-                            className={`btn ${style['google-btn']}`}
-                          >
-                            <span className="glyphicon glyphicon-remove" />
-                            <Image
-                              className={style['google-img']}
-                              src="/img/member/google.png"
-                              width={20}
-                              height={20}
-                              alt="google"
-                            />
-                            使用Google快速登入
-                          </button> */}
                           <br />
                           <br />
                           <div className={style['straight-line']} />
@@ -258,14 +250,17 @@ export default function LoginPage() {
                           <div className="sign">
                             <p>
                               還沒加入菲特友嗎?{' '}
-                              <Link href="register" className={style['a-link']}>
+                              <Link
+                                href="register"
+                                className={style['register-link']}
+                              >
                                 {' '}
                                 趕快來註冊!
                               </Link>
                             </p>
                             <Link
                               href="forget-password"
-                              className={style['a-link']}
+                              className={style['forget-link']}
                             >
                               忘記密碼?
                             </Link>
