@@ -253,7 +253,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
               <div className={style['select-group']}>
                 <div className={style['filter-container']}>
                   <select
-                    class="form-select form-select-lg mb-3"
+                    className="form-select form-select-lg mb-3"
                     aria-label=".form-select-lg example"
                     defaultValue="0"
                     value={city}
@@ -272,7 +272,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                 </div>
                 <div className={style['filter-container']}>
                   <select
-                    class="form-select form-select-lg mb-3"
+                    className="form-select form-select-lg mb-3"
                     aria-label=".form-select-lg example"
                     defaultValue="0"
                     disabled={!gymList ? true : false}
@@ -336,7 +336,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                 <div className={style['select-group']}>
                   <div className={style['class-category']}>
                     <select
-                      class="form-select form-select-lg mb-3"
+                      className="form-select form-select-lg mb-3"
                       aria-label=".form-select-lg example"
                       defaultValue={0}
                       value={classTypeSchedule}
@@ -367,7 +367,7 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                   </div>
                   <div className={style['class-name']}>
                     <select
-                      class="form-select form-select-lg mb-3"
+                      className="form-select form-select-lg mb-3"
                       aria-label=".form-select-lg example"
                       defaultValue="0"
                       value={className}

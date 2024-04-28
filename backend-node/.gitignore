@@ -12,6 +12,7 @@ headers.txt
 package-lock.json
 tmp_uploads
 public/avatar
+public
 
 # Compiled Java class files
 *.class

@@ -48,7 +48,7 @@ export default function App() {
                   src={`/img/gym/${v.image_path}`}
                   alt=""
                   width={800}
-                  height={500}
+                  height={400}
                 />
               </Link>
             </SwiperSlide>

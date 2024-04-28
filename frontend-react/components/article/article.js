@@ -103,7 +103,7 @@ export default function Article() {
           <div className="section-title">
             <h3 className="mt-4 text-center">
               <RiArticleFill />
-              文章內容
+              健康小知識
             </h3>
             <span className="mt-4" style={{ color: '#EB6234' }}>
               我們提供最新、最實用的健身相關知識。
@@ -116,7 +116,7 @@ export default function Article() {
             name="select"
             id="select"
             className="form-select form-select-lg mb-3"
-            style={{ width: 200, marginRight: 15 }}
+            style={{ width: '100%', maxWidth: 200, marginRight: 15 }}
             data-type="select"
             data-width="medium"
             value={selectedCategory}
@@ -134,7 +134,7 @@ export default function Article() {
             name="title"
             id="title"
             className="form-select form-select-lg mb-3"
-            style={{ width: 420 }}
+            style={{ width: '100%', maxWidth: 420 }}
             value={selectedTitle}
             onChange={handleTitleChange}
           >
@@ -150,16 +150,21 @@ export default function Article() {
         <div className="row" style={{ marginBottom: 20 }}>
           {filteredArtData.map((v, i) => {
             return (
-              <div key={i} className="col-4" style={{ marginTop: 20 }}>
-                <div className="card" style={{ height: 400 }}>
+              <div
+                key={i}
+                className="col-md-6 col-lg-4"
+                style={{ marginTop: 20 }}
+              >
+                <div className="card mb-3">
                   <div className="card-body">
                     <p className="card-text">{v.article_item}</p>
                     <Image
                       src={`/img/article/${v.article_image}`}
                       alt=""
-                      style={{ marginBottom: 10 }}
-                      width={300}
+                      style={{ marginBottom: 10, width: '100%' }}
+                      width={250}
                       height={200}
+                      objectFit="cover"
                     />
                     <Link href={`/article/${v.article_id}`}>
                       <h5 className="card-title" style={{ color: 'black' }}>

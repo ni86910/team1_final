@@ -79,9 +79,14 @@ export default function GymDetail() {
   return (
     <>
       {!gymInfo ? (
-        <div>loading...</div>
+        <div>Loading...</div>
       ) : (
-        <section style={{ backgroundImage: 'url("/img/gym/place-mask.png")' }}>
+        <section
+          style={{
+            backgroundImage: 'url("/img/gym/place-mask.png")',
+            backgroundSize: 'cover',
+          }}
+        >
           <div className="container">
             <div className="row">
               <div className="col" style={{ marginBottom: 20 }}>
@@ -90,16 +95,15 @@ export default function GymDetail() {
                   {text2jsx(gymInfo.gym_description)}
                 </div>
               </div>
-
-              <div className="row">
-                <div className="col text-center">
-                  <Image
-                    src={`/img/gym/${gymInfo.image_path}`}
-                    alt=""
-                    width={900}
-                    height={500}
-                  />
-                </div>
+            </div>
+            <div className="row">
+              <div className="col text-center">
+                <Image
+                  src={`/img/gym/${gymInfo.image_path}`}
+                  alt=""
+                  width={900}
+                  height={400}
+                />
               </div>
             </div>
             <div className="row">
@@ -108,40 +112,39 @@ export default function GymDetail() {
               </div>
               <iframe
                 title="場地地圖"
-                src={`${gymInfo.gym_position}`}
-                frameborder="0"
+                src={gymInfo.gym_position}
+                frameBorder="0"
                 width={600}
                 height={450}
               ></iframe>
             </div>
             <div className="row" style={{ marginTop: 20 }}>
-              <div className="col">
-                <div className="card" style={{ border: 'none', height: 350 }}>
+              <div className="col-lg-6 mb-4 mb-lg-0">
+                <div
+                  className="card"
+                  style={{ border: 'none', height: '100%' }}
+                >
                   <div className="card-body">
                     <h5 className="card-title">廠館資料</h5>
                     <p>
                       <FaPhone />
-                      廠館電話
+                      廠館電話: {gymInfo.gym_phone}
                     </p>
-                    <p>{gymInfo.gym_phone}</p>
                     <p>
                       <FaClock />
-                      營業時間
+                      營業時間: {gymInfo.gym_opentime}
                     </p>
-                    <p>{gymInfo.gym_opentime}</p>
                     <p>
                       <FaLocationDot />
-                      廠館地址
+                      廠館地址: {gymInfo.gym_address}
                     </p>
-                    <p>{gymInfo.gym_address}</p>
                   </div>
                 </div>
               </div>
-
-              <div className="col">
+              <div className="col-lg-6">
                 <div
                   className="card"
-                  style={{ border: 'none', height: 350, lineHeight: 3 }}
+                  style={{ border: 'none', height: '100%', lineHeight: 3 }}
                 >
                   <div className="card-body">
                     <h5 className="card-title">館內設施</h5>
@@ -171,13 +174,12 @@ export default function GymDetail() {
                 </div>
               </div>
             </div>
+
             <div className="row">
               <div className="col">
-                <h4 className="mt-4 text-center">
-                  營運企業文化，專注於打造專業、舒適、優良的運動環境，並於2014年起深耕雙北新都會區及拓展運動服務版圖，至桃竹苗、嘉南地區，全力推廣培養全民健康生活態度
-                </h4>
+                <h4 className="mt-4 text-center">營運企業文化</h4>
                 <p className="mt-4 text-center">
-                  強身為強國之根基，相關研究證實運動能有效促進人民健康，體育發展程度更是國家現代化及國民生活品質的重要指標，因此先進國家莫不投入大量資源支持運動賽事或廣建運動場館強身為強國之根基，相關研究證實運動能有效促進人民健康，體育發展程度更是國家現代化及國民生活品質的重要指標，因此先進國家莫不投入大量資源支持運動賽事或廣建運動場館
+                  強身為強國之根基，相關研究證實運動能有效促進人民健康，體育發展程度更是國家現代化及國民生活品質的重要指標，因此先進國家莫不投入大量資源支持運動賽事或廣建運動場館。
                 </p>
               </div>
             </div>
@@ -189,10 +191,9 @@ export default function GymDetail() {
                 </p>
               </div>
               <div className="row" style={{ marginBottom: 20 }}>
-                {accordion.map((curElem) => {
-                  const { id } = curElem
-                  return <Myaccordion key={id} {...curElem} />
-                })}
+                {accordion.map((item) => (
+                  <Myaccordion key={item.id} {...item} />
+                ))}
               </div>
             </div>
           </div>
