@@ -25,9 +25,9 @@ export default function RegisterPage() {
     m_name: '',
     m_account: '',
     m_pwd: '',
-    gender:'',
+    gender: '',
     mobile: '',
-    birthday:'',
+    birthday: '',
     address: '',
   })
   const [errors, setErrors] = useState({
