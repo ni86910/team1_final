@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { FaAnglesRight, FaLocationDot } from 'react-icons/fa6'
 import Marquee from 'react-fast-marquee'
 import Link from 'next/link'
+import ProductBox from '@/components/home/product-box'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -458,7 +459,7 @@ export default function Home() {
           <div className={style['place-container']}>
             <div className={style['left']}>
               <select
-                class="form-select form-select-lg mb-3"
+                className="form-select form-select-lg mb-3"
                 aria-label=".form-select-lg example"
                 defaultValue="0"
                 value={city}
@@ -488,6 +489,8 @@ export default function Home() {
                   {gymList.map((v, i) => {
                     return (
                       <li
+                        // data-bs-toggle="modal"
+                        // data-bs-target="#exampleModal"
                         key={i}
                         role="presentation"
                         // className={gymIndex === i ? style['selected-gym'] : ''}
@@ -515,6 +518,7 @@ export default function Home() {
                   })}
                   <li
                     role="presentation"
+                    className={style['all-gym']}
                     onClick={() => {
                       router.push({
                         pathname: '/gym',
@@ -525,7 +529,10 @@ export default function Home() {
                       })
                     }}
                   >
-                    <span>查看該縣市所有場館</span>
+                    <span className={style['icon']}>
+                      <FaAnglesRight />
+                    </span>
+                    <span className={style['text']}>查看所有場館</span>
                   </li>
                 </ul>
               )}
@@ -583,12 +590,9 @@ export default function Home() {
               }}
               className={style['image-a']}
             >
-              <Image
-                src={`${API_SERVER}/imgs/class/class-page/dance05.jpg`}
-                fill
-                alt=""
-              />
+              <ProductBox which={true} />
               <div
+                className={style['text']}
                 role="presentation"
                 onClick={() => {
                   router.push('/product')
@@ -606,12 +610,9 @@ export default function Home() {
               }}
               className={style['image-b']}
             >
-              <Image
-                src={`${API_SERVER}/imgs/class/class-page/dance04.jpg`}
-                fill
-                alt=""
-              />
+              <ProductBox which={false} />
               <div
+                className={style['text']}
                 role="presentation"
                 onClick={() => {
                   router.push('/product')
@@ -643,13 +644,75 @@ export default function Home() {
               <span className={style['orange']}>乳清蛋白</span>
               <span>瑜珈墊</span>
             </Marquee>
-            <Link href={'#'} className={style['rwd-click']}>
+            <Link href={'/product'} className={style['rwd-click']}>
               探索商城
               <span>
                 <FaAnglesRight />
               </span>
             </Link>
           </div>
+
+          {/* <!-- Modal --> */}
+          {/* <div
+            className={'modal fade'}
+            id="exampleModal"
+            tabIndex={-1}
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+            // style={{ display: 'none' }}
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5
+                    className="modal-title"
+                    id="exampleModalLabel"
+                    style={{ fontWeight: '600', fontSize: '24px' }}
+                  >
+                    {!gymList[0] ? '' : gymList[gymIndex].gym_name}
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  />
+                </div>
+                <div
+                  className="modal-body"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {!gymList[0] ? (
+                    <></>
+                  ) : (
+                    <>
+                      <iframe
+                        title="1"
+                        className={style['iframe']}
+                        src={gymList[gymIndex].gym_position}
+                        width={300}
+                        height={500}
+                        style={
+                          {
+                            // border: '5px solid black',
+                            // borderRadius: '0px 900px 900px 900px',
+                          }
+                        }
+                        allowFullScreen=""
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div> */}
+
+          {/* <!-- Modal --> */}
         </section>
       </>
     </>
