@@ -21,7 +21,7 @@
 
 .profile-section{
    margin: 0px 100px;
-  padding: 20px;
+  padding: 20px 0px;
   width:100%;
   .title{
     padding: 0px;
@@ -38,15 +38,22 @@
   }
 }
 
+.profile-upload-self-col{
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+}
+
 .self-pic{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+   margin-top: 20px;
     .profile-img{
       border: 3px solid $secondary-color;
       border-radius: 20%;
-      width:110px;
       }
 }
 
@@ -109,7 +116,6 @@
   .member-card-box{
     display: flex;
     align-items: center;
-    align-content: center;
     justify-content: center;
   
   .member-card{

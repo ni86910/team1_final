@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import style from '@/styles/jack-use/button.module.css'
 import TOP from '@/components/TOPbutton/top'
 import Swiper from '@/components/article/swiper/swiper'
 import Image from 'next/image'

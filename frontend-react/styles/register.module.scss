@@ -53,6 +53,15 @@
   }
 }
 
+.show-password{
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: white;
+  color:$primary-color;
+}
 
 
 .member-terms{

@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 const router = express.Router();
 
-//取會員總點數
+// 取會員總點數
 router.get("/all_points", async (req, res) => {
   console.log("query", req.query);
   const member_id = req.query.member_id;
@@ -29,5 +29,12 @@ router.get("/all_points", async (req, res) => {
     res.status(500).send("Internal Server Error"); // 處理錯誤並回傳 500 錯誤給前端
   }
 });
+
+// 取會員獲得紀錄
+router.get("/add_records", async (req, res) =>{
+  const member_id = req.query.member_id;
+  const sql2 = `SELECT * FROM bonus_points
+  WHERE bonus_points.member_id = ?`;
+})
 
 export default router;

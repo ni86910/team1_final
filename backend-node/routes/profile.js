@@ -1,8 +1,8 @@
 import express from "express";
 import db from "./../utils/mysql2-connect.js";
 import dayjs from "dayjs";
-import path from 'path'
-import multer from 'multer'
+import path from "path";
+import multer from "multer";
 
 const router = express.Router();
 
@@ -10,41 +10,48 @@ const router = express.Router();
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
     // 存放目錄
-    callback(null, 'public/avatar/')
+    callback(null, "public/avatar");
   },
   filename: function (req, file, callback) {
+    /*
     // 經授權後，req.user帶有會員的id
-    const newFilename = req.member.member_id
+    const newFilename = req.body.member_id
     // 新檔名由表單傳來的req.body.newFilename決定
     callback(null, newFilename + path.extname(file.originalname))
+    */
+    const filename =
+      file.originalname + "-" + Date.now() + path.extname(file.originalname);
+    callback(null, filename);
   },
-})
-const upload = multer({ storage: storage })
+});
+const upload = multer({ storage: storage });
 // multer的設定值 - END
 
 //取資料
 router.get("/", async (req, res) => {
-  console.log('jwt=',res.locals.jwt)
-    const sql = `SELECT * FROM \`member\` WHERE m_account ='${res.locals.jwt.m_account}'`; 
+  console.log("jwt=", res.locals.jwt);
+  const sql = `SELECT * FROM \`member\` WHERE m_account ='${res.locals.jwt.m_account}'`;
 
-    try {
-      const [rows, fields] = await db.query(sql);
-      if (rows.length > 0) {
-        // 將 ISO 8601 格式的日期轉換為 "yyyy-MM-dd" 格式
-        const formattedDate = new Date(rows[0].birthday).toISOString().split('T')[0];
-        rows[0].birthday = formattedDate;
-        
-        res.json(rows[0]);
-      } else {
-        res.status(204).json({ error: "No member data found" }); 
-      }
-    } catch (ex) {
-      console.log(ex);
-      res.status(200).json({ error: "Internal Server Error" }); 
+  try {
+    const [rows, fields] = await db.query(sql);
+    if (rows.length > 0) {
+      // 將 ISO 8601 格式的日期轉換為 "yyyy-MM-dd" 格式
+      const formattedDate = new Date(rows[0].birthday)
+        .toISOString()
+        .split("T")[0];
+      rows[0].birthday = formattedDate;
+
+      res.json(rows[0]);
+    } else {
+      res.status(204).json({ error: "No member data found" });
     }
-  });
+  } catch (ex) {
+    console.log(ex);
+    res.status(200).json({ error: "Internal Server Error" });
+  }
+});
 
-  // 修改資料的表單
+// 修改資料的表單
 router.get("/profile/:member_id", async (req, res) => {
   const member_id = +req.params.member_id || 0;
   if (!member_id) {
@@ -61,65 +68,78 @@ router.get("/profile/:member_id", async (req, res) => {
   res.render("member/profile", r);
 });
 
+/*
 // POST - 可同時上傳與更新會員檔案用，使用multer(設定值在此檔案最上面)
 router.post(
-  '/profile/upload-avatar',
-  upload.single('avatar'), // 上傳來的檔案(這是單個檔案，表單欄位名稱為avatar)
+  "/upload/avatar",
+  upload.single("avatar"), // 上傳來的檔案(這是單個檔案，表單欄位名稱為avatar)
   async function (req, res) {
     // req.file 即上傳來的檔案(avatar這個檔案)
     // req.body 其它的文字欄位資料…
     // console.log(req.file, req.body)
 
     if (req.file) {
-      const id = req.member.member_id
-      const data = { avatar: req.file.filename }
-
-      // 對資料庫執行update
-      /*const [affectedRows] = await User.update(data, {
-        where: {
-          id,
-        },
-      })*/
+      const id = req.body.member_id;
+      const filename = req.file.filename; // 從 req.file 中取得檔案名稱
       const sqlAvatar = "UPDATE `member` SET avatar = ? WHERE member_id = ?";
       try {
         // 執行 SQL 時最好做錯誤處理
-        const [resultAvatar] = await db.query(sqlAvatar, [fileName, id]);
+        const [resultAvatar] = await db.query(sqlAvatar, [
+          req.file.filename,
+          id,
+        ]);
         // 檢查是否成功更新資料
         if (resultAvatar.affectedRows > 0) {
           console.log("檔案名稱已成功儲存到資料表member的avatar欄位中");
         } else {
           console.log("無法更新資料表member的avatar欄位");
         }
-      } catch(ex){
+      } catch (ex) {
         console.error("更新資料表member的avatar欄位時出錯:", ex);
       }
 
-      // 沒有更新到任何資料 -> 失敗或沒有資料被更新
-      if (!resultAvatar.affectedRows) {
-        return res.json({
-          status: 'error',
-          message: '更新失敗或沒有資料被更新',
-        })
-      }
-
-      // 沒有更新到任何資料 -> 失敗或沒有資料被更新
-      if (!affectedRows) {
-        return res.json({
-          status: 'error',
-          message: '更新失敗或沒有資料被更新',
-        })
-      }
-
       return res.json({
-        status: 'success',
+        status: "success",
         data: { avatar: req.file.filename },
-      })
+      });
     } else {
-      return res.json({ status: 'fail', data: null })
+      return res.json({ status: "fail", data: null });
     }
   }
-)
+);
+*/
 
+// POST - 上傳會員頭像
+router.post(
+  "/upload/avatar",
+  upload.single("avatar"),
+  async function (req, res) {
+    if (req.file) {
+      const id = req.body.member_id;
+      const filename = req.file.filename; // 從 req.file 中取得檔案名稱
+      const sqlAvatar = "UPDATE `member` SET avatar = ? WHERE member_id = ?";
+      console.log(id,filename,sqlAvatar);
+      try {
+        const [resultAvatar] = await db.query(sqlAvatar, [filename, id]);
+        if (resultAvatar.affectedRows > 0) {
+          console.log("檔案名稱已成功儲存到資料表member的avatar欄位中");
+          return res.json({
+            status: "success",
+            data: { avatar: filename }, // 返回檔案名稱
+          });
+        } else {
+          console.log("無法更新資料表member的avatar欄位");
+          return res.json({ status: "fail", data: null });
+        }
+      } catch (ex) {
+        console.error("更新資料表member的avatar欄位時出錯:", ex);
+        return res.json({ status: "fail", data: null });
+      }
+    } else {
+      return res.json({ status: "fail", data: null });
+    }
+  }
+);
 
 // 編輯更新
 router.put("/:member_id", async (req, res) => {
@@ -144,7 +164,7 @@ router.put("/:member_id", async (req, res) => {
     const [result] = await db.query(sql, [req.body, member_id]);
 
     output.success = !!(result.affectedRows && result.changedRows);
-  } catch(ex){
+  } catch (ex) {
     output.error = ex.toString();
   }
   res.json(output);
@@ -158,4 +178,4 @@ router.get("/zod", (req, res) => {
   });
 });
 
-  export default router;
+export default router;

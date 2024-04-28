@@ -1,107 +1,68 @@
 import express from "express";
 import db from "./../utils/mysql2-connect.js";
 import jsonwebtoken from "jsonwebtoken";
+
 const router = express.Router();
 
 // 定義安全的私鑰字串
-const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+const accessTokenSecret = "dkjsfklsUGLJ677sjfs";
 
 router.post("/", async function (req, res, next) {
-  // providerData =  req.body
-  console.log(JSON.stringify(req.body));
+  // 檢查從前端來的資料
+  const { displayName, uid, photoURL, email } = req.body;
 
-  // 檢查從react來的資料
-  if (!req.body.providerId || !req.body.uid) {
-    console.log("缺少google登入資料");
-    return res.json({ status: "error", message: "缺少google登入資料" });
+  if (!displayName || !uid || !photoURL || !email) {
+    console.log("缺少 Google 登入資料");
+    return res
+      .status(400)
+      .json({ status: "error", message: "缺少 Google 登入資料" });
   }
 
-  const { displayName, email, uid, photoURL } = req.body;
-  const google_uid = uid;
+  try {
+    // 在此處可以執行驗證 Google Access Token 的相關程式碼
+    // 如果驗證通過，可以創建或查詢對應的使用者資料
 
-  // 以下流程:
-  // 1. 先查詢資料庫是否有同google_uid的資料
-  // 2-1. 有存在 -> 執行登入工作
-  // 2-2. 不存在 -> 建立一個新會員資料(無帳號與密碼)，只有google來的資料 -> 執行登入工作
-
-  // 1. 先查詢資料庫是否有同google_uid的資料
-
-  const sql =
-    "INSERT INTO member (`member_id`,`m_name`,`google_uid`,`photo_url`) VALUES (?,?,?,?)";
-  const [result] = await db.query(sql, [
-    req.body.member_id,
-    req.body.m_name,
-    req.body.google_uid,
-    req.body.photo_url,
-  ]);
-
-  if (result.affectedRows) {
-    res.json(output);
-  }
-
-  const total = await member.count({
-    where: {
-      google_uid,
-    },
-  });
-
-  // 要加到access token中回傳給前端的資料
-  // 存取令牌(access token)只需要id和username就足夠，其它資料可以再向資料庫查詢
-  let returnUser = {
-    member_id: 0,
-    m_name: "",
-    google_uid: "",
-  };
-
-  if (total) {
-    // 2-1. 有存在 -> 從資料庫查詢會員資料
-    const dbUser = await member.findOne({
-      where: {
-        google_uid,
-      },
-      raw: true, // 只需要資料表中資料
-    });
-
-    // 回傳給前端的資料
-    returnUser = {
-      member_id: dbUser.member_id,
-      m_name: dbUser.m_name,
-      google_uid: dbUser.google_uid,
-    };
-  } else {
-    // 2-2. 不存在 -> 建立一個新會員資料(無帳號與密碼)，只有google來的資料 -> 執行登入工作
+    // 假設驗證成功並從 Google 獲取的用戶資料已存在於資料庫中，或已創建了新的用戶資料
     const user = {
       m_name: displayName,
-      google_uid,
+      google_uid: uid,
       photo_url: photoURL,
+      google_email: email,
     };
 
-    // 新增會員資料
-    const newUser = await member.create(user);
+    // 假設已經有了一個 user 模型，你需要使用它來執行資料庫的操作
+    // 這裡只是一個示例，實際上你需要替換為你的資料庫操作程式碼
+    const [result] = await db.query(
+      "INSERT INTO member (`m_name`,`google_uid`,`photo_url`,`google_email`) VALUES (?,?,?,?)",
+      [user.m_name, user.google_uid, user.photo_url, user.google_email]
+    );
 
-    // 回傳給前端的資料
-    returnUser = {
-      member_id: newUser.id,
-      m_name: "",
-      google_uid: newUser.google_uid,
-    };
+    if (result.affectedRows) {
+      // 插入成功
+      // 產生存取令牌 (Access Token)，其中包含用戶資料
+      const accessToken = jsonwebtoken.sign(user, accessTokenSecret, {
+        expiresIn: "3d",
+      });
+
+      // 使用 httpOnly cookie 來將存取令牌傳送給前端
+      res.cookie("accessToken", accessToken, { httpOnly: true });
+
+      // 返回存取令牌給前端
+      return res.status(200).json({
+        status: "success",
+        data: {
+          accessToken,
+        },
+      });
+    } else {
+      return res
+        .status(500)
+        .json({ status: "error", message: "無法創建用戶資料" });
+    }
+  } catch (error) {
+    console.error("Google 登入錯誤:", error);
+    return res.status(500).json({ status: "error", message: "登入失敗" });
   }
-
-  // 產生存取令牌(access token)，其中包含會員資料
-  const accessToken = jsonwebtoken.sign(returnUser, accessTokenSecret, {
-    expiresIn: "3d",
-  });
-
-  // 使用httpOnly cookie來讓瀏覽器端儲存access token
-  res.cookie("accessToken", accessToken, { httpOnly: true });
-
-  // 傳送access token回應(react可以儲存在state中使用)
-  return res.json({
-    status: "success",
-    data: {
-      accessToken,
-    },
-  });
 });
 
 export default router;
