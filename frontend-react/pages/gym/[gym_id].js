@@ -102,7 +102,7 @@ export default function GymDetail() {
                   src={`/img/gym/${gymInfo.image_path}`}
                   alt=""
                   width={900}
-                  height={500}
+                  height={400}
                 />
               </div>
             </div>
