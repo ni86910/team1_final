@@ -123,7 +123,10 @@ export default function ForgetPasswordPage() {
                             </div>
                           </div>
 
-                          <div className="col-md-12" style={{ margin: '0px', padding:'0px' }}>
+                          <div
+                            className="col-md-12"
+                            style={{ margin: '0px', padding: '0px' }}
+                          >
                             <button
                               className={style['verification-btn']}
                               type="button"
