@@ -61,6 +61,8 @@
   border: none;
   background-color: white;
   color:$primary-color;
+  margin: 0px;
+  padding: 0px;
 }
 
 
@@ -87,6 +89,63 @@
   border-radius: 10px;
 }
 
-/*----------------------------------------*/
-/* Register CSS END
-/*----------------------------------------*/
+.modal-term-container{
+  font-family: 微軟正黑體;
+  padding: 0px 10px;
+  .modal-h5{
+    text-decoration: underline;
+    font-weight: 600;
+    padding: 15px 10px 0px 0px;
+    .terms-text{
+      padding: 20px;
+
+    }
+  }
+}
+
+.fake-data-col{
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  .fake-data-btn{
+    font-size: 10px;
+    background-color: black;
+    color: white;
+    font-weight: 600;
+    border: none;
+    width: 70px;
+    height: 25px;
+    text-align: justify;
+    &:hover{
+      background-color:$secondary-color;
+      color:white;
+      border: none;
+      }
+    }
+}
+
+  @media only screen and (max-width: 768px){
+    .register-text{
+      font-size: 20px;
+    }
+    .straight-line{
+      border:1px solid black;
+      width: auto;
+      margin: auto;
+    }
+    .label-text{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .fake-data-col
+    {
+      margin-top: 5px;
+      width: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+   
+  }

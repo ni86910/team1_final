@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { REGISTER_POST } from '@/components/common/config'
+// Style
 import style from '@/styles/register.module.scss'
+// 套件
 import toast, { Toaster } from 'react-hot-toast'
 import Swal from 'sweetalert2'
 import validator from 'validator'
-import Link from 'next/link'
 /* Bootstrap */
 import { Button, Modal, Form } from 'react-bootstrap'
+// React-Icon
 import { FaStarOfLife } from 'react-icons/fa6'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
-
-import { REGISTER_POST } from '@/components/common/config'
-import { useRouter } from 'next/router'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -25,17 +27,17 @@ export default function RegisterPage() {
     m_name: '',
     m_account: '',
     m_pwd: '',
-    gender:'',
+    gender: '',
     mobile: '',
-    birthday:'',
+    birthday: '',
     address: '',
   })
+  // 錯誤
   const [errors, setErrors] = useState({
     m_name: '',
     m_account: '',
     m_pwd: '',
     mobile: '',
-    address: '',
   })
   // 驗證表單字段
   const validateFields = () => {
@@ -72,9 +74,9 @@ export default function RegisterPage() {
       newErrors.mobile = '手機號碼格式不正確'
     }
 
-    if (validator.isEmpty(data.address, { ignore_whitespace: true })) {
-      newErrors.address = '地址為必填欄位'
-    }
+    // if (validator.isEmpty(data.address, { ignore_whitespace: true })) {
+    //   newErrors.address = '地址為必填欄位'
+    // }
 
     setErrors(newErrors)
     return Object.values(newErrors).every((error) => error === '')
@@ -158,6 +160,19 @@ export default function RegisterPage() {
     memberTermsLink.style.color = 'orange'
   }
 
+  // 一鍵輸入
+  const fillFakeData = () => {
+    setData({
+      m_name: '第一組',
+      m_account: 'a123456789@test.com',
+      m_pwd: 'a123456',
+      gender: '女',
+      mobile: '0920240507',
+      birthday: '2023-11-28',
+      address: '高雄市前金區中正三路211號8樓-1',
+    })
+  }
+
   return (
     <>
       <section className={style['regist-section']}>
@@ -182,6 +197,7 @@ export default function RegisterPage() {
                     </div>
                     <div className="card-body">
                       <form name="form1" onSubmit={onSubmit}>
+                        {/* 姓名 */}
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="m_name"
@@ -204,6 +220,7 @@ export default function RegisterPage() {
                             <div className="error">{errors.m_name}</div>
                           </div>
                         </div>
+                        {/* 帳號 */}
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="m_account"
@@ -226,6 +243,7 @@ export default function RegisterPage() {
                             <div className="error">{errors.m_account}</div>
                           </div>
                         </div>
+                        {/* 密碼 */}
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="m_pwd"
@@ -236,12 +254,14 @@ export default function RegisterPage() {
                           </label>
                           <div
                             className="col-md-6"
-                            style={{ position: 'relative' }}
+                            style={{
+                              position: 'relative',
+                            }}
                           >
                             <input
-                              id="m_pwd"
                               className="form-control"
                               name="m_pwd"
+                              id="m_pwd"
                               type={showPassword ? 'text' : 'password'}
                               placeholder="請輸密碼"
                               value={data.m_pwd}
@@ -261,6 +281,7 @@ export default function RegisterPage() {
                             <div className="error">{errors.m_pwd}</div>
                           </div>
                         </div>
+                        {/* 性別 */}
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="gender"
@@ -282,6 +303,7 @@ export default function RegisterPage() {
                             </Form.Select>
                           </div>
                         </div>
+                        {/* 生日 */}
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="birthday"
@@ -301,6 +323,7 @@ export default function RegisterPage() {
                             />
                           </div>
                         </div>
+                        {/* 手機 */}
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="mobile"
@@ -323,6 +346,7 @@ export default function RegisterPage() {
                             <div className="error">{errors.mobile}</div>
                           </div>
                         </div>
+                        {/* 地址 */}
                         <div className={`form-group row ${style['form-box']}`}>
                           <label
                             htmlFor="address"
@@ -340,12 +364,10 @@ export default function RegisterPage() {
                               col={20}
                               rows={2}
                               value={data.address}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
                             />
-                            <div className="error">{errors.address}</div>
                           </div>
                         </div>
+                        {/* 會員條款 */}
                         <div className="checkbox">
                           <input
                             type="checkbox"
@@ -367,6 +389,14 @@ export default function RegisterPage() {
                           註冊
                         </button>
                       </form>
+                      <div className={`col-md-6 ${style['fake-data-col']}`}>
+                        <button
+                          onClick={fillFakeData}
+                          className={`btn ${style['fake-data-btn']}`}
+                        >
+                          一鍵輸入
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -384,35 +414,46 @@ export default function RegisterPage() {
         </Modal.Header>
         <Modal.Body>
           {/* Member-Terms */}
-          <div>
-            會員資格：
-            <ul>
-              <li>1.1 申請加入本健身房的會員必須年滿18歲。</li>
-              <li>1.2 會員必須填寫完整且準確的個人資料。</li>
-              <li>
-                1.3
-                健身房保留拒絕或撤銷會員資格的權利，若發現會員提供的資訊不實或違反會員條款。
-              </li>
-              會費與付款：{' '}
-              <li>
-                2.1
-                會員應按時繳納會費，逾期未繳納會費的會員將被停止使用健身房設施。
-              </li>
-              <li>2.2 會員應遵守健身房設施的使用規定，並保護設施不被損壞。</li>
-              安全注意事項：{' '}
-              <li>
-                3.1 在使用健身房設施時，請遵循健身教練的指導，以避免受傷。
-              </li>{' '}
-              <li>3.2 未成年人應在成年監護人的陪同下使用健身房設施。</li>{' '}
-              責任限制：{' '}
-              <li>4.1 健身房不對會員在健身過程中可能遭受的任何傷害負責。</li>{' '}
-              <li>
-                4.2 會員應自行購買適當的保險，以應對可能發生的意外或傷害。
-              </li>{' '}
-              其他條款：
-              <li>
-                5.健身房保留修改會員條款的權利，修改後的條款將在健身房網站上公布。
-              </li>
+          <div className={style['modal-term-container']}>
+            <h5 className={style['modal-h5']}>會員資格：</h5>
+            <ul style={{ listStyle: 'none' }}>
+              <div className={style['terms-text']}>
+                <li>- 申請加入本健身房的會員必須年滿18歲。</li>
+                <li>- 會員必須填寫完整且準確的個人資料。</li>
+                <li className={style['li-text-bottom']}>
+                  -
+                  健身房保留拒絕或撤銷會員資格的權利，若發現會員提供的資訊不實或違反會員條款。
+                </li>
+              </div>
+              <h5 className={style['modal-h5']}>會費與付款： </h5>
+              <div className={style['terms-text']}>
+                <li>
+                  -
+                  會員應按時繳納會費，逾期未繳納會費的會員將被停止使用健身房設施。
+                </li>
+                <li>- 會員應遵守健身房設施的使用規定，並保護設施不被損壞。</li>
+              </div>
+              <h5 className={style['modal-h5']}>責任限制： </h5>
+              <div className={style['terms-text']}>
+                <li>- 健身房不對會員在健身過程中可能遭受的任何傷害負責。</li>{' '}
+                <li>
+                  - 會員應自行購買適當的保險，以應對可能發生的意外或傷害。
+                </li>{' '}
+              </div>
+              <h5 className={style['modal-h5']}>注意事項： </h5>
+              <div className={style['terms-text']}>
+                <li>
+                  - 在使用健身房設施時，請遵循健身教練的指導，以避免受傷。
+                </li>{' '}
+                <li>- 未成年人應在成年監護人的陪同下使用健身房設施。</li>{' '}
+              </div>
+              <h5 className={style['modal-h5']}>其他條款： </h5>
+              <div className={style['terms-text']}>
+                <li>
+                  -
+                  健身房保留修改會員條款的權利，修改後的條款將在健身房網站上公布。
+                </li>
+              </div>
             </ul>
           </div>
         </Modal.Body>
