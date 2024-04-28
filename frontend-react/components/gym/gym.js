@@ -85,7 +85,7 @@ export default function GymPlace() {
           <select
             name="area"
             id="area"
-            style={{ marginRight: 15, width: 200 }}
+            style={{ marginRight: 15, width: '100%', maxWidth: 200 }}
             className="form-select form-select-lg mb-3"
             data-width="medium"
             value={selectedArea}
@@ -103,7 +103,7 @@ export default function GymPlace() {
             name="gym"
             id="gym"
             className="form-select form-select-lg mb-3"
-            style={{ width: 300 }}
+            style={{ width: '100%', maxWidth: 300 }}
             data-width="medium"
             aria-label=".form-select-lg example"
             value={selectedGym}
@@ -138,8 +138,12 @@ export default function GymPlace() {
                 selectedGym === '全部場館' || gym.gym_name === selectedGym
             )
             .map((v, i) => (
-              <div key={i} className="col-4" style={{ marginTop: 20 }}>
-                <div className="card" style={{ height: 330 }}>
+              <div
+                key={i}
+                className="col-md-6 col-lg-4"
+                style={{ marginTop: 20 }}
+              >
+                <div className="card mb-3" style={{ maxWidth: 540 }}>
                   <div className="card-body">
                     <p className="card-text">{v.gym_area}</p>
                     <h5 className="card-title">{v.gym_name}</h5>
