@@ -103,7 +103,7 @@ export default function Article() {
           <div className="section-title">
             <h3 className="mt-4 text-center">
               <RiArticleFill />
-              文章內容
+              健康小知識
             </h3>
             <span className="mt-4" style={{ color: '#EB6234' }}>
               我們提供最新、最實用的健身相關知識。
