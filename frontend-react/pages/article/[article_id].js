@@ -169,7 +169,7 @@ export default function ArticleDetail() {
             <p className="mt-4">
               {artInfo.post_date} | {artInfo.article_item}
             </p>
-            <div className="col">
+            <div className="col" style={{ marginBottom: 15 }}>
               <ArticleFav
                 favInfo={favInfo}
                 setToggleBtn={setToggleBtn}
@@ -179,12 +179,20 @@ export default function ArticleDetail() {
           </div>
           <div className="row">
             <div className="col text-center">
-              <Image
-                src={`/img/article/${artInfo.article_image}`}
-                alt=""
-                width={900}
-                height={550}
-              />
+              <style jsx>{`
+                .image-container {
+                  max-width: 100%;
+                  max-height: 100%; /* 調整圖片的最大高度 */
+                }
+              `}</style>
+              <div className="image-container">
+                <Image
+                  src={`/img/article/${artInfo.article_image}`}
+                  alt=""
+                  width={900}
+                  height={400}
+                />
+              </div>
             </div>
             <div className="mt-4" style={{ lineHeight: 2.5 }}>
               {text2jsx(artInfo.content)}
@@ -290,6 +298,8 @@ export default function ArticleDetail() {
                         <button type="reset" className={style['site-btn']}>
                           重新填寫
                         </button>
+                      </div>
+                      <div className="text-center">
                         <button type="submit" className={style['site-btn']}>
                           Send Message
                         </button>
