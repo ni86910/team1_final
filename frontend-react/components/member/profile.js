@@ -28,7 +28,7 @@ export default function ProfilePage({ member_id }) {
   const [isEditing, setIsEditing] = useState(false) // 新增編輯狀態
   const [formChanged, setFormChanged] = useState(false)
 
-  // 會員登入後,取得資訊
+  // 會員登入
   useEffect(() => {
     console.log(auth)
     if (auth.member_id) {
@@ -41,120 +41,48 @@ export default function ProfilePage({ member_id }) {
         .then((response) => response.json())
         .then((data) => {
           setProfile(data)
+          setNewProfileImage(`http://localhost:3001/avatar/${data.avatar}`)
         })
         .catch((error) => console.error('獲取資料時出錯:', error))
     }
   }, [auth.member_id])
 
-  // 驗證
+  // 初始值
   const [data, setData] = useState({
     m_name: '',
     mobile: '',
     address: '',
   })
+  // 錯誤回應欄位
   const [errors, setErrors] = useState({
     m_name: '',
     mobile: '',
     address: '',
   })
 
-  const handleInputChange = (event) => {
-    if (isEditing) {
-      // 只有在編輯狀態下才允許修改
-      const { name, value } = event.target
-      setProfile((prevProfile) => ({
-        ...prevProfile,
-        [name]: value,
-      }))
-    }
-  }
-
+  // 因為上傳照片只是單一事件不需要使用到onSubmit來做到多工處理,只要使用onChang就可以了
   const handleFileUpload = async (event) => {
-    if (isEditing) {
-      // 只有在編輯狀態下才允許上傳圖片
-      const file = event.target.files[0]
-      const reader = new FileReader()
+    // 只有在編輯狀態下才允許上傳圖片
+    const file = event.target.files[0]
+    const reader = new FileReader()
 
-      reader.onloadend = async () => {
-        setNewProfileImage(reader.result)
+    reader.onloadend = async () => {
+      setNewProfileImage(reader.result)
 
-        // 調用 uploadImage 函數處理圖像上傳邏輯
-        const imageUrl = await uploadImage(file)
-        if (imageUrl) {
-          setProfile((prevProfile) => ({
-            ...prevProfile,
-            profileImage: imageUrl,
-          }))
-        }
-      }
-
-      if (file) {
-        reader.readAsDataURL(file)
+      // 調用 uploadImage 函數處理圖像上傳邏輯
+      const imageUrl = await uploadImage(file, profile)
+      if (imageUrl) {
+        setProfile((prevProfile) => ({
+          ...prevProfile,
+          profileImage: imageUrl,
+        }))
       }
     }
-  }
-
-  /*
-  // 編輯資料
-  const [formData, setFormData] = useState({
-    member_id: 0, // 資料的 primary key
-    m_name: '',
-    m_account: '',
-    mobile: '',
-    birthday: '',
-    address: '',
-  })
-  // 欄位預設的錯誤訊息
-  const [errorMsg, setErrorMsg] = useState({
-    m_name: '',
-    m_account: '',
-    mobile: '',
-  })
-
-  const validateName = (m_name) => {
-    return m_name.toString().length >= 2
-  }
-  const validateEmail = (m_account) => {
-    return m_account.toString().indexOf('@') >= 0 // 粗略的判斷方式
-  }
-  const validateMobile = (mobile) => {
-    return /^09\d{2}-?\d{3}-?\d{3}$/.test(mobile)
-  }
-
-  const fieldChanged = (e) => {
-    const newFormData = { ...formData, [e.target.m_name]: e.target.value }
-    setFormData(newFormData)
-  }
-  const validateFields = () => {
-    let tmpIsPass = true
-    let tmpErrorMsg = { ...errorMsg }
-    // 欄位資料驗證
-    if (!validateName(profile.m_name)) {
-      tmpErrorMsg = { ...tmpErrorMsg, m_name: '請輸入正確的姓名' }
-      tmpIsPass = false
-    } else {
-      tmpErrorMsg = { ...tmpErrorMsg, m_name: '' }
+    if (file) {
+      reader.readAsDataURL(file)
     }
-
-    if (!validateEmail(profile.m_account)) {
-      tmpErrorMsg = { ...tmpErrorMsg, m_account: '請輸入正確的 Email' }
-      tmpIsPass = false
-    } else {
-      tmpErrorMsg = { ...tmpErrorMsg, m_account: '' }
-    }
-
-    if (!validateMobile(profile.mobile)) {
-      tmpErrorMsg = { ...tmpErrorMsg, mobile: '請輸入正確的手機號碼' }
-      tmpIsPass = false
-    } else {
-      tmpErrorMsg = { ...tmpErrorMsg, mobile: '' }
-    }
-    setErrorMsg(tmpErrorMsg)
-    return tmpIsPass
   }
-*/
-  // 整個表單有沒有通過檢查
-  const [isPass, setIsPass] = useState(false)
+
   // 驗證表單字段
   const validateFields = () => {
     const newErrors = {}
@@ -173,36 +101,17 @@ export default function ProfilePage({ member_id }) {
     setErrors(newErrors)
     return Object.values(newErrors).every((error) => error === '')
   }
+
   const onSubmit = async (e) => {
     e.preventDefault() // 表單不要以傳統方式送出
     if (!validateFields()) {
       return
     }
-    // if (isPass) {
-    //   toast.error('必填欄位請填入符合格式的值', {
-    //     duration: 2000,
-    //     style: {
-    //       backgroundColor: 'black',
-    //       color: 'white',
-    //     },
-    //   })
-    //   return // 沒通過檢查的話, 就返回
-    // }
 
     const dataModified = { ...profile }
     // 沒有要更動的欄位去掉
     delete dataModified.member_id
     delete dataModified.created_at
-
-    const handleChange = (e) => {
-      setData({
-        ...data,
-        [e.target.name]: e.target.value,
-      })
-      if (isEditing) {
-        setFormChanged(true)
-      }
-    }
 
     const r = await fetch(`${API_SERVER}/profile/${profile.member_id}`, {
       method: 'PUT',
@@ -234,6 +143,14 @@ export default function ProfilePage({ member_id }) {
         showConfirmButton: false,
         timer: 2000,
       })
+      if (!validateFields)
+        toast.error('請填入符合格式的值', {
+          duration: 2000,
+          style: {
+            backgroundColor: 'black',
+            color: 'white',
+          },
+        })
     }
   }
 
@@ -318,13 +235,13 @@ export default function ProfilePage({ member_id }) {
           </Container>
         </Navbar>
         {/* Side Bar End */}
-
         {/* Profile Start */}
         <Container className={style['profile-section']}>
           <style jsx>{`
             .error {
               color: red;
-              font-size: 13px;
+              font-size: 12px;
+              text-align: center;
             }
           `}</style>
           <Container>
@@ -333,18 +250,17 @@ export default function ProfilePage({ member_id }) {
             </Row>
           </Container>
           {/* self-pic Start*/}
-          <Form
-            className={style['profile-row']}
-            encType="application/x-www-form-urlencoded"
-            onSubmit={onSubmit}
-          >
-            <Row className={style['profile-first-row']}>
-              <Col className={style['profile-first-col']}>
+          <Row className={style['profile-first-row']}>
+            <Form
+              className={style['profile-row']}
+              encType="application/x-www-form-urlencoded"
+            >
+              <Col className={style['profile-upload-self-col']}>
                 <Col className={style['self-pic']}>
                   <Image
                     src={newProfileImage || '/img/member/default-self.jpg'}
-                    width={150}
-                    height={100}
+                    width={130}
+                    height={130}
                     alt="selfie"
                     className={style['profile-img']}
                   />
@@ -354,11 +270,6 @@ export default function ProfilePage({ member_id }) {
                     onClick={(e) => {
                       document.getElementById('file0').click()
                     }}
-                    disabled={!isEditing} // 根據編輯狀態設定按鈕是否可用
-                    style={{
-                      color: isEditing ? '#EB6234' : 'gray',
-                      backgroundColor: isEditing ? 'white' : '#f0f0f0',
-                    }}
                   >
                     <MdChangeCircle /> 更換頭像
                     <input
@@ -367,7 +278,6 @@ export default function ProfilePage({ member_id }) {
                       onChange={handleFileUpload}
                       style={{
                         display: 'none',
-                        backgroundColor: isEditing ? 'white' : '#f0f0f0',
                       }}
                     />
                   </button>
@@ -387,8 +297,15 @@ export default function ProfilePage({ member_id }) {
                   />
                 </Col>
               </Col>
-              {/* self-pic End*/}
-
+            </Form>
+          </Row>
+          {/* self-pic End*/}
+          <Form
+            className={style['profile-row']}
+            encType="application/x-www-form-urlencoded"
+            onSubmit={onSubmit}
+          >
+            <Row className={style['profile-first-row']}>
               {/* Form Start*/}
               <Row className={style['profile']}>
                 <Col className={style['profile-col']}>

@@ -7,23 +7,27 @@ import Link from 'next/link'
 /* Bootstrap */
 import { Button, Modal, Form } from 'react-bootstrap'
 import { FaStarOfLife } from 'react-icons/fa6'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 import { REGISTER_POST } from '@/components/common/config'
 import { useRouter } from 'next/router'
-
 
 export default function RegisterPage() {
   const router = useRouter()
   // 會員條款
   const [showModal, setShowModal] = useState(false)
   const [agreedToTerms, setAgreedToTerms] = useState(false)
+  // 呈現密碼用
+  const [showPassword, setShowPassword] = useState(false)
 
   // 驗證
   const [data, setData] = useState({
     m_name: '',
     m_account: '',
     m_pwd: '',
+    gender:'',
     mobile: '',
+    birthday:'',
     address: '',
   })
   const [errors, setErrors] = useState({
@@ -33,9 +37,6 @@ export default function RegisterPage() {
     mobile: '',
     address: '',
   })
-
-  // 整個表單有沒有通過檢查
-  const [isPass, setIsPass] = useState(false)
   // 驗證表單字段
   const validateFields = () => {
     const newErrors = {}
@@ -81,12 +82,9 @@ export default function RegisterPage() {
 
   const onSubmit = async (e) => {
     e.preventDefault() // 表單不要以傳統方式送出
+    const isValid = validateFields() // 檢查所有欄位是否填寫
 
-    if (!validateFields()) {
-      return
-    }
-    const { m_account, m_pwd } = data
-    if (isPass) {
+    if (isValid && agreedToTerms) {
       const r = await fetch(REGISTER_POST, {
         method: 'POST',
         headers: {
@@ -117,22 +115,24 @@ export default function RegisterPage() {
         })
       }
     } else {
-      toast.error('必填欄位請填入符合格式的值', {
-        duration: 2000,
-        style: {
-          backgroundColor: 'black',
-          color: 'white',
-        },
-      })
-    }
-    if (!agreedToTerms) {
-      toast.error('請勾選會員條款', {
-        duration: 2000,
-        style: {
-          backgroundColor: 'black',
-          color: 'white',
-        },
-      })
+      if (!isValid) {
+        toast.error('必填欄位請填入符合格式的值', {
+          duration: 2000,
+          style: {
+            backgroundColor: 'black',
+            color: 'white',
+          },
+        })
+      }
+      if (!agreedToTerms) {
+        toast.error('請勾選會員條款', {
+          duration: 2000,
+          style: {
+            backgroundColor: 'black',
+            color: 'white',
+          },
+        })
+      }
       return // 停止表單提交
     }
   }
@@ -145,7 +145,7 @@ export default function RegisterPage() {
     })
   }
   // 處理輸入框失去焦點
-  const handleBlur = (e) => {
+  const handleBlur = () => {
     validateFields()
   }
 
@@ -164,7 +164,7 @@ export default function RegisterPage() {
         <style jsx>{`
           .error {
             color: red;
-            font-size: 13px;
+            font-size: 11px;
           }
         `}</style>
         <div className="col-6">
@@ -234,17 +234,30 @@ export default function RegisterPage() {
                             <FaStarOfLife className={style['icon-padding']} />
                             會員密碼
                           </label>
-                          <div className="col-md-6">
+                          <div
+                            className="col-md-6"
+                            style={{ position: 'relative' }}
+                          >
                             <input
-                              type="password"
                               id="m_pwd"
                               className="form-control"
                               name="m_pwd"
+                              type={showPassword ? 'text' : 'password'}
                               placeholder="請輸密碼"
                               value={data.m_pwd}
                               onChange={handleChange}
                               onBlur={handleBlur}
                             />
+                            <button
+                              type="button"
+                              className={style['show-password']}
+                              onClick={(e) => {
+                                e.preventDefault()
+                                setShowPassword(!showPassword)
+                              }}
+                            >
+                              {!showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
                             <div className="error">{errors.m_pwd}</div>
                           </div>
                         </div>
