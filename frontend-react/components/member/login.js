@@ -1,11 +1,15 @@
-import { useState, useEffect } from 'react'
 import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+// modules
 import Swal from 'sweetalert2'
 import validator from 'validator'
-import style from '@/styles/login.module.scss'
-import Link from 'next/link'
+// Hook
 import GoogleLogin from './google-login'
+// Style
+import style from '@/styles/login.module.scss'
+// React-Icon
 import { FaStarOfLife } from 'react-icons/fa6'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
@@ -14,17 +18,15 @@ export default function LoginPage() {
   const { login } = useAuth()
 
   // 呈現密碼用
- 
   const [showPassword, setShowPassword] = useState(false)
-
   // 新增Remember Me 狀態
   const [rememberMe, setrememberMe] = useState(false)
-
-  // 驗證
+  // 驗證欄位初始值
   const [Logindata, setLoginData] = useState({
     m_account: '',
     m_pwd: '',
   })
+  // 抓取錯誤欄位
   const [errors, setErrors] = useState({
     m_account: '',
     m_pwd: '',
