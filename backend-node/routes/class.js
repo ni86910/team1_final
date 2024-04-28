@@ -38,9 +38,7 @@ router.get("/", async (req, res) => {
 // 抓區域內的場館
 router.get("/city", async (req, res) => {
   const gym_area = req.query.city;
-  const sql = `SELECT * FROM \`gym\` WHERE gym_area = ${db.escape(
-    gym_area
-  )}`;
+  const sql = `SELECT * FROM \`gym\` WHERE gym_area = ${db.escape(gym_area)}`;
 
   let rows = [];
   let fields;
@@ -584,6 +582,44 @@ router.delete("/remove-book", async (req, res) => {
   res.json({ error: "缺少會員id或開課id" });
 });
 
+// 課程付款後，獲得點數
+router.post("/add-point", async (req, res) => {
+  const transaction_id = req.body.transaction_id;
+
+  const date = new Date();
+
+  const sql = `SELECT * FROM line_purchase_order 
+  JOIN class_book on class_book.line_uuid = line_purchase_order.id
+  WHERE transaction_id = ?`;
+
+  const sql2 = `INSERT INTO bonus_points(points, add_used_time, member_id, remark) VALUES (?, ?, ?, ?)`;
+
+  // 先透過transaction_id找到對應的class_schedule_id
+  let rows;
+  let class_schedule_id;
+  let member_id;
+  try {
+    [rows] = await db.query(sql, [transaction_id]);
+    class_schedule_id = rows[0].class_schedule_id;
+    member_id = rows[0].member_id;
+    console.log("rows", rows);
+  } catch (e) {
+    console.log(e);
+  }
+
+  let result;
+  // 拿到class_schedule_id後，再做為remark 加到點數資料表中
+  // 獲得20點
+  if (member_id && class_schedule_id) {
+    try {
+      [result] = await db.query(sql2, [20, date, member_id, class_schedule_id]);
+      console.log("result", result);
+      res.json(result);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+});
 // 動態路由 接收課程名稱
 router.get("/:class_id", async (req, res) => {
   // 用變數接收動態路由
