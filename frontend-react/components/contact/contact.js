@@ -11,15 +11,6 @@ export default function Contact() {
     consult_email: '',
     request: '',
   })
-  // 用於保存登錄狀態
-  // const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-  // 模擬檢查用戶是否已經登錄
-  // useEffect(() => {
-  //   // 您可以在這裡進行實際的驗證邏輯
-  //   const token = localStorage.getItem('authToken') // 例如從本地存儲中獲取身份驗證令牌
-  //   setIsLoggedIn(!!token)
-  // }, [])
 
   const handleChange = (e) => {
     setFormData({
@@ -76,7 +67,7 @@ export default function Contact() {
   return (
     <>
       {/* Map Begin */}
-      <div className="container">
+      <div className="container-fluid">
         <div className="map" style={{ marginTop: 20 }}>
           <iframe
             title="聯絡地圖"
@@ -132,22 +123,15 @@ export default function Contact() {
                       <select
                         name="consult_type"
                         className="form-select form-select-lg mb-3"
-                        style={{ width: 230 }}
+                        style={{ width: '100%' }}
                         onChange={handleChange}
                       >
                         <option value="" selected="selected">
                           請選擇諮詢內容
                         </option>
-                        <option value="問題詢問" onChange={handleChange}>
-                          問題詢問
-                        </option>
-                        <option value="異業/商品合作" onChange={handleChange}>
-                          異業/商品合作
-                        </option>
-                        <option
-                          value="企業/特約商家申請"
-                          onChange={handleChange}
-                        >
+                        <option value="問題詢問">問題詢問</option>
+                        <option value="異業/商品合作">異業/商品合作</option>
+                        <option value="企業/特約商家申請">
                           企業/特約商家申請
                         </option>
                       </select>
@@ -178,12 +162,18 @@ export default function Contact() {
                         value={formData.message}
                         onChange={handleChange}
                       />
-                      <button type="reset" className={style['site-btn']}>
-                        重新填寫
-                      </button>
-                      <button type="submit" className={style['site-btn']}>
-                        Send Message
-                      </button>
+                      <div className="text-center mt-3">
+                        <div className="d-block d-sm-inline-block mb-3 mb-sm-0">
+                          <button type="reset" className={style['site-btn']}>
+                            重新填寫
+                          </button>
+                        </div>
+                        <div className="d-block d-sm-inline-block">
+                          <button type="submit" className={style['site-btn']}>
+                            Send Message
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </form>

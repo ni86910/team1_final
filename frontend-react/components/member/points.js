@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
-import { useAuth } from '@/context/auth-context' // 登出
+import { useAuth } from '@/context/auth-context'
+import { usePoints } from '@/context/points-context'
 
 /* My module.scss */
 import style from '@/styles/points.module.scss'
@@ -19,7 +20,8 @@ import {
 /* React-icon */
 
 export default function PointsPage() {
-  const { logout } = useAuth() // 登出
+  const { logout } = useAuth()
+  const { totalPoints } = usePoints()
 
   return (
     <>
@@ -77,8 +79,8 @@ export default function PointsPage() {
           {/* First Point Container Start */}
           <Row className={style['point-first-row']}>
             <Col className={style['point-left']}>
-              <div className={style['points-number']}>50</div>
-              <div>我的點數</div>
+              <div className={style['points-number']}>{totalPoints}</div>
+              <div>可使用點數</div>
             </Col>
           </Row>
           {/* First Point Container End */}
@@ -93,7 +95,7 @@ export default function PointsPage() {
                 className={`mb-3 ${['Tabs-color']}`}
                 justify
               >
-                <Tab eventKey="points" title="點數紀錄">
+                <Tab eventKey="points" title="獲得紀錄">
                   <Table striped bordered hover>
                     <thead>
                       <tr>

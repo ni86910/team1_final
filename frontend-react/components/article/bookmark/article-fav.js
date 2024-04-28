@@ -92,20 +92,21 @@ function ArticleFav({ favInfo, setToggleBtn, toggleBtn }) {
 
     if (favInfo.alreadyFav) {
       console.log('已取消收藏')
-      alert('已取消收藏')
       removeFav()
     } else {
       console.log('已加入收藏')
-      alert('已加入收藏')
       addFav()
     }
   }
 
   useEffect(() => {}, [favInfo])
   return (
-    <button className={style['btn']} onClick={handleToggle}>
-      {favInfo.alreadyFav ? <FaHeart /> : <FaRegHeart />}
-    </button>
+    <>
+      <Toaster position="top-center" reverseOrder={false} />
+      <button className={style['btn']} onClick={handleToggle}>
+        {favInfo.alreadyFav ? <FaHeart /> : <FaRegHeart />}
+      </button>
+    </>
   )
 }
 

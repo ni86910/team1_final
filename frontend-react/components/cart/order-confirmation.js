@@ -7,7 +7,7 @@ export default function OrderConfirmationMain() {
   return (
     <>
       <section className={`${style['order-confirmation']} ${style['spad']}`}>
-        <div className={`container pt-3`}>
+        <div className={`container pt-3 pb-5`}>
           {/* 感謝收到訂單 */}
           <div className={`d-flw ${style['order-confirmation-content']}`}>
             <div
@@ -61,24 +61,20 @@ export default function OrderConfirmationMain() {
             <div
               className={`d-flex justify-content-center ${style['order-confirmation-button']}`}
             >
-              <button
+              <Link
                 type="button"
+                href="/product"
                 className={`btn btn-lg col-3 mb-5 me-2 ${style['backtoshop-btn']}`}
               >
                 返回商城
-              </button>
-              <button
+              </Link>
+              <Link
                 type="button"
+                href="/member/order"
                 className={`btn btn-lg col-3 mb-5 ms-2 ${style['checkorders-btn']}`}
               >
                 查詢訂單
-              </button>
-            </div>
-          </div>
-          {/* 您可能也會喜歡 */}
-          <div className={style['recommend-products']}>
-            <div className={style['recommend-products-title']}>
-              <h3>...</h3>
+              </Link>
             </div>
           </div>
         </div>

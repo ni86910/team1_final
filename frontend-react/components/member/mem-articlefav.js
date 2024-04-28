@@ -3,7 +3,7 @@ import { useAuth } from '@/context/auth-context' //登出
 import { useRouter } from 'next/router'
 import { API_SERVER } from '@/configs/index'
 import Link from 'next/link'
-import Swal from 'sweetalert2'
+import toast, { Toaster } from 'react-hot-toast'
 /* React-Bootstrap */
 import { Table } from 'react-bootstrap'
 
@@ -65,7 +65,7 @@ export default function ArtFavorite() {
       if (response.ok) {
         // 成功刪除後更新狀態以重新加載收藏資料
         setToggleBtn(!toggleBtn)
-        Swal.fire('已成功取消收藏!')
+        toast.success('已取消收藏')
       } else {
         console.error('取消收藏失敗')
       }
@@ -76,6 +76,7 @@ export default function ArtFavorite() {
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       {articleData.length === 0 ? (
         <Table striped hover bordered className="mt-4">
           <thead>

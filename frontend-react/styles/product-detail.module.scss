@@ -248,7 +248,7 @@
     opacity: 1;
     transition: all .4s;
     &:hover {
-      background-color: $secondary-color;
+      background-color: $primary-color;
     }
   }
 }
@@ -256,7 +256,7 @@
 .fav-button {
     width: 40px;
     height: 40px;
-    background-color: $primary-color;
+    background-color: #000000;
     padding-top: 5px;
     text-align: center;
     box-shadow: 0 8px 24px hsla(0,0%, 0%, .15);
@@ -270,7 +270,7 @@
   .add-cart-button {
     width: 40px;
     height: 40px;
-    background-color: $primary-color;
+    background-color: #000000;
     padding-top: 5px;
     text-align: center;
     box-shadow: 0 8px 24px hsla(0,0%, 0%, .15);
