@@ -216,7 +216,7 @@ export default function ProductDetail() {
                   >
                     <div className={`row ${style['product-detail-text']}`}>
                       <h2>{v.product_name}</h2>
-                      <h4>NT$ {v.price}</h4>
+                      <h4>NT$ {v.price.toLocaleString()}</h4>
                     </div>
                     <div className={`row ${style['product-detail-option']}`}>
                       <div
@@ -230,7 +230,11 @@ export default function ProductDetail() {
                         </p>
                         <div className={`${style['choose-spec']}`}>
                           <ul className={`d-flex`}>
-                            <li className={`col-4`}>F</li>
+                            <li
+                              className={`col-4`}
+                            >
+                              <button>F</button>
+                            </li>
                           </ul>
                         </div>
                       </div>

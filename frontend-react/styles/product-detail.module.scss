@@ -88,19 +88,19 @@
   .choose-spec {
     li{
       list-style: none;
-      border: 1px solid $gray-deep-color;
-      border-radius: 5px;
-      margin: 8px 10px;
-      width: 50px;
-      height: 40px;
-      background-color: #ffffff;
-      text-align: center;
-      line-height: 40px;
-
-      &:hover {
-        color: $primary-color;
+      
+      button {
         border: 1px solid #000000;
-        transition: all 0.3s ease-in-out;
+        color: #EB6234;
+        border-radius: 5px;
+        width: 45px;
+        height: 45px;
+
+        &:hover {
+          border: 1px solid #000000;
+          color: #EB6234;
+          transition: all .3s;
+        }
       }
     }
   }
