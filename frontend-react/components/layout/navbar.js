@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import Swal from 'sweetalert2'
 import {
   FaRegHeart,
   FaUser,
@@ -198,7 +199,13 @@ export default function Navbar() {
                               role="presentation"
                               onClick={() => {
                                 logout()
-                                alert('你已成功登出')
+                                Swal.fire({
+                                  position: 'center',
+                                  icon: 'success',
+                                  title: '登出成功',
+                                  showConfirmButton: false,
+                                  timer: 2000,
+                                })
                                 router.push('/member/login')
                               }}
                             >

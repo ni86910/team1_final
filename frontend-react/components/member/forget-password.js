@@ -133,7 +133,7 @@ export default function ForgetPasswordPage() {
                               id="button-addon2"
                               onClick={sendMemberEmail}
                             >
-                              取得驗証碼
+                              寄送
                             </button>
                           </div>
 
