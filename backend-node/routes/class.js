@@ -196,7 +196,7 @@ router.get("/all_fav", async (req, res) => {
 
   const sql3 = `
   SELECT * FROM fav 
-  LEFT JOIN class_schedule on fav.class_schedule_id = class_schedule.class_schedule_id
+  RIGHT JOIN class_schedule on fav.class_schedule_id = class_schedule.class_schedule_id
   LEFT JOIN class on class_schedule.class_id = class.class_id
   LEFT JOIN gym ON class_schedule.gym_id = gym.gym_id
   WHERE 1
