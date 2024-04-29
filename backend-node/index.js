@@ -30,6 +30,7 @@ import googleloginRouter from "./routes/google-login.js";
 import linePayRouter from "./routes/line-pay.js";
 import pointsRouter from "./routes/points.js";
 import emailRouter from "./routes/email.js";
+import forgetPwdRouter from "./routes/forget-password.js";
 
 // 建立一個session可以儲存的地方
 const MysqlStore = mysql_session(session);
@@ -111,6 +112,9 @@ app.use("/shipment", shipmentRouter);
 app.use("/profile", profileRouter);
 
 app.use("/upload", profileRouter);
+
+app.use("/forget-password", forgetPwdRouter);
+
 app.use("/", LogInRouter);
 
 app.use("/", LogOutRouter);

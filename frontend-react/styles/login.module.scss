@@ -71,7 +71,6 @@ text-align: center;
   font-weight: bold;
   color:black;
   padding-top: 15px;
-  
   &:hover{
     color:$primary-color;
     padding-top: 15px;
@@ -107,6 +106,20 @@ text-align: center;
 @media only screen and (max-width: 768px){
   .login-text{
     font-size: 20px;
+  }
+  .straight-line{
+    border:1px solid black;
+    width: auto;
+    margin: auto;
+  }
+  .label-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .google-btn
+  {
+    font-size: 14px;
   }
  
 }

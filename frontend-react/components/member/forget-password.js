@@ -1,25 +1,52 @@
-import React, { useState } from 'react'
-import {nodemailer} from 'nodemailer'
-import { Col, Button } from 'react-bootstrap'
+import { useRouter, useState, useEffect } from 'next/router'
+import { API_SERVER } from '../common/config'
+import { Button } from 'react-bootstrap'
+import toast, { Toaster } from 'react-hot-toast'
+// React-Icon
 import { FaStarOfLife } from 'react-icons/fa6'
+// Style
 import style from '@/styles/forget-password.module.scss'
 
-import { MdChangeCircle } from 'react-icons/md'
-
 export default function ForgetPasswordPage() {
-  const [randomCode, setRandomCode] = useState('')
+  const router = useRouter()
 
+  const sendMemberEmail = async (e) => {
+    e.preventDefault()
+    console.log('按下按鈕')
+    const r = await fetch(`${API_SERVER}/forget-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(),
+    })
+    const result = await r.json()
 
-  // 生成隨機的四位數字驗證碼
-  const generateRandomCode = () => {
-    const code = Math.floor(1000 + Math.random() * 9000)
-    setRandomCode(code.toString())
+    console.log(result)
+    if (result.status) {
+      toast.success('請到您的電子信箱收取郵件', {
+        style: {
+          border: '1px solid #ED7C15',
+          padding: '14px',
+          color: 'white',
+        },
+        iconTheme: {
+          primary: 'green',
+          secondary: '#ED7C15',
+        },
+      })
+      router.back()
+    } else {
+      toast.error('無此帳號信箱,請重新輸入', {
+        duration: 2000,
+        style: {
+          backgroundColor: 'black',
+          color: 'white',
+        },
+      })
+    }
   }
 
-  // 初始化時生成一次驗證碼
-  useState(() => {
-    generateRandomCode()
-  }, [])
   return (
     <>
       <section className={style['forget-section']}>
@@ -38,18 +65,31 @@ export default function ForgetPasswordPage() {
                         忘記密碼
                       </div>
                       <div className="card-body">
-                        <form action="#" method="#">
+                        <p className={`text-center mb-3 ${style['text-note']}`}>
+                          輸入您的會員帳號，按下{' '}
+                          <span
+                            style={{
+                              color: 'red',
+                              textDecoration: 'underline',
+                            }}
+                          >
+                            &quot;取得驗証碼&quot;
+                          </span>{' '}
+                          按鈕後，我們會將密碼重設指示寄送給您。
+                        </p>
+                        <form>
+                          {/* 信箱帳號開始 */}
                           <div
                             className={`form-group row ${style['forget-box']}`}
                           >
                             <label
                               htmlFor="m_account"
-                              className={`col-md-4 col-form-label  ${style['label-text']}`}
+                              className={`col-md-4 col-form-label ${style['label-text']}`}
                             >
                               <FaStarOfLife className={style['icon-padding']} />
                               會員帳號
                             </label>
-                            <div className="col-md-4 col-form-label ">
+                            <div className="col-md-6">
                               <input
                                 style={{ borderRadius: '10px' }}
                                 type="email"
@@ -57,48 +97,89 @@ export default function ForgetPasswordPage() {
                                 className="form-control"
                                 name="m_account"
                                 placeholder="請輸入信箱"
-                                required
                               />
                             </div>
                           </div>
-
+                          {/* 信箱驗證碼 */}
                           <div
                             className={`form-group row ${style['forget-box']}`}
                           >
                             <label
                               htmlFor="m_account"
-                              className={`col-md-4 col-form-label  ${style['label-verify-text']}`}
+                              className={`col-md-4 col-form-label ${style['label-verify-text']}`}
                             >
                               <FaStarOfLife className={style['icon-padding']} />
-                              信箱驗證碼
+                              驗證碼
                             </label>
-                            <div className="col-md-4 col-form-label ">
+                            <div className="col-md-6">
                               <input
                                 style={{ borderRadius: '10px' }}
                                 type="text"
                                 id="verify"
                                 className="form-control"
                                 name="verify"
-                                placeholder="請輸入驗證碼"
-                                required
+                                placeholder="請從信箱領取驗證碼"
                               />
                             </div>
                           </div>
-                          <Col className={style['verify-col']}>
-                            <div
-                              id="verify-code"
-                              className={style['verify-number']}
-                            >
-                              {randomCode}
-                            </div>
-                            <Button
-                              className={style['changg']}
-                              onClick={generateRandomCode}
-                            >
-                              <MdChangeCircle size={'30px'} />
-                            </Button>
-                          </Col>
 
+                          <div
+                            className="col-md-12"
+                            style={{ margin: '0px', padding: '0px' }}
+                          >
+                            <button
+                              className={style['verification-btn']}
+                              type="button"
+                              id="button-addon2"
+                              onClick={sendMemberEmail}
+                            >
+                              取得驗証碼
+                            </button>
+                          </div>
+
+                          {/* 新密碼 */}
+                          <div
+                            className={`form-group row ${style['forget-box']}`}
+                          >
+                            <label
+                              htmlFor="m_pwd"
+                              className={`col-md-4 col-form-label ${style['label-verify-text']}`}
+                            >
+                              <FaStarOfLife className={style['icon-padding']} />
+                              新密碼
+                            </label>
+                            <div className="col-md-6">
+                              <input
+                                style={{ borderRadius: '10px' }}
+                                type="password"
+                                id="verify"
+                                className="form-control"
+                                name="new_pwd"
+                                placeholder="請輸入新密碼"
+                              />
+                            </div>
+                          </div>
+                          {/* 確認新密碼 */}
+                          <div
+                            className={`form-group row ${style['forget-box']}`}
+                          >
+                            <label
+                              htmlFor="m_pwd"
+                              className={`col-md-4 col-form-label ${style['label-verify-text']}`}
+                            >
+                              <FaStarOfLife className={style['icon-padding']} />
+                              確認密碼
+                            </label>
+                            <div className="col-md-6">
+                              <input
+                                style={{ borderRadius: '10px' }}
+                                type="password"
+                                className="form-control"
+                                name="confirm_pwd"
+                                placeholder="請輸入確認密碼"
+                              />
+                            </div>
+                          </div>
                           <Button type="submit" className={style['forget-btn']}>
                             <span className="glyphicon glyphicon-off" />
                             確認
@@ -113,6 +194,7 @@ export default function ForgetPasswordPage() {
           </div>
         </div>
       </section>
+      <Toaster />
     </>
   )
 }
