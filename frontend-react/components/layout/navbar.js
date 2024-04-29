@@ -89,7 +89,7 @@ export default function Navbar() {
           </div>
         </div>
         <div className="offcanvas-nav-option">
-          <Link href="/favorite" style={{ color: '#EB6234' }}>
+          <Link href="member/favorite" style={{ color: '#EB6234' }}>
             <FaRegHeart size={20} />
           </Link>
           <Link href="/cart" style={{ color: '#EB6234' }}>
