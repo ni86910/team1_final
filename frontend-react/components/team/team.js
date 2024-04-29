@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import TOP from '@/components/TOPbutton/top'
 import { API_SERVER } from '@/configs/index'
 import Swiper from '@/components/team/swiper/swiper'
 import { RiTeamFill } from 'react-icons/ri'
@@ -316,8 +315,6 @@ export default function Team() {
           </div>
         </div>
       </div>
-
-      <TOP />
     </>
   )
 }
