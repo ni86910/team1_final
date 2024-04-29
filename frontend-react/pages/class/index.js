@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import ClassSchedule from '@/components/class/class-schedule'
 import ClassSwitch from '@/components/class/class-switch'
 import ClassIntro from '@/components/class/class-intro'
-import ClassBook from '@/components/class/class-book'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
@@ -29,7 +28,6 @@ export default function Class() {
         <title>課程專區</title>
       </Head>
       <ClassSwitch setTab={setTab} tab={tab} />
-
       <div
         style={{
           display: 'flex',

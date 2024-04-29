@@ -15,6 +15,7 @@ import { TiArrowSortedDown } from 'react-icons/ti'
 import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
 import { useCart } from '@/hooks/use-cart'
+import Loading from '@/components/common/loading'
 
 export default function Navbar() {
   const { totalItems } = useCart()
@@ -29,6 +30,7 @@ export default function Navbar() {
   return (
     <>
       {/* Offcanvas Menu Begin */}
+      <Loading />
       <div
         className={`offcanvas-menu-overlay ${offcanvas}`}
         role="presentation"
@@ -89,24 +91,11 @@ export default function Navbar() {
           </div>
         </div>
         <div className="offcanvas-nav-option">
-          <Link href="#" className="search-switch">
-            <Image
-              src="/img/navbar-template/icon/search_w.png"
-              width={19}
-              height={19}
-              alt=""
-            />
+          <Link href="member/favorite" style={{ color: '#EB6234' }}>
+            <FaRegHeart size={20} />
           </Link>
-          <Link href="#">
-            <FaRegHeart />
-          </Link>
-          <Link href="#">
-            <Image
-              src="/img/navbar-template/icon/cart.png"
-              width={19}
-              height={19}
-              alt=""
-            />
+          <Link href="/cart" style={{ color: '#EB6234' }}>
+            <FaBasketShopping size={20} />
             <span>{totalItems}</span>
           </Link>
           <div className="quantity">共 {totalItems} 件商品</div>
@@ -114,6 +103,42 @@ export default function Navbar() {
         <div id="mobile-menu-wrap" />
         <div className="offcanvas-text">
           <p>現在加入菲特友，開啟專屬您的運動計畫!</p>
+        </div>
+        <div className="offcanvas-link-list">
+          <ul className="offcanvas-main">
+            <Link href="/class" style={{ color: '#FFFFFF', fontWeight: '700' }}>
+              課程專區 <FaBook />
+            </Link>
+          </ul>
+          <ul className="offcanvas-main">
+            <Link
+              href="/product"
+              style={{ color: '#FFFFFF', fontWeight: '700' }}
+            >
+              健康商城 <FaStore />
+            </Link>
+          </ul>
+          <ul className="offcanvas-main">
+            了解更多 <IoIosArrowDown />
+            <li>
+              <Link href="/article">健康小知識</Link>
+            </li>
+            <li>
+              <Link href="/quest">常見問題</Link>
+            </li>
+            <li>
+              <Link href="/contact">客服專區</Link>
+            </li>
+          </ul>
+          <ul className="offcanvas-main">
+            關於我們 <IoIosArrowDown />
+            <li>
+              <Link href="/team">團隊介紹</Link>
+            </li>
+            <li>
+              <Link href="/gym">場地一覽</Link>
+            </li>
+          </ul>
         </div>
       </div>
       {/* Offcanvas Menu End */}
@@ -236,7 +261,8 @@ export default function Navbar() {
                       課程專區 <FaBook />
                     </Link>
                   </li>
-                  <li className="active">
+                  {/* <li className="active"> */}
+                  <li>
                     <Link href="/product">
                       健康商城 <FaStore />
                     </Link>
@@ -300,17 +326,27 @@ export default function Navbar() {
       </header>
       {/* Header Section End */}
       {/* Breadcrumb Section Begin */}
-      <section className={`breadcrumb-option`}>
+      <section
+        className={`breadcrumb-option`}
+        style={{ background: 'none', position: 'relative', height: '140px' }}
+      >
+        <Image
+          src={'/Component 1.jpg'}
+          alt=""
+          width={2000}
+          height={140}
+          style={{ position: 'absolute', top: '0', zIndex: '-1' }}
+        ></Image>
         <div className={`container`}>
           <div className={`row`}>
             <div className={`col-lg-12`}>
-              <div className={`breadcrumb-text`}>
+              {/* <div className={`breadcrumb-text`}>
                 <h4>健康商城</h4>
                 <div className={`breadcrumb-links`}>
                   <Link href="#">首頁</Link>
                   <span>所有商品</span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
