@@ -11,7 +11,7 @@ dist/
 headers.txt
 package-lock.json
 tmp_uploads
-public/avatar
+public/imgs
 
 # Compiled Java class files
 *.class
