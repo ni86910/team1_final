@@ -15,6 +15,7 @@ import { TiArrowSortedDown } from 'react-icons/ti'
 import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
 import { useCart } from '@/hooks/use-cart'
+import Loading from '@/components/common/loading'
 
 export default function Navbar() {
   const { totalItems } = useCart()
@@ -29,6 +30,7 @@ export default function Navbar() {
   return (
     <>
       {/* Offcanvas Menu Begin */}
+      <Loading />
       <div
         className={`offcanvas-menu-overlay ${offcanvas}`}
         role="presentation"
@@ -259,7 +261,8 @@ export default function Navbar() {
                       課程專區 <FaBook />
                     </Link>
                   </li>
-                  <li className="active">
+                  {/* <li className="active"> */}
+                  <li>
                     <Link href="/product">
                       健康商城 <FaStore />
                     </Link>
@@ -323,17 +326,27 @@ export default function Navbar() {
       </header>
       {/* Header Section End */}
       {/* Breadcrumb Section Begin */}
-      <section className={`breadcrumb-option`}>
+      <section
+        className={`breadcrumb-option`}
+        style={{ background: 'none', position: 'relative', height: '140px' }}
+      >
+        <Image
+          src={'/Component 1.jpg'}
+          alt=""
+          width={2000}
+          height={140}
+          style={{ position: 'absolute', top: '0', zIndex: '-1' }}
+        ></Image>
         <div className={`container`}>
           <div className={`row`}>
             <div className={`col-lg-12`}>
-              <div className={`breadcrumb-text`}>
+              {/* <div className={`breadcrumb-text`}>
                 <h4>健康商城</h4>
                 <div className={`breadcrumb-links`}>
                   <Link href="#">首頁</Link>
                   <span>所有商品</span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

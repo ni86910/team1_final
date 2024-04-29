@@ -294,12 +294,12 @@ export default function ArticleDetail() {
                         onChange={handleChange}
                         rows={4}
                       />
-                      <div className="text-center" style={{ marginBottom: 10 }}>
+                      <div className="text-center" style={{ marginBottom: 15 }}>
                         <button type="reset" className={style['site-btn']}>
                           重新填寫
                         </button>
                       </div>
-                      <div className="text-center">
+                      <div className="text-center" style={{ marginBottom: 15 }}>
                         <button type="submit" className={style['site-btn']}>
                           Send Message
                         </button>
