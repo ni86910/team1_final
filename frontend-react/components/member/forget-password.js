@@ -12,7 +12,7 @@ export default function ForgetPasswordPage() {
 
   const sendMemberEmail = async (e) => {
     e.preventDefault()
-    console.log('按下按鈕')
+    console.log('按下取得驗證碼按鈕')
     const r = await fetch(`${API_SERVER}/forget-password`, {
       method: 'POST',
       headers: {
@@ -105,7 +105,7 @@ export default function ForgetPasswordPage() {
                             className={`form-group row ${style['forget-box']}`}
                           >
                             <label
-                              htmlFor="m_account"
+                              htmlFor="verify"
                               className={`col-md-4 col-form-label ${style['label-verify-text']}`}
                             >
                               <FaStarOfLife className={style['icon-padding']} />
@@ -133,7 +133,7 @@ export default function ForgetPasswordPage() {
                               id="button-addon2"
                               onClick={sendMemberEmail}
                             >
-                              取得驗証碼
+                              寄送
                             </button>
                           </div>
 
@@ -142,7 +142,7 @@ export default function ForgetPasswordPage() {
                             className={`form-group row ${style['forget-box']}`}
                           >
                             <label
-                              htmlFor="m_pwd"
+                              htmlFor="new_pwd"
                               className={`col-md-4 col-form-label ${style['label-verify-text']}`}
                             >
                               <FaStarOfLife className={style['icon-padding']} />
@@ -164,7 +164,7 @@ export default function ForgetPasswordPage() {
                             className={`form-group row ${style['forget-box']}`}
                           >
                             <label
-                              htmlFor="m_pwd"
+                              htmlFor="confirm_pwd"
                               className={`col-md-4 col-form-label ${style['label-verify-text']}`}
                             >
                               <FaStarOfLife className={style['icon-padding']} />

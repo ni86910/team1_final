@@ -86,9 +86,9 @@ export default function ClassBook({
 
   const checkPay = () => {
     Swal.fire({
-      title: '是否前往會員中心進行付款',
-      // text: '預約後，將前往會員中心進行付款',
-      icon: 'question',
+      title: '成功預約!',
+      text: '是否前往會員中心進行付款',
+      icon: 'success',
       showCancelButton: true,
       confirmButtonColor: '#EB6234',
       cancelButtonColor: 'black',

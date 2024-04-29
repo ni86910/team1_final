@@ -2543,8 +2543,32 @@ ol {
 	}
 
 	.offcanvas-text p {
-		color: #F3F2EE;
+		color: #cccccc;
+		font-style: italic;
+		font-size: 12px;
 		margin-bottom: 0;
+
+	}
+
+	.offcanvas-link-list ul {
+		color: #ffffff;
+		margin: 12px auto;
+	}
+
+	.offcanvas-main {
+		color: #EB6234;
+		font-weight: 700;
+	}
+
+	.offcanvas-link-list ul a {
+		color: #EB6234;
+		margin: 10px auto;
+	}
+
+	.offcanvas-link-list ul li {
+		list-style: none;
+		color: #ffffff;
+		margin: 8px auto 8px 10px;
 	}
 
 	.header-top {
@@ -2767,6 +2791,7 @@ ol {
 	.product-details-cart-option .quantity {
 		margin-right: 0;
 		margin-bottom: 15px;
+		
 	}
 
 	.product-details-last-option h5 span {

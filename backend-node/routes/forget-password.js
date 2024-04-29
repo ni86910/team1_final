@@ -49,41 +49,41 @@ router.post("/reset-password", async (req, res) => {
   }
 });
 
-router.post("/forget-password", async (req, res) => {
-  const { email } = req.body;
+router.post("/", async (req, res) => {
+  const { m_account } = req.body;
 
   // 檢查郵箱是否存在於資料庫中
   const [user] = await db.query("SELECT * FROM member WHERE m_account = ?", [
-    email,
+    m_account,
   ]);
   if (!user.length) {
     return res.status(404).json({ message: "User not found" });
   }
 
   // 生成重設密碼的 token
-  const token = bcrypt.hashSync(email + new Date().toISOString(), 10);
+  const token = bcrypt.hashSync(m_account + new Date().toISOString(), 10);
 
   // 更新資料庫中的 token
   await db.query("UPDATE member SET resetPasswordToken = ? WHERE m_account = ?", [
     token,
-    email,
+    m_account,
   ]);
 
   // 發送包含重設密碼連結的郵件給用戶
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "projectreact0456@gmail.com",
-      pass: "wtry rark ggdg ajer",
+      user: "fitsu879@gmail.com",
+      pass: "yfxx mxgk tuwb hwbn",
     },
   });
 
   
 
   const mailOptions = {
-    from: '"毛毛星球" <projectreact0456@gmail.com>',
-    to: email,
-    subject: "關於毛毛星球的重設密碼",
+    from: '"fitsu" <fitsu879@gmail.com>',
+    to: m_account,
+    subject: "關於 Fit-U 健康帳戶的重設密碼",
     html: `
         <h2 style="color:black;">您在剛剛提出密碼重設要求，：</h2>
 
