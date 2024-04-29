@@ -4,6 +4,11 @@ import { Button, Modal, Form } from 'react-bootstrap'
 import style from '@/styles/cart-checkout-main.module.scss'
 import { useRouter } from 'next/router'
 
+// sweet alert
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
+
 // hooks
 import { useCart } from '@/hooks/use-cart'
 import { useAuth } from '@/context/auth-context'
@@ -109,7 +114,7 @@ export default function CheckoutMain() {
                                   backgroundColor: '#E6E6E6',
                                   color: '#EB6234',
                                   width: '90px',
-                                  height: '40px',
+                                  height: '35px',
                                   border: '1px solid #EB6234',
                                   borderRadius: '5px',
                                   marginBottom: '15px',
@@ -126,6 +131,7 @@ export default function CheckoutMain() {
                               門市名稱:{' '}
                               <input
                                 type="text"
+                                style={{ margin: '8px auto' }}
                                 value={store711.storename}
                                 disabled
                               />
@@ -133,6 +139,7 @@ export default function CheckoutMain() {
                               門市地址:{' '}
                               <input
                                 type="text"
+                                style={{ margin: '8px auto' }}
                                 value={store711.storeaddress}
                                 disabled
                               />
