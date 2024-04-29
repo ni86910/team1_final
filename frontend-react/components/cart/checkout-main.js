@@ -58,11 +58,7 @@ export default function CheckoutMain() {
 
   // 使用 useRef hook 創建 ref
   const purchaseNotesRef = useRef(null)
-
-  // 定義滾動到 purchase notes 區塊的函數
-  const handleScrollToPurchaseNotes = () => {
-    purchaseNotesRef.current.scrollIntoView({ behavior: 'smooth' })
-  }
+  const purchaseOrder = useRef(null)
 
   return (
     <>
@@ -74,6 +70,8 @@ export default function CheckoutMain() {
           >
             {/* Left 結帳詳細區塊 */}
             <div
+              ref={purchaseOrder}
+              id="purchaseOrder"
               className={`col-lg-8 col-sm-12 ${style['checkout-left-section']}`}
             >
               <h3>結帳詳細</h3>
@@ -159,7 +157,7 @@ export default function CheckoutMain() {
                             <p style={{ marginTop: '15px' }}>
                               <div className={style['checkout-BlockRow']}>
                                 <div>803 高雄市苓雅區***路123號</div>
-                                <div>蔡*瑜 (+886)0912****12</div>
+                                <div>蔡*紓 (+886)0912****12</div>
                               </div>
                             </p>
                           </>
@@ -247,7 +245,7 @@ export default function CheckoutMain() {
                 </div>
                 <ul>
                   <li>
-                    商品金額 NT$<span>{calcTotalPrice().toLocaleString()}</span>
+                    商品金額<span>NT$ {calcTotalPrice().toLocaleString()}</span>
                   </li>
                   <li>
                     點數折抵後 (使用{myPoints}點) NT$
@@ -304,7 +302,11 @@ export default function CheckoutMain() {
                     我已經閱讀並同意
                     <Link
                       href="#purchaseNotes"
-                      style={{ color: '#EB6234', textDecoration: 'underline' }}
+                      style={{
+                        color: '#EB6234',
+                        textDecoration: 'underline',
+                        fontWeight: '800',
+                      }}
                     >
                       以下
                     </Link>
@@ -387,7 +389,19 @@ export default function CheckoutMain() {
                   <p>
                     4. 如遇缺貨或商品無法出貨時，客服人員將會以電話與您聯絡。
                   </p>
-                  <p>感謝您撥空詳閱本站購物須知</p>
+                  <p>
+                    感謝您撥空詳閱本站購物須知!{' '}
+                    <Link
+                      href="#purchaseOrder"
+                      style={{
+                        color: '#EB6234',
+                        textDecoration: 'underline',
+                        fontWeight: '700',
+                      }}
+                    >
+                      請繼續您的訂購流程
+                    </Link>
+                  </p>
                   <p />
                 </div>
               </div>
