@@ -2,6 +2,8 @@ import React from 'react'
 import { useAuth } from '@/context/auth-context' //登出
 import Image from 'next/image'
 import Link from 'next/link'
+import Swal from 'sweetalert2'
+import { useRouter } from 'next/router'
 /* My module.scss */
 import style from '@/styles/favorite.module.scss'
 import SideBar from '@/styles/m-sidebar.module.scss'
@@ -20,6 +22,7 @@ import {
 import ClassRecordTable from '@/components/member/class-record-table'
 
 export default function CourseRecords() {
+  const router = useRouter()
   const { logout } = useAuth()
   return (
     <>
@@ -53,11 +56,23 @@ export default function CourseRecords() {
                 我的點數
               </Link>
               <Link
-                className={SideBar['Nav-link']}
-                href="/member/logout"
+                className={SideBar['logout-Nav-link']}
+                href={'#'}
                 onClick={(e) => {
-                  e.preventDefault()
                   logout()
+                  Swal.fire({
+                    title: '確定登出嗎?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#EB6234',
+                    cancelButtonColor: 'black',
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      router.push('/member/login')
+                    }
+                  })
                 }}
               >
                 登出
