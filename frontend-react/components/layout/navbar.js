@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import Swal from 'sweetalert2'
+
 import {
   FaRegHeart,
   FaUser,
