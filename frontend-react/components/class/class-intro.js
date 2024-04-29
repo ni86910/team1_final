@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FaPlus } from 'react-icons/fa6'
 import Form from 'react-bootstrap/Form'
+import LiftUpLoading from '../common/lift-up-loading'
 
 export default function ClassIntro({ setContainerHeight, tab }) {
   const router = useRouter()

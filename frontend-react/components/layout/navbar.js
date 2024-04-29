@@ -15,6 +15,7 @@ import { TiArrowSortedDown } from 'react-icons/ti'
 import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
 import { useCart } from '@/hooks/use-cart'
+import Loading from '@/components/common/loading'
 
 export default function Navbar() {
   const { totalItems } = useCart()
@@ -29,6 +30,7 @@ export default function Navbar() {
   return (
     <>
       {/* Offcanvas Menu Begin */}
+      <Loading />
       <div
         className={`offcanvas-menu-overlay ${offcanvas}`}
         role="presentation"
@@ -303,13 +305,13 @@ export default function Navbar() {
       {/* Breadcrumb Section Begin */}
       <section
         className={`breadcrumb-option`}
-        style={{ background: 'none', position: 'relative', height:"140px" }}
+        style={{ background: 'none', position: 'relative', height: '140px' }}
       >
         <Image
           src={'/Component 1.jpg'}
           alt=""
           width={2000}
-          height={180}
+          height={140}
           style={{ position: 'absolute', top: '0', zIndex: '-1' }}
         ></Image>
         <div className={`container`}>
