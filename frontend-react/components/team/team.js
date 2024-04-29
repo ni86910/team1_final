@@ -175,8 +175,8 @@ export default function Team() {
                   <Image
                     src={`/img/team/${v.teacher_image}`}
                     alt=""
-                    width={500}
-                    height={350}
+                    width={300}
+                    height={300}
                     data-bs-toggle="modal"
                     data-bs-target={`#modalJohnSmith${i}`}
                   />

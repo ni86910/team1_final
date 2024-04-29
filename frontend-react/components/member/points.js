@@ -99,15 +99,11 @@ export default function PointsPage() {
                   <Table striped bordered hover>
                     <thead>
                       <tr>
-                        <td width={300}>
-                          <span>日期</span>
-                        </td>
-                        <td width={300}>
-                          <span>類型</span>
-                        </td>
-                        <td>
-                          <span>紅利點數</span>
-                        </td>
+                        <th width={300} name="add_used_time">
+                          日期
+                        </th>
+                        <th width={300}>類型</th>
+                        <th name="points">紅利點數</th>
                       </tr>
                     </thead>
                     <tbody>

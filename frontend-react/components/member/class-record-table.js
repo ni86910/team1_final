@@ -111,6 +111,20 @@ export default function ClassRecordTable() {
     setIsLoading(false)
   }
 
+  // 付款完成後，新增點數
+  const addPoint = async () => {
+    const url = `${API_SERVER}/class/add-point`
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/JSON' },
+      body: JSON.stringify({
+        transaction_id: router.query.transactionId,
+      }),
+    })
+    const result = await r.json()
+    console.log('點數新增結果', result)
+  }
+
   // confirm回來用的
   useEffect(() => {
     if (router.isReady) {
@@ -144,6 +158,9 @@ export default function ClassRecordTable() {
   useEffect(() => {
     // 重刷一下頁面 更新預約資料
     if (router.query.transactionId) {
+      //TODO: 這裡要執行 加點數動作
+      addPoint()
+      //TODO: 要有loading畫面  阻止使用者作其他操作
       setTimeout(() => {
         router.push(
           {
