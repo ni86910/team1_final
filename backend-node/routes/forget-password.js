@@ -49,7 +49,7 @@ router.post("/reset-password", async (req, res) => {
   }
 });
 
-router.post("/forget-password", async (req, res) => {
+router.post("/", async (req, res) => {
   const { m_account } = req.body;
 
   // 檢查郵箱是否存在於資料庫中
