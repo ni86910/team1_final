@@ -43,6 +43,19 @@
   } 
 }
 
+.logout-Nav-link{
+  margin: 0px;
+  color:red;
+  padding:0px;
+  margin-bottom: 15px;
+  padding-left: 5px;
+  &:hover{
+    font-size: 20px;
+    border-left: 3px solid red;
+    color:red
+  }
+}
+
 .text-h4 {
   font-size: 24px;
     width: 100%;

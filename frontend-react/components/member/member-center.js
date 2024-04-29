@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import Swal from 'sweetalert2'
 // Hooks
 import { useAuth } from '@/context/auth-context'
 import { usePoints } from '@/context/points-context'
@@ -70,11 +71,23 @@ export default function MemberCenterPage() {
                 我的收藏
               </Link>
               <Link
-                className={SideBar['Nav-link']}
-                href="/member/logout"
+                className={SideBar['logout-Nav-link']}
+                href={'#'}
                 onClick={(e) => {
-                  e.preventDefault()
                   logout()
+                  Swal.fire({
+                    title: '確定登出嗎?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#EB6234',
+                    cancelButtonColor: 'black',
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      router.push('/member/login')
+                    }
+                  })
                 }}
               >
                 登出

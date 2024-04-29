@@ -103,7 +103,7 @@ export default function LoginPage() {
           showConfirmButton: false,
           timer: 2000,
         })
-        router.push('/member/profile')
+        router.push('/member/member-center')
       } else {
         Swal.fire({
           position: 'top',
