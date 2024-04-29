@@ -16,6 +16,8 @@ import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
 import { useCart } from '@/hooks/use-cart'
 import Loading from '@/components/common/loading'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 export default function Navbar() {
   const { totalItems } = useCart()
@@ -307,7 +309,30 @@ export default function Navbar() {
                 <Link href="/member/member-center">
                   <FaUser />
                 </Link>
-                <Link href="/cart">
+                <Link
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    if (!auth.member_id) {
+                      Swal.fire({
+                        title: '您尚未登入',
+                        text: '無法查看購物車',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#EB6234',
+                        cancelButtonColor: 'black',
+                        confirmButtonText: '前往登入',
+                        cancelButtonText: '取消',
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          router.push('/member/login')
+                        }
+                      })
+                    } else {
+                      router.push('/cart')
+                    }
+                  }}
+                >
                   <FaBasketShopping /> <span>{totalItems}</span>
                 </Link>
               </div>

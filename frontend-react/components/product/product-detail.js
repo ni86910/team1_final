@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useCart } from '@/hooks/use-cart'
+import { useAuth } from '@/context/auth-context'
 
 import Link from 'next/link'
 import style from '@/styles/product-detail.module.scss'
@@ -11,6 +12,10 @@ import { API_SERVER } from '../common/config'
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
+
+//sweet alert
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -23,7 +28,7 @@ import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules'
 
 export default function ProductDetail() {
   const { addItem } = useCart()
-
+  const { auth, logout } = useAuth()
   const router = useRouter()
   const [products, setProducts] = useState([])
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
@@ -230,9 +235,7 @@ export default function ProductDetail() {
                         </p>
                         <div className={`${style['choose-spec']}`}>
                           <ul className={`d-flex`}>
-                            <li
-                              className={`col-4`}
-                            >
+                            <li className={`col-4`}>
                               <button>F</button>
                             </li>
                           </ul>
@@ -297,9 +300,31 @@ export default function ProductDetail() {
                       <Link
                         href="#"
                         className={`col-6 ${style['add-to-cart-btn']}`}
+                        style={{
+                          color: '#EB6234',
+                          backgroundColor: '#FFFFFF',
+                          border: '1px solid #EB6234',
+                        }}
                         onClick={(e) => {
                           e.preventDefault()
-                          addItem(v, count)
+                          if (!auth.member_id) {
+                            Swal.fire({
+                              title: '請先登入!',
+                              text: '無法加入購物車',
+                              icon: 'warning',
+                              showCancelButton: true,
+                              confirmButtonColor: '#EB6234',
+                              cancelButtonColor: 'black',
+                              confirmButtonText: '前往登入',
+                              cancelButtonText: '取消',
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                router.push('/member/login')
+                              }
+                            })
+                          } else {
+                            addItem(v, count)
+                          }
                         }}
                       >
                         加入購物車

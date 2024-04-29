@@ -5,6 +5,11 @@ import { API_SERVER } from '../common/config'
 import style from '@/styles/product-list.module.scss'
 import { FaRegHeart, FaCartArrowDown } from 'react-icons/fa6'
 import { useCart } from '@/hooks/use-cart'
+import { useAuth } from '@/context/auth-context'
+
+//sweet alert
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 export default function ProductCardList({
   perPage,
@@ -15,6 +20,7 @@ export default function ProductCardList({
   searchKeyword,
 }) {
   const router = useRouter()
+  const { auth, logout } = useAuth()
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1) // 追蹤當前頁碼
   const [totalPages, setTotalPages] = useState(0) // 新增 totalPage 狀態
@@ -99,7 +105,24 @@ export default function ProductCardList({
                   style={{ color: '#ffffff', fontSize: '18px' }}
                   onClick={(e) => {
                     e.preventDefault()
-                    addItem(v)
+                    if (!auth.member_id) {
+                      Swal.fire({
+                        title: '請先登入!',
+                        text: '無法加入購物車',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#EB6234',
+                        cancelButtonColor: 'black',
+                        confirmButtonText: '前往登入',
+                        cancelButtonText: '取消',
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          router.push('/member/login')
+                        }
+                      })
+                    } else {
+                      addItem(v)
+                    }
                   }}
                 >
                   <li>
