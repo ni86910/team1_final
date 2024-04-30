@@ -34,12 +34,12 @@ export default function ResetPasswordPage() {
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
         },
-        body: JSON.stringify({ m_pwd, ResetToken }),
+        body: JSON.stringify({ m_pwd: m_pwd, ResetToken: ResetToken }),
       }
     )
     const res = await response.json()
     console.log(res)
-    if (res) {
+    if (res.success) {
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -47,7 +47,7 @@ export default function ResetPasswordPage() {
         showConfirmButton: false,
         timer: 2000,
       })
-      // router.push('/member/login')
+      router.push('/member/login')
     } else {
       toast.error('密碼重新設定失敗', {
         duration: 2000,

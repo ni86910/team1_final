@@ -1,11 +1,11 @@
-import express from 'express'
+import express from "express";
 // import transporter from '../configs/mail.js'
-import 'dotenv/config.js'
+import "dotenv/config.js";
 import db from "./../utils/mysql2-connect.js";
 import bcrypt from "bcryptjs";
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 
-const router = express.Router()
+const router = express.Router();
 
 // 忘記密碼寄信
 router.post("/forgot-password", async (req, res) => {
@@ -37,8 +37,7 @@ router.post("/forgot-password", async (req, res) => {
     },
   });
 
-  
-// 信件內容
+  // 信件內容
   const mailOptions = {
     from: '"Fits-U 團隊" <fitsu879@gmail.com>',
     to: m_account,
@@ -68,31 +67,33 @@ router.post("/forgot-password", async (req, res) => {
     `,
   };
 
-//   transporter.sendMail(mailOptions, (result, info) => {
-//     if (result) {
-//       console.log(error);
-//       return res
-//         .status(500)
-//         .json({ message: "Failed to send reset password email" });
-//     } else {
-//       console.log("Email sent: " + info.response);
-//       return res.status(200).json({ message: "Reset password email sent" });
-//     }
-//   });
-// });
+  //   transporter.sendMail(mailOptions, (result, info) => {
+  //     if (result) {
+  //       console.log(error);
+  //       return res
+  //         .status(500)
+  //         .json({ message: "Failed to send reset password email" });
+  //     } else {
+  //       console.log("Email sent: " + info.response);
+  //       return res.status(200).json({ message: "Reset password email sent" });
+  //     }
+  //   });
+  // });
 
-transporter.sendMail(mailOptions, (result, info) => {
-  if (result) {
-    console.log(error);
-    return res
-      .status(500)
-      .json({ message: "Failed to send reset password email" });
-  } else {
-    console.log("Email sent: " + info.response);
-    return res.status(200).json({ message: "Reset-password email sent success" });
-  }
+  transporter.sendMail(mailOptions, (result, info) => {
+    if (result) {
+      console.log(error);
+      return res
+        .status(500)
+        .json({ message: "Failed to send reset password email" });
+    } else {
+      console.log("Email sent: " + info.response);
+      return res
+        .status(200)
+        .json({ message: "Reset-password email sent success" });
+    }
+  });
 });
-});  
 
 // 重置密碼
 router.get("/reset-password/:token", (req, res) => {
@@ -101,7 +102,7 @@ router.get("/reset-password/:token", (req, res) => {
 });
 
 router.post("/reset-password", async (req, res) => {
-  const { token, m_pwd } = req.body;
+  const { m_pwd, ResetToken } = req.body;
 
   try {
     // 驗證 token 的有效性
@@ -109,11 +110,10 @@ router.post("/reset-password", async (req, res) => {
     // 如果 token 有效，則更新用戶的密碼
     // 假設你的資料庫包含名為 'resetToken' 的欄位用於存儲重設密碼的 token
     // 你可以使用類似的 SQL 查詢來檢查 token 的有效性並更新密碼
-    const [user] = await db.query(
-      "SELECT * FROM member WHERE ResetToken = ?",
-      [token]
-    );
-    console.log(token);
+    const [user] = await db.query("SELECT * FROM member WHERE ResetToken = ?", [
+      ResetToken,
+    ]);
+    console.log("ResetToken", ResetToken);
     if (user.length === 0) {
       return res
         .status(400)
@@ -126,7 +126,7 @@ router.post("/reset-password", async (req, res) => {
     // 更新用戶的密碼並清除 resetToken
     await db.query(
       "UPDATE member SET m_pwd = ?, ResetToken = NULL WHERE ResetToken = ?",
-      [hashedPassword, token]
+      [hashedPassword, ResetToken]
     );
 
     // 密碼更新成功，返回成功消息
@@ -140,7 +140,5 @@ router.post("/reset-password", async (req, res) => {
       .json({ success: false, message: "Internal server error" });
   }
 });
-
-
 
 export default router;
