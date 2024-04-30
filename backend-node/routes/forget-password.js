@@ -1,5 +1,5 @@
 import express from 'express'
-import transporter from '../configs/mail.js'
+// import transporter from '../configs/mail.js'
 import 'dotenv/config.js'
 import db from "./../utils/mysql2-connect.js";
 import bcrypt from "bcryptjs";
@@ -8,7 +8,7 @@ import nodemailer from 'nodemailer';
 const router = express.Router()
 
 // 忘記密碼寄信
-router.post("/", async (req, res) => {
+router.post("/forgot-password", async (req, res) => {
   const { m_account } = req.body;
 
   // 檢查郵箱是否存在於資料庫中
@@ -20,11 +20,11 @@ router.post("/", async (req, res) => {
   }
 
   // 生成重設密碼的 token
-  const resetPasswordToken = bcrypt.hashSync(m_account + new Date().toISOString(), 10);
+  const ResetToken = bcrypt.hashSync(m_account + new Date().toISOString(), 10);
 
   // 更新資料庫中的 token
-  await db.query("UPDATE member SET resetPasswordToken = ? WHERE m_account = ?", [
-    resetPasswordToken,
+  await db.query("UPDATE member SET ResetToken = ? WHERE m_account = ?", [
+    ResetToken,
     m_account,
   ]);
 
@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
   });
 
   
-
+// 信件內容
   const mailOptions = {
     from: '"Fits-U 團隊" <fitsu879@gmail.com>',
     to: m_account,
@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
           <h4 style="font-weight: bold">您收到此電子郵件是因為您或其他人要求重置您的 Fits-U 健康帳戶密碼。</h4>
         <br>
           <h2 style="font-weight: bold">請點擊以下連結以重置您的密碼：</h2>
-          <a style="font-weight: bold" href="http://localhost:3000/member/reset-password?token=${resetPasswordToken}" >
+          <a style="font-weight: bold" href="http://localhost:3000/member/reset-password?token=${ResetToken}" >
             <h3 font-weight: bold;>點我重設密碼</h3>
           </a>
           <div style="font-weight: bold">
@@ -92,16 +92,16 @@ transporter.sendMail(mailOptions, (result, info) => {
     return res.status(200).json({ message: "Reset-password email sent success" });
   }
 });
-});
+});  
 
 // 重置密碼
 router.get("/reset-password/:token", (req, res) => {
-  const resetPasswordToken = req.params.resetPasswordToken;
-  res.render("reset-password", { resetPasswordToken });
+  const token = req.params.token;
+  res.render("reset-password", { token });
 });
 
 router.post("/reset-password", async (req, res) => {
-  const { resetPasswordToken, m_pwd } = req.body;
+  const { token, m_pwd } = req.body;
 
   try {
     // 驗證 token 的有效性
@@ -110,9 +110,10 @@ router.post("/reset-password", async (req, res) => {
     // 假設你的資料庫包含名為 'resetToken' 的欄位用於存儲重設密碼的 token
     // 你可以使用類似的 SQL 查詢來檢查 token 的有效性並更新密碼
     const [user] = await db.query(
-      "SELECT * FROM member WHERE resetPasswordToken = ?",
-      [resetPasswordToken]
+      "SELECT * FROM member WHERE ResetToken = ?",
+      [token]
     );
+    console.log(token);
     if (user.length === 0) {
       return res
         .status(400)
@@ -124,8 +125,8 @@ router.post("/reset-password", async (req, res) => {
 
     // 更新用戶的密碼並清除 resetToken
     await db.query(
-      "UPDATE member SET m_pwd = ?, ResetToken = NULL WHERE resetPasswordToken = ?",
-      [hashedPassword, resetPasswordToken]
+      "UPDATE member SET m_pwd = ?, ResetToken = NULL WHERE ResetToken = ?",
+      [hashedPassword, token]
     );
 
     // 密碼更新成功，返回成功消息
@@ -139,5 +140,7 @@ router.post("/reset-password", async (req, res) => {
       .json({ success: false, message: "Internal server error" });
   }
 });
+
+
 
 export default router;
