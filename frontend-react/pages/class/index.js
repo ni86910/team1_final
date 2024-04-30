@@ -6,14 +6,21 @@ import ClassSwitch from '@/components/class/class-switch'
 import ClassIntro from '@/components/class/class-intro'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { useBreadcrumb } from '@/context/breadcrumb-context'
 
 export default function Class() {
+  const { setPath, setPageName } = useBreadcrumb()
   const router = useRouter()
   // 決定目前分頁
   const [tab, setTab] = useState('left')
 
   // 決定ClassIntro跟ClassSchedule 的容器高度
   const [ContainerHeight, setContainerHeight] = useState(0)
+
+  useEffect(() => {
+    setPath([{ name: '課程專區', href: '/class', isEnd: true }])
+    setPageName('課程專區')
+  }, [])
 
   useEffect(() => {
     setTab(router.query.tab || 'left')

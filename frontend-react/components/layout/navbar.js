@@ -16,12 +16,15 @@ import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
 import { useCart } from '@/hooks/use-cart'
 import Loading from '@/components/common/loading'
+import Top from '../TOPbutton/top'
+import { useBreadcrumb } from '@/context/breadcrumb-context'
 
 export default function Navbar() {
   const { totalItems } = useCart()
   const router = useRouter()
   const [offcanvas, setOffcanvas] = useState('')
   const { auth, logout } = useAuth()
+  const { path, setPath, pageName, setPageName } = useBreadcrumb()
 
   const openCanvasHandler = () => {
     offcanvas == 'active' ? setOffcanvas('') : setOffcanvas('active')
@@ -30,6 +33,7 @@ export default function Navbar() {
   return (
     <>
       {/* Offcanvas Menu Begin */}
+      <Top />
       <Loading />
       <div
         className={`offcanvas-menu-overlay ${offcanvas}`}
@@ -317,13 +321,57 @@ export default function Navbar() {
         <div className={`container`}>
           <div className={`row`}>
             <div className={`col-lg-12`}>
-              {/* <div className={`breadcrumb-text`}>
-                <h4>健康商城</h4>
+              <div className={`breadcrumb-text`}>
+                <h4>{pageName}</h4>
                 <div className={`breadcrumb-links`}>
-                  <Link href="#">首頁</Link>
-                  <span>所有商品</span>
+                  <span
+                    role="presentation"
+                    style={
+                      !path
+                        ? {
+                            color: 'black',
+                            cursor: 'pointer',
+                            fontWeight: '600',
+                          }
+                        : { cursor: 'pointer', color: 'black' }
+                    }
+                    onClick={() => {
+                      router.push('/')
+                    }}
+                  >
+                    {!path ? '首頁' : '首頁'}
+                  </span>
+                  {!path ? (
+                    <></>
+                  ) : (
+                    path.map((v, i) => {
+                      return (
+                        <span
+                          key={i}
+                          role="presentation"
+                          style={
+                            v.isEnd
+                              ? {
+                                  color: 'black',
+                                  cursor: 'pointer',
+                                  fontWeight: '600',
+                                }
+                              : {
+                                  color: 'black',
+                                  cursor: 'pointer',
+                                }
+                          }
+                          onClick={() => {
+                            router.push(v.href)
+                          }}
+                        >
+                          {'>'+v.name}
+                        </span>
+                      )
+                    })
+                  )}
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
