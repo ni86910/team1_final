@@ -20,11 +20,11 @@ router.post("/", async (req, res) => {
   }
 
   // 生成重設密碼的 token
-  const token = bcrypt.hashSync(m_account + new Date().toISOString(), 10);
+  const resetPasswordToken = bcrypt.hashSync(m_account + new Date().toISOString(), 10);
 
   // 更新資料庫中的 token
   await db.query("UPDATE member SET resetPasswordToken = ? WHERE m_account = ?", [
-    token,
+    resetPasswordToken,
     m_account,
   ]);
 
@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
   
 
   const mailOptions = {
-    from: '"Fits-U 管理系統" <fitsu879@gmail.com>',
+    from: '"Fits-U 團隊" <fitsu879@gmail.com>',
     to: m_account,
     subject: " 重置密碼指示 - Fits-U 健康帳戶 ",
     html: `
@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
           <h4 style="font-weight: bold">您收到此電子郵件是因為您或其他人要求重置您的 Fits-U 健康帳戶密碼。</h4>
         <br>
           <h2 style="font-weight: bold">請點擊以下連結以重置您的密碼：</h2>
-          <a style="font-weight: bold" href="http://localhost:3000/member/reset-password?token=${token}" >
+          <a style="font-weight: bold" href="http://localhost:3000/member/reset-password?token=${resetPasswordToken}" >
             <h3 font-weight: bold;>點我重設密碼</h3>
           </a>
           <div style="font-weight: bold">
@@ -96,8 +96,8 @@ transporter.sendMail(mailOptions, (result, info) => {
 
 // 重置密碼
 router.get("/reset-password/:token", (req, res) => {
-  const token = req.params.token;
-  res.render("reset-password", { token });
+  const resetPasswordToken = req.params.resetPasswordToken;
+  res.render("reset-password", { resetPasswordToken });
 });
 
 router.post("/reset-password", async (req, res) => {

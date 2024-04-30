@@ -38,7 +38,6 @@ export default function ForgetPasswordPage() {
           secondary: 'white',
         },
       })
-      router.back()
     } else {
       console.log(result)
       toast.error('無此帳號信箱,請重新輸入', {
