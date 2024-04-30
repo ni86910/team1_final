@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 import { useAuth } from '@/context/auth-context' //登出
 import Image from 'next/image'
 import Link from 'next/link'
@@ -18,9 +18,17 @@ import {
 } from 'react-bootstrap'
 /* React-icon */
 import ClassRecordTable from '@/components/member/class-record-table'
+import { useBreadcrumb } from '@/context/breadcrumb-context'
 
 export default function CourseRecords() {
   const { logout } = useAuth()
+  // 設定麵包屑
+  const { setPath, setPageName } = useBreadcrumb()
+
+  useEffect(() => {
+    setPath([{ name: '會員中心', href: '/', isEnd: true }])
+    setPageName('會員中心')
+  }, [])
   return (
     <>
       <section className={SideBar['member-center-container']}>

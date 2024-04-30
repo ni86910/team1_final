@@ -8,8 +8,19 @@ import { useRouter } from 'next/router'
 import { useAuth } from '@/context/auth-context'
 import { API_SERVER } from '@/configs/index'
 import Swal from 'sweetalert2'
+import { useBreadcrumb } from '@/context/breadcrumb-context'
 
 export default function ArticleDetail() {
+  // 設定麵包屑
+  const { setPath, setPageName } = useBreadcrumb()
+  useEffect(() => {
+    setPath([
+      { name: '健康小知識', href: '/article', isEnd: false },
+      { name: '文章', href: '/', isEnd: true },
+    ])
+    setPageName('文章')
+  }, [])
+
   const router = useRouter()
   const { auth } = useAuth()
 

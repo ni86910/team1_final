@@ -9,6 +9,7 @@ import Head from 'next/head'
 import { useBreadcrumb } from '@/context/breadcrumb-context'
 
 export default function Class() {
+  // 設定麵包屑
   const { setPath, setPageName } = useBreadcrumb()
   const router = useRouter()
   // 決定目前分頁

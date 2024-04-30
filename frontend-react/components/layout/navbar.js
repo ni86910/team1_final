@@ -52,7 +52,7 @@ export default function Navbar() {
           </div>
           <div className="offcanvas-top-hover">
             <span>
-              會員專區 <TiArrowSortedDown />
+              會員中心 <TiArrowSortedDown />
             </span>
             <ul>
               <li
@@ -178,7 +178,7 @@ export default function Navbar() {
                             router.push('/member/member-center')
                           }}
                         >
-                          會員專區 <i className="arrow_carrot-down" />
+                          會員中心 <i className="arrow_carrot-down" />
                         </span>
                         <ul>
                           <li
@@ -362,10 +362,12 @@ export default function Navbar() {
                                 }
                           }
                           onClick={() => {
-                            router.push(v.href)
+                            if (!v.isEnd) {
+                              router.push(v.href)
+                            }
                           }}
                         >
-                          {'>'+v.name}
+                          {'>' + v.name}
                         </span>
                       )
                     })

@@ -17,8 +17,19 @@ import { MdSportsMartialArts, MdElectricBike } from 'react-icons/md'
 import { GiSteam } from 'react-icons/gi'
 import { useRouter } from 'next/router'
 import { API_SERVER } from '@/configs/index'
+import { useBreadcrumb } from '@/context/breadcrumb-context'
 
 export default function GymDetail() {
+  // 設定麵包屑
+  const { setPath, setPageName } = useBreadcrumb()
+  useEffect(() => {
+    setPath([
+      { name: '場地一覽', href: '/gym', isEnd: false },
+      { name: '場地介紹', href: '/', isEnd: true },
+    ])
+    setPageName('場地介紹')
+  }, [])
+
   const [accordion, setAccordion] = useState(questions)
   // const [gymData, setGymData] = useState([])
   const router = useRouter()

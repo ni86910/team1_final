@@ -52,7 +52,7 @@ export default function OrderPage() {
               </Link>
               <Link
                 className={SideBar['Nav-link']}
-                href="/membercourse-records"
+                href="/member/course-records"
               >
                 課程紀錄
               </Link>
