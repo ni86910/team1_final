@@ -152,12 +152,14 @@
   justify-content: center;
   border-radius: 50px;
   background-color: black;
+  color:white;
   border: none;
   font-family: 微軟正黑體;
   font-weight: bold;
   padding: 5px 30px;
     &:hover{
-    background-color: $primary-color;
+    background-color: $secondary-color;
+    color:white;
   }
 }
 
