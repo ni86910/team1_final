@@ -8,6 +8,7 @@ import { useAuth } from '@/context/auth-context'
 import toast, { Toaster } from 'react-hot-toast'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { IoMdHeartDislike } from "react-icons/io";
 
 export default function FavClassTab() {
   const router = useRouter()
@@ -51,7 +52,7 @@ export default function FavClassTab() {
               <th>收藏時間</th>
 
               <th>
-                <FaHeart />
+              <IoMdHeartDislike />
               </th>
             </tr>
           </thead>
