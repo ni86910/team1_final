@@ -113,22 +113,29 @@ export function CartProvider({ children }) {
   const totalItems = items.reduce((acc, v) => acc + v.qty, 0)
   const totalPrice = items.reduce((acc, v) => acc + v.qty * v.price, 0)
 
+  const [setTotalItems] = useState(0)
 
   // 宣告 myPoints 並給予初始值
   const [myPoints, setMyPoints] = useState(0)
 
+  // useEffect(() => {
+  //   // localStorage 有東西，且items沒東西，就設定給items
+  //   const str = localStorage.getItem(cartStorageKey)
+  //   if (str && items.length === 0) {
+  //     try {
+  //       const localState = JSON.parse(str)
+  //       setItems(localState)
+  //     } catch (ex) {
+  //       console.log(ex)
+  //     }
+  //   }
+  //   // 如果items不是空的，則把items設定給localStorage
+  //   if (items.length > 0) {
+  //     localStorage.setItem(cartStorageKey, JSON.stringify(items))
+  //   }
+  // }, [items])
+
   useEffect(() => {
-    // localStorage 有東西，且items沒東西，就設定給items
-    const str = localStorage.getItem(cartStorageKey)
-    if (str && items.length === 0) {
-      try {
-        const localState = JSON.parse(str)
-        setItems(localState)
-      } catch (ex) {
-        console.log(ex)
-      }
-    }
-    // 如果items不是空的，則把items設定給localStorage
     if (items.length > 0) {
       localStorage.setItem(cartStorageKey, JSON.stringify(items))
     }
@@ -139,12 +146,13 @@ export function CartProvider({ children }) {
       // 使用value屬性提供資料給提供者階層以下的所有後代元件
       value={{
         items,
+        setItems,
         incrementItemById,
         decrementItemById,
         removeItemById,
         addItem,
         totalItems,
-        setItems,
+        setTotalItems,
         totalPrice,
         calcTotalItems,
         calcTotalPrice,

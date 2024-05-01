@@ -74,6 +74,8 @@ export default function CheckoutMain() {
 
       if (response.ok) {
         setEmailSent(true) // Set state to indicate email has been sent
+        setItems([])
+        router.push('/cart/order-confirmation')
       } else {
         throw new Error('Failed to send email')
       }
@@ -95,10 +97,9 @@ export default function CheckoutMain() {
   const handleSubmitOrder = async (event) => {
     event.preventDefault()
     await sendEmail()
-    if (emailSent) {
-      setItems([])
-      router.push('/cart/order-confirmation')
-    }
+    // if (emailSent) {
+    //   console.log('送出了')
+    // }
   }
 
   return (
@@ -107,7 +108,10 @@ export default function CheckoutMain() {
         <div className={`container`}>
           <Form
             className={`row`}
-            onSubmit={(event) => handleSubmitOrder(event)}
+            onSubmit={(event) => {
+              event.preventDefault()
+              handleSubmitOrder(event)
+            }}
           >
             {/* Left 結帳詳細區塊 */}
             <div
@@ -157,7 +161,8 @@ export default function CheckoutMain() {
                                   letterSpacing: '2px',
                                   fontWeight: '700',
                                 }}
-                                onClick={() => {
+                                onClick={(e) => {
+                                  e.preventDefault()
                                   openWindow()
                                 }}
                               >
@@ -216,7 +221,10 @@ export default function CheckoutMain() {
                           fontSize: '18px',
                           fontWeight: '700',
                         }}
-                        onClick={handleShowModal}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          handleShowModal()
+                        }}
                       >
                         變更 <IoIosArrowForward />
                       </button>
