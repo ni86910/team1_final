@@ -113,7 +113,6 @@ export function CartProvider({ children }) {
   const totalItems = items.reduce((acc, v) => acc + v.qty, 0)
   const totalPrice = items.reduce((acc, v) => acc + v.qty * v.price, 0)
 
-  const [setTotalItems] = useState(0)
 
   // 宣告 myPoints 並給予初始值
   const [myPoints, setMyPoints] = useState(0)
@@ -145,7 +144,7 @@ export function CartProvider({ children }) {
         removeItemById,
         addItem,
         totalItems,
-        setTotalItems,
+        setItems,
         totalPrice,
         calcTotalItems,
         calcTotalPrice,
