@@ -36,7 +36,7 @@ export default function CourseRecords() {
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
             <Navbar.Brand
-              href="/member/course-records"
+              // href="/member/course-records"
               className={SideBar['text-h4']}
             >
               課程紀錄

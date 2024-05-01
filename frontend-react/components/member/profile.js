@@ -194,7 +194,10 @@ export default function ProfilePage({ member_id }) {
         {/* Side Bar Begin */}
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
-            <Navbar.Brand href="/member/profile" className={SideBar['text-h4']}>
+            <Navbar.Brand
+              // href="/member/profile"
+              className={SideBar['text-h4']}
+            >
               個人資料
             </Navbar.Brand>
             <Nav className={`me-auto ${SideBar['nav-side']}`}>
