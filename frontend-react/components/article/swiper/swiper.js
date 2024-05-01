@@ -29,6 +29,10 @@ export default function App() {
     <>
       <Swiper
         rewind={true}
+        style={{
+          '--swiper-navigation-color': '#EB6234',
+          '--swiper-pagination-color': '#EB6234',
+        }}
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
