@@ -18,7 +18,7 @@
 
 import express from "express";
 import transporter from "../configs/mail.js";
-import "dotenv/config.js";
+//import "dotenv/config.js";
 
 const router = express.Router();
 
