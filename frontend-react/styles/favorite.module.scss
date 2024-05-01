@@ -37,23 +37,6 @@
 }
 
 
-.all-tabs {
-  color: white; /* 默認文字顏色 */
-  background-color: black; /* 默認背景顏色 */
-  .a-tab{
-
-color:white;
-  &:active{
-    color:white;
-    background-color: $primary-color;
-  }
-  }
-}
-
-
-
-
-
 
 .favorite-first-row{
   background-color: white;

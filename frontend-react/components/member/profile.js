@@ -21,12 +21,11 @@ import { FaStarOfLife } from 'react-icons/fa6'
 export default function ProfilePage({ member_id }) {
   const router = useRouter()
 
-  const { auth, logout } = useAuth() 
+  const { auth, logout } = useAuth()
 
   const [profile, setProfile] = useState({})
   const [newProfileImage, setNewProfileImage] = useState(null)
-  const [isEditing, setIsEditing] = useState(false) // 新增編輯狀態
-  const [formChanged, setFormChanged] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
 
   // 會員登入
   useEffect(() => {
@@ -64,7 +63,6 @@ export default function ProfilePage({ member_id }) {
 
   // 因為上傳照片只是單一事件不需要使用到onSubmit來做到多工處理,只要使用onChang就可以了
   const handleFileUpload = async (event) => {
-    // 只有在編輯狀態下才允許上傳圖片
     const file = event.target.files[0]
     const reader = new FileReader()
 
@@ -78,6 +76,20 @@ export default function ProfilePage({ member_id }) {
           ...prevProfile,
           profileImage: imageUrl,
         }))
+        // 在這裡添加成功更換照片後顯示 toast 訊息
+        if(file.success){
+        toast.success('照片成功上傳', {
+          style: {
+            border: '3px solid #ED7C15',
+            padding: '14px',
+            color: 'black',
+          },
+          iconTheme: {
+            primary: 'green',
+            secondary: 'white',
+          },
+        })}
+        console.log(imageUrl)
       }
     }
     if (file) {
@@ -88,15 +100,19 @@ export default function ProfilePage({ member_id }) {
   // 驗證表單字段
   const validateFields = () => {
     const newErrors = {}
-    if (!validator.isLength(data.m_name, { min: 2 })) {
+    if (validator.isEmpty(data.m_name, { ignore_whitespace: true })) {
+      newErrors.m_name = '名稱為必填欄位'
+    } else if (!validator.isLength(data.m_name, { min: 2 })) {
       newErrors.m_name = '名稱不得小於2字元'
     }
 
-    if (!validator.isMobilePhone(data.mobile, 'zh-TW')) {
-      newErrors.mobile = '手機號碼為必填欄位'
+    if (validator.isEmpty(data.mobile, { ignore_whitespace: true })) {
+      newErrors.mobile = '手機為必填欄位'
+    } else if (!validator.isMobilePhone(data.mobile, 'zh-TW')) {
+      newErrors.mobile = '手機號碼格式不正確'
     }
 
-    if (!validator.isEmpty(data.address, { ignore_whitespace: true })) {
+    if (validator.isEmpty(data.address, { ignore_whitespace: true })) {
       newErrors.address = '地址為必填欄位'
     }
 
@@ -134,16 +150,15 @@ export default function ProfilePage({ member_id }) {
         showConfirmButton: false,
         timer: 2000,
       })
-      console.log(document.referrer)
       setIsEditing(false)
       router.push('/member/profile')
     } else {
-      Swal.fire({
-        position: 'center',
-        icon: 'warning',
-        title: '編輯失敗',
-        showConfirmButton: false,
-        timer: 2000,
+      toast.error('編輯失敗', {
+        duration: 2000,
+        style: {
+          backgroundColor: 'black',
+          color: 'white',
+        },
       })
       if (!validateFields)
         toast.error('請填入符合格式的值', {

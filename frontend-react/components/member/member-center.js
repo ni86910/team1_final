@@ -26,6 +26,7 @@ export default function MemberCenterPage() {
   const router = useRouter()
   const { auth, logout } = useAuth()
   const { totalPoints } = usePoints()
+  const [profile, setProfile] = useState({})
   const [newProfileImage, setNewProfileImage] = useState(null)
 
   // 會員登入
@@ -40,15 +41,14 @@ export default function MemberCenterPage() {
       })
         .then((response) => response.json())
         .then((data) => {
-          setNewProfileImage(`${API_SERVER}/avatar/${data.avatar}`)
+          setProfile(data)
+          if (data.avatar) {
+            setNewProfileImage(`${API_SERVER}/avatar/${data.avatar}`)
+          }
         })
         .catch((error) => console.error('獲取資料時出錯:', error))
     }
   }, [auth.member_id])
-
-  const [profileImage, setProfileImage] = useState([
-    '/img/member/default-self.jpg',
-  ])
 
   return (
     <>
@@ -145,14 +145,14 @@ export default function MemberCenterPage() {
           {/* Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop */}
           <Row className={style['list']}>
             <Col className={style['list-text']}>
-              1
+              0
               <div className={style['icon-box']}>
                 待出貨
                 <FaHourglassStart className={style['glasshour']} />
               </div>
             </Col>
             <Col className={style['list-text']}>
-              2
+              0
               <div className={style['icon-box']}>
                 已出貨
                 <ImTruck className={style['truck']} />
