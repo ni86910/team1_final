@@ -45,6 +45,9 @@ export default function ArticleDetail() {
     message_content: '',
   })
 
+  // 檢查收藏按鈕是否被點擊，用來更新favInfo 的依據
+  const [toggleBtn, setToggleBtn] = useState(true)
+
   //文章分段
   const text2jsx = (text) => {
     return text.split('\n\n').map((v, i) => (
@@ -83,7 +86,7 @@ export default function ArticleDetail() {
       console.log('article_id:', article_id)
       getArticleData(article_id)
     }
-  }, [router.isReady])
+  }, [router.isReady, toggleBtn])
 
   const handleChange = (e) => {
     setArtformdata({
@@ -120,6 +123,7 @@ export default function ArticleDetail() {
         // alert('表單提交成功！')
         Swal.fire('表單提交成功！')
         e.target.reset()
+        setToggleBtn(!toggleBtn)
       } else {
         // alert('表單提交失敗，請稍後再試。')
         Swal.fire('表單提交失敗，請稍後再試！')
@@ -132,9 +136,6 @@ export default function ArticleDetail() {
       console.error('Error submitting form:', error)
     }
   }
-
-  // 檢查收藏按鈕是否被點擊，用來更新favInfo 的依據
-  const [toggleBtn, setToggleBtn] = useState(true)
 
   // 儲存收藏資料
   const [favInfo, setFavInfo] = useState({
