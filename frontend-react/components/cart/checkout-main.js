@@ -31,7 +31,7 @@ export default function CheckoutMain() {
   const {
     items,
     totalItems,
-    setTotalItems,
+    setItems,
     calcTotalItems,
     calcTotalPrice,
     myPoints,
@@ -63,7 +63,7 @@ export default function CheckoutMain() {
   // Function to handle sending email
   const sendEmail = async () => {
     try {
-      const response = await fetch('http://localhost:3001/email', {
+      const response = await fetch('http://localhost:3001/email/send', {
         method: 'POST', // Send POST request
         headers: {
           'Content-Type': 'application/json', // Specify content type as JSON
@@ -92,16 +92,11 @@ export default function CheckoutMain() {
   const purchaseNotesRef = useRef(null)
   const purchaseOrder = useRef(null)
 
-  // 重置 totalItems 為 0
-  const handleResetTotalItems = () => {
-    setTotalItems(0)
-  }
-
   const handleSubmitOrder = async (event) => {
     event.preventDefault()
     await sendEmail()
     if (emailSent) {
-      handleResetTotalItems()
+      setItems([])
       router.push('/cart/order-confirmation')
     }
   }
