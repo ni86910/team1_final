@@ -7,12 +7,16 @@ import Swal from 'sweetalert2'
 
 // React-Icon
 import { FaStarOfLife } from 'react-icons/fa6'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 // Style
 import style from '@/styles/forget-password.module.scss'
 
 export default function ResetPasswordPage() {
   const router = useRouter()
-  const [ResetToken, setResetToken] = useState(null) // 新增
+  // 新增token
+  const [ResetToken, setResetToken] = useState(null)
+  // 呈現密碼用
+  const [showPassword, setShowPassword] = useState(false)
 
   // 獲取 resetPasswordToken
   useEffect(() => {
@@ -101,15 +105,30 @@ export default function ResetPasswordPage() {
                               <FaStarOfLife className={style['icon-padding']} />
                               新密碼
                             </label>
-                            <div className="col-md-6">
+                            <div
+                              className="col-md-6"
+                              style={{
+                                position: 'relative',
+                              }}
+                            >
                               <input
                                 style={{ borderRadius: '10px' }}
-                                type="password"
+                                type={showPassword ? 'text' : 'password'}
                                 id="m_pwd"
                                 className="form-control"
                                 name="m_pwd"
                                 placeholder="請輸入新密碼"
                               />
+                              <button
+                                type="button"
+                                className={style['show-password']}
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  setShowPassword(!showPassword)
+                                }}
+                              >
+                                {!showPassword ? <FaEyeSlash /> : <FaEye />}
+                              </button>
                             </div>
                           </div>
                           {/* 確認新密碼 */}

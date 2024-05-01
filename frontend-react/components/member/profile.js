@@ -268,7 +268,7 @@ export default function ProfilePage({ member_id }) {
               <Col className={style['profile-upload-self-col']}>
                 <Col className={style['self-pic']}>
                   <Image
-                    src={newProfileImage || '/img/member/default-self.jpg'}
+                    src={newProfileImage || '/public/img/member/self.jpg'}
                     width={130}
                     height={130}
                     alt="selfie"
