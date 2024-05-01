@@ -41,7 +41,9 @@ export default function ProfilePage({ member_id }) {
         .then((response) => response.json())
         .then((data) => {
           setProfile(data)
-          setNewProfileImage(`${API_SERVER}/avatar/${data.avatar}`)
+          if (data.avatar) {
+            setNewProfileImage(`${API_SERVER}/avatar/${data.avatar}`)
+          }
         })
         .catch((error) => console.error('獲取資料時出錯:', error))
     }
