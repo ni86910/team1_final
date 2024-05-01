@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import TOP from '@/components/TOPbutton/top'
+
 import Swiper from '@/components/article/swiper/swiper'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -180,7 +180,6 @@ export default function Article() {
           })}
         </div>
       </div>
-      <TOP />
     </>
   )
 }
