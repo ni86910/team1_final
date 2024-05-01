@@ -31,7 +31,7 @@ const mailOptions = {
 };
 
 /* 寄送email的路由 */
-router.get("/send", function (req, res, next) {
+router.post("/send", function (req, res, next) {
   // 寄送
   transporter.sendMail(mailOptions, (err, response) => {
     if (err) {
