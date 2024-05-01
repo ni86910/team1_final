@@ -515,6 +515,7 @@ router.get("/single_class_book", async (req, res) => {
   } catch (ex) {
     console.log(ex);
   }
+  console.log("single class book rows", rows);
 
   // 有資料 aka 有收藏
   if (rows[0]) {

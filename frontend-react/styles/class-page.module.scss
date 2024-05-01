@@ -64,7 +64,7 @@
       .title {
         display: flex;
         align-items: center;
-        color: chocolate;
+        color: $primary-color;
         font-size: larger;
         margin-bottom: 16px;
         h2 {
@@ -77,8 +77,8 @@
       .select-group {
         display: flex;
         flex-wrap: wrap;
-        justify-content: flex-start;
-        max-width: 600px;
+        justify-content: center;
+        max-width: 500px;
         width: 100%;
         margin-left: 20px;
         .filter-container{
@@ -106,13 +106,19 @@
       .search-btn {
         width: 50px;
         height: 50px;
-        background-color: chocolate;
+        background-color: $primary-color;
         display: flex;
         justify-content: center;
         align-items: center;
         border-radius: 50px;
         margin-bottom: 16px;
+        &:hover .search{
+          color: black;
+        }
         .search {
+          text-decoration: none;
+          color: white;
+          
         }
       }
     }

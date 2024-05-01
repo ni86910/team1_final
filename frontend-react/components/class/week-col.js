@@ -58,11 +58,17 @@ export default function WeekCol({
             }
             const startH = dayjs(v2.start_time).format('HH')
             const endH = dayjs(v2.end_time).format('HH')
+            const now = dayjs().format('YYYY/MM/DD')
+            const start_time = dayjs(v2.start_time).format('YYYY/MM/DD')
 
             return (
               <div
                 key={i2}
-                className={style['class-box']}
+                className={
+                  start_time > now
+                    ? style['class-box']
+                    : style['disabled-class-box']
+                }
                 role="presentation"
                 onClick={() => {
                   setPopClassBook(true)
@@ -78,7 +84,7 @@ export default function WeekCol({
                   <span>{`${startH}:00-${endH}:00`}</span>
                 </div>
                 <div className={style['class-box-bottom']}>
-                  <span>001號教室</span>
+                  <span>教練</span>
                   <br />
                   <span>{v2.teacher_name}</span>
                 </div>
