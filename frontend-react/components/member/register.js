@@ -38,6 +38,7 @@ export default function RegisterPage() {
     m_account: '',
     m_pwd: '',
     mobile: '',
+    address: '',
   })
   // 驗證表單字段
   const validateFields = () => {
@@ -74,9 +75,9 @@ export default function RegisterPage() {
       newErrors.mobile = '手機號碼格式不正確'
     }
 
-    // if (validator.isEmpty(data.address, { ignore_whitespace: true })) {
-    //   newErrors.address = '地址為必填欄位'
-    // }
+    if (validator.isEmpty(data.address, { ignore_whitespace: true })) {
+      newErrors.address = '地址為必填欄位'
+    }
 
     setErrors(newErrors)
     return Object.values(newErrors).every((error) => error === '')
@@ -164,7 +165,7 @@ export default function RegisterPage() {
   const fillFakeData = () => {
     setData({
       m_name: '第一組',
-      m_account: 'a123456789@test.com',
+      m_account: 'fitsu879@gmail.com',
       m_pwd: 'a123456',
       gender: '女',
       mobile: '0920240507',
@@ -364,7 +365,10 @@ export default function RegisterPage() {
                               col={20}
                               rows={2}
                               value={data.address}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
                             />
+                            <div className="error">{errors.address}</div>
                           </div>
                         </div>
                         {/* 會員條款 */}

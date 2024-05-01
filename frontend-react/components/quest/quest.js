@@ -4,7 +4,6 @@ import Myaccordion from '../accordion/Myaccordion'
 import { questions } from '@/pages/api/accordion-data-quest'
 import { questions1 } from '@/pages/api/accordion-data-coach'
 import { questions2 } from '@/pages/api/accordion-data-allquest'
-import TOP from '@/components/TOPbutton/top'
 import { RiQuestionnaireLine } from 'react-icons/ri'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -67,8 +66,6 @@ export default function Quest() {
           </Tab>
         </Tabs>
       </Container>
-
-      <TOP />
     </>
   )
 }

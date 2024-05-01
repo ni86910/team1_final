@@ -21,7 +21,7 @@ import { FaStarOfLife } from 'react-icons/fa6'
 export default function ProfilePage({ member_id }) {
   const router = useRouter()
 
-  const { auth, logout } = useAuth() // 登出
+  const { auth, logout } = useAuth() 
 
   const [profile, setProfile] = useState({})
   const [newProfileImage, setNewProfileImage] = useState(null)
@@ -130,7 +130,7 @@ export default function ProfilePage({ member_id }) {
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: '資料新增成功',
+        title: '編輯成功',
         showConfirmButton: false,
         timer: 2000,
       })
@@ -141,7 +141,7 @@ export default function ProfilePage({ member_id }) {
       Swal.fire({
         position: 'center',
         icon: 'warning',
-        title: '資料沒有修改',
+        title: '編輯失敗',
         showConfirmButton: false,
         timer: 2000,
       })
@@ -225,13 +225,23 @@ export default function ProfilePage({ member_id }) {
                 我的收藏
               </Link>
               <Link
-                className={SideBar['Nav-link']}
+                className={SideBar['logout-Nav-link']}
                 href={'#'}
                 onClick={(e) => {
-                  e.preventDefault()
                   logout()
-                  alert('你已成功登出')
-                  router.push('/member/login')
+                  Swal.fire({
+                    title: '確定登出嗎?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#EB6234',
+                    cancelButtonColor: 'black',
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      router.push('/member/login')
+                    }
+                  })
                 }}
               >
                 登出

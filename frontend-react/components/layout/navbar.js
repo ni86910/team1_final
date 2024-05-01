@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+
 import {
   FaRegHeart,
   FaUser,
@@ -18,6 +19,8 @@ import { useCart } from '@/hooks/use-cart'
 import Loading from '@/components/common/loading'
 import Top from '../TOPbutton/top'
 import { useBreadcrumb } from '@/context/breadcrumb-context'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 export default function Navbar() {
   const { totalItems } = useCart()
@@ -29,6 +32,7 @@ export default function Navbar() {
   const openCanvasHandler = () => {
     offcanvas == 'active' ? setOffcanvas('') : setOffcanvas('active')
   }
+  
 
   return (
     <>
@@ -95,24 +99,11 @@ export default function Navbar() {
           </div>
         </div>
         <div className="offcanvas-nav-option">
-          <Link href="#" className="search-switch">
-            <Image
-              src="/img/navbar-template/icon/search_w.png"
-              width={19}
-              height={19}
-              alt=""
-            />
+          <Link href="/member/favorite" style={{ color: '#EB6234' }}>
+            <FaRegHeart size={20} />
           </Link>
-          <Link href="#">
-            <FaRegHeart />
-          </Link>
-          <Link href="#">
-            <Image
-              src="/img/navbar-template/icon/cart.png"
-              width={19}
-              height={19}
-              alt=""
-            />
+          <Link href="/cart" style={{ color: '#EB6234' }}>
+            <FaBasketShopping size={20} />
             <span>{totalItems}</span>
           </Link>
           <div className="quantity">共 {totalItems} 件商品</div>
@@ -120,6 +111,42 @@ export default function Navbar() {
         <div id="mobile-menu-wrap" />
         <div className="offcanvas-text">
           <p>現在加入菲特友，開啟專屬您的運動計畫!</p>
+        </div>
+        <div className="offcanvas-link-list">
+          <ul className="offcanvas-main">
+            <Link href="/class" style={{ color: '#FFFFFF', fontWeight: '700' }}>
+              課程專區 <FaBook />
+            </Link>
+          </ul>
+          <ul className="offcanvas-main">
+            <Link
+              href="/product"
+              style={{ color: '#FFFFFF', fontWeight: '700' }}
+            >
+              健康商城 <FaStore />
+            </Link>
+          </ul>
+          <ul className="offcanvas-main">
+            了解更多 <IoIosArrowDown />
+            <li>
+              <Link href="/article">健康小知識</Link>
+            </li>
+            <li>
+              <Link href="/quest">常見問題</Link>
+            </li>
+            <li>
+              <Link href="/contact">客服專區</Link>
+            </li>
+          </ul>
+          <ul className="offcanvas-main">
+            關於我們 <IoIosArrowDown />
+            <li>
+              <Link href="/team">團隊介紹</Link>
+            </li>
+            <li>
+              <Link href="/gym">場地一覽</Link>
+            </li>
+          </ul>
         </div>
       </div>
       {/* Offcanvas Menu End */}
@@ -204,7 +231,13 @@ export default function Navbar() {
                               role="presentation"
                               onClick={() => {
                                 logout()
-                                alert('你已成功登出')
+                                Swal.fire({
+                                  position: 'center',
+                                  icon: 'success',
+                                  title: '登出成功',
+                                  showConfirmButton: false,
+                                  timer: 2000,
+                                })
                                 router.push('/member/login')
                               }}
                             >
@@ -288,7 +321,30 @@ export default function Navbar() {
                 <Link href="/member/member-center">
                   <FaUser />
                 </Link>
-                <Link href="/cart">
+                <Link
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    if (!auth.member_id) {
+                      Swal.fire({
+                        title: '您尚未登入',
+                        text: '無法查看購物車',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#EB6234',
+                        cancelButtonColor: 'black',
+                        confirmButtonText: '前往登入',
+                        cancelButtonText: '取消',
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          router.push('/member/login')
+                        }
+                      })
+                    } else {
+                      router.push('/cart')
+                    }
+                  }}
+                >
                   <FaBasketShopping /> <span>{totalItems}</span>
                 </Link>
               </div>

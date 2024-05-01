@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Link from 'next/link'
 import { Button, Modal, Form } from 'react-bootstrap'
 import style from '@/styles/cart-checkout-main.module.scss'
 import { useRouter } from 'next/router'
+
+// sweet alert
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
 
 // hooks
 import { useCart } from '@/hooks/use-cart'
@@ -23,10 +28,17 @@ export default function CheckoutMain() {
   const { auth } = useAuth()
   const router = useRouter()
   // use-cart hook
-  const { items, calcTotalItems, calcTotalPrice, myPoints, setMyPoints } =
-    useCart()
+  const {
+    items,
+    totalItems,
+    setItems,
+    calcTotalItems,
+    calcTotalPrice,
+    myPoints,
+    setMyPoints,
+  } = useCart()
 
-  // 閱讀購買須知後才可送出訂單
+  // 閱讀購買須知後才可點按送出訂單
   const [membershipTermsChecked, setMembershipTermsChecked] = useState(false)
 
   // 變更資料彈窗
@@ -46,14 +58,48 @@ export default function CheckoutMain() {
     { autoCloseMins: 3 } // x分鐘沒完成選擇會自動關閉，預設5分鐘。
   )
 
-  // send order
-  const handleSubmitOrder = (event) => {
-    event.preventDefault() // 防止表單提交預設行為
+  const [emailSent, setEmailSent] = useState(false)
+
+  // Function to handle sending email
+  const sendEmail = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/email/send', {
+        method: 'POST', // Send POST request
+        headers: {
+          'Content-Type': 'application/json', // Specify content type as JSON
+        },
+        // Optional: If you need to send any data with the request, you can include it here
+        // body: JSON.stringify({ key: value }),
+      })
+
+      if (response.ok) {
+        setEmailSent(true) // Set state to indicate email has been sent
+        setItems([])
+        router.push('/cart/order-confirmation')
+      } else {
+        throw new Error('Failed to send email')
+      }
+    } catch (error) {
+      console.error(error)
+      // Handle error here
+    }
   }
 
   // 當 checkbox 被點擊時更新狀態
   const handleMembershipTermsChange = (event) => {
     setMembershipTermsChecked(event.target.checked)
+  }
+
+  // 使用 useRef hook 創建 ref
+  const purchaseNotesRef = useRef(null)
+  const purchaseOrder = useRef(null)
+
+  const handleSubmitOrder = async (event) => {
+    event.preventDefault()
+    await sendEmail()
+    // if (emailSent) {
+    //   console.log('送出了')
+    // }
   }
 
   return (
@@ -62,10 +108,15 @@ export default function CheckoutMain() {
         <div className={`container`}>
           <Form
             className={`row`}
-            onSubmit={(event) => handleSubmitOrder(event)}
+            onSubmit={(event) => {
+              event.preventDefault()
+              handleSubmitOrder(event)
+            }}
           >
             {/* Left 結帳詳細區塊 */}
             <div
+              ref={purchaseOrder}
+              id="purchaseOrder"
               className={`col-lg-8 col-sm-12 ${style['checkout-left-section']}`}
             >
               <h3>結帳詳細</h3>
@@ -103,14 +154,15 @@ export default function CheckoutMain() {
                                   backgroundColor: '#E6E6E6',
                                   color: '#EB6234',
                                   width: '90px',
-                                  height: '40px',
+                                  height: '35px',
                                   border: '1px solid #EB6234',
                                   borderRadius: '5px',
                                   marginBottom: '15px',
                                   letterSpacing: '2px',
                                   fontWeight: '700',
                                 }}
-                                onClick={() => {
+                                onClick={(e) => {
+                                  e.preventDefault()
                                   openWindow()
                                 }}
                               >
@@ -120,6 +172,7 @@ export default function CheckoutMain() {
                               門市名稱:{' '}
                               <input
                                 type="text"
+                                style={{ margin: '8px auto' }}
                                 value={store711.storename}
                                 disabled
                               />
@@ -127,6 +180,7 @@ export default function CheckoutMain() {
                               門市地址:{' '}
                               <input
                                 type="text"
+                                style={{ margin: '8px auto' }}
                                 value={store711.storeaddress}
                                 disabled
                               />
@@ -151,22 +205,26 @@ export default function CheckoutMain() {
                             <p style={{ marginTop: '15px' }}>
                               <div className={style['checkout-BlockRow']}>
                                 <div>803 高雄市苓雅區***路123號</div>
-                                <div>王*帥 (+886)0912****12</div>
+                                <div>蔡*紓 (+886)0912****12</div>
                               </div>
                             </p>
                           </>
                         )}
                       </div>
                       <button
-                        className={`col-3 ${style['checkout-choose']}`}
                         style={{
                           color: '#F1600D',
                           background: '#ffffff',
                           border: 'none',
                           width: '100px',
                           height: '50px',
+                          fontSize: '18px',
+                          fontWeight: '700',
                         }}
-                        onClick={handleShowModal}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          handleShowModal()
+                        }}
                       >
                         變更 <IoIosArrowForward />
                       </button>
@@ -196,18 +254,6 @@ export default function CheckoutMain() {
                       </h5>
                     </div>
                     <div className={style['checkout-payment']}>
-                      <div className={`row ${style['line-pay-area']}`}>
-                        <label>
-                          <input
-                            type="radio"
-                            className={`my-3 me-2`}
-                            id="linepay"
-                            name="payment"
-                            Value={1}
-                          />
-                          Line-pay
-                        </label>
-                      </div>
                       <div className={`row ${style['cash-area']}`}>
                         <label>
                           <input
@@ -215,9 +261,22 @@ export default function CheckoutMain() {
                             className={`my-3 me-2`}
                             id="cash"
                             name="payment"
-                            Value={2}
+                            Value={10}
+                            checked
                           />
                           貨到付款
+                        </label>
+                      </div>
+                      <div className={`row ${style['line-pay-area']}`}>
+                        <label>
+                          <input
+                            type="radio"
+                            className={`my-3 me-2`}
+                            id="linepay"
+                            name="payment"
+                            Value={11}
+                          />
+                          Line-pay
                         </label>
                       </div>
                     </div>
@@ -237,7 +296,7 @@ export default function CheckoutMain() {
                 </div>
                 <ul>
                   <li>
-                    商品金額 NT$<span>{calcTotalPrice().toLocaleString()}</span>
+                    商品金額<span>NT$ {calcTotalPrice().toLocaleString()}</span>
                   </li>
                   <li>
                     點數折抵後 (使用{myPoints}點) NT$
@@ -268,7 +327,8 @@ export default function CheckoutMain() {
                 </ul>
                 <hr />
                 <div className={style['checkout-products-detail']}>
-                  購買清單 (共<span>4</span>件) <IoIosArrowDown />
+                  購買清單 (共<span>{calcTotalItems()}</span>件){' '}
+                  <IoIosArrowDown />
                 </div>
               </div>
               {/* 同意會員條款 checkbox */}
@@ -290,7 +350,18 @@ export default function CheckoutMain() {
                     <span className={style['CheckMark']} />
                   </label>
                   <label htmlFor="membershipTerms" className={`col-11`}>
-                    我已經閱讀並同意以下購買須知、會員權益聲明、隱私權及網站使用條款
+                    我已經閱讀並同意
+                    <Link
+                      href="#purchaseNotes"
+                      style={{
+                        color: '#EB6234',
+                        textDecoration: 'underline',
+                        fontWeight: '800',
+                      }}
+                    >
+                      以下
+                    </Link>
+                    購買須知、會員權益聲明、隱私權及網站使用條款
                   </label>
                 </div>
               </div>
@@ -300,21 +371,21 @@ export default function CheckoutMain() {
                 <Button
                   type="submit" // 將 type 設為 button，避免表單自動提交
                   className={style['confirm-order-btn']}
+                  onClick={handleSubmitOrder}
                   disabled={!membershipTermsChecked}
-                  onClick={(event) => {
-                    if (!membershipTermsChecked) {
-                      window.alert('請先勾選已閱讀購物須知')
-                    } else {
-                      handleSubmitOrder(event)
-                    }
-                  }}
                 >
-                  <FaRegCreditCard size={20} /> 送出訂單
+                  <FaRegCreditCard size={20} />
+                  {emailSent ? '訂單已送出' : '送出訂單'}{' '}
+                  {/* Change button text based on emailSent state */}
                 </Button>
               </div>
             </div>
             {/* 購物須知 */}
-            <div className={style['checkout-BlockContainer']}>
+            <div
+              ref={purchaseNotesRef}
+              id="purchaseNotes"
+              className={style['checkout-BlockContainer']}
+            >
               <div className={style['checkout-MaskContainer']}>
                 <div className={style['checkout-BlockTitle']}>
                   <h5>購物須知</h5>
@@ -365,7 +436,19 @@ export default function CheckoutMain() {
                   <p>
                     4. 如遇缺貨或商品無法出貨時，客服人員將會以電話與您聯絡。
                   </p>
-                  <p>感謝您撥空詳閱本站購物須知</p>
+                  <p>
+                    感謝您撥空詳閱本站購物須知!{' '}
+                    <Link
+                      href="#purchaseOrder"
+                      style={{
+                        color: '#EB6234',
+                        textDecoration: 'underline',
+                        fontWeight: '700',
+                      }}
+                    >
+                      請繼續您的訂購流程
+                    </Link>
+                  </p>
                   <p />
                 </div>
               </div>

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import style from '@/styles/jack-use/button.module.css'
-import TOP from '@/components/TOPbutton/top'
 import { API_SERVER } from '@/configs/index'
 import Swal from 'sweetalert2'
 
@@ -182,7 +181,6 @@ export default function Contact() {
           </div>
         </div>
       </section>
-      <TOP />
     </>
   )
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import style from '@/styles/jack-use/button.module.css'
 import styles from '@/styles/jack-use/table.module.css'
-import TOP from '@/components/TOPbutton/top'
+
 import Image from 'next/image'
 import ArticleFav from '@/components/article/bookmark/article-fav'
 import { useRouter } from 'next/router'
@@ -325,7 +325,6 @@ export default function ArticleDetail() {
         </div>
       )}
       {/* Article Section End */}
-      <TOP />
     </>
   )
 }

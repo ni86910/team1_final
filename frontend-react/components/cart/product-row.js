@@ -47,7 +47,9 @@ export function ProductRow({ v, imgSrc, productName, color, price }) {
         </div>
         <div className={style['product-cart-item-text']}>
           <h6>{productName}</h6>
-          <span>{color}</span>
+          <span>規格: F</span>
+          <br />
+          <span>價格: NT${price}</span>
           <h5>{price.toLocaleString()}</h5>
         </div>
       </td>

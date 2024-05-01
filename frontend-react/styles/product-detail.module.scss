@@ -88,19 +88,19 @@
   .choose-spec {
     li{
       list-style: none;
-      border: 1px solid $gray-deep-color;
-      border-radius: 5px;
-      margin: 8px 10px;
-      width: 50px;
-      height: 40px;
-      background-color: #ffffff;
-      text-align: center;
-      line-height: 40px;
-
-      &:hover {
-        color: $primary-color;
+      
+      button {
         border: 1px solid #000000;
-        transition: all 0.3s ease-in-out;
+        color: #EB6234;
+        border-radius: 5px;
+        width: 45px;
+        height: 45px;
+
+        &:hover {
+          border: 1px solid #000000;
+          color: #EB6234;
+          transition: all .3s;
+        }
       }
     }
   }
@@ -176,11 +176,8 @@
   width: 70%;
   height: auto;
   text-align: center;
-  border: 1px solid #111111;
   border-radius: 50px;
   padding: 8px 10px;
-  background-color: transparent;
-  color: #111111;
   font-size: 18px;
   font-weight: 700;
   transition: all 0.2s ease-in-out;

@@ -43,6 +43,19 @@
   } 
 }
 
+.logout-Nav-link{
+  margin: 0px;
+  color:red;
+  padding:0px;
+  margin-bottom: 15px;
+  padding-left: 5px;
+  &:hover{
+    font-size: 20px;
+    border-left: 3px solid red;
+    color:red
+  }
+}
+
 .text-h4 {
   font-size: 24px;
     width: 100%;
@@ -82,4 +95,98 @@
 
 // RWD
 
+/*
+選單線
+*/
+@media only screen and (max-width: 768px){
+.line {
+  width: 24px;
+  height: 24px;
+  background: #FFF;
+  cursor: pointer;
+  display: block;
+  padding: 16px;
+  position: fixed;
+  z-index: 2;
+}
+.line .menu,
+.line .menu::before,
+.line .menu::after {
+  background: #222;
+  content: '';
+  display: block;
+  height: 1px;
+  position: absolute;
+  transition: background ease .3s, top ease .3s .3s, transform ease .3s;
+  width: 20px;
+}
+.line .menu {
+  left: 18px;
+  top: 27px;
+}
 
+.line .menu::before {
+  top: -6px;
+}
+
+.line .menu::after {
+  top: 6px;
+}
+/*
+點選選單變叉叉
+*/
+#menu:checked + .line .menu {
+  background: transparent;
+}
+
+#menu:checked + .line .menu::before {
+  transform: rotate(45deg);
+}
+
+#menu:checked + .line .menu::after {
+  transform: rotate(-45deg);
+}
+
+#menu:checked + .line .menu::before,
+#menu:checked + .line .menu::after {
+  top: 0;
+  transition: top ease .3s, transform ease .3s .3s;
+}
+
+/*
+選單開合
+*/
+#menu:checked ~ .menu-list {
+  width: 200px;
+}
+
+.menu-list {
+  width: 60px;
+  height: 100vh;
+  background: #FFF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+  padding-top: 60px;
+  position: fixed;
+  z-index: 1;
+  transition: all .6s;
+  overflow: hidden;
+}
+/*
+選單向外推
+*/
+.menu-list ul {
+  list-style: none;
+  margin-left:70px;
+  padding: 0;
+}
+.menu-list ul>li{
+  display:block;
+  width:100px;
+}
+/*
+隱藏核許框
+*/
+input#menu {
+display: none;
+}
+}

@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import { useAuth } from '@/context/auth-context' // 登出
+import { useAuth } from '@/context/auth-context' 
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
+import Swal from 'sweetalert2'
 
 /* My module.scss */
 import style from '@/styles/order.module.scss'
@@ -19,7 +21,8 @@ import {
 /* React-icon */
 
 export default function OrderPage() {
-  const { logout } = useAuth() // 登出
+  const router = useRouter()
+  const { logout } = useAuth() 
 
   const [accordionOpen, setAccordionOpen] = useState(null)
 
@@ -66,11 +69,23 @@ export default function OrderPage() {
                 我的收藏
               </Link>
               <Link
-                className={SideBar['Nav-link']}
-                href="/member/logout"
+                className={SideBar['logout-Nav-link']}
+                href={'#'}
                 onClick={(e) => {
-                  e.preventDefault()
                   logout()
+                  Swal.fire({
+                    title: '確定登出嗎?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#EB6234',
+                    cancelButtonColor: 'black',
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      router.push('/member/login')
+                    }
+                  })
                 }}
               >
                 登出

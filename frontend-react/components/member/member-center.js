@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Swal from 'sweetalert2'
 // Hooks
 import { useAuth } from '@/context/auth-context'
 import { usePoints } from '@/context/points-context'
+
 // Style
 import style from '@/styles/member-center.module.scss'
 import SideBar from '@/styles/m-sidebar.module.scss'
@@ -18,25 +20,36 @@ import { FaHourglassStart } from 'react-icons/fa'
 import { BsBookmarkHeartFill } from 'react-icons/bs'
 import { AiFillSchedule } from 'react-icons/ai'
 import { FaSackDollar, FaAddressCard } from 'react-icons/fa6'
+import { API_SERVER } from '@/configs'
 
 export default function MemberCenterPage() {
   const router = useRouter()
   const { auth, logout } = useAuth()
   const { totalPoints } = usePoints()
+  const [newProfileImage, setNewProfileImage] = useState(null)
 
-  const [profileImage, setProfileImage] = useState(
-    '/img/member/default-self.jpg'
-  )
-
-  /* 上傳圖像
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0]
-    const imageUrl = await uploadImage(file)
-    if (imageUrl) {
-      setProfileImage(imageUrl)
+  // 會員登入
+  useEffect(() => {
+    console.log(auth)
+    if (auth.member_id) {
+      fetch(`${API_SERVER}/profile`, {
+        //credentials: 'include',
+        headers: new Headers({
+          Authorization: `Bearer ${auth.token}`,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setNewProfileImage(`${API_SERVER}/avatar/${data.avatar}`)
+        })
+        .catch((error) => console.error('獲取資料時出錯:', error))
     }
-  }
-*/
+  }, [auth.member_id])
+
+  const [profileImage, setProfileImage] = useState([
+    '/img/member/default-self.jpg',
+  ])
+
   return (
     <>
       <section className={SideBar['member-center-container']}>
@@ -70,11 +83,23 @@ export default function MemberCenterPage() {
                 我的收藏
               </Link>
               <Link
-                className={SideBar['Nav-link']}
-                href="/member/logout"
+                className={SideBar['logout-Nav-link']}
+                href={'#'}
                 onClick={(e) => {
-                  e.preventDefault()
                   logout()
+                  Swal.fire({
+                    title: '確定登出嗎?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#EB6234',
+                    cancelButtonColor: 'black',
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      router.push('/member/login')
+                    }
+                  })
                 }}
               >
                 登出
@@ -95,7 +120,8 @@ export default function MemberCenterPage() {
           <Row className={style['profile']}>
             <Col className={style['self-pic']}>
               <Image
-                src={profileImage}
+                // src={profileImage}
+                src={newProfileImage || '/img/member/default-self.jpg'}
                 width={150}
                 height={100}
                 alt="selfie"
@@ -103,7 +129,7 @@ export default function MemberCenterPage() {
               />
             </Col>
             <Col className={style['member-describe']}>
-              潮州土狗
+              {auth.m_name}
               <div className={style['member-fit']}>菲特友會員</div>
               <div className={style['member-date']}>永久效期</div>
             </Col>
