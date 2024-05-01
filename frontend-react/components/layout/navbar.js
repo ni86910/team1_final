@@ -29,6 +29,7 @@ export default function Navbar() {
   const openCanvasHandler = () => {
     offcanvas == 'active' ? setOffcanvas('') : setOffcanvas('active')
   }
+  
 
   return (
     <>

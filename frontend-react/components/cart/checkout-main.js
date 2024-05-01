@@ -28,10 +28,17 @@ export default function CheckoutMain() {
   const { auth } = useAuth()
   const router = useRouter()
   // use-cart hook
-  const { items, calcTotalItems, calcTotalPrice, myPoints, setMyPoints } =
-    useCart()
+  const {
+    items,
+    totalItems,
+    setTotalItems,
+    calcTotalItems,
+    calcTotalPrice,
+    myPoints,
+    setMyPoints,
+  } = useCart()
 
-  // 閱讀購買須知後才可送出訂單
+  // 閱讀購買須知後才可點按送出訂單
   const [membershipTermsChecked, setMembershipTermsChecked] = useState(false)
 
   // 變更資料彈窗
@@ -51,9 +58,29 @@ export default function CheckoutMain() {
     { autoCloseMins: 3 } // x分鐘沒完成選擇會自動關閉，預設5分鐘。
   )
 
-  // send order
-  const handleSubmitOrder = (event) => {
-    event.preventDefault() // 防止表單提交預設行為
+  const [emailSent, setEmailSent] = useState(false)
+
+  // Function to handle sending email
+  const sendEmail = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/email', {
+        method: 'POST', // Send POST request
+        headers: {
+          'Content-Type': 'application/json', // Specify content type as JSON
+        },
+        // Optional: If you need to send any data with the request, you can include it here
+        // body: JSON.stringify({ key: value }),
+      })
+
+      if (response.ok) {
+        setEmailSent(true) // Set state to indicate email has been sent
+      } else {
+        throw new Error('Failed to send email')
+      }
+    } catch (error) {
+      console.error(error)
+      // Handle error here
+    }
   }
 
   // 當 checkbox 被點擊時更新狀態
@@ -64,6 +91,20 @@ export default function CheckoutMain() {
   // 使用 useRef hook 創建 ref
   const purchaseNotesRef = useRef(null)
   const purchaseOrder = useRef(null)
+
+  // 重置 totalItems 為 0
+  const handleResetTotalItems = () => {
+    setTotalItems(0)
+  }
+
+  const handleSubmitOrder = async (event) => {
+    event.preventDefault()
+    await sendEmail()
+    if (emailSent) {
+      handleResetTotalItems()
+      router.push('/cart/order-confirmation')
+    }
+  }
 
   return (
     <>
@@ -327,16 +368,12 @@ export default function CheckoutMain() {
                 <Button
                   type="submit" // 將 type 設為 button，避免表單自動提交
                   className={style['confirm-order-btn']}
+                  onClick={handleSubmitOrder}
                   disabled={!membershipTermsChecked}
-                  onClick={(event) => {
-                    if (!membershipTermsChecked) {
-                      window.alert('請先勾選已閱讀購物須知')
-                    } else {
-                      handleSubmitOrder(event)
-                    }
-                  }}
                 >
-                  <FaRegCreditCard size={20} /> 送出訂單
+                  <FaRegCreditCard size={20} />
+                  {emailSent ? '訂單已送出' : '送出訂單'}{' '}
+                  {/* Change button text based on emailSent state */}
                 </Button>
               </div>
             </div>
