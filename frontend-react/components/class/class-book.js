@@ -260,36 +260,50 @@ export default function ClassBook({
             <br />
             <span>課程費用: {bookInfo.class_fee}</span>
           </div>
-          <Link
-            className={style['button']}
-            // href={!auth.member_id ? '/member/login' : '#'}
-            href={'#'}
-            onClick={(e) => {
-              e.preventDefault()
-              if (!auth.member_id) {
-                Swal.fire({
-                  title: '您尚未登入',
-                  text: '無法預約課程',
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#EB6234',
-                  cancelButtonColor: 'black',
-                  confirmButtonText: '前往登入',
-                  cancelButtonText: '繼續瀏覽',
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    router.push('/member/login')
-                  }
-                })
-              } else if (singleClassBook.button_display === '立即預約') {
-                checkBook()
-              } else if (singleClassBook.button_display === '取消預約') {
-                checkRemoveBook(auth.member_id, bookInfo.class_schedule_id)
-              }
-            }}
-          >
-            {singleClassBook.button_display}
-          </Link>
+          {/* 判斷課程是否過期 */}
+          {dayjs(bookInfo.start_time).format('YYYY/MM/DD') <=
+          dayjs().format('YYYY/MM/DD') ? (
+            <Link
+              className={style['disabled']}
+              href={'#'}
+              onClick={(e) => {
+                e.preventDefault()
+              }}
+            >
+              無法預約
+            </Link>
+          ) : (
+            <Link
+              className={style['button']}
+              // href={!auth.member_id ? '/member/login' : '#'}
+              href={'#'}
+              onClick={(e) => {
+                e.preventDefault()
+                if (!auth.member_id) {
+                  Swal.fire({
+                    title: '您尚未登入',
+                    text: '無法預約課程',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#EB6234',
+                    cancelButtonColor: 'black',
+                    confirmButtonText: '前往登入',
+                    cancelButtonText: '繼續瀏覽',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      router.push('/member/login')
+                    }
+                  })
+                } else if (singleClassBook.button_display === '立即預約') {
+                  checkBook()
+                } else if (singleClassBook.button_display === '取消預約') {
+                  checkRemoveBook(auth.member_id, bookInfo.class_schedule_id)
+                }
+              }}
+            >
+              {singleClassBook.button_display}
+            </Link>
+          )}
         </div>
       </div>
     </>

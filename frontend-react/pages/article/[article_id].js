@@ -8,8 +8,19 @@ import { useRouter } from 'next/router'
 import { useAuth } from '@/context/auth-context'
 import { API_SERVER } from '@/configs/index'
 import Swal from 'sweetalert2'
+import { useBreadcrumb } from '@/context/breadcrumb-context'
 
 export default function ArticleDetail() {
+  // 設定麵包屑
+  const { setPath, setPageName } = useBreadcrumb()
+  useEffect(() => {
+    setPath([
+      { name: '健康小知識', href: '/article', isEnd: false },
+      { name: '文章', href: '/', isEnd: true },
+    ])
+    setPageName('文章')
+  }, [])
+
   const router = useRouter()
   const { auth } = useAuth()
 
@@ -33,6 +44,9 @@ export default function ArticleDetail() {
     message_email: '',
     message_content: '',
   })
+
+  // 檢查收藏按鈕是否被點擊，用來更新favInfo 的依據
+  const [toggleBtn, setToggleBtn] = useState(true)
 
   //文章分段
   const text2jsx = (text) => {
@@ -72,7 +86,7 @@ export default function ArticleDetail() {
       console.log('article_id:', article_id)
       getArticleData(article_id)
     }
-  }, [router.isReady])
+  }, [router.isReady, toggleBtn])
 
   const handleChange = (e) => {
     setArtformdata({
@@ -109,6 +123,7 @@ export default function ArticleDetail() {
         // alert('表單提交成功！')
         Swal.fire('表單提交成功！')
         e.target.reset()
+        setToggleBtn(!toggleBtn)
       } else {
         // alert('表單提交失敗，請稍後再試。')
         Swal.fire('表單提交失敗，請稍後再試！')
@@ -121,9 +136,6 @@ export default function ArticleDetail() {
       console.error('Error submitting form:', error)
     }
   }
-
-  // 檢查收藏按鈕是否被點擊，用來更新favInfo 的依據
-  const [toggleBtn, setToggleBtn] = useState(true)
 
   // 儲存收藏資料
   const [favInfo, setFavInfo] = useState({

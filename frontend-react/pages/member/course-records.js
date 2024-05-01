@@ -1,5 +1,6 @@
-import React from 'react'
-import { useAuth } from '@/context/auth-context'
+import { useEffect } from 'react'
+import { useAuth } from '@/context/auth-context' //登出
+import Image from 'next/image'
 import NotLogin from '@/components/common/not-login'
 import Link from 'next/link'
 import Swal from 'sweetalert2'
@@ -20,10 +21,18 @@ import {
 } from 'react-bootstrap'
 /* React-icon */
 import ClassRecordTable from '@/components/member/class-record-table'
+import { useBreadcrumb } from '@/context/breadcrumb-context'
 
 export default function CourseRecords() {
   const router = useRouter()
   const { logout } = useAuth()
+  // 設定麵包屑
+  const { setPath, setPageName } = useBreadcrumb()
+
+  useEffect(() => {
+    setPath([{ name: '會員中心', href: '/', isEnd: true }])
+    setPageName('會員中心')
+  }, [])
   return (
     <>
       <section className={SideBar['member-center-container']}>
@@ -31,7 +40,7 @@ export default function CourseRecords() {
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
             <Navbar.Brand
-              href="/member/course-records"
+              // href="/member/course-records"
               className={SideBar['text-h4']}
             >
               課程紀錄

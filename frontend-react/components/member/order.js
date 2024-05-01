@@ -40,7 +40,10 @@ export default function OrderPage() {
         {/* Side Bar Begin */}
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
-            <Navbar.Brand href="/member/order" className={SideBar['text-h4']}>
+            <Navbar.Brand
+              // href="/member/order"
+              className={SideBar['text-h4']}
+            >
               我的訂單
             </Navbar.Brand>
             <Nav className={`me-auto ${SideBar['nav-side']}`}>

@@ -7,6 +7,7 @@ import { AuthContextProvider } from '@/context/auth-context'
 import { CartProvider } from '@/hooks/use-cart'
 import { ClassFavContextProvider } from '@/context/class-fav-context'
 import { PointsContextProvider } from '@/context/points-context'
+import { BreadcrumbContextProvider } from '@/context/breadcrumb-context'
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -21,11 +22,15 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <AuthContextProvider>
-      <PointsContextProvider>
-        <ClassFavContextProvider>
-          <CartProvider>{getLayout(<Component {...pageProps} />)}</CartProvider>
-        </ClassFavContextProvider>
-      </PointsContextProvider>
+      <BreadcrumbContextProvider>
+        <PointsContextProvider>
+          <ClassFavContextProvider>
+            <CartProvider>
+              {getLayout(<Component {...pageProps} />)}
+            </CartProvider>
+          </ClassFavContextProvider>
+        </PointsContextProvider>
+      </BreadcrumbContextProvider>
     </AuthContextProvider>
   )
 }

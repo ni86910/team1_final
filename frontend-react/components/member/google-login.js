@@ -22,7 +22,7 @@ export default function GoogleLogin() {
       localStorage.setItem('access_token', token)
       // 登入成功就轉址
       if (token) {
-        login('a123456@test.com', 'a123456')
+        login('googletest@test.com', 'a123456')
 
         setTimeout(() => {
           router.push('/member/profile')

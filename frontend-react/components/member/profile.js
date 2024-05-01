@@ -41,7 +41,9 @@ export default function ProfilePage({ member_id }) {
         .then((response) => response.json())
         .then((data) => {
           setProfile(data)
-          setNewProfileImage(`${API_SERVER}/avatar/${data.avatar}`)
+          if (data.avatar) {
+            setNewProfileImage(`${API_SERVER}/avatar/${data.avatar}`)
+          }
         })
         .catch((error) => console.error('獲取資料時出錯:', error))
     }
@@ -194,7 +196,10 @@ export default function ProfilePage({ member_id }) {
         {/* Side Bar Begin */}
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
-            <Navbar.Brand href="/member/profile" className={SideBar['text-h4']}>
+            <Navbar.Brand
+              // href="/member/profile"
+              className={SideBar['text-h4']}
+            >
               個人資料
             </Navbar.Brand>
             <Nav className={`me-auto ${SideBar['nav-side']}`}>

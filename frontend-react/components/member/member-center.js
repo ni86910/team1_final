@@ -58,7 +58,7 @@ export default function MemberCenterPage() {
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
             <Navbar.Brand
-              href="/member/member-center"
+              // href="/member/member-center"
               className={SideBar['text-h4']}
             >
               會員中心

@@ -41,15 +41,18 @@ export default function Top() {
           onClick={scrollToTop}
           style={{
             position: 'fixed',
-            bottom: '10px',
-            right: '10px',
-            padding: '10px',
+            bottom: '30px',
+            right: '30px',
+            // padding: '10px',
             background: 'black',
-            color: 'white',
+            color: '#EB6234',
             borderRadius: '50%',
             border: 'none',
             cursor: 'pointer',
             zIndex: 1000,
+            height: '70px',
+            width: '70px',
+            fontWeight: '600',
           }}
         >
           TOP

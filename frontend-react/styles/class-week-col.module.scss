@@ -1,20 +1,18 @@
-@import "variable";
+@import 'variable';
 
 %class-box-shared {
   position: relative;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 205px;
-    height: 200px;
-    border-top: 1px dashed rgb(72, 72, 72);
-    border-left: 1px dashed rgb(72, 72, 72);
-    cursor: pointer;
-    transition: all 0.3s;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 205px;
+  height: 200px;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-.background-col{
+.background-col {
   padding: 0px;
   width: 205px;
   position: absolute;
@@ -33,15 +31,7 @@
   width: 205px;
   position: relative;
   .class-box {
-    position: relative;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 205px;
-    height: 200px;
-    cursor: pointer;
-    transition: all 0.3s;
+    @extend %class-box-shared;
     .class-box-top {
       font-weight: 700;
       font-size: larger;
@@ -56,38 +46,38 @@
       left: 0;
       opacity: 0;
       transition: all 0.5s;
-      // background-color: orangered;
       border-radius: 30px;
     }
 
-    &:hover::after{
+    &:hover::after {
       border-radius: 0px;
       background-color: $third-color;
       z-index: -1;
-      // border: 5px solid black;
       opacity: 1;
     }
-    &:hover{
-      
+    &:hover {
     }
   }
-
-
-  .class-box-empty {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 205px;
-    height: 200px;
+  .disabled-class-box {
+    @extend %class-box-shared;
     border-top: 1px dashed rgb(72, 72, 72);
     border-left: 1px dashed rgb(72, 72, 72);
-    // cursor: pointer;
+    background-color: #b8b8b8;
     .class-box-top {
       font-weight: 700;
       font-size: larger;
     }
+
+
+    &:hover::after {
+      border-radius: 0px;
+      background-color: $third-color;
+      z-index: -1;
+      opacity: 1;
+    }
   }
+
+ 
   .type-a {
     background-color: #3d85c6;
     color: white;
@@ -97,4 +87,3 @@
     background-color: #93c47d;
   }
 }
-

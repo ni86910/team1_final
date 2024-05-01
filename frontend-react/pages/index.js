@@ -9,10 +9,13 @@ import { FaAnglesRight, FaLocationDot } from 'react-icons/fa6'
 import Marquee from 'react-fast-marquee'
 import Link from 'next/link'
 import ProductBox from '@/components/home/product-box'
+import { useBreadcrumb } from '@/context/breadcrumb-context'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const { setPath, setPageName } = useBreadcrumb()
+
   const router = useRouter()
   // 控制課程圖片
   const [img, setImg] = useState('yoga01.jpg')
@@ -32,6 +35,11 @@ export default function Home() {
 
   // 紀錄地圖是否loading
   const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setPath([])
+    setPageName('首頁')
+  }, [])
 
   //state改變就router.push
   useEffect(() => {
