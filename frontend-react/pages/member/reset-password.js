@@ -1,18 +1,16 @@
 import React from 'react'
 // import Navbar from '@/components/common/navbar'
 // import Footer from '@/components/common/footer'
-import PointsPage from '@/components/member/points'
-import NotLogin from '@/components/common/not-login'
+import ResetPasswordPage from '@/components/member/reset-password'
 import Head from 'next/head'
 
-export default function Points() {
+export default function ResetPassword() {
   return (
     <>
       <Head>
-        <title>我的點數</title>
+        <title>重置密碼</title>
       </Head>
-      <NotLogin />
-      <PointsPage />
+      <ResetPasswordPage />
     </>
   )
 }

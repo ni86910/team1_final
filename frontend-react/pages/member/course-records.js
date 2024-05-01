@@ -1,6 +1,6 @@
 import React from 'react'
-import { useAuth } from '@/context/auth-context' //登出
-import Image from 'next/image'
+import { useAuth } from '@/context/auth-context'
+import NotLogin from '@/components/common/not-login'
 import Link from 'next/link'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
@@ -100,6 +100,7 @@ export default function CourseRecords() {
           </Row>
         </Container>
       </section>
+      <NotLogin />
     </>
   )
 }

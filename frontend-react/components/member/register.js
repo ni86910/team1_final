@@ -164,7 +164,7 @@ export default function RegisterPage() {
   const fillFakeData = () => {
     setData({
       m_name: '第一組',
-      m_account: 'a123456789@test.com',
+      m_account: 'fitsu879@gmail.com',
       m_pwd: 'a123456',
       gender: '女',
       mobile: '0920240507',

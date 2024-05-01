@@ -2,6 +2,7 @@ import React from 'react'
 // import Navbar from '@/components/common/navbar'
 // import Footer from '@/components/common/footer'
 import ProfilePage from '@/components/member/profile'
+import NotLogin from '@/components/common/not-login'
 import Head from 'next/head'
 
 export default function Profile() {
@@ -10,6 +11,7 @@ export default function Profile() {
       <Head>
         <title>個人資料</title>
       </Head>
+      <NotLogin />
       <ProfilePage />
     </>
   )

@@ -128,7 +128,7 @@ export default function ProfilePage({ member_id }) {
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: '資料新增成功',
+        title: '編輯成功',
         showConfirmButton: false,
         timer: 2000,
       })
@@ -139,7 +139,7 @@ export default function ProfilePage({ member_id }) {
       Swal.fire({
         position: 'center',
         icon: 'warning',
-        title: '資料沒有修改',
+        title: '編輯失敗',
         showConfirmButton: false,
         timer: 2000,
       })
