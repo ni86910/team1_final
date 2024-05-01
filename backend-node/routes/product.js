@@ -133,4 +133,142 @@ router.get("/:p_id", async (req, res) => {
   res.json(rows);
 });
 
+// 以下是收藏
+// 某A會員的 所有商品收藏
+router.get("/all_fav", async (req, res) => {
+  console.log("query", req.query);
+  const member_id = req.query.member_id;
+
+  const sql3 = `
+  SELECT * FROM fav 
+  LEFT JOIN product on fav.product_id = product.product_id
+  WHERE 1
+  AND member_id = ${member_id}
+  `;
+
+  let rows = [];
+  let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
+  //用await要捕捉錯誤 要像這樣，用.then 就用.catch
+  try {
+    [rows, fields] = await db.query(sql3);
+  } catch (ex) {
+    console.log(ex);
+  }
+  // 收藏時間 原本抓出來會是UTC時間，要轉成當地時間，再塞回去
+  rows.map((v, i) => {
+    v.fav_time = dayjs(v.fav_time).format("YYYY-MM-DD HH:mm");
+    return v;
+  });
+
+  res.json(rows);
+});
+
+
+// 獲得某商品的收藏資訊(用來確認 某A會員 是否有收藏過 某B商品)
+router.get("/product_fav", async (req, res) => {
+  const output = {
+    member_id: 0,
+    product_id: 0,
+    alreadyFav: false,
+  };
+
+  console.log("query", req.query);
+  const member_id = req.query.member_id;
+  const product_id = req.query.product_id;
+
+  //把會員id跟商品id丟進回傳
+  output.member_id = +member_id;
+  output.product_id = +product_id;
+
+  const sql = `SELECT * FROM \`fav\` 
+  WHERE \`member_id\`=${db.escape(member_id)} 
+  AND \`product_id\` = ${db.escape(product_id)};`;
+
+  let rows = [];
+  let fields; // 通常這是不需要取得欄位定義的資料 要看一下就res.json({rows,fields});
+  //用await要捕捉錯誤 要像這樣，用.then 就用.catch
+  try {
+    [rows, fields] = await db.query(sql);
+  } catch (ex) {
+    console.log(ex);
+  }
+
+  // 有資料 aka 有收藏
+  if (rows[0]) {
+    output.alreadyFav = true;
+  } else {
+    output.alreadyFav = false;
+  }
+  console.log("rows", rows);
+  res.json(output);
+});
+
+// 新增商品收藏 資料放在body中
+router.post("/add-fav", async (req, res) => {
+  const output = {
+    member_id: 0,
+    product_id: 0,
+    addFav: false,
+    message: "",
+  };
+
+  console.log("body", req.body);
+  const member_id = +req.body.member_id;
+  const product_id = +req.body.product_id;
+
+  if (!member_id || !product_id) {
+    output.message = "會員ID或商品ID undefined 或者 不是數字";
+    res.json(output);
+  }
+
+  //把會員id跟商品id丟進回傳
+  output.member_id = +member_id;
+  output.product_id = +product_id;
+
+  const sql2 = "INSERT INTO `fav` SET ?";
+
+  const sql = `INSERT INTO \`fav\`(\`member_id\`, \`product_id\`) 
+  VALUES (${db.escape(member_id)},${db.escape(product_id)})`;
+
+  let result;
+  try {
+    [result] = await db.query(sql2, [req.body]);
+    output.addFav = !!result.affectedRows;
+  } catch (ex) {
+    console.log(ex);
+  }
+
+  res.json(output);
+});
+
+// 刪除商品收藏的路由
+router.delete("/remove-fav", async (req, res) => {
+  const output = {
+    member_id: 0,
+    product_id: 0,
+    removeFav: false,
+    message: "",
+  };
+
+  console.log("body", req.body);
+  const member_id = +req.body.member_id;
+  const product_id = +req.body.product_id;
+
+  if (!member_id || !product_id) {
+    output.message = "會員ID或商品ID undefined 或者 不是數字";
+    res.json(output);
+  }
+
+  //把會員id跟商品id丟進回傳
+  output.member_id = +member_id;
+  output.product_id = +product_id;
+
+  const sql = `DELETE FROM fav WHERE member_id=? AND product_id=? `; // 用問號 會自動跳脫，值 按照順序丟到下方陣列 包成陣列是為了應付所有的SQL語法
+  const [result] = await db.query(sql, [member_id, product_id]);
+
+  res.json(result);
+
+});
+// 以上是收藏
+
 export default router;
