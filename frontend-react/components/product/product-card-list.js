@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import style from '@/styles/product-list.module.scss'
-import ProductFav from './product-fav'
-
-import { FaRegHeart, FaCartArrowDown } from 'react-icons/fa6'
-
 import { useRouter } from 'next/router'
 import { API_SERVER } from '../common/config'
+import style from '@/styles/product-list.module.scss'
+import { FaRegHeart, FaCartArrowDown } from 'react-icons/fa6'
 import { useCart } from '@/hooks/use-cart'
 import { useAuth } from '@/context/auth-context'
-import { useProductFav } from '@/context/product-fav-context'
 
-//hot toast & sweet alert
+//sweet alert
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
-import toast, { Toaster } from 'react-hot-toast'
 
 export default function ProductCardList({
   perPage,
@@ -31,16 +25,6 @@ export default function ProductCardList({
   const [currentPage, setCurrentPage] = useState(1) // 追蹤當前頁碼
   const [totalPages, setTotalPages] = useState(0) // 新增 totalPage 狀態
   // const perPage = 12 // 每頁顯示的資料筆數
-
-  // 收藏商品
-  const { toggleBtn, setToggleBtn } = useProductFav()
-
-  // 儲存收藏資料
-  const [favInfo, setFavInfo] = useState({
-    member_id: 0,
-    product_id: 0,
-    alreadyFav: false,
-  })
 
   const { addItem } = useCart()
   // `${API_SERVER}/product?orderBy=${ob}&perPage=${perPage}&page=${page}&category=${category}&keyword=${searchKeyword}`
@@ -71,37 +55,6 @@ export default function ProductCardList({
     }
   }, [currentPage, router]) // 當 currentPage 改變時再次呼叫 useEffect)
 
-  // 抓收藏資料
-  useEffect(
-    () => {
-      products.forEach((product) => {
-        const member_id = auth.member_id
-        const product_id = product.product_id
-
-        if (member_id && product_id) {
-          const url = `${API_SERVER}/product/product_fav?member_id=${member_id}&product_id=${product_id}`
-
-          try {
-            fetch(url, {
-              method: 'GET', // 可以是 GET、POST、PUT、DELETE 等
-              headers: {
-                'Content-Type': 'application/json', // 設定 Content-Type 為 JSON
-              },
-            })
-              .then((r) => r.json())
-              .then((data) => {
-                console.log('收藏資訊', data)
-                setFavInfo(data)
-              })
-          } catch (e) {
-            console.log(e)
-          }
-        }
-      })
-    },
-    [toggleBtn, products] // 添加 products 作為 useEffect 的依賴項目
-  ) // 有收藏按鈕被按到時更新
-
   // 取得 query string 的資料
   const qs = { ...router.query }
 
@@ -116,10 +69,7 @@ export default function ProductCardList({
                 href={`/product/${v.product_id}`}
                 className={`${style['product-item-pic']} ${style['set-bg']}`}
               >
-                <Image
-                  width={300}
-                  height={300}
-                  layout="responsive"
+                <img
                   src={`/img/products/${
                     v.image.includes(',') ? v.image.split(',')[0] : v.image
                   }`}
@@ -136,15 +86,18 @@ export default function ProductCardList({
                   }}
                 />
               </Link>
-              <ul
-                className={style['fav-button']}
-                style={{ backgroundColor: 'none', border: 'none' }}
-              >
-                <ProductFav
-                  favInfo={favInfo}
-                  setToggleBtn={setToggleBtn}
-                  toggleBtn={toggleBtn}
-                />
+              <ul className={style['fav-button']}>
+                <li>
+                  <Link
+                    href="#"
+                    style={{ color: '#ffffff', fontSize: '18px' }}
+                    onClick={(e) => {
+                      e.preventDefault()
+                    }}
+                  >
+                    <FaRegHeart />
+                  </Link>
+                </li>
               </ul>
               <ul className={style['add-cart-button']}>
                 <Link

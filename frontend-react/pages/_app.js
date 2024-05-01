@@ -24,11 +24,7 @@ export default function MyApp({ Component, pageProps }) {
     <AuthContextProvider>
       <PointsContextProvider>
         <ClassFavContextProvider>
-          <ProductFavContextProvider>
-            <CartProvider>
-              {getLayout(<Component {...pageProps} />)}
-            </CartProvider>
-          </ProductFavContextProvider>
+          <CartProvider>{getLayout(<Component {...pageProps} />)}</CartProvider>
         </ClassFavContextProvider>
       </PointsContextProvider>
     </AuthContextProvider>
