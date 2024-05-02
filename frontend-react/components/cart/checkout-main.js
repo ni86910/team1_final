@@ -240,7 +240,7 @@ export default function CheckoutMain() {
                     </div>
                     <div className={`row ${style['checkout-BlockRow']}`}>
                       <div className={`col-9 ${style['checkout-option']}`}>
-                        Email：oce*****@gmail.com
+                        Email：{auth.m_account}
                       </div>
                     </div>
                   </div>

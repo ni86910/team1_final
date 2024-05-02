@@ -135,6 +135,7 @@ export default function CartMain() {
                               setMyPoints(e.target.value)
                             }}
                             max={totalPoints}
+                            min={0}
                             onBlur={() => {
                               if (myPoints > totalPoints) {
                                 setMyPoints(totalPoints)

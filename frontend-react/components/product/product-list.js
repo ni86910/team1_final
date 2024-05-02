@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import ProductCardList from './product-card-list'
 import ProductCategory from './product-category'
 import style from '@/styles/product-list.module.scss'
+import { IoIosArrowUp } from 'react-icons/io'
 
 export default function ProductList({ searchKeyword }) {
   const router = useRouter()
@@ -31,9 +33,14 @@ export default function ProductList({ searchKeyword }) {
     })
   }
 
+  // 到頁首
+  const clickToGotoTop = useRef(null)
+
   return (
     <>
-      <section className={`${style.shop} ${style.spad}`}>
+      <section
+        className={`${style.shop} ${style.spad}`}
+      >
         <div className={`container-fluid ${style['shop-product-display']}`}>
           <div className={`row`}>
             <div className={`col-lg-3`}>

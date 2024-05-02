@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAuth } from '@/context/auth-context' 
+import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -22,7 +22,7 @@ import {
 
 export default function OrderPage() {
   const router = useRouter()
-  const { logout } = useAuth() 
+  const { logout } = useAuth()
 
   const [accordionOpen, setAccordionOpen] = useState(null)
 
@@ -117,12 +117,12 @@ export default function OrderPage() {
                     />
                     7-11取貨
                   </div>
-                  <div className="p-2 ms-auto">信用卡3期 0利率</div>
-                  <div className="p-2">訂購日期: 2024-01-02</div>
+                  <div className="p-2 ms-auto">貨到付款</div>
+                  <div className="p-2">訂購日期: 2024-05-02</div>
                 </Stack>
                 <Stack>
-                  <div className="p-2">訂單編號：TG240127AA00TT</div>
-                  <div className="p-2">訂購總額： NT$1,999</div>
+                  <div className="p-2">訂單編號：FTU000010</div>
+                  <div className="p-2">訂購總額： NT$2,700</div>
                 </Stack>
               </Col>
 
@@ -132,20 +132,20 @@ export default function OrderPage() {
               >
                 <Accordion.Item eventKey="1">
                   <Accordion.Header onClick={() => handleAccordionToggle('1')}>
-                    <div className={style['header-text']}>1項商品</div>
+                    <div className={style['header-text']}>4項商品</div>
                   </Accordion.Header>
                   <Accordion.Body className={style['accordion-body']}>
                     <Image
-                      src="/img/member/profile-dog.png"
+                      src="/img/products/product_gym_06_00_00.webp"
                       width={100}
                       height={100}
                       alt="selfie"
                       className={style['products-img']}
                     />
                     <Stack>
-                      <div className="p-2">商品名稱: 屏東 / 黑法鬥</div>
-                      <div className="p-2">規格: 黑/5歲</div>
-                      <div className="p-2">2024-02-06 取貨完成</div>
+                      <div className="p-2">商品名稱: 柔軟壺鈴 4kg</div>
+                      <div className="p-2">規格: F</div>
+                      <div className="p-2">2024-05-02 訂單成立</div>
                     </Stack>
                   </Accordion.Body>
                 </Accordion.Item>
@@ -169,11 +169,11 @@ export default function OrderPage() {
                     />
                     7-11取貨
                   </div>
-                  <div className="p-2 ms-auto">信用卡3期 0利率</div>
-                  <div className="p-2">訂購日期: 2024-01-02</div>
+                  <div className="p-2 ms-auto">LINEPAY</div>
+                  <div className="p-2">訂購日期: 2024-04-26</div>
                 </Stack>
                 <Stack>
-                  <div className="p-2">訂單編號：TG240127AA00TT</div>
+                  <div className="p-2">訂單編號：FTU000009</div>
                   <div className="p-2">訂購總額： NT$3,999</div>
                 </Stack>
               </Col>
@@ -188,30 +188,32 @@ export default function OrderPage() {
                   </Accordion.Header>
                   <Accordion.Body className={style['accordion-body']}>
                     <Image
-                      src="/img/member/profile-dog.png"
+                      src="/img/products/product_yoga_12_00_00.webp"
                       width={100}
                       height={100}
                       alt="selfie"
                       className={style['products-img']}
                     />
                     <Stack>
-                      <div className="p-2">商品名稱: 屏東 / 黑法鬥</div>
-                      <div className="p-2">規格: 黑/5歲</div>
+                      <div className="p-2">商品名稱: 大號泡棉瑜珈磚</div>
+                      <div className="p-2">規格: 紫色</div>
                       <div className="p-2">2024-02-06 取貨完成</div>
                     </Stack>
                   </Accordion.Body>
                   <div className={style['straight-line']} />
                   <Accordion.Body className={style['accordion-body']}>
                     <Image
-                      src="/img/member/profile-dog.png"
+                      src="/img/products/product_acc_01_00_00.jpg"
                       width={100}
                       height={100}
                       alt="selfie"
                       className={style['products-img']}
                     />
                     <Stack>
-                      <div className="p-2">商品名稱: 屏東 / 黑法鬥</div>
-                      <div className="p-2">規格: 黑/2歲</div>
+                      <div className="p-2">
+                        商品名稱: 中階舒適止滑重訓手套 (S ~ XL)
+                      </div>
+                      <div className="p-2">規格: M</div>
                       <div className="p-2">2024-02-06 取貨完成</div>
                     </Stack>
                   </Accordion.Body>

@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { useAuth } from '@/context/auth-context'
 import { API_SERVER } from '@/configs/index'
 import Swal from 'sweetalert2'
+import toast, { Toaster } from 'react-hot-toast'
 import { useBreadcrumb } from '@/context/breadcrumb-context'
 
 export default function ArticleDetail() {
@@ -106,7 +107,11 @@ export default function ArticleDetail() {
       !artformData.message_content
     ) {
       // alert('請完整填寫所有必填字段。')
-      Swal.fire('請完整填寫所有必填字段!')
+      Swal.fire({
+        title: '請完整填寫所有必填字段!',
+        icon: 'question',
+        confirmButtonColor: '#EB6234',
+      })
       return
     }
 
@@ -120,13 +125,13 @@ export default function ArticleDetail() {
       })
 
       if (response.ok) {
-        // alert('表單提交成功！')
-        Swal.fire('表單提交成功！')
+        toast.success('留言成功！')
         e.target.reset()
         setToggleBtn(!toggleBtn)
       } else {
         // alert('表單提交失敗，請稍後再試。')
-        Swal.fire('表單提交失敗，請稍後再試！')
+        // Swal.fire('留言失敗！')
+        toast.error('留言失敗！')
         console.error('Failed to submit form')
       }
       console.log(artformData)
@@ -171,6 +176,7 @@ export default function ArticleDetail() {
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       {/* Article Section Begin */}
       {!artInfo ? (
         <div>loading...</div>
