@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { API_SERVER } from '../common/config'
 import style from '@/styles/product-list.module.scss'
@@ -72,7 +73,9 @@ export default function ProductCardList({
                   href={`/product/${v.product_id}`}
                   className={`${style['product-item-pic']} ${style['set-bg']}`}
                 >
-                  <img
+                  <Image
+                    height={326}
+                    width={326}
                     src={`/img/products/${
                       v.image.includes(',') ? v.image.split(',')[0] : v.image
                     }`}

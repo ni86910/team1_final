@@ -34,7 +34,7 @@ export default function OrderConfirmationMain() {
                     style={{ color: '#EB6234' }}
                   >
                     <span className={`row justify-content-center`}>
-                      #35789621
+                      #FTU000010
                     </span>
                   </Link>
                 </h6>

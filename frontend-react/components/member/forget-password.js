@@ -32,7 +32,6 @@ export default function ForgetPasswordPage() {
       toast.success('請到您的電子信箱收取郵件', {
         style: {
           border: '3px solid #ED7C15',
-          // backgroundColor:'#ED7C15',
           padding: '14px',
           color: 'black',
         },

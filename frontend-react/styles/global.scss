@@ -58,6 +58,17 @@ $dropdown-border-radius:50px;
   color: white;
 }
 
+/* Favorite頁面Tabs */
+
+.nav {
+  --bs-nav-link-color: black;
+  --bs-nav-link-hover-color: #ED7C15;
+}
+
+.nav-tabs {
+  --bs-nav-tabs-link-active-color: white;
+  --bs-nav-tabs-link-active-bg: #ED7C15;
+}
 
 // google Noto Sans TC 字體
 @import 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap';

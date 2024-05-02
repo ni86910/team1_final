@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import style from '@/styles/jack-use/button.module.css'
 import { API_SERVER } from '@/configs/index'
 import Swal from 'sweetalert2'
+import toast, { Toaster } from 'react-hot-toast'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -28,8 +29,11 @@ export default function Contact() {
       !formData.consult_email ||
       !formData.request
     ) {
-      // alert('請完整填寫所有必填字段。')
-      Swal.fire('請完整填寫所有必填字段!')
+      Swal.fire({
+        title: '請完整填寫所有必填字段!',
+        icon: 'question',
+        confirmButtonColor: '#EB6234',
+      })
       return
     }
 
@@ -43,18 +47,10 @@ export default function Contact() {
       })
 
       if (response.ok) {
-        Swal.fire({
-          title: '表單提交成功！',
-          icon: 'success',
-        })
-        // alert('表單提交成功！')
+        toast.success('提交成功！')
         e.target.reset()
       } else {
-        // alert('表單提交失敗，請稍後再試。')
-        Swal.fire({
-          icon: 'error',
-          text: '表單提交失敗，請稍後再試!',
-        })
+        toast.error('提交失敗，請稍後再試。')
         console.error('Failed to submit form')
       }
     } catch (error) {
@@ -66,6 +62,7 @@ export default function Contact() {
   return (
     <>
       {/* Map Begin */}
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="container-fluid">
         <div className="map" style={{ marginTop: 20 }}>
           <iframe
