@@ -26,8 +26,11 @@ export default function MemberCenterPage() {
   const router = useRouter()
   const { auth, logout } = useAuth()
   const { totalPoints } = usePoints()
+  const [newProfileImage, setNewProfileImage] = useState(
+    '/img/member/default-self.jpg'
+  )
   const [profile, setProfile] = useState({})
-  const [newProfileImage, setNewProfileImage] = useState(null)
+
 
   // 會員登入
   useEffect(() => {
@@ -86,7 +89,6 @@ export default function MemberCenterPage() {
                 className={SideBar['logout-Nav-link']}
                 href={'#'}
                 onClick={(e) => {
-                  logout()
                   Swal.fire({
                     title: '確定登出嗎?',
                     icon: 'question',
@@ -97,6 +99,16 @@ export default function MemberCenterPage() {
                     cancelButtonText: '取消',
                   }).then((result) => {
                     if (result.isConfirmed) {
+                      logout()
+                      setTimeout(() => {
+                        Swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: '登出成功',
+                          showConfirmButton: false,
+                          timer: 2000,
+                        })
+                      }, 200)
                       router.push('/member/login')
                     }
                   })

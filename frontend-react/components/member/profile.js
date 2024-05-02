@@ -243,7 +243,6 @@ export default function ProfilePage({ member_id }) {
                 className={SideBar['logout-Nav-link']}
                 href={'#'}
                 onClick={(e) => {
-                  logout()
                   Swal.fire({
                     title: '確定登出嗎?',
                     icon: 'question',
@@ -254,6 +253,16 @@ export default function ProfilePage({ member_id }) {
                     cancelButtonText: '取消',
                   }).then((result) => {
                     if (result.isConfirmed) {
+                      logout()
+                      setTimeout(() => {
+                        Swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: '登出成功',
+                          showConfirmButton: false,
+                          timer: 2000,
+                        })
+                      }, 200)
                       router.push('/member/login')
                     }
                   })
