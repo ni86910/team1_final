@@ -21,7 +21,7 @@ import { FaStarOfLife } from 'react-icons/fa6'
 export default function ProfilePage({ member_id }) {
   const router = useRouter()
 
-  const { auth, logout } = useAuth() 
+  const { auth, logout } = useAuth()
 
   const [profile, setProfile] = useState({})
   const [newProfileImage, setNewProfileImage] = useState(null)
@@ -228,7 +228,6 @@ export default function ProfilePage({ member_id }) {
                 className={SideBar['logout-Nav-link']}
                 href={'#'}
                 onClick={(e) => {
-                  logout()
                   Swal.fire({
                     title: '確定登出嗎?',
                     icon: 'question',
@@ -239,6 +238,16 @@ export default function ProfilePage({ member_id }) {
                     cancelButtonText: '取消',
                   }).then((result) => {
                     if (result.isConfirmed) {
+                      logout()
+                      setTimeout(() => {
+                        Swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: '登出成功',
+                          showConfirmButton: false,
+                          timer: 2000,
+                        })
+                      }, 200)
                       router.push('/member/login')
                     }
                   })

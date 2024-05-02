@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAuth } from '@/context/auth-context' 
+import { useAuth } from '@/context/auth-context'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -22,7 +22,7 @@ import {
 
 export default function OrderPage() {
   const router = useRouter()
-  const { logout } = useAuth() 
+  const { logout } = useAuth()
 
   const [accordionOpen, setAccordionOpen] = useState(null)
 
@@ -72,7 +72,6 @@ export default function OrderPage() {
                 className={SideBar['logout-Nav-link']}
                 href={'#'}
                 onClick={(e) => {
-                  logout()
                   Swal.fire({
                     title: '確定登出嗎?',
                     icon: 'question',
@@ -83,6 +82,16 @@ export default function OrderPage() {
                     cancelButtonText: '取消',
                   }).then((result) => {
                     if (result.isConfirmed) {
+                      logout()
+                      setTimeout(() => {
+                        Swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: '登出成功',
+                          showConfirmButton: false,
+                          timer: 2000,
+                        })
+                      }, 200)
                       router.push('/member/login')
                     }
                   })

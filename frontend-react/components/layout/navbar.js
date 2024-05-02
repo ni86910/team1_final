@@ -32,7 +32,6 @@ export default function Navbar() {
   const openCanvasHandler = () => {
     offcanvas == 'active' ? setOffcanvas('') : setOffcanvas('active')
   }
-  
 
   return (
     <>
@@ -88,9 +87,30 @@ export default function Navbar() {
               </li>
               <li
                 role="presentation"
-                onClick={() => {
-                  logout()
-                  alert('你已成功登出')
+                onClick={(e) => {
+                  Swal.fire({
+                    title: '確定登出嗎?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#EB6234',
+                    cancelButtonColor: 'black',
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      logout()
+                      setTimeout(() => {
+                        Swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: '登出成功',
+                          showConfirmButton: false,
+                          timer: 2000,
+                        })
+                      }, 200)
+                      router.push('/member/login')
+                    }
+                  })
                 }}
               >
                 登出
@@ -229,16 +249,30 @@ export default function Navbar() {
                           ) : (
                             <li
                               role="presentation"
-                              onClick={() => {
-                                logout()
+                              onClick={(e) => {
                                 Swal.fire({
-                                  position: 'center',
-                                  icon: 'success',
-                                  title: '登出成功',
-                                  showConfirmButton: false,
-                                  timer: 2000,
+                                  title: '確定登出嗎?',
+                                  icon: 'question',
+                                  showCancelButton: true,
+                                  confirmButtonColor: '#EB6234',
+                                  cancelButtonColor: 'black',
+                                  confirmButtonText: '確定',
+                                  cancelButtonText: '取消',
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    logout()
+                                    setTimeout(() => {
+                                      Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: '登出成功',
+                                        showConfirmButton: false,
+                                        timer: 2000,
+                                      })
+                                    }, 200)
+                                    router.push('/member/login')
+                                  }
                                 })
-                                router.push('/member/login')
                               }}
                             >
                               登出

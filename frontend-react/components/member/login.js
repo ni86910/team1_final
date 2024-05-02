@@ -97,7 +97,7 @@ export default function LoginPage() {
         }
 
         Swal.fire({
-          position: 'top',
+          position: 'center',
           icon: 'success',
           title: '登入成功',
           showConfirmButton: false,
@@ -106,7 +106,7 @@ export default function LoginPage() {
         router.push('/member/member-center')
       } else {
         Swal.fire({
-          position: 'top',
+          position: 'center',
           icon: 'error',
           title: '登入失敗',
           showConfirmButton: false,
