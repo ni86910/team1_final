@@ -14,6 +14,7 @@ tmp_uploads
 public/imgs
 public/avatar
 public
+tips.txt
 
 # Compiled Java class files
 *.class
