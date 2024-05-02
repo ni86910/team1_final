@@ -245,6 +245,7 @@
   img {
     width: 100%;
     height: 100%;
+    overflow: hidden;
     object-fit: cover;
   }
 }
@@ -331,21 +332,4 @@
 .pagination-nav {
   margin: 50px auto 20px auto;
   justify-content: center;
-}
-
-.gotoTop-btn {
-  position: fixed;
-  width: 50px;
-  height: 50px;
-  right: 100px;
-  bottom: 60px;
-  color: #ffffff;
-  background-color: $primary-color;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 45px;
-  z-index: 99;
-  &:hover{
-    cursor: pointer;
-  }
 }
