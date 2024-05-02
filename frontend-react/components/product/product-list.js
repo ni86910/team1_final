@@ -40,12 +40,7 @@ export default function ProductList({ searchKeyword }) {
     <>
       <section
         className={`${style.shop} ${style.spad}`}
-        ref={clickToGotoTop}
-        id="topOfProducts"
       >
-        <Link href="#topOfProducts" className={`${style['gotoTop-btn']}`}>
-          <IoIosArrowUp size={'30px'} />
-        </Link>
         <div className={`container-fluid ${style['shop-product-display']}`}>
           <div className={`row`}>
             <div className={`col-lg-3`}>
