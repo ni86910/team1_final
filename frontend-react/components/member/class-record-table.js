@@ -232,19 +232,23 @@ export default function ClassRecordTable() {
                       })()}
                     </td>
                     <td>
-                      <Link
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          checkRemoveBook(
-                            auth.member_id,
-                            v.class_schedule_id,
-                            '/member/course-records'
-                          )
-                        }}
-                      >
-                        取消
-                      </Link>
+                      {v.status ? (
+                        <span>請洽客服</span>
+                      ) : (
+                        <Link
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            checkRemoveBook(
+                              auth.member_id,
+                              v.class_schedule_id,
+                              '/member/course-records'
+                            )
+                          }}
+                        >
+                          取消
+                        </Link>
+                      )}
                     </td>
                   </tr>
                 )
