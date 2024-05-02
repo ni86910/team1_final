@@ -53,12 +53,14 @@ export default function ClassSwiper({ classInfo }) {
         slidesPerView={'auto'}
         centeredSlides={true}
         spaceBetween={30}
-        pagination={{
-          clickable: true,
-        }}
+        pagination={false}
         modules={[Pagination, Navigation]}
         navigation={true}
         className={style['swiper']}
+        style={{
+          '--swiper-navigation-color': '#EB6234',
+          '--swiper-pagination-color': '#EB6234',
+        }}
       >
         {otherClasses.length == 0 ? (
           <SwiperSlide className={style['swiper-slide']}>

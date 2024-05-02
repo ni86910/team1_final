@@ -6,12 +6,14 @@ import { API_SERVER } from '@/configs/index'
 import Image from 'next/image'
 import ClassSwiper from '@/components/class/class-swiper'
 import Link from 'next/link'
-import NickSelect from '@/components/common/nick-select'
 import Head from 'next/head'
-import { Tab } from 'bootstrap'
+import { useBreadcrumb } from '@/context/breadcrumb-context'
 
 export default function ClassPage() {
   const router = useRouter()
+
+  // 設定麵包屑
+  const { setPath, setPageName } = useBreadcrumb()
 
   // 紀錄目前選擇的縣市
   const [city, setCity] = useState('')
@@ -21,10 +23,6 @@ export default function ClassPage() {
 
   // 記錄選中的場館
   const [gymName, setGymName] = useState('')
-
-  const [position, setPosition] = useState(
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29457.720277696328!2d120.28803630000002!3d22.645769849999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e05acb0d030a1%3A0xeaf475aece122885!2z56Kz5L2Q6bq76YeM6auY6ZuE576O6KGT6aSo5bqX!5e0!3m2!1szh-TW!2stw!4v1712886618960!5m2!1szh-TW!2stw'
-  )
 
   // 用來接收 fetch資料 的狀態
   const [classInfo, setClassInfo] = useState({
@@ -47,7 +45,6 @@ export default function ClassPage() {
       // 這裡拿到的是物件
       if (typeof data === 'object' && data) {
         setClassInfo(data)
-        console.log(data)
       }
     } catch (e) {
       console.log(e)
@@ -59,11 +56,15 @@ export default function ClassPage() {
     if (router.isReady) {
       console.log(router.query)
       const { class_id } = router.query
-      console.log('class_id:', class_id)
       getClassData(class_id)
+
+      setPath([
+        { name: '課程專區', href: '/class', isEnd: false },
+        { name: '課程介紹', href: '', isEnd: true },
+      ])
+      setPageName('課程介紹')
     }
-  }, [router.isReady, router])
-  console.log('classInfo', classInfo)
+  }, [router])
 
   // 抓 該城市中的所有場館
   useEffect(() => {

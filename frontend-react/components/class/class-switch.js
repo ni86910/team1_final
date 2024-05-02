@@ -25,7 +25,7 @@ export default function ClassSwitch({ setTab, tab }) {
         // tabIndex="0"
         className={style[tab == 'left' ? 'on' : 'off']}
       >
-        課程介紹
+        課程列表
       </div>
       <div
         onClick={() => {

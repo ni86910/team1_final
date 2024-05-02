@@ -52,7 +52,7 @@ export default function FavoritePage() {
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
             <Navbar.Brand
-              href="/member/favorite"
+              // href="/member/favorite"
               className={SideBar['text-h4']}
             >
               我的收藏

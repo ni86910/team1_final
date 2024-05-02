@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from '@/styles/not-login.module.scss'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
@@ -8,11 +8,14 @@ import { useAuth } from '@/context/auth-context'
 export default function NotLogin() {
   const { auth } = useAuth()
   const router = useRouter()
+
+  const [countDown, setCountDown] = useState(() => {})
+
   useEffect(() => {
-    // 等0.3秒後再判斷
-    setTimeout(() => {
-      let timerInterval
-      if (auth.member_id === 0) {
+    if (!auth.member_id) {
+      const notAuth = setTimeout(() => {
+        let timerInterval
+        // 沒有拿到auth.member_id
         Swal.fire({
           title: '請先登入!',
           html: '將在 <b></b> 秒後回到登入頁.',
@@ -25,9 +28,6 @@ export default function NotLogin() {
             timerInterval = setInterval(() => {
               timer.textContent = Math.ceil(+`${Swal.getTimerLeft()}` / 1000)
             }, 100)
-            if (auth.member_id) {
-              Swal.stopTimer()
-            }
           },
           willClose: () => {
             clearInterval(timerInterval)
@@ -39,9 +39,13 @@ export default function NotLogin() {
             router.push('/member/login')
           }
         })
-      }
-    }, 500)
+      }, 100)
+      setCountDown(notAuth)
+    } else {
+      clearTimeout(countDown)
+    }
   }, [auth])
+
   return (
     <>
       <div className={style['container']}></div>

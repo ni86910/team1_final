@@ -18,20 +18,20 @@
 
 import express from "express";
 import transporter from "../configs/mail.js";
-import "dotenv/config.js";
+//import "dotenv/config.js";
 
 const router = express.Router();
 
 // email內容
 const mailOptions = {
   from: `"FITS U 官方團隊"<${process.env.SMTP_TO_EMAIL}>`,
-  to: "oceanoia@gmail.com",
+  to: "fitsu879@gmail.com",
   subject: "訂單成立",
   text: `親愛的會員您好: \r\n\r\n感謝您的訂購! 此封信件為通知訂單已完成。\r\n\r\n您可至「會員專區 > 我的訂單」查看訂單的最新狀態。\r\n\r\n\r\n FITS U 團隊 敬上`,
 };
 
 /* 寄送email的路由 */
-router.get("/send", function (req, res, next) {
+router.post("/send", function (req, res, next) {
   // 寄送
   transporter.sendMail(mailOptions, (err, response) => {
     if (err) {

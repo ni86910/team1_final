@@ -32,7 +32,10 @@ export default function PointsPage() {
         {/* Side Bar Begin */}
         <Navbar className={SideBar['m-sidebar']}>
           <Container className={SideBar['m-container']}>
-            <Navbar.Brand href="/member/points" className={SideBar['text-h4']}>
+            <Navbar.Brand
+              // href="/member/points"
+              className={SideBar['text-h4']}
+            >
               我的點數
             </Navbar.Brand>
             <Nav className={`me-auto ${SideBar['nav-side']}`}>

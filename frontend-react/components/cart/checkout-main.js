@@ -31,7 +31,7 @@ export default function CheckoutMain() {
   const {
     items,
     totalItems,
-    setTotalItems,
+    setItems,
     calcTotalItems,
     calcTotalPrice,
     myPoints,
@@ -63,7 +63,7 @@ export default function CheckoutMain() {
   // Function to handle sending email
   const sendEmail = async () => {
     try {
-      const response = await fetch('http://localhost:3001/email', {
+      const response = await fetch('http://localhost:3001/email/send', {
         method: 'POST', // Send POST request
         headers: {
           'Content-Type': 'application/json', // Specify content type as JSON
@@ -74,6 +74,8 @@ export default function CheckoutMain() {
 
       if (response.ok) {
         setEmailSent(true) // Set state to indicate email has been sent
+        setItems([])
+        router.push('/cart/order-confirmation')
       } else {
         throw new Error('Failed to send email')
       }
@@ -92,18 +94,12 @@ export default function CheckoutMain() {
   const purchaseNotesRef = useRef(null)
   const purchaseOrder = useRef(null)
 
-  // 重置 totalItems 為 0
-  const handleResetTotalItems = () => {
-    setTotalItems(0)
-  }
-
   const handleSubmitOrder = async (event) => {
     event.preventDefault()
     await sendEmail()
-    if (emailSent) {
-      handleResetTotalItems()
-      router.push('/cart/order-confirmation')
-    }
+    // if (emailSent) {
+    //   console.log('送出了')
+    // }
   }
 
   return (
@@ -112,7 +108,10 @@ export default function CheckoutMain() {
         <div className={`container`}>
           <Form
             className={`row`}
-            onSubmit={(event) => handleSubmitOrder(event)}
+            onSubmit={(event) => {
+              event.preventDefault()
+              handleSubmitOrder(event)
+            }}
           >
             {/* Left 結帳詳細區塊 */}
             <div
@@ -162,7 +161,8 @@ export default function CheckoutMain() {
                                   letterSpacing: '2px',
                                   fontWeight: '700',
                                 }}
-                                onClick={() => {
+                                onClick={(e) => {
+                                  e.preventDefault()
                                   openWindow()
                                 }}
                               >
@@ -221,7 +221,10 @@ export default function CheckoutMain() {
                           fontSize: '18px',
                           fontWeight: '700',
                         }}
-                        onClick={handleShowModal}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          handleShowModal()
+                        }}
                       >
                         變更 <IoIosArrowForward />
                       </button>
@@ -237,7 +240,7 @@ export default function CheckoutMain() {
                     </div>
                     <div className={`row ${style['checkout-BlockRow']}`}>
                       <div className={`col-9 ${style['checkout-option']}`}>
-                        Email：oce*****@gmail.com
+                        Email：{auth.m_account}
                       </div>
                     </div>
                   </div>
