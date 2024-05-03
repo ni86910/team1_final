@@ -220,7 +220,13 @@ export default function ClassBook({
               </div>
             </div>
             <div className={style['teacher']}>
-              <div className={style['avatar']}></div>
+              <div className={style['avatar']}>
+                <Image
+                  alt="avatar"
+                  fill
+                  src={`/img/team/${bookInfo.teacher_image}`}
+                ></Image>
+              </div>
               <div className={style['text']}>
                 <span>{bookInfo.teacher_name}</span>
                 <p>教練</p>
