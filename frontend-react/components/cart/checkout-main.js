@@ -204,8 +204,8 @@ export default function CheckoutMain() {
                             </span>
                             <p style={{ marginTop: '15px' }}>
                               <div className={style['checkout-BlockRow']}>
-                                <div>803 高雄市苓雅區***路123號</div>
-                                <div>蔡*紓 (+886)0912****12</div>
+                                <div>高雄市前金區中正三路211號8樓</div>
+                                <div>{auth.m_name} 0920240511</div>
                               </div>
                             </p>
                           </>
