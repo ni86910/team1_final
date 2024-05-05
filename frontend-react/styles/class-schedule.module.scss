@@ -1,5 +1,11 @@
 @import 'variable';
 
+@mixin pad {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
 %schedule-width {
   width: 1435px;
 }
@@ -108,11 +114,11 @@
         border-radius: 50%;
         background-color: #ed7c15;
         line-height: 50px;
-        color: black;
+        color: white;
         transition: all 0.2s;
         margin-bottom: 1rem;
         &:hover {
-          background-color: white;
+          color: black;
         }
       }
     }
@@ -187,6 +193,9 @@
         background-color: white;
       }
     }
+    @include pad {
+      padding: 0 10px;
+    }
   }
 
   .schedule {
@@ -215,7 +224,7 @@
       .last-week {
         width: 78px;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         height: 50%;
         color: black;
@@ -226,6 +235,9 @@
           font-weight: 800;
         }
       }
+      .next-week{
+        // justify-content: flex-end;
+      }
 
       .list-title {
         display: flex;
@@ -234,6 +246,22 @@
 
         h3 {
           font-weight: 600;
+        }
+      }
+      @include pad {
+        padding: 0 10px;
+        .next-week,
+        .last-week {
+
+          
+          span {
+            font-size: small;
+          }
+        }
+        .list-title {
+          h3 {
+            font-size: 20px;
+          }
         }
       }
     }
@@ -267,7 +295,7 @@
       }
 
       .class-type-b {
-        color: #b8b8b8;;
+        color: #b8b8b8;
       }
     }
 

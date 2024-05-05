@@ -1,8 +1,15 @@
-$orange: #ed7c15;
+$secondary-color: #ed7c15;
 $black: #000000;
 $black2: #2e2e2e;
 $gray: #f1f1f1;
 $white: #ffffff;
+@import 'variable';
+
+@mixin pad {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
 
 .banner {
   margin-top: 100px;
@@ -23,13 +30,13 @@ $white: #ffffff;
   width: 100%;
   height: fit-content;
   position: absolute;
-  left:0%;
-  transition: all .5s ease-in-out;
+  left: 0%;
+  transition: all 0.5s ease-in-out;
   overflow: hidden;
 }
 .hide {
   // display: none;
-  left:-100%;
+  left: -100%;
   // transition: left .5s ease-in-out;
   // opacity: 0.5;
   z-index: -1;
@@ -41,8 +48,7 @@ $white: #ffffff;
   height: 100px;
   width: 100%;
   background: #f3f2ee;
-  // margin-top: 50px;
-  // margin-bottom: 50px;
+  padding-top: 20px;
   .categories {
     display: flex;
     width: 60%;
@@ -50,24 +56,28 @@ $white: #ffffff;
     padding: 0;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
     a {
+      margin-bottom: 10px;
       font-size: 16px;
       font-weight: 700;
       color: #000000;
+      width: 100px;
+      text-align: center;
       & :active {
-        color: $orange;
+        color: $secondary-color;
       }
       &:visited {
         color: $black;
       }
       &:hover {
-        color: $orange;
+        color: $secondary-color;
       }
       transition: all 0.2s ease-in;
     }
   }
   .more-btn {
-    background-color: $orange;
+    background-color: $secondary-color;
     height: 50px;
     width: 50px;
     line-height: 50px;
@@ -84,12 +94,13 @@ $white: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 120px;
+  justify-content: center;
+  // padding: 5%;
   width: 100%;
   h2 {
     font-size: 32px;
     font-weight: 700;
+    margin-bottom: 10px;
   }
   .select-container {
     max-width: 280px;
@@ -102,7 +113,7 @@ $white: #ffffff;
   .select-bar {
     width: 280px;
     height: 50px;
-    background-color: $orange;
+    background-color: $secondary-color;
     border-radius: 50px;
     line-height: 50px;
     padding: 0 30px 0 30px;
@@ -125,8 +136,9 @@ $white: #ffffff;
   width: 100%;
   .class {
     display: flex;
-    height: 500px;
+    height: 600px;
     // flex-wrap: wrap;
+
     .img-box {
       width: 55%;
       display: flex;
@@ -145,8 +157,9 @@ $white: #ffffff;
       padding: 70px 50px;
       width: 45%;
       min-width: 320px;
-      .class-content-box{
+      .class-content-box {
         margin: auto;
+
         .class-name {
           font-size: 32px;
           margin-bottom: 20px;
@@ -162,31 +175,51 @@ $white: #ffffff;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 2; //多行在这里修改数字即可
-          overflow:hidden;
+          overflow: hidden;
           -webkit-box-orient: vertical;
         }
         .learn-more {
           width: 90px;
           height: 90px;
-          background-color: $orange;
+          background-color: $secondary-color;
           line-height: 90px;
           text-align: center;
           border-radius: 50%;
           cursor: pointer;
-          
+
           &:hover {
             font-size: x-large;
           }
         }
       }
     }
+    @include pad {
+      display: flex;
+      flex-direction: column;
+      .img-box {
+        height: 40%;
+        width: 100%;
+      }
+      .class-content {
+        height: 60%;
+        width: 100%;
+        .class-content-box {
+
+        }
+      }
+    }
   }
-  .class:nth-child(even){
+  .class:nth-child(even) {
     flex-direction: row-reverse;
+    @include pad {
+      display: flex;
+      flex-direction: column;
+    }
     .class-content {
       background-color: $gray;
-      .class-content-box{
-        .class-info,.class-name{
+      .class-content-box {
+        .class-info,
+        .class-name {
           color: $black;
         }
       }

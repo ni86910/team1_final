@@ -460,12 +460,14 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                     }}
                     scroll={false}
                   >
-                    <FaAngleLeft />
-                    <span>上一周</span>
+                    <span>
+                      <FaAngleLeft />
+                      上一周
+                    </span>
                   </Link>
                   <div className={style['list-title']}>
                     <h3>{scheduleData.gymName}</h3>
-                    <h3>{`${scheduleData.year} 年 ${scheduleData.month} 月份 課程表`}</h3>
+                    <h3>{`${scheduleData.year} 年 ${scheduleData.month} 月份`}</h3>
                   </div>
                   <Link
                     href={'/'}
@@ -474,8 +476,6 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                       e.preventDefault()
                       // 有指定場館，才執行
                       if (router.query.gym_name && router.isReady) {
-                        // 重置比較陣列，避免越積越多
-
                         // 獲得下周一的日期
                         const nextMonday = dayjs(
                           scheduleData.mondayOfTheWeek
@@ -497,8 +497,10 @@ export default function ClassSchedule({ setContainerHeight, tab }) {
                     }}
                     scroll={false}
                   >
-                    <span>下一周</span>
-                    <FaAngleRight />
+                    <span>
+                      下一周
+                      <FaAngleRight />
+                    </span>
                   </Link>
                 </div>
                 <div className={style['class-type-group']}>

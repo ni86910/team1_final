@@ -1,13 +1,10 @@
 import { useRef, useEffect, useState } from 'react'
 import style from '@/styles/class-intro.module.scss'
-import { FaSortDown } from 'react-icons/fa6'
 import Link from 'next/link'
 import { API_SERVER } from '../common/config'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FaPlus } from 'react-icons/fa6'
-import Form from 'react-bootstrap/Form'
-import LiftUpLoading from '../common/lift-up-loading'
 
 export default function ClassIntro({ setContainerHeight, tab }) {
   const router = useRouter()
@@ -157,7 +154,7 @@ export default function ClassIntro({ setContainerHeight, tab }) {
               radical課程
             </Link>
           </div>
-          <div className={style['more-btn']}>+</div>
+          {/* <div className={style['more-btn']}>+</div> */}
         </div>
         <div className={style['category-intro']}>
           <h2 className={style['category-name']}>
