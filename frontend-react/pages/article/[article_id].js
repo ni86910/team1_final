@@ -10,6 +10,7 @@ import { API_SERVER } from '@/configs/index'
 import Swal from 'sweetalert2'
 import toast, { Toaster } from 'react-hot-toast'
 import { useBreadcrumb } from '@/context/breadcrumb-context'
+import Head from 'next/head'
 
 export default function ArticleDetail() {
   // 設定麵包屑
@@ -176,6 +177,9 @@ export default function ArticleDetail() {
 
   return (
     <>
+      <Head>
+        <title>健康小知識</title>
+      </Head>
       <Toaster position="top-center" reverseOrder={false} />
       {/* Article Section Begin */}
       {!artInfo ? (

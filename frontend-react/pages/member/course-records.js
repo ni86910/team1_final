@@ -22,6 +22,7 @@ import {
 /* React-icon */
 import ClassRecordTable from '@/components/member/class-record-table'
 import { useBreadcrumb } from '@/context/breadcrumb-context'
+import Head from 'next/head'
 
 export default function CourseRecords() {
   const router = useRouter()
@@ -35,6 +36,9 @@ export default function CourseRecords() {
   }, [])
   return (
     <>
+      <Head>
+        <title>課程紀錄</title>
+      </Head>
       <section className={SideBar['member-center-container']}>
         {/* Side Bar Begin */}
         <Navbar className={SideBar['m-sidebar']}>

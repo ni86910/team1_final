@@ -17,6 +17,7 @@ import { GiSteam } from 'react-icons/gi'
 import { useRouter } from 'next/router'
 import { API_SERVER } from '@/configs/index'
 import { useBreadcrumb } from '@/context/breadcrumb-context'
+import Head from 'next/head'
 
 export default function GymDetail() {
   // 設定麵包屑
@@ -88,6 +89,9 @@ export default function GymDetail() {
 
   return (
     <>
+      <Head>
+        <title>場地介紹</title>
+      </Head>
       {!gymInfo ? (
         <div>Loading...</div>
       ) : (

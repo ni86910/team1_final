@@ -71,7 +71,7 @@ export default function ForgetPasswordPage() {
                       </div>
                       <div className="card-body">
                         <p className={`text-center mb-3 ${style['text-note']}`}>
-                          輸入您的會員帳號，按下送出後，我們會將
+                          輸入您的會員帳號，按下確認後，我們會將
                           <span
                             style={{
                               color: 'red',
