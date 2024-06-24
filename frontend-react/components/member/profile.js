@@ -192,7 +192,7 @@ export default function ProfilePage({ member_id }) {
   }
 
   useEffect(() => {
-    if (!member_id) return // 如果沒有 sid 的值, 就不用發 AJAX
+    if (!member_id) return // 如果沒有 id 的值, 就不用發 AJAX
     fetch(`${API_SERVER}/profile/${member_id}`)
       .then((r) => r.json())
       .then((result) => {
