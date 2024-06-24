@@ -1,7 +1,7 @@
 ----使用方法----
 
 後端:(路由為http://localhost:3001/)
-1. 將team1.sql匯入資料庫
+1. 將team1.sql匯入MySQL資料庫
 2. 將dev.env.sample改名為dev.env，並填入相關的資料庫參數
 3. 執行npm i 安裝相關套件
 4. 執行npm run dev
